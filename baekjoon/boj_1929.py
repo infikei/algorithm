@@ -1,3 +1,6 @@
+m, n = map(int, input().split())
+
+
 def isPrime(n):
     if n == 1:
         return False
@@ -7,10 +10,6 @@ def isPrime(n):
     return True
 
 
-n = int(input())
-li = list(map(int, input().split()))
-ans = 0
-for i in li:
+for i in range(m, n+1):
     if isPrime(i):
-        ans += 1
-print(ans)
+        print(i)
