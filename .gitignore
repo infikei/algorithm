@@ -1,4 +1,5 @@
 *.DS_Store
+*.bin
 test.py
 test2.py
 test3.py
