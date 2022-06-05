@@ -1,4 +1,4 @@
-// boj_18258 코드에서 배열 길이만 바꿔준 버전
+// boj_10845.cpp 코드에서 배열 길이만 바꿔준 버전
 
 #include <iostream>
 #include <string>
