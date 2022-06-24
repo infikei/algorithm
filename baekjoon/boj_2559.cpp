@@ -16,5 +16,14 @@ int main() {
         arr[i] += arr[i - 1];
     }
 
+    int max = arr[K] - arr[0];
+    for (int i = 1; i <= N - K; i++) {
+        if (arr[i + K] - arr[i] > max) {
+            max = arr[i + K] - arr[i];
+        }
+    }
+
+    cout << max << "\n";
+
     return 0;
 }
