@@ -2,7 +2,7 @@
 using namespace std;
 
 int A[1001];
-int DP_increase[1001];
+int DP_decrease[1001];
 int N, ans;
 
 void input() {
@@ -12,18 +12,18 @@ void input() {
     }
 }
 
-void DP_increase_fn() {
-    DP_increase[1] = 1;
+void DP_decrease_fn() {
+    DP_decrease[N] = 1;
     ans = 1;
 
-    for (int i = 2; i <= N; i++) {
-        DP_increase[i] = 1;
-        for (int j = 1; j < i; j++) {
+    for (int i = N - 1; i >= 1; i--) {
+        DP_decrease[i] = 1;
+        for (int j = N; j > i; j--) {
             if (A[j] < A[i]) {
-                DP_increase[i] = max(DP_increase[i], DP_increase[j] + 1);
+                DP_decrease[i] = max(DP_decrease[i], DP_decrease[j] + 1);
             }
         }
-        ans = max(ans, DP_increase[i]);
+        ans = max(ans, DP_decrease[i]);
     }
 }
 
@@ -34,9 +34,9 @@ int main() {
 
     input();
 
-    DP_increase_fn();
+    DP_decrease_fn();
 
-    cout << ans << "\n";
+    cout << ans << '\n';
 
     return 0;
 }

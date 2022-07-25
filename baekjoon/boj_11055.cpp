@@ -13,14 +13,14 @@ void input() {
 }
 
 void DP_increase_fn() {
-    DP_increase[1] = 1;
-    ans = 1;
+    ans = DP_increase[1] = A[1];
 
     for (int i = 2; i <= N; i++) {
-        DP_increase[i] = 1;
+        DP_increase[i] = A[i];
+
         for (int j = 1; j < i; j++) {
             if (A[j] < A[i]) {
-                DP_increase[i] = max(DP_increase[i], DP_increase[j] + 1);
+                DP_increase[i] = max(DP_increase[i], DP_increase[j] + A[i]);
             }
         }
         ans = max(ans, DP_increase[i]);
@@ -36,7 +36,7 @@ int main() {
 
     DP_increase_fn();
 
-    cout << ans << "\n";
+    cout << ans << '\n';
 
     return 0;
 }
