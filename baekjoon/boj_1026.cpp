@@ -27,7 +27,7 @@ int main() {
         ans += A[i] * B[N - 1 - i];
     }
 
-    cout << ans;
+    cout << ans << '\n';
 
     return 0;
 }

@@ -1,9 +1,10 @@
 #include <iostream>
 using namespace std;
 
-int main()
-{
+int main() {
     ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
+    cout.tie(NULL);
+    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
 
     int n, max;
     cin >> n;
@@ -14,25 +15,21 @@ int main()
     dp[0] = arr[0];
     max = arr[0];
 
-    for (int i = 1; i < n; i++)
-    {
+    for (int i = 1; i < n; i++) {
         cin >> arr[i];
-        if (dp[i - 1] < 0)
-        {
+        if (dp[i - 1] < 0) {
             dp[i] = arr[i];
         }
-        else
-        {
+        else {
             dp[i] = dp[i - 1] + arr[i];
         }
 
-        if (dp[i] > max)
-        {
+        if (dp[i] > max) {
             max = dp[i];
         }
     }
 
-    cout << max << "\n";
+    cout << max << '\n';
 
     // dp[0] = arr[0]
     // dp[1] = max(arr[0]+arr[1], arr[1])

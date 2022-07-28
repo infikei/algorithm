@@ -5,39 +5,40 @@ using namespace std;
 
 int main() {
     ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
+    cout.tie(NULL);
+    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
 
     string input;
+    int input_count[26] = {0};
+
     cin >> input;
 
-    int input_size = input.size();
-    int count[26] = {0};
-
-    for (int i = 0; i < input_size; i++) {
+    for (int i = 0; i < input.length(); i++) {
         if ('a' <= input[i] && input[i] <= 'z') {
-            count[input[i] - 'a']++;
+            input_count[input[i] - 'a']++;
         } else {
-            count[input[i] - 'A']++;
+            input_count[input[i] - 'A']++;
         }
     }
 
-    int max = *max_element(count, count+26);
-    int ans = -1;
+    int max = *max_element(input_count, input_count + 26);
+    int ans_index = -1;
     for (int i = 0; i < 26; i++) {
-        if (count[i] == max) {
-            if (ans == -1) {
-                ans = i;
+        if (input_count[i] == max) {
+            if (ans_index == -1) {
+                ans_index = i;
             } else {
-                ans = -2;
+                ans_index = -2;
                 break;
             }
         }
     }
 
-    if (ans == -2) {
+    if (ans_index == -2) {
         cout << "?\n";
     } else {
-        char answer = 'A' + ans;
-        cout << answer << "\n";
+        char ans_ch = 'A' + ans_index;
+        cout << ans_ch << '\n';
     }
 
     return 0;

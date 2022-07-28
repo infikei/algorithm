@@ -17,7 +17,7 @@ int main() {
 
     int max = *max_element(arr, arr + N);
     int min = *min_element(arr, arr + N);
-    cout << max * min << "\n";
+    cout << max * min << '\n';
 
     return 0;
 }

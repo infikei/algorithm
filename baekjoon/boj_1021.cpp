@@ -47,7 +47,7 @@ int main() {
         dq_size--;
     }
 
-    cout << ans << "\n";
+    cout << ans << '\n';
 
     return 0;
 }

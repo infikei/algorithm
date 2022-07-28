@@ -2,9 +2,10 @@
 #include <algorithm>
 using namespace std;
 
-int main()
-{
+int main() {
     ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
+    cout.tie(NULL);
+    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
 
     int n, i, j, temp;
     cin >> n;
@@ -12,16 +13,14 @@ int main()
     int DP[2][500];
     cin >> DP[0][0];
 
-    for (int row = 1; row < n; row++)
-    {
+    for (int row = 1; row < n; row++) {
         i = row % 2;
         j = 1 - i;
 
         cin >> temp;
         DP[i][0] = temp + DP[j][0];
 
-        for (int col = 1; col < row; col++)
-        {
+        for (int col = 1; col < row; col++) {
             cin >> temp;
             DP[i][col] = temp + max(DP[j][col - 1], DP[j][col]);
         }
@@ -30,7 +29,7 @@ int main()
         DP[i][row] = temp + DP[j][row - 1];
     }
 
-    cout << *max_element(DP[i], DP[i] + n) << "\n";
+    cout << *max_element(DP[i], DP[i] + n) << '\n';
 
     return 0;
 }

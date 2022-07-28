@@ -3,6 +3,7 @@ using namespace std;
 
 int main() {
     ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
+    cout.tie(NULL);
     cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
 
     int arr[1001][1001];
@@ -61,14 +62,13 @@ int main() {
     }
 
     for (int row = 1; row <= N; row++) {
-        cout << arr[row][1];
-        for (int col = 2; col <= N; col++) {
-            cout << " " << arr[row][col];
+        for (int col = 1; col <= N; col++) {
+            cout << arr[row][col] << ' ';
         }
-        cout << "\n";
+        cout << '\n';
     }
 
-    cout << target_x << " " << target_y << "\n";
+    cout << target_x << ' ' << target_y << '\n';
 
     return 0;
 }

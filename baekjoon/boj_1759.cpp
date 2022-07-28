@@ -11,7 +11,7 @@ void dfs(int depth, int start = 0, int ae = 1, int not_ae = 2) {
             for (int i = 0; i < L; i++) {
                 cout << ans[i];
             }
-            cout << "\n";
+            cout << '\n';
         }
     }
     else {
@@ -29,6 +29,7 @@ void dfs(int depth, int start = 0, int ae = 1, int not_ae = 2) {
 
 int main() {
     ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
+    cout.tie(NULL);
     cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
 
     cin >> L >> C;

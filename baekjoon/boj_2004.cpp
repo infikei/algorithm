@@ -3,6 +3,7 @@ using namespace std;
 
 int main() {
     ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
+    cout.tie(NULL);
     cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
 
     long long n, m, result5 = 0, result2 = 0;
@@ -22,7 +23,7 @@ int main() {
         result2 -= (n - m) / i;
     }
 
-    cout << min(result5, result2) << "\n";
+    cout << min(result5, result2) << '\n';
 
     return 0;
 }

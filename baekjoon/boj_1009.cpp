@@ -17,7 +17,7 @@ int main() {
         while (b--) {
             ans *= a;
         }
-        cout << (ans - 1) % 10 + 1 << "\n";
+        cout << (ans - 1) % 10 + 1 << '\n';
     }
 
     return 0;

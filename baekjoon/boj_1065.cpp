@@ -20,7 +20,7 @@ int main() {
             ans++;
         }
     }
-    cout << ans << "\n";
+    cout << ans << '\n';
 
     return 0;
 }

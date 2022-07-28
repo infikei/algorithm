@@ -2,29 +2,28 @@
 #include <queue>
 using namespace std;
 
-int main()
-{
+int main() {
     ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
+    cout.tie(NULL);
+    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
 
     int N, card;
     cin >> N;
 
     queue<int> q;
 
-    for (int i = 1; i <= N; i++)
+    for (int i = 1; i <= N; i++) {
         q.push(i);
+    }
 
     bool pop = true;
 
-    while (q.size() > 1)
-    {
-        if (pop)
-        {
+    while (q.size() > 1) {
+        if (pop) {
             q.pop();
             pop = false;
         }
-        else
-        {
+        else {
             card = q.front();
             q.pop();
             q.push(card);
@@ -32,7 +31,7 @@ int main()
         }
     }
 
-    cout << q.front() << "\n";
+    cout << q.front() << '\n';
 
     return 0;
 }

@@ -32,7 +32,7 @@ int main() {
 
     for (int t = 0; t < T; t++) {
         cin >> west >> east;
-        cout << dp[east][west] << "\n";
+        cout << dp[east][west] << '\n';
     }
 
     return 0;
