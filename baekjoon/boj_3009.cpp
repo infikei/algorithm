@@ -1,9 +1,10 @@
 #include <iostream>
 using namespace std;
 
-int main()
-{
+int main() {
     ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
+    cout.tie(NULL);
+    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
 
     int x[4], y[4];
     for (int i = 0; i < 3; i++)
@@ -23,7 +24,7 @@ int main()
     else
         y[3] = y[0];
 
-    cout << x[3] << " " << y[3] << "\n";
+    cout << x[3] << ' ' << y[3] << '\n';
 
     return 0;
 }

@@ -18,6 +18,7 @@ int gcd(int a, int b) {
 
 int main() {
     ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
+    cout.tie(NULL);
     cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
 
     int N;
@@ -36,10 +37,10 @@ int main() {
     // 약수 검사 시 ans / 2까지만 검사해서 시간 단축하기 (ans는 반복문 이후 따로 출력함)
     for (int m = 2; m <= ans / 2; m++) {
         if (ans % m == 0) {
-            cout << m << " ";
+            cout << m << ' ';
         }
     }
-    cout << ans << "\n";
+    cout << ans << '\n';
 
     return 0;
 }

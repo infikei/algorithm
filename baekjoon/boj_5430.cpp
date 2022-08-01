@@ -5,6 +5,7 @@ using namespace std;
 
 int main() {
     ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
+    cout.tie(NULL);
     cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
 
     int T;
@@ -64,17 +65,17 @@ int main() {
         }
         else if (reverse) {
             int dq_size = dq.size();
-            cout << "[" << dq[dq_size - 1];
+            cout << '[' << dq[dq_size - 1];
             for (int i = 1; i < dq_size; i++) {
-                cout << "," << dq[dq_size - 1 - i];
+                cout << ',' << dq[dq_size - 1 - i];
             }
             cout << "]\n";
         }
         else {
             int dq_size = dq.size();
-            cout << "[" << dq[0];
+            cout << '[' << dq[0];
             for (int i = 1; i < dq_size; i++) {
-                cout << "," << dq[i];
+                cout << ',' << dq[i];
             }
             cout << "]\n";
         }

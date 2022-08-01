@@ -5,6 +5,7 @@ int DP[46];
 
 int main() {
     ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
+    cout.tie(NULL);
     cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
 
     int n;
@@ -16,7 +17,7 @@ int main() {
         DP[i] = DP[i - 1] + DP[i - 2];
     }
 
-    cout << DP[n] << "\n";
+    cout << DP[n] << '\n';
 
     return 0;
 }

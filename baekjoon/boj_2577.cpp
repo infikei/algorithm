@@ -1,24 +1,23 @@
 #include <iostream>
 using namespace std;
 
-int main()
-{
+int main() {
     ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
+    cout.tie(NULL);
+    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
 
     int a, b, c;
     cin >> a >> b >> c;
     int count[10] = {0};
     int abc = a * b * c;
 
-    while (abc > 0)
-    {
+    while (abc > 0) {
         count[abc % 10]++;
         abc /= 10;
     }
 
-    for (int i : count)
-    {
-        cout << i << "\n";
+    for (int i : count) {
+        cout << i << '\n';
     }
 
     return 0;

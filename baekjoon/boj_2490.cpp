@@ -14,20 +14,21 @@ int main() {
             sum += temp;
         }
         if (sum == 0) {
-            cout << "D\n";
+            cout << 'D';
         }
         else if (sum == 1) {
-            cout << "C\n";
+            cout << 'C';
         }
         else if (sum == 2) {
-            cout << "B\n";
+            cout << 'B';
         }
         else if (sum == 3) {
-            cout << "A\n";
+            cout << 'A';
         }
         else {
-            cout << "E\n";
+            cout << 'E';
         }
+        cout << '\n';
     }
 
     return 0;

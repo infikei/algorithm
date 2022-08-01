@@ -16,6 +16,7 @@ int gcd(int a, int b) {
 
 int main() {
     ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
+    cout.tie(NULL);
     cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
 
     // 입력받은 n 값을 저장한다.
@@ -41,7 +42,7 @@ int main() {
     // 동시에 약수 1개당 다른 약수 1개를 배열에 저장한다. (1 출력시 625 저장, 5 출력시 125 저장, 25 출력시 25 저장)
     for (int i = 1; i <= sqrt(gcd_value); i++) {
         if (gcd_value % i == 0) {
-            cout << i << "\n";
+            cout << i << '\n';
             arr[arr_index] = gcd_value / i;
             arr_index++;
         }
@@ -56,7 +57,7 @@ int main() {
     // 배열에 저장되어있는 값을 역순으로 출력한다.
     for (int i = arr_index; i > 0; i--) {
         arr_index--;
-        cout << arr[arr_index] << "\n";
+        cout << arr[arr_index] << '\n';
     }
 
     return 0;
