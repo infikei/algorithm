@@ -6,9 +6,9 @@ int result[9];
 void dfs(int n, int m, int depth = 1) {
     if (depth == m + 1) {
         for (int i = 1; i <= m; i++) {
-            cout << result[i] << " ";
+            cout << result[i] << ' ';
         }
-        cout << "\n";
+        cout << '\n';
     }
     else {
         for (int i = 1; i <= n; i++) {
