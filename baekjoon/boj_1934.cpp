@@ -2,11 +2,6 @@
 using namespace std;
 
 int gcd(int a, int b) {
-    if (a < b) {
-        int temp = b;
-        b = a;
-        a = temp;
-    }
     if (a % b == 0) {
         return b;
     }

@@ -5,11 +5,6 @@ int gcd(int a, int b) {
     if (a < 0) {
         a = -a;
     }
-    if (a < b) {
-        int temp = a;
-        a = b;
-        b = temp;
-    }
     if (a % b == 0) {
         return b;
     }
