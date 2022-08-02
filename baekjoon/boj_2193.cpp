@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 
-long long dp[91];
+long long DP[91];
 
 int main() {
     ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
@@ -11,13 +11,13 @@ int main() {
     int N;
     cin >> N;
 
-    dp[0] = 0;
-    dp[1] = 1;
+    DP[0] = 0;
+    DP[1] = 1;
     for (int i = 2; i <= N; i++) {
-        dp[i] = dp[i - 1] + dp[i - 2];
+        DP[i] = DP[i - 1] + DP[i - 2];
     }
 
-    cout << dp[N] << '\n';
+    cout << DP[N] << '\n';
 
     return 0;
 }

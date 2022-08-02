@@ -10,33 +10,33 @@ int main() {
     cin >> n;
 
     int arr[100000];
-    int dp[100000];
+    int DP[100000];
     cin >> arr[0];
-    dp[0] = arr[0];
+    DP[0] = arr[0];
     max = arr[0];
 
     for (int i = 1; i < n; i++) {
         cin >> arr[i];
-        if (dp[i - 1] < 0) {
-            dp[i] = arr[i];
+        if (DP[i - 1] < 0) {
+            DP[i] = arr[i];
         }
         else {
-            dp[i] = dp[i - 1] + arr[i];
+            DP[i] = DP[i - 1] + arr[i];
         }
 
-        if (dp[i] > max) {
-            max = dp[i];
+        if (DP[i] > max) {
+            max = DP[i];
         }
     }
 
     cout << max << '\n';
 
-    // dp[0] = arr[0]
-    // dp[1] = max(arr[0]+arr[1], arr[1])
-    // dp[2] = max(arr[0]+arr[1]+arr[2], arr[1]+arr[2], arr[2])
+    // DP[0] = arr[0]
+    // DP[1] = max(arr[0]+arr[1], arr[1])
+    // DP[2] = max(arr[0]+arr[1]+arr[2], arr[1]+arr[2], arr[2])
 
-    // max = max(dp[0], dp[1], dp[2])
-    // 즉, dp[0]부터 dp[2]까지 계산하고 그 중에서 최댓값을 구한다면
+    // max = max(DP[0], DP[1], DP[2])
+    // 즉, DP[0]부터 DP[2]까지 계산하고 그 중에서 최댓값을 구한다면
     // 부분합의 모든 경우를 비교해서 최댓값을 구한 것과 같은 것이다.
 
     return 0;

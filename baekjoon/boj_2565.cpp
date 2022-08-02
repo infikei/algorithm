@@ -19,7 +19,7 @@ void input() {
     sort(A_to_B.begin(), A_to_B.end());
 }
 
-void DP_fn() {
+void dp() {
     DP[0] = 1;
     ans = 1;
 
@@ -41,7 +41,7 @@ int main() {
 
     input();
 
-    DP_fn();
+    dp();
 
     cout << (N - ans) << '\n';
 

@@ -4,12 +4,12 @@ using namespace std;
 int DP[1000001] = {0};
 int T, N;
 
-int DP_fn(int N) {
+int dp(int N) {
     if (DP[N] > 0) {
         return DP[N];
     }
-    int result = (DP_fn(N - 1) + DP_fn(N - 2)) % 1000000009;
-    result = (result + DP_fn(N - 3)) % 1000000009;
+    int result = (dp(N - 1) + dp(N - 2)) % 1000000009;
+    result = (result + dp(N - 3)) % 1000000009;
     DP[N] = result;
     return result;
 }
@@ -26,7 +26,7 @@ int main() {
     cin >> T;
     for (int t = 0; t < T; t++) {
         cin >> N;
-        cout << DP_fn(N) << '\n';
+        cout << dp(N) << '\n';
     }
 
     return 0;
