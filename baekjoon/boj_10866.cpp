@@ -67,6 +67,7 @@ int back() {
 
 int main() {
     ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
+    cout.tie(NULL);
     cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
 
     int n, input;
@@ -85,18 +86,24 @@ int main() {
             cin >> input;
             push_back(input);
         }
-        else if (cmd == "pop_front")
-            cout << pop_front() << "\n";
-        else if (cmd == "pop_back")
-            cout << pop_back() << "\n";
-        else if (cmd == "size")
-            cout << size() << "\n";
-        else if (cmd == "empty")
-            cout << empty() << "\n";
-        else if (cmd == "front")
-            cout << front() << "\n";
-        else if (cmd == "back")
-            cout << back() << "\n";
+        else if (cmd == "pop_front") {
+            cout << pop_front() << '\n';
+        }
+        else if (cmd == "pop_back") {
+            cout << pop_back() << '\n';
+        }
+        else if (cmd == "size") {
+            cout << size() << '\n';
+        }
+        else if (cmd == "empty") {
+            cout << empty() << '\n';
+        }
+        else if (cmd == "front") {
+            cout << front() << '\n';
+        }
+        else if (cmd == "back") {
+            cout << back() << '\n';
+        }
     }
 
     return 0;

@@ -13,7 +13,7 @@ int main() {
         sum += (s[i] - '0');
     }
 
-    cout << sum << "\n";
+    cout << sum << '\n';
 
     return 0;
 }

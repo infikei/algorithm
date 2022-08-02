@@ -5,6 +5,7 @@ long long DP[101][10];
 
 int main() {
     ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
+    cout.tie(NULL);
     cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
 
     // 입력 값 저장하기
@@ -31,7 +32,7 @@ int main() {
     for (int j = 1; j <= 9; j++) {
         ans = (ans + DP[N][j]) % 1000000000;
     }
-    cout << ans << "\n";
+    cout << ans << '\n';
 
     return 0;
 }

@@ -12,7 +12,7 @@ int main() {
         sum += (ch - '0');
     }
 
-    cout << sum << "\n";
+    cout << sum << '\n';
 
     return 0;
 }
