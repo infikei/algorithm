@@ -20,9 +20,9 @@
 #include <stack>
 using namespace std;
 
-int main()
-{
+int main() {
     ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
+    cout.tie(NULL);
     cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
 
     int N, input;
@@ -36,11 +36,9 @@ int main()
     st.push(input);
     st_index.push(0);
 
-    for (int input_index = 1; input_index < N; input_index++)
-    {
+    for (int input_index = 1; input_index < N; input_index++) {
         cin >> input;
-        while (st.top() < input)
-        {
+        while (st.top() < input) {
             ans[st_index.top()] = input;
             st.pop();
             st_index.pop();
@@ -51,16 +49,15 @@ int main()
         st_index.push(input_index);
     }
 
-    while (!st_index.empty())
-    {
+    while (!st_index.empty()) {
         ans[st_index.top()] = -1;
         st_index.pop();
     }
 
-    for (int i = 0; i < N; i++)
-    {
-        cout << ans[i] << " ";
+    for (int i = 0; i < N; i++) {
+        cout << ans[i] << ' ';
     }
+    cout << '\n';
 
     return 0;
 }
