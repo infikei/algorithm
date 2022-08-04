@@ -6,7 +6,7 @@ using namespace std;
 int N, M;
 string DP_combi[101][101];
 
-string big_number_add(string a, string b) {
+string big_integer_add(string a, string b) {
     string result;
     int carry = 0;
 
@@ -35,7 +35,7 @@ string dp_combi(int n, int r) {
     if (DP_combi[n][r] != "") {
         return DP_combi[n][r];
     }
-    DP_combi[n][r] = big_number_add(dp_combi(n - 1, r - 1), dp_combi(n - 1, r));
+    DP_combi[n][r] = big_integer_add(dp_combi(n - 1, r - 1), dp_combi(n - 1, r));
     return DP_combi[n][r];
 }
 

@@ -5,7 +5,7 @@
 #include <algorithm>
 using namespace std;
 
-bool big_number_smaller(string a, string b) {
+bool big_integer_smaller(const string& a, const string& b) {
     if (a.length() == b.length()) {
         for (int i = 0; i < a.length(); i++) {
             if (a[i] != b[i]) {
@@ -19,9 +19,9 @@ bool big_number_smaller(string a, string b) {
     }
 }
 
-string big_number_add(string a, string b) {
-    if (big_number_smaller(a, b)) {
-        return big_number_add(b, a);
+string big_integer_add(string a, string b) {
+    if (big_integer_smaller(a, b)) {
+        return big_integer_add(b, a);
     }
 
     string result = "";
@@ -69,7 +69,7 @@ int main() {
     string A, B;
     cin >> A >> B;
 
-    cout << big_number_add(A, B) << '\n';
+    cout << big_integer_add(A, B) << '\n';
 
     return 0;
 }
