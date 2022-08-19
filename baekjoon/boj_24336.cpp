@@ -10,7 +10,7 @@ int time_arr[86];
 int dist_arr[43] = {0, 91, 239, 415, 565, 665, 750, 844, 966, 1074, 1149, 1293, 1398, 1519, 1663, 1825, 1908, 1964, 2008, 2046, 2116, 2262, 2347, 2538, 2767, 2813, 2895, 2960, 3059, 3231, 3263, 3386, 3531, 3618, 3722, 3816, 3941, 4032, 4124, 4218, 4252, 4303, 4417};
 unordered_map<string, int> hs;
 
-void hs_initiate() {
+void initialize_hs() {
     hs["Seoul"] = 0;
     hs["Yeongdeungpo"] = 1;
     hs["Anyang"] = 2;
@@ -61,7 +61,7 @@ int main() {
     cout.tie(NULL);
     cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
 
-    hs_initiate();
+    initialize_hs();
 
     cin >> N >> Q;
 
