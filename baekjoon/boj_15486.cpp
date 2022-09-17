@@ -1,9 +1,11 @@
 #include <iostream>
 using namespace std;
 
-int T[16];
-int P[16];
-int DP[16];
+const int SIZE = 1500001;
+int T[SIZE];
+int P[SIZE];
+int DP[SIZE];
+int DP_max = 0;
 
 int main() {
     ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
@@ -17,18 +19,17 @@ int main() {
         cin >> T[i] >> P[i];
     }
 
-    int ans = 0;
-    DP[N] = 0;
+    for (int i = 1; i <= N; i++) {
+        DP[i] = max(DP_max, DP[i]);
 
-    for (int i = N; i >= 1; i--) {
-        DP[i] = 0;
-        for (int j = i + T[i]; j <= N + 1; j++) {
-            DP[i] = max(DP[i], P[i] + DP[j]);
+        if (i + T[i] - 1 <= N) {
+            DP[i + T[i] - 1] = max(DP[i + T[i] - 1], DP[i - 1] + P[i]);
         }
-        ans = max(ans, DP[i]);
+
+        DP_max = DP[i];
     }
 
-    cout << ans << '\n';
+    cout << DP_max << '\n';
 
     return 0;
 }
