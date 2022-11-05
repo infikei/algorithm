@@ -3,7 +3,9 @@
 #include <vector>
 #include <algorithm>
 using namespace std;
-typedef pair<bool, string> bigint;
+#define fastio ios_base::sync_with_stdio(false);cout.tie(NULL);cin.tie(NULL); // boj_15552.cpp
+using ll = long long;
+using bigint = pair<bool, string>;
 
 bigint string_to_big_int(string s) {
     if (s == "-0") {
@@ -14,15 +16,6 @@ bigint string_to_big_int(string s) {
     }
     else {
         return make_pair(true, s);
-    }
-}
-
-string big_int_to_string(bigint b) {
-    if (b.first) {
-        return b.second;
-    }
-    else {
-        return "-" + b.second;
     }
 }
 
@@ -108,68 +101,6 @@ string unsigned_big_int_sub(string a, string b) {
     return result;
 }
 
-string unsigned_big_int_mult(string a, string b) {
-    if (a == "0" || b == "0") {
-        return "0";
-    }
-
-    string result, result2, a_copy, b_copy;
-
-    int sum = 0, carry = 0, now = 0, zeros = 0;
-
-    b_copy = b;
-    result = "";
-    while (!b_copy.empty()) {
-        now = (b_copy.back() - '0');
-        b_copy.pop_back();
-
-        a_copy = a;
-        result2 = "";
-        while (!a_copy.empty() || carry) {
-            sum = 0;
-            if (!a_copy.empty()) {
-                sum += (a_copy.back() - '0') * now;
-                a_copy.pop_back();
-            }
-            sum += carry;
-            carry = 0;
-            while (sum >= 10) {
-                sum -= 10;
-                carry++;
-            }
-            result2.push_back('0' + sum);
-        }
-
-        reverse(result2.begin(), result2.end());
-        for (int i = 0; i < zeros; i++) {
-            result2.push_back('0');
-        }
-        zeros++;
-        result = unsigned_big_int_add(result, result2);
-    }
-
-    return result;
-}
-
-bool big_int_lt(const bigint& a, const bigint& b) {
-    if (a.first) {
-        if (b.first) {
-            return unsigned_big_int_lt(a.second, b.second);
-        }
-        else {
-            return false;
-        }
-    }
-    else {
-        if (b.first) {
-            return true;
-        }
-        else {
-            return unsigned_big_int_lt(b.second, a.second);
-        }
-    }
-}
-
 bigint big_int_add(bigint a, bigint b) {
     if (a.first) {
         if (b.first) {
@@ -189,42 +120,34 @@ bigint big_int_add(bigint a, bigint b) {
     }
 }
 
-bigint big_int_sub(bigint a, bigint b) {
-    if (b.first && b.second == "0") {
-        return a;
-    }
-    b.first = !b.first;
-    return big_int_add(a, b);
-}
-
-bigint big_int_mult(bigint a, bigint b) {
-    if (a.second == "0" || b.second == "0") {
-        return make_pair(true, "0");
-    }
-    if (a.first == b.first) {
-        return make_pair(true, unsigned_big_int_mult(a.second, b.second));
-    }
-    else {
-        return make_pair(false, unsigned_big_int_mult(a.second, b.second));
-    }
-}
-
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    fastio;
 
-    // 예시 : N 팩토리얼 계산하기
-    int N;
-    cin >> N;
+    int T = 3;
+    for (int t = 0; t < T; t++) {
+        int N;
+        cin >> N;
 
-    bigint A = string_to_big_int(to_string(1));
-    for (int i = 1; i <= N; i++) {
-        bigint B = string_to_big_int(to_string(i));
-        A = big_int_mult(A, B);
+        string S;
+        cin >> S;
+        bigint ans = string_to_big_int(S);
+
+        for (int n = 1; n < N; n++) {
+            cin >> S;
+            ans = big_int_add(ans, string_to_big_int(S));
+        }
+
+        if (ans.second == "0") {
+            cout << "0\n";
+            
+        }
+        else if (ans.first) {
+            cout << "+\n";
+        }
+        else {
+            cout << "-\n";
+        }
     }
-    
-    cout << N << "! = " << big_int_to_string(A) << '\n';
 
     return 0;
 }
