@@ -16,7 +16,10 @@ using namespace std;
 // using ll = long long;
 // using ull = unsigned long long;
 // using pii = pair<int, int>;
+// using pid = pair<int, double>;
+// using pdi = pair<double, int>;
 // using pic = pair<int, char>;
+// using pci = pair<char, int>;
 // using iii = tuple<int, int, int>;
 
 int main() {
