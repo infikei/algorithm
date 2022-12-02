@@ -1,10 +1,8 @@
 #include <iostream>
 using namespace std;
 
-int arr[1000000];
-long long remainder[1000] = {0};
-int N, M;
-long long ans;
+int arr[1000000], N, M;
+long long remainder[1000], ans;
 
 int main() {
     ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
@@ -16,11 +14,11 @@ int main() {
         cin >> arr[i];
     }
 
-    int temp = 0;
-    remainder[0]++;
+    int tmp = 0;
+    remainder[0] = 1;
     for (int i = 0; i < N; i++) {
-        temp = (temp + arr[i]) % M;
-        remainder[temp]++;
+        tmp = (tmp + arr[i]) % M;
+        remainder[tmp]++;
     }
 
     ans = 0;
