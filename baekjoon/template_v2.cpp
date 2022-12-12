@@ -23,6 +23,7 @@ using namespace std;
 // using pdi = pair<double, int>;
 // using psi = pair<string, int>;
 // using pci = pair<char, int>;
+// using vint = vector<int>;
 // using vvint = vector<vector<int> >;
 
 int main() {
