@@ -23,6 +23,9 @@ using namespace std;
 // using pdi = pair<double, int>;
 // using psi = pair<string, int>;
 // using pci = pair<char, int>;
+// using pdd = pair<double, double>;
+// using pss = pair<string, string>;
+// using pcc = pair<char, char>;
 // using vint = vector<int>;
 // using vvint = vector<vector<int> >;
 
