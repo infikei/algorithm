@@ -16,6 +16,7 @@ using namespace std;
 // using ll = long long;
 // using ull = unsigned long long;
 // using pii = pair<int, int>;
+// using pll = pair<ll, ll>;
 // using piii = pair<int, pii>;
 // using pid = pair<int, double>;
 // using pis = pair<int, string>;
