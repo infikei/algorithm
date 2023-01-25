@@ -16,6 +16,8 @@ using namespace std;
 // using uint = unsigned int;
 // using ull = unsigned long long;
 // using pii = pair<int, int>;
+// using pi3 = pair<int, pii>;
+// using pi4 = pair<pii, pii>;
 // using pll = pair<ll, ll>;
 // using pdd = pair<double, double>;
 // using pid = pair<int, double>;
