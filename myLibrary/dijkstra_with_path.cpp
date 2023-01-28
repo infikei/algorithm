@@ -9,12 +9,14 @@ const int INF = 987654321; // 또는 1e9로 설정
 int vertex, edge, start;
 vector<vector<pii> > edges;
 vector<int> costs;
+vector<vector<int> > parents;
 
-void dijkstra() {
+void dijkstra(bool flag_parents = false) {
     priority_queue<pii, vector<pii>, greater<pii> > pq_mintop;
     costs.assign(vertex, INF);
     costs[start] = 0;
     pq_mintop.push({0, start});
+    if (flag_parents) parents.assign(vertex, vector<int>());
 
     while (!pq_mintop.empty()) {
         int now = pq_mintop.top().second;
@@ -28,6 +30,13 @@ void dijkstra() {
             if (costs[next] > next_cost) {
                 costs[next] = next_cost;
                 pq_mintop.push({next_cost, next});
+                if (flag_parents) {
+                    parents[next].clear();
+                    parents[next].push_back(now);
+                }
+            }
+            else if (flag_parents && costs[next] == next_cost) {
+                parents[next].push_back(now);
             }
         }
     }
@@ -46,7 +55,7 @@ int main() {
         edges[v].push_back({u, c}); // 양방향일 경우
     }
 
-    dijkstra();
+    dijkstra(true);
 
     return 0;
 }

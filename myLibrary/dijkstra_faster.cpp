@@ -6,7 +6,7 @@ using namespace std;
 using pii = pair<int, int>;
 
 const int INF = 987654321; // 또는 1e9로 설정
-int vertex, edge, start;
+int vertex, edge, start, finish;
 vector<vector<pii> > edges;
 vector<int> costs;
 
@@ -20,6 +20,8 @@ void dijkstra() {
         int now = pq_mintop.top().second;
         int now_cost = pq_mintop.top().first;
         pq_mintop.pop();
+        if (now == finish) break; // finish까지의 값만 구하는 경우라면 이 이후의 실행은 의미가 없으므로 finish에서 반복을 끝내서 시간을 단축한다.
+        // 이렇게 하면 finish 점을 제외한 다른 점들에 대해서는 최단 거리 값이 아닐 수 있다. (중간에 실행을 멈췄으므로)
         if (now_cost > costs[now]) continue;
 
         for (auto edge : edges[now]) {
@@ -36,7 +38,7 @@ void dijkstra() {
 int main() {
     fastio;
 
-    cin >> vertex >> edge >> start;
+    cin >> vertex >> edge >> start >> finish;
 
     edges.assign(vertex, vector<pii>());
     for (int i = 0; i < edge; i++) {
