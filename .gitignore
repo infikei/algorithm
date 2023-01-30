@@ -3,5 +3,4 @@
 .cph
 test*.*
 memo*.*
-contest*.*
-boj_*_temp*.*
+boj*ing.*

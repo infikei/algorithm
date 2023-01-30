@@ -1,3 +1,5 @@
+# 제출 결과 : 시간 초과
+
 def isPrime(n):
     if n == 1:
         return False
