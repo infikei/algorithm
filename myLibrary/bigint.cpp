@@ -3,44 +3,30 @@
 #include <vector>
 #include <algorithm>
 using namespace std;
-typedef pair<bool, string> bigint;
+using bigint = pair<bool, string>;
 
-bigint string_to_big_int(string s) {
-    if (s == "-0") {
-        s = "0";
-    }
-    if (s[0] == '-') {
-        return make_pair(false, s.substr(1));
-    }
-    else {
-        return make_pair(true, s);
-    }
+bigint string_to_bigint(string s) {
+    if (s == "-0") s = "0";
+    if (s[0] == '-') return make_pair(false, s.substr(1));
+    return make_pair(true, s);
 }
 
-string big_int_to_string(bigint b) {
-    if (b.first) {
-        return b.second;
-    }
-    else {
-        return "-" + b.second;
-    }
+string bigint_to_string(bigint b) {
+    if (b.first) return b.second;
+    return "-" + b.second;
 }
 
-bool unsigned_big_int_lt(const string& a, const string& b) {
+bool unsigned_bigint_lt(const string &a, const string &b) {
     if (a.length() == b.length()) {
         for (int i = 0; i < (int)a.length(); i++) {
-            if (a[i] != b[i]) {
-                return a[i] < b[i];
-            }
+            if (a[i] != b[i]) return a[i] < b[i];
         }
         return false;
     }
-    else {
-        return a.length() < b.length();
-    }
+    return a.length() < b.length();
 }
 
-string unsigned_big_int_add(string a, string b) {
+string unsigned_bigint_add(string a, string b) {
     string result;
     int sum = 0, carry = 0;
 
@@ -58,9 +44,7 @@ string unsigned_big_int_add(string a, string b) {
             sum -= 10;
             carry = 1;
         }
-        else {
-            carry = 0;
-        }
+        else carry = 0;
         result.push_back('0' + sum);
     }
 
@@ -68,13 +52,9 @@ string unsigned_big_int_add(string a, string b) {
     return result;
 }
 
-string unsigned_big_int_sub(string a, string b) {
-    if (a == b) {
-        return "0";
-    }
-    if (unsigned_big_int_lt(a, b)) {
-        return unsigned_big_int_sub(b, a);
-    }
+string unsigned_bigint_sub(string a, string b) {
+    if (a == b) return "0";
+    if (unsigned_bigint_lt(a, b)) return unsigned_bigint_sub(b, a);
 
     string result;
     int sum = 0, carry = 0;
@@ -93,9 +73,7 @@ string unsigned_big_int_sub(string a, string b) {
             sum += 10;
             carry = -1;
         }
-        else {
-            carry = 0;
-        }
+        else carry = 0;
         result.push_back('0' + sum);
     }
 
@@ -108,13 +86,10 @@ string unsigned_big_int_sub(string a, string b) {
     return result;
 }
 
-string unsigned_big_int_mult(string a, string b) {
-    if (a == "0" || b == "0") {
-        return "0";
-    }
+string unsigned_bigint_mul(string a, string b) {
+    if (a == "0" || b == "0") return "0";
 
     string result, result2, a_copy, b_copy;
-
     int sum = 0, carry = 0, now = 0, zeros = 0;
 
     b_copy = b;
@@ -141,72 +116,57 @@ string unsigned_big_int_mult(string a, string b) {
         }
 
         reverse(result2.begin(), result2.end());
-        for (int i = 0; i < zeros; i++) {
-            result2.push_back('0');
-        }
+        for (int i = 0; i < zeros; i++) result2.push_back('0');
         zeros++;
-        result = unsigned_big_int_add(result, result2);
+        result = unsigned_bigint_add(result, result2);
     }
 
     return result;
 }
 
-bool big_int_lt(const bigint& a, const bigint& b) {
+string unsigned_bigint_pow(string a, int b) {
+    if (b == 0) return "1";
+    if (b == 1) return a;
+
+    // 분할정복을 이용하여 빠르게 계산
+    string k = unsigned_bigint_pow(a, b / 2);
+    k = unsigned_bigint_mul(k, k);
+    if (b % 2 == 1) k = unsigned_bigint_mul(k, a);
+    return k;
+}
+
+bool bigint_lt(const bigint &a, const bigint &b) {
     if (a.first) {
-        if (b.first) {
-            return unsigned_big_int_lt(a.second, b.second);
-        }
-        else {
-            return false;
-        }
+        if (b.first) return unsigned_bigint_lt(a.second, b.second);
+        else return false;
     }
     else {
-        if (b.first) {
-            return true;
-        }
-        else {
-            return unsigned_big_int_lt(b.second, a.second);
-        }
+        if (b.first) return true;
+        else return unsigned_bigint_lt(b.second, a.second);
     }
 }
 
-bigint big_int_add(bigint a, bigint b) {
+bigint bigint_add(bigint a, bigint b) {
     if (a.first) {
-        if (b.first) {
-            return make_pair(true, unsigned_big_int_add(a.second, b.second));
-        }
-        else {
-            return make_pair(!unsigned_big_int_lt(a.second, b.second), unsigned_big_int_sub(a.second, b.second));
-        }
+        if (b.first) return {true, unsigned_bigint_add(a.second, b.second)};
+        else return {!unsigned_bigint_lt(a.second, b.second), unsigned_bigint_sub(a.second, b.second)};
     }
     else {
-        if (b.first) {
-            return make_pair(!unsigned_big_int_lt(b.second, a.second), unsigned_big_int_sub(a.second, b.second));
-        }
-        else {
-            return make_pair(false, unsigned_big_int_add(a.second, b.second));
-        }
+        if (b.first) return {!unsigned_bigint_lt(b.second, a.second), unsigned_bigint_sub(a.second, b.second)};
+        else return {false, unsigned_bigint_add(a.second, b.second)};
     }
 }
 
-bigint big_int_sub(bigint a, bigint b) {
-    if (b.first && b.second == "0") {
-        return a;
-    }
+bigint bigint_sub(bigint a, bigint b) {
+    if (b.first && b.second == "0") return a;
     b.first = !b.first;
-    return big_int_add(a, b);
+    return bigint_add(a, b);
 }
 
-bigint big_int_mult(bigint a, bigint b) {
-    if (a.second == "0" || b.second == "0") {
-        return make_pair(true, "0");
-    }
-    if (a.first == b.first) {
-        return make_pair(true, unsigned_big_int_mult(a.second, b.second));
-    }
-    else {
-        return make_pair(false, unsigned_big_int_mult(a.second, b.second));
-    }
+bigint bigint_mul(bigint a, bigint b) {
+    if (a.second == "0" || b.second == "0") return {true, "0"};
+    if (a.first == b.first) return {true, unsigned_bigint_mul(a.second, b.second)};
+    else return {false, unsigned_bigint_mul(a.second, b.second)};
 }
 
 int main() {
@@ -215,16 +175,16 @@ int main() {
     cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
 
     // 예시 : N 팩토리얼 계산하기
-    int N;
-    cin >> N;
+    int n;
+    cin >> n;
 
-    bigint A = string_to_big_int(to_string(1));
-    for (int i = 1; i <= N; i++) {
-        bigint B = string_to_big_int(to_string(i));
-        A = big_int_mult(A, B);
+    bigint x = string_to_bigint(to_string(1));
+    for (int i = 1; i <= n; i++) {
+        bigint y = string_to_bigint(to_string(i));
+        x = bigint_mul(x, y);
     }
     
-    cout << N << "! = " << big_int_to_string(A) << '\n';
+    cout << n << "! = " << bigint_to_string(x) << '\n';
 
     return 0;
 }
