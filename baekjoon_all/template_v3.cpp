@@ -28,6 +28,8 @@ using namespace std;
 // using pi3 = pair<int, pii>;
 // using pi4 = pair<pii, pii>;
 // using pll = pair<ll, ll>;
+// using pl3 = pair<ll, pll>;
+// using pl4 = pair<pll, pll>;
 
 int main() {
     FASTIO;
