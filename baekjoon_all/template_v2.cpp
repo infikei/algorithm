@@ -11,7 +11,7 @@
 // #include <cmath>
 // #include <iomanip>
 // #include <sstream>
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
 using namespace std;
 // using ll = long long;
 // using uint = unsigned int;
