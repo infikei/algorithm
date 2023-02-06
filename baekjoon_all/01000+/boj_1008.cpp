@@ -1,23 +1,27 @@
-#include <iostream>
+// Solve 2021-12-18
+// Update 2023-02-07
+
+#include <bits/stdc++.h>
 using namespace std;
 
 int main() {
+    // cout.precision(n);
+    // 해당 코드 이후 출력 시 실수 전체 자리수가 n자리로 표현된다.
+    // 기본값은 6자리로 설정이 되어있는 듯 하다.
+
+    // cout << fixed; 이후 cout.precision(n);
+    // 해당 코드 이후 출력 시 소수점 아래 자리수가 n자리로 표현된다.
+    // 이를 해제하려면 cout.unsetf(ios::fixed); 를 수행한다.
+    // 반대로 cout << fixed; 는 cout.setf(ios::fixed); 와 동일하다.
+
+    // cout << fixed; cout.precision(n);
+    // 또는 iomanip을 include하면 다음 코드도 사용가능하다.
+    // cout << fixed << setprecision(n);
+
     double a, b;
     cin >> a >> b;
-
-    // cout.precision(n); 코드
-    // - 해당 코드 이후 출력 시 실수 전체 자리수를 n자리로 표현하도록 설정한다.
-    // - 기본값은 6자리로 설정이 되어있는 듯 하다.
-
-    // cout << fixed;를 설정하고 나서 cout.precision(n); 코드
-    // - 해당 코드 이후 출력 시 소수점 아래 자리수를 n자리로 표현하도록 설정한다.
-
-    // cout << fixed;을 해제하려면 cout.unsetf(ios::fixed); 코드를 사용한다.
-    // 반대로 cout << fixed; 코드는 cout.setf(ios::fixed); 코드와 동일하다.
-
-    cout << fixed;
-    cout.precision(12);
-    cout << a / b << endl;
+    cout << fixed << setprecision(12);
+    cout << a / b << '\n';
 
     return 0;
 }
