@@ -1,11 +1,15 @@
 #include <iostream>
 #include <vector>
 #include <queue>
-#define fastio ios_base::sync_with_stdio(false);cout.tie(NULL);cin.tie(NULL); // boj_15552.cpp
 using namespace std;
+
+#define INF (int)1e9
+#define LLINF (ll)4e18
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
 using pii = pair<int, int>;
 
-const int INF = 987654321; // 또는 1e9로 설정
 int vertex, edge, start;
 vector<vector<pii> > edges;
 vector<int> costs;
@@ -34,8 +38,6 @@ void dijkstra() {
 }
 
 int main() {
-    fastio;
-
     cin >> vertex >> edge >> start;
 
     edges.assign(vertex, vector<pii>());
