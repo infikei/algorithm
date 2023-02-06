@@ -1,16 +1,4 @@
-#include <iostream>
-// #include <string>
-// #include <vector>
-// #include <stack>
-// #include <queue>
-// #include <deque>
-// #include <set>
-// #include <unordered_set>
-// #include <unordered_map>
-// #include <algorithm>
-// #include <cmath>
-// #include <iomanip>
-// #include <sstream>
+#include <bits/stdc++.h>
 using namespace std;
 
 #ifdef BOJ
