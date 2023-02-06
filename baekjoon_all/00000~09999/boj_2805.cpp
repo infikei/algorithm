@@ -1,50 +1,52 @@
-#include <iostream>
+#include <bits/stdc++.h>
 using namespace std;
 
-int trees_height[1000000];
-int max_height;
-int N, M, ans;
+#ifdef BOJ
+#define BOJTEST(x) ((void)0)
+#else
+#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
+#endif
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+#define INF (int)1e9
+#define LLINF (ll)4e18
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    cin >> N >> M;
-    max_height = 0;
-    for (int i = 0; i < N; i++) {
-        cin >> trees_height[i];
-        if (trees_height[i] > max_height) {
-            max_height = trees_height[i];
-        }
+    const int N_MAX = 1e6;
+    int n, m;
+    cin >> n >> m;
+    int trees[N_MAX], highest_tree = 0;
+    for (int i = 0; i < n; i++) {
+        cin >> trees[i];
+        highest_tree = max(highest_tree, trees[i]);
     }
 
-    ans = 0;
-    long long low = 0, high = max_height, mid;
-    while (low <= high) {
-        mid = (low + high) / 2;
-        long long now = 0;
-        // mid 최댓값 = 5*10^8
-        // -> now 최댓값 = mid 최댓값 * N 최댓값 = 5*10^8 * 10*6 = 5*10^14 이므로
-        // now 역시 long long 자료형으로 선언해야 한다.
-        for (int i = 0; i < N; i++) {
-            if (trees_height[i] > mid) {
-                now += trees_height[i] - mid;
+    ll low = 0, high = highest_tree;
+    while (low + 1 < high) {
+        ll mid = (low + high) / 2;
+
+        ll cut_trees_sum = 0;
+        for (int i = 0; i < n; i++) {
+            ll tree = trees[i];
+            if (tree > mid) {
+                cut_trees_sum += (tree - mid);
             }
         }
-
-        if (now >= M) {
-            low = mid + 1;
-            if (mid > ans) {
-                ans = mid;
-            }
+        if (cut_trees_sum >= m) {
+            low = mid;
         }
         else {
-            high = mid - 1;
+            high = mid;
         }
     }
 
-    cout << ans << '\n';
+    cout << low << '\n';
 
     return 0;
 }
