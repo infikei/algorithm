@@ -1,31 +1,40 @@
-#include <iostream>
-#include <string>
-#include <map>
+// Solve 2022-09-01
+// Update 2023-02-08
+
+#include <bits/stdc++.h>
 using namespace std;
 
-string str;
-map<string, int> m;
-int sum = 0;
+#ifdef BOJ
+#define BOJTEST(x) ((void)0)
+#else
+#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
+#endif
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+#define SETPRECISION(n) cout << fixed << setprecision(n); // boj_1008.cpp (먼저 iomanip을 include해야 한다)
+#define INF (int)1e9
+#define LLINF (ll)4e18
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    while (getline(cin, str)) {
-        sum++;
-        m[str]++;
+    string tree;
+    map<string, int> tree_cnt;
+    int trees_cnt = 0;
+
+    while (getline(cin, tree)) {
+        trees_cnt++;
+        tree_cnt[tree]++;
     }
 
-    cout << fixed;
-    cout.precision(4);
+    SETPRECISION(4);
 
-    map<string, int>::iterator iter;
-
-    for (iter = m.begin(); iter != m.end(); iter++) {
-        cout << iter->first << ' ';
-        double d = iter->second * 100;
-        cout << d / sum << '\n';
+    for (auto it = tree_cnt.begin(); it != tree_cnt.end(); it++) {
+        cout << it->first << ' ' << (it->second * 100.0 / trees_cnt) << '\n';
     }
 
     return 0;
