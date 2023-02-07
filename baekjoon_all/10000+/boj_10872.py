@@ -1,7 +1,9 @@
-def factorial(n):
-    if n == 0:
-        return 1
-    return n*factorial(n-1)
+# Solve 2022-05-25
+# Update 2023-02-08
 
+n = int(input())
 
-print(factorial(int(input())))
+ans = 1
+for i in range(2, n + 1):
+    ans *= i
+print(ans)
