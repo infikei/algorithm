@@ -1,54 +1,58 @@
-#include <iostream>
-#include <string>
-#define fastio ios_base::sync_with_stdio(false);cout.tie(NULL);cin.tie(NULL); // boj_15552.cpp
+// Solve 2022-12-06
+// Update 2023-02-08
+
+#include <bits/stdc++.h>
 using namespace std;
 
-int N, Drow[4] = {0, 0, 1, 1}, Dcol[4] = {0, 1, 0, 1};
-string board[64], ans;
+#ifdef BOJ
+#define BOJTEST(x) ((void)0)
+#else
+#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
+#endif
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+#define INF (int)1e9
+#define LLINF (ll)4e18
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
 
-void input() {
-    cin >> N;
-    for (int row = 0; row < N; row++) {
-        cin >> board[row];
-    }
-}
+int n;
+string input_data[64];
 
-void solve(int row0, int col0, int size) {
-    bool flag_all_is_same = true;
-
-    for (int row = row0; row < row0 + size; row++) {
-        for (int col = col0; col < col0 + size; col++) {
-            if (board[row][col] != board[row0][col0]) {
-                flag_all_is_same = false;
-                break;
-            }
-        }
-        if (!flag_all_is_same) {
-            break;
-        }
+string make_output_data(int row, int col, int size) {
+    string res;
+    if (size == 1) {
+        res = input_data[row][col];
+        return res;
     }
 
-    if (flag_all_is_same) {
-        ans += board[row0][col0];
+    int nsize = size / 2;
+    res = make_output_data(row, col, nsize);
+    res += make_output_data(row, col + nsize, nsize);
+    res += make_output_data(row + nsize, col, nsize);
+    res += make_output_data(row + nsize, col + nsize, nsize);
+
+    if (res == "1111") {
+        return "1";
     }
-    else {
-        int half_size = size / 2;
-        ans += '(';
-        for (int i = 0; i < 4; i++) {
-            solve(row0 + half_size * Drow[i], col0 + half_size * Dcol[i], half_size);
-        }
-        ans += ')';
+    if (res == "0000") {
+        return "0";
     }
+    return "(" + res + ")";
 }
 
 int main() {
-    fastio;
+    FASTIO;
 
-    input();
+    cin >> n;
+    for (int i = 0; i < n; i++) {
+        cin >> input_data[i];
+    }
 
-    solve(0, 0, N);
-
-    cout << ans << '\n';
+    string output_data = make_output_data(0, 0, n);
+    cout << output_data;
 
     return 0;
 }
