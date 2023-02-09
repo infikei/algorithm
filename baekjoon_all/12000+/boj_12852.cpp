@@ -1,43 +1,62 @@
-#include <iostream>
+// Solve 2022-07-26
+// Update 2023-02-09
+
+#include <bits/stdc++.h>
 using namespace std;
 
-int DP_count[1000001];
-int DP_next[1000001];
-int N;
+#ifdef BOJ
+#define BOJTEST(x) ((void)0)
+#else
+#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
+#endif
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+#define INF (int)1e9
+#define LLINF (ll)4e18
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+
+const int N_MAX = 1e6;
+int n, dp_count[N_MAX + 1], dp_parent[N_MAX + 1];
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    cin >> N;
+    cin >> n;
 
-    DP_count[1] = 0;
+    dp_count[1] = 0;
+    for (int i = 2; i <= n; i++) {
+        dp_count[i] = dp_count[i - 1];
+        dp_parent[i] = i - 1;
 
-    for (int i = 2; i <= N; i++) {
-        DP_count[i] = DP_count[i - 1] + 1;
-        DP_next[i] = i - 1;
         if (i % 2 == 0) {
-            if (DP_count[i / 2] + 1 < DP_count[i]) {
-                DP_count[i] = DP_count[i / 2] + 1;
-                DP_next[i] = i / 2;
+            int ni = i / 2;
+            if (dp_count[ni] < dp_count[i]) {
+                dp_count[i] = dp_count[ni];
+                dp_parent[i] = ni;
             }
         }
+
         if (i % 3 == 0) {
-            if (DP_count[i / 3] + 1 < DP_count[i]) {
-                DP_count[i] = DP_count[i / 3] + 1;
-                DP_next[i] = i / 3;
+            int ni = i / 3;
+            if (dp_count[ni] < dp_count[i]) {
+                dp_count[i] = dp_count[ni];
+                dp_parent[i] = ni;
             }
         }
+
+        dp_count[i]++;
     }
 
-    cout << DP_count[N] << '\n';
-    int now = N;
-    for (int i = 0; i <= DP_count[N]; i++) {
-        cout << now << ' ';
-        now = DP_next[now];
+    cout << dp_count[n] << '\n';
+    int cur = n;
+    while (cur != 1) {
+        cout << cur << ' ';
+        cur = dp_parent[cur];
     }
-    cout << '\n';
+    cout << cur << '\n';
 
     return 0;
 }
