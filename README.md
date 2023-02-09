@@ -13,6 +13,8 @@
     * 백준 대회 문제만 저장하는 폴더 생성 (완료)
     * 기존 저장된 문제 1번 더 풀고 풀이 최신화 (순차적으로 진행)
 
+4. Javascript로 해결한 풀이는 이곳이 아닌 [algorithm-javascript 저장소](https://github.com/infikei/algorithm-javascript)에서 확인할 수 있습니다.
+
 ### My Profile
 
 ![hyp3rflow's solved.ac stats](https://github-readme-solvedac.hyp3rflow.vercel.app/api/?handle=infikei)
