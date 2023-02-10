@@ -1,33 +1,43 @@
-#include <iostream>
-#include <string>
+// Solve 2022-08-03
+// Update 2023-02-10
+
+#include <bits/stdc++.h>
 using namespace std;
 
-int DP[1001][1001];
-string s1, s2;
+#ifdef BOJ
+#define BOJTEST(x) ((void)0)
+#else
+#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
+#endif
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+#define INF (int)1e9
+#define LLINF (ll)4e18
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
 
-void solve() {
-    for (int i = 1; i <= s1.length(); i++) {
-        for (int j = 1; j <= s2.length(); j++) {
-            if (s1[i - 1] == s2[j - 1]) {
-                DP[i][j] = DP[i - 1][j - 1] + 1;
+string s0, s1;
+int dp[1001][1001];
+
+int main() {
+    FASTIO;
+
+    cin >> s0 >> s1;
+    int len_s0 = SIZE(s0), len_s1 = SIZE(s1);
+    for (int i = 1; i <= len_s0; i++) {
+        for (int j = 1; j <= len_s1; j++) {
+            if (s0[i - 1] == s1[j - 1]) {
+                dp[i][j] = dp[i - 1][j - 1] + 1;
             }
             else {
-                DP[i][j] = max(DP[i - 1][j], DP[i][j - 1]);
+                dp[i][j] = max(dp[i][j - 1], dp[i - 1][j]);
             }
         }
     }
-}
 
-int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
-
-    cin >> s1 >> s2;
-
-    solve();
-
-    cout << DP[s1.length()][s2.length()] << '\n';
+    cout << dp[len_s0][len_s1] << '\n';
 
     return 0;
 }
