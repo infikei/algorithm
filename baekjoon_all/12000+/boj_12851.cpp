@@ -1,83 +1,94 @@
-#include <iostream>
-#include <queue>
-#define fastio ios_base::sync_with_stdio(false);cout.tie(NULL);cin.tie(NULL); // boj_15552.cpp
+// Solve 2023-01-06
+// Update 2023-02-11
+
+#include <bits/stdc++.h>
 using namespace std;
 
+#ifdef BOJ
+#define BOJTEST(x) ((void)0)
+#else
+#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
+#endif
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+#define INF (int)1e9
+#define LLINF (ll)4e18
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+
 const int MAX_N = 100000;
-int n, k, ans[MAX_N + 1], cnt[MAX_N + 1];
+int n, k, ans1[MAX_N + 1], ans2[MAX_N + 1];
+queue<int> q;
 
-void solve() {
-    if (n == k) {
-        cnt[k]++;
-        return;
-    }
+void bfs() {
+    ans2[n] = 1;
+    if (n == k) return;
 
-    for (int i = 0; i <= MAX_N; i++) {
-        ans[i] = -1;
-    }
-
-    queue<int> q;
     q.push(n);
-    ans[n] = 0;
-    cnt[n] = 1;
-
-    int now_time = 0;
+    int current = 0;
 
     while (!q.empty()) {
-        now_time++;
+        current++;
 
-        int i_end = q.size();
+        int i_end = SIZE(q);
         for (int i = 0; i < i_end; i++) {
             int now = q.front();
             q.pop();
 
-            int next = now - 1;
-            if (next >= 0) {
-                if (ans[next] == -1) {
+            int next;
+
+            next = now * 2;
+            if (next <= MAX_N) {
+                if (ans2[next] == 0) {
+                    ans1[next] = current;
+                    ans2[next] = ans2[now];
                     q.push(next);
-                    ans[next] = now_time;
                 }
-                if (ans[next] == now_time) {
-                    cnt[next] += cnt[now];
+                else if (ans1[next] == current) {
+                    ans2[next] += ans2[now];
                 }
             }
 
             next = now + 1;
             if (next <= MAX_N) {
-                if (ans[next] == -1) {
+                if (ans2[next] == 0) {
+                    ans1[next] = current;
+                    ans2[next] = ans2[now];
                     q.push(next);
-                    ans[next] = now_time;
                 }
-                if (ans[next] == now_time) {
-                    cnt[next] += cnt[now];
+                else if (ans1[next] == current) {
+                    ans2[next] += ans2[now];
                 }
             }
 
-            next = now * 2;
-            if (next <= MAX_N) {
-                if (ans[next] == -1) {
+            next = now - 1;
+            if (next >= 0) {
+                if (ans2[next] == 0) {
+                    ans1[next] = current;
+                    ans2[next] = ans2[now];
                     q.push(next);
-                    ans[next] = now_time;
                 }
-                if (ans[next] == now_time) {
-                    cnt[next] += cnt[now];
+                else if (ans1[next] == current) {
+                    ans2[next] += ans2[now];
                 }
             }
         }
 
-        if (cnt[k] > 0) return;
+        if (ans2[k] > 0) return;
     }
 }
 
 int main() {
-    fastio;
+    FASTIO;
 
     cin >> n >> k;
 
-    solve();
+    bfs();
 
-    cout << ans[k] << '\n';
-    cout << cnt[k] << '\n';
+    cout << ans1[k] << '\n';
+    cout << ans2[k] << '\n';
 
     return 0;
 }

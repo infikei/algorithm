@@ -1,17 +1,31 @@
+// Solve 2023-01-06
+// Update 2023-02-11
+
 // 풀이 방법에 관한 글 : https://www.acmicpc.net/board/view/38887
 // 1. 다익스트라 알고리즘
 // 2. 0-1 BFS : 큐 대신 덱을 사용하여 가중치가 0인 간선에 연결된 정점은 덱의 맨 뒤가 아닌 맨 앞에 넣는 방법
 // 3. 2배를 별도의 간선으로 생각하지 않고, +1이나 -1에 의한 좌표를 큐에 넣을 때 그 좌표의 2의 거듭제곱 배인 좌표들을 전부 큐에 넣는 방법
 // 아래 풀이는 2번째 방법인 0-1 BFS를 이용한 풀이이다.
 
-#include <iostream>
-#include <vector>
-#include <deque>
-#define fastio ios_base::sync_with_stdio(false);cout.tie(NULL);cin.tie(NULL); // boj_15552.cpp
+#include <bits/stdc++.h>
 using namespace std;
 
+#ifdef BOJ
+#define BOJTEST(x) ((void)0)
+#else
+#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
+#endif
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+#define INF (int)1e9
+#define LLINF (ll)4e18
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+
 const int MAX_N = 100000;
-int n, k, ans;
+int n, k;
 int dist[MAX_N + 1];
 bool visited[MAX_N + 1];
 
@@ -55,14 +69,13 @@ void solve() {
 }
 
 int main() {
-    fastio;
+    FASTIO;
 
     cin >> n >> k;
 
     solve();
 
-    ans = dist[k];
-    cout << ans << '\n';
+    cout << dist[k] << '\n';
 
     return 0;
 }
