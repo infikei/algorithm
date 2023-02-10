@@ -1,17 +1,33 @@
-#include <iostream>
-#define fastio ios_base::sync_with_stdio(false);cout.tie(NULL);cin.tie(NULL); // boj_15552.cpp
+// Solve 2023-01-29
+// Update 2023-02-11
+
+#include <bits/stdc++.h>
 using namespace std;
 
+#ifdef BOJ
+#define BOJTEST(x) ((void)0)
+#else
+#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
+#endif
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+#define INF (int)1e9
+#define LLINF (ll)4e18
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+
 int main() {
-    fastio;
+    FASTIO;
 
-    int N = 100;
-    cout << N << '\n';
+    int n = 100;
+    cout << n << '\n';
 
-    for (int i = 1; i <= N; i++) {
-        for (int j = 1; j <= N; j++) {
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= n; j++) {
             if (i == j) cout << 0 << ' ';
-            else if (i == N || j == N) cout << 1 << ' ';
+            else if (i == n || j == n) cout << 1 << ' ';
             else cout << 3 << ' ';
         }
         cout << '\n';
