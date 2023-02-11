@@ -17,8 +17,8 @@ using ll = long long;
 using uint = unsigned int;
 using ull = unsigned long long;
 
-const int N_MAX = 1000;
-int n, arr[N_MAX], dp[N_MAX], dp_parent[N_MAX];
+const int MAX_N = 1000;
+int n, arr[MAX_N], dp[MAX_N], dp_parent[MAX_N];
 
 int main() {
     FASTIO;

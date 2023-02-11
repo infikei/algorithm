@@ -18,8 +18,8 @@ using uint = unsigned int;
 using ull = unsigned long long;
 using pii = pair<int, int>;
 
-const int N_MAX = 1000000;
-int n, arr[N_MAX], dp_parent[N_MAX];
+const int MAX_N = 1000000;
+int n, arr[MAX_N], dp_parent[MAX_N];
 vector<int> dp, dp_idx;
 
 int main() {

@@ -18,8 +18,8 @@ using ll = long long;
 using uint = unsigned int;
 using ull = unsigned long long;
 
-const int N_MAX = 1000000;
-int n, arr[N_MAX];
+const int MAX_N = 1000000;
+int n, arr[MAX_N];
 vector<int> dp;
 
 int main() {
