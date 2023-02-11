@@ -18,8 +18,8 @@ using ll = long long;
 using uint = unsigned int;
 using ull = unsigned long long;
 
-const int N_MAX = 1e6;
-int n, dp[N_MAX + 1];
+const int MAX_N = 1e6;
+int n, dp[MAX_N + 1];
 
 int main() {
     FASTIO;
