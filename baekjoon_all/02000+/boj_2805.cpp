@@ -21,10 +21,10 @@ using ull = unsigned long long;
 int main() {
     FASTIO;
 
-    const int N_MAX = 1e6;
+    const int MAX_N = 1e6;
     int n, m;
     cin >> n >> m;
-    int trees[N_MAX], highest_tree = 0;
+    int trees[MAX_N], highest_tree = 0;
     for (int i = 0; i < n; i++) {
         cin >> trees[i];
         highest_tree = max(highest_tree, trees[i]);
