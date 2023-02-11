@@ -20,8 +20,8 @@ using ull = unsigned long long;
 int main() {
     FASTIO;
 
-    const int N_MAX = 1e5;
-    int n, x, arr[N_MAX];
+    const int MAX_N = 1e5;
+    int n, x, arr[MAX_N];
     cin >> n;
     for (int i = 0; i < n; i++) {
         cin >> arr[i];
