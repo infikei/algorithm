@@ -1,63 +1,62 @@
-#include <iostream>
+// Solve 2022-07-25
+// Update 2023-02-12
+
+#include <bits/stdc++.h>
 using namespace std;
 
-int A[1001];
-int DP_increase[1001];
-int DP_decrease[1001];
-int N, ans;
+#ifdef BOJ
+#define BOJTEST(x) ((void)0)
+#else
+#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
+#endif
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+#define INF (int)1e9
+#define LLINF (ll)4e18
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
 
-void input() {
-    cin >> N;
-    for (int i = 1; i <= N; i++) {
-        cin >> A[i];
-    }
-}
-
-void DP_increase_fn() {
-    DP_increase[1] = 1;
-
-    for (int i = 2; i <= N; i++) {
-        DP_increase[i] = 1;
-        for (int j = 1; j < i; j++) {
-            if (A[j] < A[i]) {
-                DP_increase[i] = max(DP_increase[i], DP_increase[j] + 1);
-            }
-        }
-    }
-}
-
-void DP_decrease_fn() {
-    DP_decrease[N] = 1;
-
-    for (int i = N - 1; i >= 1; i--) {
-        DP_decrease[i] = 1;
-        for (int j = N; j > i; j--) {
-            if (A[j] < A[i]) {
-                DP_decrease[i] = max(DP_decrease[i], DP_decrease[j] + 1);
-            }
-        }
-    }
-}
-
-void DP_bitonic_fn() {
-    ans = 0;
-
-    for (int i = 1; i <= N; i++) {
-        ans = max(ans, DP_increase[i] + DP_decrease[i] - 1);
-    }
-}
+const int MAX_N = 1000;
+int n, arr[MAX_N], dp1[MAX_N], dp2[MAX_N];
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    input();
+    cin >> n;
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
 
-    DP_increase_fn();
-    DP_decrease_fn();
-    DP_bitonic_fn();
+    // 가장 긴 증가하는 부분 수열의 길이 구하기
+    dp1[0] = 1;
+    for (int i = 1; i < n; i++) {
+        for (int j = 0; j < i; j++) {
+            if (arr[j] < arr[i]) {
+                dp1[i] = max(dp1[i], dp1[j]);
+            }
+        }
+        dp1[i]++;
+    }
 
+    // 가장 긴 감소하는 부분 수열의 길이 구하기
+    dp2[n - 1] = 1;
+    for (int i = n - 2; i >= 0; i--) {
+        for (int j = n - 1; j > i; j--) {
+            if (arr[j] < arr[i]) {
+                dp2[i] = max(dp2[i], dp2[j]);
+            }
+        }
+        dp2[i]++;
+    }
+
+    // 위에서 구한 길이의 합을 통해 답 구하기
+    int ans = 0;
+    for (int i = 0; i < n; i++) {
+        ans = max(ans, dp1[i] + dp2[i]);
+    }
+    ans--;
     cout << ans << '\n';
 
     return 0;
