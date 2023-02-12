@@ -1,53 +1,65 @@
-#include <iostream>
-#include <vector>
+// Solve 2022-09-14
+// Update 2023-02-12
+
+#include <bits/stdc++.h>
 using namespace std;
 
-const int SIZE = 100001;
-int N;
-vector<int> v[SIZE];
-int parent[SIZE];
-bool visited[SIZE];
+#ifdef BOJ
+#define BOJTEST(x) ((void)0)
+#else
+#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
+#endif
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+#define INF (int)1e9
+#define LLINF (ll)4e18
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
 
-void input() {
-    cin >> N;
+const int MAX_N = 100000;
+int n, parent[MAX_N + 1];
+vector<int> graph[MAX_N + 1];
+bool visited[MAX_N + 1];
 
-    for (int n = 0; n < N; n++) {
-        int x, y;
-        cin >> x >> y;
-        v[x].push_back(y);
-        v[y].push_back(x);
+void bfs() {
+    visited[1] = true;
+    queue<int> q;
+    for (auto next : graph[1]) {
+        visited[next] = true;
+        parent[next] = 1;
+        q.push(next);
     }
-}
 
-void dfs(int k = 1) {
-    visited[k] = true;
-    int child_sz = v[k].size();
-
-    for (int i = 0; i < child_sz; i++) {
-        int next_k = v[k][i];
-        if (!visited[next_k]) {
-            parent[next_k] = k;
-            dfs(next_k);
+    while (!q.empty()) {
+        int now = q.front();
+        q.pop();
+        for (auto next : graph[now]) {
+            if (visited[next]) continue;
+            visited[next] = true;
+            parent[next] = now;
+            q.push(next);
         }
     }
 }
 
-void print() {
-    for (int i = 2; i <= N; i++) {
+int main() {
+    FASTIO;
+
+    cin >> n;
+    for (int i = 1; i < n; i++) {
+        int u, v;
+        cin >> u >> v;
+        graph[u].push_back(v);
+        graph[v].push_back(u);
+    }
+
+    bfs();
+
+    for (int i = 2; i <= n; i++) {
         cout << parent[i] << '\n';
     }
-}
-
-int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
-
-    input();
-
-    dfs();
-
-    print();
 
     return 0;
 }
