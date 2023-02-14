@@ -1,38 +1,41 @@
-#include <iostream>
+// Solve 2022-09-15
+// Update 2023-02-14
+
+#include <bits/stdc++.h>
 using namespace std;
 
+#ifdef BOJ
+#define BOJTEST(x) ((void)0)
+#else
+#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
+#endif
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+#define INF (int)1e9
+#define LLINF (ll)4e18
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    int N;
-    cin >> N;
+    int n;
+    cin >> n;
 
-    // 첫째 줄
-    for (int i = 0; i < N - 1; i++) {
-        cout << ' ';
+    string tmp1, tmp2;
+    tmp1.assign(n - 1, ' ');
+    tmp2 = " ";
+    cout << tmp1 << '*' << '\n';
+    for (int iter = n - 2; iter > 0; iter--) {
+        tmp1.pop_back();
+        cout << tmp1 << '*' << tmp2 << '*' << '\n';
+        tmp2 += "  ";
     }
-    cout << '*' << '\n';
-
-    // 중간 줄
-    for (int row = 2; row < N; row++) {
-        for (int i = 0; i < N - row; i++) {
-            cout << ' ';
-        }
-        cout << '*';
-        for (int i = 0; i < 2 * row - 3; i++) {
-            cout << ' ';
-        }
-        cout << '*' << '\n';
-    }
-
-    // 마지막 줄
-    if (N > 1) {
-        for (int i = 0; i < 2 * N - 1; i++) {
-            cout << '*';
-        }
-        cout << '\n';
+    if (n > 1) {
+        tmp1.assign(n * 2 - 1, '*');
+        cout << tmp1 << '\n';
     }
 
     return 0;
