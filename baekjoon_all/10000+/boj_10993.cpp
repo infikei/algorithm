@@ -24,8 +24,8 @@ vector<string> make_triangle(int x) {
         return res;
     }
 
-    vector<string> res_small = make_triangle(x - 1);
-    reverse(ALL(res_small));
+    vector<string> small_triangle = make_triangle(x - 1);
+    reverse(ALL(small_triangle));
 
     int row_end = (1 << x) - 1;
     res.assign(row_end + 1, "");
@@ -51,7 +51,7 @@ vector<string> make_triangle(int x) {
     tmp = "";
     int k = 0;
     for (int row = i_end; row < row_end; row++) {
-        res[row] += tmp + res_small[k] + tmp + tmp + "*";
+        res[row] += tmp + small_triangle[k] + tmp + tmp + "*";
         tmp += " ";
         k++;
     }
@@ -65,13 +65,13 @@ int main() {
     int n;
     cin >> n;
 
-    vector<string> ans = make_triangle(n);
-    ans.erase(ans.begin(), ans.begin() + 1);
+    vector<string> triangle = make_triangle(n);
+    triangle.erase(triangle.begin(), triangle.begin() + 1);
     if (~n & 1) {
-        reverse(ALL(ans));
+        reverse(ALL(triangle));
     }
-    for (auto a : ans) {
-        cout << a << '\n';
+    for (auto line : triangle) {
+        cout << line << '\n';
     }
 
     return 0;
