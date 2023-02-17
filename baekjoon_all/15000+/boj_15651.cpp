@@ -1,30 +1,46 @@
-#include <iostream>
+// Solve 2022-06-10
+// Update 2023-02-17
+
+#include <bits/stdc++.h>
 using namespace std;
 
-int result[9];
+#ifdef BOJ
+#define BOJTEST(x) ((void)0)
+#else
+#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
+#endif
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+#define INF (int)1e9
+#define LLINF (ll)4e18
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
 
-void dfs(int n, int m, int depth = 1) {
-    if (depth == m + 1) {
-        for (int i = 1; i <= m; i++) {
-            cout << result[i] << ' ';
+int n, m, seq[7];
+
+void dfs(int depth = 0) {
+    if (depth == m) {
+        for (int i = 0; i < m; i++) {
+            cout << seq[i] << ' ';
         }
         cout << '\n';
+        return;
     }
-    else {
-        for (int i = 1; i <= n; i++) {
-            result[depth] = i;
-            dfs(n, m, depth + 1);
-        }
+
+    for (int i = 1; i <= n; i++) {
+        seq[depth] = i;
+        dfs(depth + 1);
     }
 }
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    int n, m;
     cin >> n >> m;
-    dfs(n, m);
+
+    dfs();
 
     return 0;
 }
