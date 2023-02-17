@@ -1,39 +1,48 @@
-#include <iostream>
-#include <algorithm>
+// Solve 2022-08-13
+// Update 2023-02-17
+
+#include <bits/stdc++.h>
 using namespace std;
 
-int N, M, arr[8], ans[8];
+#ifdef BOJ
+#define BOJTEST(x) ((void)0)
+#else
+#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
+#endif
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+#define INF (int)1e9
+#define LLINF (ll)4e18
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
 
-void input() {
-    cin >> N >> M;
-    for (int i = 0; i < N; i++) {
-        cin >> arr[i];
-    }
+int n, m, nums[8], seq[8];
 
-    sort(arr, arr + N);
-}
-
-void dfs(int depth = 0, int begin = 0) {
-    if (depth == M) {
-        for (int i = 0; i < M; i++) {
-            cout << ans[i] << ' ';
+void dfs(int depth = 0, int begin_idx = 0) {
+    if (depth == m) {
+        for (int i = 0; i < m; i++) {
+            cout << seq[i] << ' ';
         }
         cout << '\n';
         return;
     }
 
-    for (int i = begin; i < N; i++) {
-        ans[depth] = arr[i];
+    for (int i = begin_idx; i < n; i++) {
+        seq[depth] = nums[i];
         dfs(depth + 1, i + 1);
     }
 }
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    input();
+    cin >> n >> m;
+    for (int i = 0; i < n; i++) {
+        cin >> nums[i];
+    }
+    sort(nums, nums + n);
 
     dfs();
 
