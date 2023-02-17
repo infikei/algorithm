@@ -1,37 +1,51 @@
-#include <iostream>
+// Solve 2022-06-08
+// Update 2023-02-17
+
+#include <bits/stdc++.h>
 using namespace std;
 
-bool visited[9];
-int result[9];
+#ifdef BOJ
+#define BOJTEST(x) ((void)0)
+#else
+#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
+#endif
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+#define INF (int)1e9
+#define LLINF (ll)4e18
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
 
-void dfs(int n, int m, int depth = 1) {
-    if (depth == m + 1) {
-        for (int i = 1; i <= m; i++) {
-            cout << result[i] << ' ';
+int n, m, seq[8];
+bool visited[9];
+
+void dfs(int depth = 0) {
+    if (depth == m) {
+        for (int i = 0; i < m; i++) {
+            cout << seq[i] << ' ';
         }
         cout << '\n';
+        return;
     }
-    else {
-        for (int i = 1; i <= n; i++) {
-            if (visited[i]) {
-                continue;
-            }
-            result[depth] = i;
-            visited[i] = true;
-            dfs(n, m, depth + 1);
-            visited[i] = false;
-        }
+
+    for (int i = 1; i <= n; i++) {
+        if (visited[i]) continue;
+
+        visited[i] = true;
+        seq[depth] = i;
+        dfs(depth + 1);
+        visited[i] = false;
     }
 }
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    int n, m;
     cin >> n >> m;
-    dfs(n, m);
+
+    dfs();
 
     return 0;
 }
