@@ -1,45 +1,54 @@
-#include <iostream>
-#include <vector>
-#include <algorithm>
+// Solve 2022-08-12
+// Update 2023-02-18
+
+#include <bits/stdc++.h>
 using namespace std;
 
-int N, M, v_size, ans[8];
-vector<int> v;
+#ifdef BOJ
+#define BOJTEST(x) ((void)0)
+#else
+#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
+#endif
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+#define UNIQUE(v) v.erase(unique(v.begin(),v.end()),v.end()); // 정렬이 이미 되어있는 상태에서 중복 제거
+#define INF (int)1e9
+#define LLINF (ll)4e18
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
 
-void input() {
-    cin >> N >> M;
-    int temp;
-    for (int i = 0; i < N; i++) {
-        cin >> temp;
-        v.push_back(temp);
-    }
+int n, m, seq[8];
+vector<int> nums;
 
-    sort(v.begin(), v.end());
-    v.erase(unique(v.begin(), v.end()), v.end());
-    v_size = v.size();
-}
-
-void dfs(int depth = 0, int begin = 0) {
-    if (depth == M) {
-        for (int i = 0; i < M; i++) {
-            cout << ans[i] << ' ';
+void dfs(int depth = 0, int begin_idx = 0) {
+    if (depth == m) {
+        for (int i = 0; i < m; i++) {
+            cout << seq[i] << ' ';
         }
         cout << '\n';
         return;
     }
 
-    for (int i = begin; i < v_size; i++) {
-        ans[depth] = v[i];
+    for (int i = begin_idx; i < n; i++) {
+        seq[depth] = nums[i];
         dfs(depth + 1, i);
     }
 }
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    input();
+    cin >> n >> m;
+    for (int i = 0; i < n; i++) {
+        int x;
+        cin >> x;
+        nums.push_back(x);
+    }
+    sort(ALL(nums));
+    UNIQUE(nums);
+    n = SIZE(nums);
 
     dfs();
 
