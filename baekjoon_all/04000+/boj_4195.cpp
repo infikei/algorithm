@@ -20,7 +20,7 @@ using ull = unsigned long long;
 
 const int MAX_SIZE = 200000;
 unordered_map<string, int> hs;
-int parent[MAX_SIZE + 1]; // 양수이면 해당 노드의 부모 노드를, 음수이면 해당 노드의 자식 노드의 개수를 의미한다.
+int parent[MAX_SIZE + 1]; // 양수이면 해당 노드의 부모 노드를 의미하며, 음수이면 -(해당 노드와 같은 집합인 노드들의 개수)를 의미한다.
 
 int get_parent(int k) {
     if (parent[k] < 0) {
