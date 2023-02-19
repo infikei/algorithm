@@ -1,4 +1,5 @@
 // Solve 2023-02-16
+// Update 2023-02-19
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -19,11 +20,10 @@ using ull = unsigned long long;
 
 const int MAX_SIZE = 200000;
 unordered_map<string, int> hs;
-int parent[MAX_SIZE + 1];
-int cnt[MAX_SIZE + 1];
+int parent[MAX_SIZE + 1]; // 양수이면 해당 노드의 부모 노드를, 음수이면 해당 노드의 자식 노드의 개수를 의미한다.
 
 int get_parent(int k) {
-    if (parent[k] == k) {
+    if (parent[k] < 0) {
         return k;
     }
 
@@ -52,8 +52,7 @@ int main() {
             if (hs.find(user1) == hs.end()) {
                 user1_int = SIZE(hs);
                 hs[user1] = user1_int;
-                parent[user1_int] = user1_int;
-                cnt[user1_int] = 1;
+                parent[user1_int] = -1;
             }
             else {
                 user1_int = hs[user1];
@@ -61,8 +60,7 @@ int main() {
             if (hs.find(user2) == hs.end()) {
                 user2_int = SIZE(hs);
                 hs[user2] = user2_int;
-                parent[user2_int] = user2_int;
-                cnt[user2_int] = 1;
+                parent[user2_int] = -1;
             }
             else {
                 user2_int = hs[user2];
@@ -72,10 +70,22 @@ int main() {
             int parent_of_user2_int = get_parent(user2_int);
 
             if (parent_of_user1_int != parent_of_user2_int) {
-                parent[parent_of_user2_int] = parent_of_user1_int;
-                cnt[parent_of_user1_int] += cnt[parent_of_user2_int];
+                int cnt1 = parent[parent_of_user1_int];
+                int cnt2 = parent[parent_of_user2_int];
+                if (cnt1 < cnt2) {
+                    parent[parent_of_user1_int] += cnt2;
+                    parent[parent_of_user2_int] = parent_of_user1_int;
+                    cout << -parent[parent_of_user1_int] << '\n';
+                }
+                else {
+                    parent[parent_of_user2_int] += cnt1;
+                    parent[parent_of_user1_int] = parent_of_user2_int;
+                    cout << -parent[parent_of_user2_int] << '\n';
+                }
             }
-            cout << cnt[parent_of_user1_int] << '\n';
+            else {
+                cout << -parent[parent_of_user1_int] << '\n';
+            }
         }
     }
 
