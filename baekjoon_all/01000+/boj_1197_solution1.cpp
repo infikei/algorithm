@@ -21,7 +21,7 @@ using pi3 = pair<int, pii>;
 
 const int MAX_V = 10000;
 int v, e;
-vector<pi3> edges;
+priority_queue<pi3, vector<pi3>, greater<pi3> > edges;
 int parent[MAX_V + 1];
 
 int get_parent(int k) {
@@ -40,28 +40,30 @@ int main() {
     for (int i = 0; i < e; i++) {
         int a, b, c;
         cin >> a >> b >> c;
-        edges.push_back({ c, { a, b } });
+        edges.push({ c, { a, b } });
     }
-    sort(ALL(edges));
-
     for (int i = 1; i <= v; i++) {
         parent[i] = -1;
     }
 
     int ans = 0;
-    for (auto edge : edges) {
+    while (!edges.empty()) {
+        auto edge = edges.top();
+        edges.pop();
+
         int pa = get_parent(edge.second.first);
         int pb = get_parent(edge.second.second);
-        if (pa == pb) continue;
 
-        ans += edge.first;
-        if (parent[pa] < parent[pb]) {
-            parent[pa] += parent[pb];
-            parent[pb] = pa;
-        }
-        else {
-            parent[pb] += parent[pa];
-            parent[pa] = pb;
+        if (pa != pb) {
+            ans += edge.first;
+            if (parent[pa] < parent[pb]) {
+                parent[pa] += parent[pb];
+                parent[pb] = pa;
+            }
+            else {
+                parent[pb] += parent[pa];
+                parent[pa] = pb;
+            }
         }
     }
 
