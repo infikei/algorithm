@@ -1,3 +1,6 @@
+# Solve 2022-05-16
+# Update 2023-02-22
+
 hour, minute = map(int, input().split())
 
 if minute >= 45:

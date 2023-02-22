@@ -1,5 +1,7 @@
-i = int(input())
+# Solve 2022-05-16
+# Update 2023-02-22
 
-while i > 0:
+t = int(input())
+
+for ti in range(t):
     print(sum(map(int, input().split())))
-    i -= 1
