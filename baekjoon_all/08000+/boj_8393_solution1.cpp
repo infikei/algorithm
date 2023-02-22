@@ -22,18 +22,11 @@ using ull = unsigned long long;
 int main() {
     FASTIO;
 
-    int a, b;
-    cin >> a >> b;
+    int n;
+    cin >> n;
 
-    if (a < b) {
-        cout << "<\n";
-    }
-    else if (a > b) {
-        cout << ">\n";
-    }
-    else {
-        cout << "==\n";
-    }
+    int ans = n * (n + 1) / 2;
+    cout << ans << '\n';
 
     return 0;
 }

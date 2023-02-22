@@ -22,18 +22,14 @@ using ull = unsigned long long;
 int main() {
     FASTIO;
 
-    int a, b;
-    cin >> a >> b;
+    int n;
+    cin >> n;
 
-    if (a < b) {
-        cout << "<\n";
+    int ans = 0;
+    for (int i = 1; i <= n; i++) {
+        ans += i;
     }
-    else if (a > b) {
-        cout << ">\n";
-    }
-    else {
-        cout << "==\n";
-    }
+    cout << ans << '\n';
 
     return 0;
 }

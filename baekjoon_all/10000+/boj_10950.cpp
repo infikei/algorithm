@@ -1,13 +1,17 @@
+// Solve 2021-12-18
+// Update 2023-02-22
+
 #include <iostream>
 using namespace std;
 
 int main() {
-    int t, a, b;
-
+    int t;
     cin >> t;
-    for (int i = 0; i < t; i++) {
+
+    for (int ti = 0; ti < t; ti++) {
+        int a, b;
         cin >> a >> b;
-        cout << (a + b) << endl;
+        cout << a + b << '\n';
     }
 
     return 0;
