@@ -1,4 +1,7 @@
-#include <iostream>
+// Solve 2022-06-02
+// Update 2023-02-22
+
+#include <bits/stdc++.h>
 using namespace std;
 
 int main() {
@@ -9,7 +12,7 @@ int main() {
     int t, a, b;
     cin >> t;
 
-    for (int i = 0; i < t; i++) {
+    for (int ti = 0; ti < t; ti++) {
         cin >> a >> b;
         cout << (a + b) << '\n';
         // endl 대신 '\n'을 사용한다.

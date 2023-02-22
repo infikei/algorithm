@@ -22,14 +22,19 @@ using ull = unsigned long long;
 int main() {
     FASTIO;
 
-    int t;
-    cin >> t;
+    int hour, minute, extra;
+    cin >> hour >> minute >> extra;
 
-    for (int ti = 1; ti <= t; ti++) {
-        int a, b;
-        cin >> a >> b;
-        cout << "Case #" << ti << ": " << a << " + " << b << " = " << a + b << '\n';
+    minute += extra;
+    while (minute >= 60) {
+        minute -= 60;
+        hour += 1;
     }
+    while (hour >= 24) {
+        hour -= 24;
+    }
+
+    cout << hour << ' ' << minute << '\n';
 
     return 0;
 }

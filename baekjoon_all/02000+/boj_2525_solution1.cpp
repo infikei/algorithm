@@ -22,14 +22,12 @@ using ull = unsigned long long;
 int main() {
     FASTIO;
 
-    int t;
-    cin >> t;
+    int hour, minute, extra;
+    cin >> hour >> minute >> extra;
 
-    for (int ti = 1; ti <= t; ti++) {
-        int a, b;
-        cin >> a >> b;
-        cout << "Case #" << ti << ": " << a << " + " << b << " = " << a + b << '\n';
-    }
+    int ans = hour * 60 + minute + extra;
+
+    cout << ans / 60 % 24 << ' ' << ans % 60 << '\n';
 
     return 0;
 }
