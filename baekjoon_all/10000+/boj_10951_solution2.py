@@ -1,4 +1,7 @@
-# solution 2.
+# Solve 2022-05-16
+# Update 2023-02-22
+
+# Solution 2.
 
 import sys
 
