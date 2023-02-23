@@ -1,11 +1,16 @@
+# Solve 2022-05-30
+# Update 2023-02-23
+
 import sys
 
-n = int(sys.stdin.readline())
-s = [0] * 10001
+input = lambda : sys.stdin.readline().rstrip()
 
-for i in range(n):
-    s[int(sys.stdin.readline())] += 1
+n = int(input())
+cnt = [0] * 10001
+
+for _ in range(n):
+    cnt[int(input())] += 1
 
 for i in range(1, 10001):
-    for j in range(s[i]):
+    for j in range(cnt[i]):
         print(i)

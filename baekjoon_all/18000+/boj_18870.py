@@ -1,9 +1,14 @@
+# Solve 2022-06-01
+# Update 2023-02-23
+
 import sys
 
-n = int(sys.stdin.readline())
-arr = list(map(int, sys.stdin.readline().split()))
-arr2 = sorted(set(arr))
-dic = {arr2[i]: i for i in range(len(arr2))}
+input = lambda : sys.stdin.readline().rstrip()
 
-for i in arr:
-    print(dic[i], end=' ')
+n = int(input())
+li = list(map(int, input().split()))
+li2 = sorted(set(li))
+dic = {li2[i]: i for i in range(len(li2))}
+
+for a in li:
+    print(dic[a], end=" ")

@@ -1,9 +1,13 @@
-max = 0
-find = 0
-for i in range(9):
-    n = int(input())
-    if n > max:
-        max = n
-        find = i
-print(max)
-print(find+1)
+# Solve 2022-05-19
+# Update 2023-02-23
+
+max_val, max_idx = 0, 0
+
+for idx in range(1, 10):
+    x = int(input())
+    if x > max_val:
+        max_val = x
+        max_idx = idx
+
+print(max_val)
+print(max_idx)

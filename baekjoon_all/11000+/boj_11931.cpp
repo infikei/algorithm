@@ -1,24 +1,39 @@
-#include <iostream>
-#include <queue>
-using namespace std;
-#define fastio ios_base::sync_with_stdio(false);cout.tie(NULL);cin.tie(NULL); // boj_15552.cpp
+// Solve 2022-11-15
+// Update 2023-02-23
 
-int N;
-priority_queue<int> pq_max;
+#include <bits/stdc++.h>
+using namespace std;
+
+#ifdef BOJ
+#define BOJTEST(x) ((void)0)
+#else
+#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
+#endif
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+#define INF (int)1e9
+#define LLINF (ll)4e18
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+
+const int MAX_N = 1000000;
+int n, arr[MAX_N];
 
 int main() {
-    fastio;
+    FASTIO;
 
-    cin >> N;
-    for (int n = 0; n < N; n++) {
-        int x;
-        cin >> x;
-        pq_max.push(x);
+    cin >> n;
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
     }
 
-    for (int n = 0; n < N; n++) {
-        cout << pq_max.top() << '\n';
-        pq_max.pop();
+    sort(arr, arr + n, greater<int>());
+
+    for (int i = 0; i < n; i++) {
+        cout << arr[i] << '\n';
     }
 
     return 0;
