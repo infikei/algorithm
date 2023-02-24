@@ -10,10 +10,9 @@ using namespace std;
 #define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
 #endif
 #define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
 #define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
-#define INF (int)1e9
-#define LLINF (ll)4e18
 using ll = long long;
 using uint = unsigned int;
 using ull = unsigned long long;
@@ -39,28 +38,28 @@ int main() {
 
     // wrong floyd-warshall
     for (int k = 1; k < n; k++){
-		for (int i = 1; i <= n; i++){
-			for (int j = 1; j <= n; j++){
-				d[i][j] = min(d[i][k] + d[k][j], d[i][j]);
-			}
-		}
-	}
+        for (int i = 1; i <= n; i++){
+            for (int j = 1; j <= n; j++){
+                d[i][j] = min(d[i][k] + d[k][j], d[i][j]);
+            }
+        }
+    }
     // correct floyd-warshall
-	for (int k = 1; k <= n; k++){
-		for (int i = 1; i <= n; i++){
-			for (int j = 1; j <= n; j++){
-				e[i][j] = min(e[i][k] + e[k][j], e[i][j]);
-			}
-		}
-	}
+    for (int k = 1; k <= n; k++){
+        for (int i = 1; i <= n; i++){
+            for (int j = 1; j <= n; j++){
+                e[i][j] = min(e[i][k] + e[k][j], e[i][j]);
+            }
+        }
+    }
 
     // count the diff
-	int cnt = 0;
-	for (int i = 1; i <= n; i++){
-		for (int j = 1; j <= n; j++){
-			if (d[i][j] != e[i][j]) cnt++;
-		}
-	}
+    int cnt = 0;
+    for (int i = 1; i <= n; i++){
+        for (int j = 1; j <= n; j++){
+            if (d[i][j] != e[i][j]) cnt++;
+        }
+    }
     cout << cnt << '\n' << (cnt >= 9700 ? "PASS\n" : "NOT PASS\n");
 
     return 0;

@@ -10,10 +10,9 @@ using namespace std;
 #define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
 #endif
 #define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
 #define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
-#define INF (int)1e9
-#define LLINF (ll)4e18
 using ll = long long;
 using uint = unsigned int;
 using ull = unsigned long long;
@@ -27,10 +26,10 @@ void bfs() {
     if (n == k) return;
 
     q.push(n);
-    int current = 0;
+    int cur = 0;
 
     while (!q.empty()) {
-        current++;
+        cur++;
 
         int i_end = SIZE(q);
         for (int i = 0; i < i_end; i++) {
@@ -42,11 +41,11 @@ void bfs() {
             next = now * 2;
             if (next <= MAX_N) {
                 if (ans2[next] == 0) {
-                    ans1[next] = current;
+                    ans1[next] = cur;
                     ans2[next] = ans2[now];
                     q.push(next);
                 }
-                else if (ans1[next] == current) {
+                else if (ans1[next] == cur) {
                     ans2[next] += ans2[now];
                 }
             }
@@ -54,11 +53,11 @@ void bfs() {
             next = now + 1;
             if (next <= MAX_N) {
                 if (ans2[next] == 0) {
-                    ans1[next] = current;
+                    ans1[next] = cur;
                     ans2[next] = ans2[now];
                     q.push(next);
                 }
-                else if (ans1[next] == current) {
+                else if (ans1[next] == cur) {
                     ans2[next] += ans2[now];
                 }
             }
@@ -66,11 +65,11 @@ void bfs() {
             next = now - 1;
             if (next >= 0) {
                 if (ans2[next] == 0) {
-                    ans1[next] = current;
+                    ans1[next] = cur;
                     ans2[next] = ans2[now];
                     q.push(next);
                 }
-                else if (ans1[next] == current) {
+                else if (ans1[next] == cur) {
                     ans2[next] += ans2[now];
                 }
             }
