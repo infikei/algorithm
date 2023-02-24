@@ -1,24 +1,42 @@
-#include <iostream>
-#define fastio ios_base::sync_with_stdio(false);cout.tie(NULL);cin.tie(NULL); // boj_15552.cpp
+// Solve 2022-12-27
+// Update 2023-02-24
+
+#include <bits/stdc++.h>
 using namespace std;
 
-int N, M, basket[101];
+#ifdef BOJ
+#define BOJTEST(x) ((void)0)
+#else
+#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
+#endif
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+#define INF (int)1e9
+#define LLINF (ll)4e18
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
 
 int main() {
-    fastio;
+    FASTIO;
 
-    cin >> N >> M;
+    int n, m;
+    cin >> n >> m;
 
-    int i, j, k;
-    for (int m = 0; m < M; m++) {
+    int arr[101] = { 0 };
+
+    for (int iter = 0; iter < m; iter++) {
+        int i, j, k;
         cin >> i >> j >> k;
-        for (int n = i; n <= j; n++) {
-            basket[n] = k;
+        for (int idx = i; idx <= j; idx++) {
+            arr[idx] = k;
         }
     }
 
-    for (int n = 1; n <= N; n++) {
-        cout << basket[n] << ' ';
+    for (int i = 1; i <= n; i++) {
+        cout << arr[i] << ' ';
     }
     cout << '\n';
 

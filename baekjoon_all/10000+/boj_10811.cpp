@@ -1,24 +1,39 @@
-#include <iostream>
-#include <algorithm>
-#define fastio ios_base::sync_with_stdio(false);cout.tie(NULL);cin.tie(NULL); // boj_15552.cpp
+// Solve 2023-01-18
+// Update 2023-02-24
+
+#include <bits/stdc++.h>
 using namespace std;
 
-int main() {
-    fastio;
+#ifdef BOJ
+#define BOJTEST(x) ((void)0)
+#else
+#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
+#endif
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+#define INF (int)1e9
+#define LLINF (ll)4e18
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
 
-    const int MAX_N = 100;
+int main() {
+    FASTIO;
+
     int n, m;
     cin >> n >> m;
 
-    int arr[MAX_N + 1];
+    int arr[101];
     for (int i = 1; i <= n; i++) {
         arr[i] = i;
     }
 
-    for (int k = 0; k < m; k++) {
-        int start, end;
-        cin >> start >> end;
-        reverse(arr + start, arr + end + 1);
+    for (int i = 0; i < m; i++) {
+        int a, b;
+        cin >> a >> b;
+        reverse(arr + a, arr + b + 1);
     }
 
     for (int i = 1; i <= n; i++) {
