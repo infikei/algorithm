@@ -20,6 +20,7 @@ int main() {
 
     double a, b;
     cin >> a >> b;
+
     cout << fixed << setprecision(12);
     cout << a / b << '\n';
 
