@@ -14,8 +14,6 @@ using namespace std;
 // #define FOR(i,a,b) for(int i=(a);i<=(b);i++)
 // #define ROF(i,a,b) for(int i=(a);i>=(b);i--)
 // #define UNIQUE(v) v.erase(unique(v.begin(),v.end()),v.end()); // 정렬이 이미 되어있는 상태에서 중복 제거
-#define INF (int)1e9
-#define LLINF (ll)4e18
 using ll = long long;
 using uint = unsigned int;
 using ull = unsigned long long;
@@ -25,6 +23,11 @@ using ull = unsigned long long;
 // using pll = pair<ll, ll>;
 // using pl3 = pair<ll, pll>;
 // using pl4 = pair<pll, pll>;
+// using cpx = complex<double>;
+
+// const int INF = 1e9;
+// const ll LLINF = 4e18;
+// const double PI = acos(-1);
 
 int main() {
     FASTIO;
