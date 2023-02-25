@@ -3,30 +3,51 @@
 #include <vector>
 #include <algorithm>
 using namespace std;
+
+#ifdef BOJ
+#define BOJTEST(x) ((void)0)
+#else
+#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
+#endif
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
 using bigint = pair<bool, string>;
 
 bigint string_to_bigint(string s) {
-    if (s == "-0") s = "0";
-    if (s[0] == '-') return make_pair(false, s.substr(1));
-    return make_pair(true, s);
+    if (s == "-0") {
+        s = "0";
+    }
+    if (s[0] == '-') {
+        return { true, s.substr(1) };
+    }
+    return { false, s };
 }
 
 string bigint_to_string(bigint b) {
-    if (b.first) return b.second;
-    return "-" + b.second;
+    if (b.first) {
+        return "-" + b.second;
+    }
+    return b.second;
 }
 
-bool unsigned_bigint_lt(const string &a, const string &b) {
+bool ubigint_lt(const string &a, const string &b) {
     if (a.length() == b.length()) {
         for (int i = 0; i < (int)a.length(); i++) {
-            if (a[i] != b[i]) return a[i] < b[i];
+            if (a[i] != b[i]) {
+                return a[i] < b[i];
+            }
         }
         return false;
     }
     return a.length() < b.length();
 }
 
-string unsigned_bigint_add(string a, string b) {
+string ubigint_add(string a, string b) {
     string result;
     int sum = 0, carry = 0;
 
@@ -44,7 +65,9 @@ string unsigned_bigint_add(string a, string b) {
             sum -= 10;
             carry = 1;
         }
-        else carry = 0;
+        else {
+            carry = 0;
+        }
         result.push_back('0' + sum);
     }
 
@@ -52,9 +75,13 @@ string unsigned_bigint_add(string a, string b) {
     return result;
 }
 
-string unsigned_bigint_sub(string a, string b) {
-    if (a == b) return "0";
-    if (unsigned_bigint_lt(a, b)) return unsigned_bigint_sub(b, a);
+string ubigint_sub(string a, string b) {
+    if (a == b) {
+        return "0";
+    }
+    if (ubigint_lt(a, b)) {
+        return ubigint_sub(b, a);
+    }
 
     string result;
     int sum = 0, carry = 0;
@@ -73,7 +100,9 @@ string unsigned_bigint_sub(string a, string b) {
             sum += 10;
             carry = -1;
         }
-        else carry = 0;
+        else {
+            carry = 0;
+        }
         result.push_back('0' + sum);
     }
 
@@ -86,8 +115,10 @@ string unsigned_bigint_sub(string a, string b) {
     return result;
 }
 
-string unsigned_bigint_mul(string a, string b) {
-    if (a == "0" || b == "0") return "0";
+string ubigint_mul(string a, string b) {
+    if (a == "0" || b == "0") {
+        return "0";
+    }
 
     string result, result2, a_copy, b_copy;
     int sum = 0, carry = 0, now = 0, zeros = 0;
@@ -118,73 +149,94 @@ string unsigned_bigint_mul(string a, string b) {
         reverse(result2.begin(), result2.end());
         for (int i = 0; i < zeros; i++) result2.push_back('0');
         zeros++;
-        result = unsigned_bigint_add(result, result2);
+        result = ubigint_add(result, result2);
     }
 
     return result;
 }
 
-string unsigned_bigint_pow(string a, int b) {
+string ubigint_pow(string a, int b) {
     if (b == 0) return "1";
     if (b == 1) return a;
 
     // 분할정복을 이용하여 빠르게 계산
-    string k = unsigned_bigint_pow(a, b / 2);
-    k = unsigned_bigint_mul(k, k);
-    if (b % 2 == 1) k = unsigned_bigint_mul(k, a);
+    string k = ubigint_pow(a, b / 2);
+    k = ubigint_mul(k, k);
+    if (b % 2 == 1) k = ubigint_mul(k, a);
     return k;
 }
 
 bool bigint_lt(const bigint &a, const bigint &b) {
     if (a.first) {
-        if (b.first) return unsigned_bigint_lt(a.second, b.second);
-        else return false;
+        if (b.first) {
+            return ubigint_lt(b.second, a.second);
+        }
+        else {
+            return true;
+        }
     }
     else {
-        if (b.first) return true;
-        else return unsigned_bigint_lt(b.second, a.second);
+        if (b.first) {
+            return false;
+        }
+        else {
+            return ubigint_lt(a.second, b.second);
+        }
     }
 }
 
 bigint bigint_add(bigint a, bigint b) {
     if (a.first) {
-        if (b.first) return {true, unsigned_bigint_add(a.second, b.second)};
-        else return {!unsigned_bigint_lt(a.second, b.second), unsigned_bigint_sub(a.second, b.second)};
+        if (b.first) {
+            return { true, ubigint_add(a.second, b.second) };
+        }
+        else {
+            return { ubigint_lt(b.second, a.second), ubigint_sub(a.second, b.second) };
+        }
     }
     else {
-        if (b.first) return {!unsigned_bigint_lt(b.second, a.second), unsigned_bigint_sub(a.second, b.second)};
-        else return {false, unsigned_bigint_add(a.second, b.second)};
+        if (b.first) {
+            return { ubigint_lt(a.second, b.second), ubigint_sub(a.second, b.second) };
+        }
+        else {
+            return { false, ubigint_add(a.second, b.second) };
+        }
     }
 }
 
 bigint bigint_sub(bigint a, bigint b) {
-    if (b.first && b.second == "0") return a;
+    if (b.second == "0") {
+        return a;
+    }
     b.first = !b.first;
     return bigint_add(a, b);
 }
 
 bigint bigint_mul(bigint a, bigint b) {
-    if (a.second == "0" || b.second == "0") return {true, "0"};
-    if (a.first == b.first) return {true, unsigned_bigint_mul(a.second, b.second)};
-    else return {false, unsigned_bigint_mul(a.second, b.second)};
+    if (a.second == "0" || b.second == "0") {
+        return { false, "0" };
+    }
+    if (a.first == b.first) {
+        return { false, ubigint_mul(a.second, b.second) };
+    }
+    else {
+        return { true, ubigint_mul(a.second, b.second) };
+    }
 }
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    // 예시 : N 팩토리얼 계산하기
-    int n;
-    cin >> n;
+    // 예제 : 300! 계산하기
+    int n = 300;
 
-    bigint x = string_to_bigint(to_string(1));
+    bigint fac = string_to_bigint("1");
     for (int i = 1; i <= n; i++) {
-        bigint y = string_to_bigint(to_string(i));
-        x = bigint_mul(x, y);
+        bigint ii = string_to_bigint(to_string(i));
+        fac = bigint_mul(fac, ii);
     }
-    
-    cout << n << "! = " << bigint_to_string(x) << '\n';
+
+    cout << n << "! = " << bigint_to_string(fac) << '\n';
 
     return 0;
 }
