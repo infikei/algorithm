@@ -89,6 +89,30 @@ vector<int> fft_mul(const vector<int> &a, const vector<int> &b) {
     return c;
 }
 
+vector<int> fft_mul_by_itself(const vector<int> &a) {
+    int n = (SIZE(a) << 1) - 1;
+    int n2 = 1;
+    while (n2 <= n) {
+        n2 <<= 1;
+    }
+
+    vector<cpx> a2(a.begin(), a.end());
+    a2.resize(n2);
+    fft(a2, false);
+
+    for (int i = 0; i < n2; i++) {
+        a2[i] *= a2[i];
+    }
+    fft(a2, true);
+
+    vector<int> c(n);
+    for (int i = 0; i < n; i++) {
+        c[i] = round(a2[i].real());
+    }
+
+    return c;
+}
+
 int main() {
     FASTIO;
 
