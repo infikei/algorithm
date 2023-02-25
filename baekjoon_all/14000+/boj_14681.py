@@ -1,8 +1,7 @@
 # Solve 2022-05-16
 # Update 2023-02-22
 
-x = int(input())
-y = int(input())
+x, y = int(input()), int(input())
 
 if x > 0:
     if y > 0:

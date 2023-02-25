@@ -3,6 +3,10 @@
 
 # Solution 1.
 
+import sys
+
+input = lambda : sys.stdin.readline().rstrip()
+
 while True:
     try:
         print(sum(map(int, input().split())))

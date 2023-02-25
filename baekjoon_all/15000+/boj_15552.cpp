@@ -9,10 +9,11 @@ int main() {
     cout.tie(NULL);
     cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
 
-    int t, a, b;
+    int t;
     cin >> t;
 
     for (int ti = 0; ti < t; ti++) {
+        int a, b;
         cin >> a >> b;
         cout << (a + b) << '\n';
         // endl 대신 '\n'을 사용한다.

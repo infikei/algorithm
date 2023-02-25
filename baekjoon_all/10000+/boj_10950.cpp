@@ -11,6 +11,7 @@ int main() {
     for (int ti = 0; ti < t; ti++) {
         int a, b;
         cin >> a >> b;
+
         cout << a + b << '\n';
     }
 

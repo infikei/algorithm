@@ -13,8 +13,6 @@ using namespace std;
 #define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
 #define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
-#define INF (int)1e9
-#define LLINF (ll)4e18
 using ll = long long;
 using uint = unsigned int;
 using ull = unsigned long long;

@@ -1,5 +1,5 @@
 # Solve 2022-05-16
-# Update 2023-02-22 #
+# Update 2023-02-22
 
 a, b, c = map(int, input().split())
 
