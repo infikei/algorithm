@@ -1,5 +1,5 @@
 # Solve 2022-06-01
-# Update 2023-02-23
+# Update 2023-02-26
 
 import sys
 
@@ -31,6 +31,6 @@ def merge_sort(li):
     return li
 
 n = int(input())
-li = merge_sort([(int(input())) for _ in range(n)])
+li = merge_sort([int(input()) for _ in range(n)])
 
 print(*li, sep="\n")

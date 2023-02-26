@@ -1,41 +1,33 @@
+# Solve 2022-05-28
+# Update 2023-02-26
+
 import sys
 import collections
 
 # 입력값 저장하기
-n = int(sys.stdin.readline())
-numbers_list = sys.stdin.readlines()
-# numbers_list = list(map(lambda num: int(num.rstrip()), numbers))
+n = int(sys.stdin.readline().rstrip())
+nums = list(map(lambda x: int(x.rstrip()), sys.stdin.readlines()))
 
 # ans1 : 산술평균 구하기
-numbers_sum = 0
-for i in range(n):
-    numbers_list[i] = num = int(numbers_list[i].rstrip())
-    numbers_sum += num
-ans1 = round(numbers_sum/n)
+ans1_avr = round(sum(nums) / n)
 
 # ans2 : 중앙값 구하기
 # ans4 : 범위 구하기
-numbers_sorted = sorted(numbers_list)
-ans2 = numbers_sorted[(n+1)//2-1]
-ans4 = numbers_sorted[-1] - numbers_sorted[0]
+nums.sort()
+ans2_center = nums[n // 2]
+ans4_range = nums[-1] - nums[0]
 
 # ans3 : 최빈값 구하기
-cnt = collections.Counter(numbers_list).most_common()
-most_count = cnt[0][1]
-most_li = []
-for i in range(len(cnt)):
-    if cnt[i][1] < most_count:
-        break
-    else:
-        most_li.append(cnt[i][0])
-
-if len(most_li) == 1:
-    ans3 = most_li[0]
-else:
-    ans3 = sorted(most_li)[1]
+counter = collections.Counter(nums).most_common()
+most_cnt = counter[0][1]
+ans3_most_vals = list(filter(lambda x: x[1] == most_cnt, counter))
+ans3_most_vals = list(sorted(map(lambda x: x[0], ans3_most_vals)))
 
 # 결과 출력하기
-print(ans1)
-print(ans2)
-print(ans3)
-print(ans4)
+print(ans1_avr)
+print(ans2_center)
+if len(ans3_most_vals) > 1:
+    print(ans3_most_vals[1])
+else:
+    print(ans3_most_vals[0])
+print(ans4_range)

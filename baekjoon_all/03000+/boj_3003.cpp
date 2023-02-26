@@ -1,5 +1,5 @@
 // Solve 2022-11-06
-// Update 2023-02-07
+// Update 2023-02-26
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -20,7 +20,8 @@ using ull = unsigned long long;
 int main() {
     FASTIO;
 
-    int arr[6] = {1, 1, 2, 2, 2, 8};
+    int arr[6] = { 1, 1, 2, 2, 2, 8 };
+
     for (int i = 0; i < 6; i++) {
         int x;
         cin >> x;

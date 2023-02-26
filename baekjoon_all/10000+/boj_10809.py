@@ -1,12 +1,11 @@
-S = input()
+# Solve 2022-05-19
+# Update 2023-02-26
 
-if "a" in S:
-    ans = str(S.find("a"))
-else:
-    ans = "-1"
-for i in range(98, 123):
-    if chr(i) in S:
-        ans += " " + str(S.find(chr(i)))
-    else:
-        ans += " -1"
-print(ans)
+s = input()
+ans = [-1] * 26
+
+for i in range(0, 26):
+    ch = chr(i + 97)
+    ans[i] = s.find(ch)
+
+print(*ans, sep=" ")

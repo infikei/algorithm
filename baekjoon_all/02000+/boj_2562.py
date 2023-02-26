@@ -1,7 +1,11 @@
 # Solve 2022-05-19
-# Update 2023-02-23
+# Update 2023-02-26
 
-max_val, max_idx = 0, 0
+import sys
+
+input = lambda : sys.stdin.readline().rstrip()
+
+max_val = max_idx = 0
 
 for idx in range(1, 10):
     x = int(input())

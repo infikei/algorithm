@@ -1,7 +1,11 @@
 # Solve 2022-05-29
-# Update 2023-02-23
+# Update 2023-02-26
+
+import sys
+
+input = lambda : sys.stdin.readline().rstrip()
 
 n = int(input())
-li = sorted([(int(input())) for _ in range(n)])
+li = sorted([int(input()) for _ in range(n)])
 
 print(*li, sep="\n")

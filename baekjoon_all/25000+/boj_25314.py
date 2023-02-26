@@ -1,8 +1,6 @@
 # Solve 2023-02-22
+# Update 2023-02-26
 
-n = int(input())
-n //= 4
+n = int(input()) // 4
 
-for i in range(n):
-    print("long ", end="")
-print("int")
+print("long " * n + "int")

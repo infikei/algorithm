@@ -1,5 +1,5 @@
 # Solve 2022-05-25
-# Update 2023-02-08
+# Update 2023-02-26
 
 n = int(input())
 

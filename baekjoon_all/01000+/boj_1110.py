@@ -1,9 +1,13 @@
-i = n = int(input())
+# Solve 2022-05-16
+# Update 2023-02-26
+
+cur = n = int(input())
 ans = 0
 
 while True:
-    i = i % 10*10+(i//10+i % 10) % 10
+    cur = cur % 10 * 10 + (cur // 10 + cur % 10) % 10
     ans += 1
-    if i == n:
+    if cur == n:
         break
+
 print(ans)

@@ -1,7 +1,7 @@
 // Solve 2021-12-18
-// Update 2023-02-07
+// Update 2023-02-26
 
-#include <bits/stdc++.h>
+#include <iostream>
 using namespace std;
 
 int main() {

@@ -1,10 +1,18 @@
-n = int(input())
-for i in range(n):
-    oxox = input()
-    cumulative = score = 0
+# Solve 2022-05-19
+# Update 2023-02-26
 
-    for j in range(len(oxox)):
-        if oxox[j] == 'O':
+import sys
+
+input = lambda : sys.stdin.readline().rstrip()
+
+t = int(input())
+
+for _ in range(t):
+    oxox = input()
+    score = cumulative = 0
+
+    for ch in oxox:
+        if ch == "O":
             cumulative += 1
             score += cumulative
         else:

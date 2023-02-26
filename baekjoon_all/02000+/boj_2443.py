@@ -1,4 +1,7 @@
+# Solve 2022-05-29
+# Update 2023-02-26
+
 n = int(input())
 
 for i in range(n):
-    print(" "*i+"*"*(2*n-1-2*i))
+    print(" " * i + "*" * ((n - i) * 2 - 1))

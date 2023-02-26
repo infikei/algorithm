@@ -1,7 +1,7 @@
 // Solve 2022-06-02
-// Update 2023-02-22
+// Update 2023-02-26
 
-#include <bits/stdc++.h>
+#include <iostream>
 using namespace std;
 
 int main() {
@@ -15,7 +15,7 @@ int main() {
     for (int ti = 0; ti < t; ti++) {
         int a, b;
         cin >> a >> b;
-        cout << (a + b) << '\n';
+        cout << a + b << '\n';
         // endl 대신 '\n'을 사용한다.
         // endl은 개행(줄바꿈) 뿐만 아니라 출력 버퍼를 비우는 역할까지 하는데,
         // endl을 사용하면 앞서 tie를 끊어주는 것의 효과를 볼 수가 없기 때문이다.

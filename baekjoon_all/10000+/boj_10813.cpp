@@ -1,4 +1,5 @@
 // Solve 2023-02-21
+// Update 2023-02-26
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -12,19 +13,17 @@ using namespace std;
 #define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
 #define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
-#define INF (int)1e9
-#define LLINF (ll)4e18
 using ll = long long;
 using uint = unsigned int;
 using ull = unsigned long long;
-
-int arr[101];
 
 int main() {
     FASTIO;
 
     int n, m;
     cin >> n >> m;
+
+    int arr[101];
 
     for (int i = 1; i <= n; i++) {
         arr[i] = i;
@@ -34,9 +33,7 @@ int main() {
         int u, v;
         cin >> u >> v;
 
-        int tmp = arr[u];
-        arr[u] = arr[v];
-        arr[v] = tmp;
+        swap(arr[u], arr[v]);
     }
 
     for (int i = 1; i <= n; i++) {

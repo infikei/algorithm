@@ -1,5 +1,5 @@
 # Solve 2022-05-21
-# Update 2023-02-08
+# Update 2023-02-26
 
 n = int(input())
 ans, val = 1, 1

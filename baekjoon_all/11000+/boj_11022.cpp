@@ -1,5 +1,5 @@
 // Solve 2022-06-02
-// Update 2023-02-22
+// Update 2023-02-26
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -26,6 +26,7 @@ int main() {
     for (int ti = 1; ti <= t; ti++) {
         int a, b;
         cin >> a >> b;
+
         cout << "Case #" << ti << ": " << a << " + " << b << " = " << a + b << '\n';
     }
 
