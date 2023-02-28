@@ -1,34 +1,38 @@
-#include <iostream>
-#include <queue>
+// Solve 2022-06-05
+// Update 2023-02-28
+
+#include <bits/stdc++.h>
 using namespace std;
 
-int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+#ifdef BOJ
+#define BOJTEST(x) ((void)0)
+#else
+#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
+#endif
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
 
-    int N, card;
-    cin >> N;
+int main() {
+    FASTIO;
+
+    int n;
+    cin >> n;
 
     queue<int> q;
-
-    for (int i = 1; i <= N; i++) {
+    for (int i = 1; i <= n; i++) {
         q.push(i);
     }
 
-    bool pop = true;
+    for (int i = 1; i < n; i++) {
+        q.pop();
 
-    while (q.size() > 1) {
-        if (pop) {
-            q.pop();
-            pop = false;
-        }
-        else {
-            card = q.front();
-            q.pop();
-            q.push(card);
-            pop = true;
-        }
+        q.push(q.front());
+        q.pop();
     }
 
     cout << q.front() << '\n';

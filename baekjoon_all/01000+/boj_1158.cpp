@@ -1,41 +1,49 @@
-#include <iostream>
-#include <vector>
-#include <queue>
+// Solve 2022-08-01
+// Update 2023-02-28
+
+#include <bits/stdc++.h>
 using namespace std;
 
+#ifdef BOJ
+#define BOJTEST(x) ((void)0)
+#else
+#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
+#endif
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+
 queue<int> q;
-vector<int> res;
-int N, K;
+vector<int> ans;
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    cin >> N >> K;
+    int n, k;
+    cin >> n >> k;
 
-    for (int i = 1; i <= N; i++) {
+    for (int i = 1; i <= n; i++) {
         q.push(i);
     }
 
-    int k = 1;
+    ans.resize(n);
 
-    while (!q.empty()) {
-        if (k < K) {
+    for (int i = 0; i < n; i++) {
+        for (int j = 1; j < k; j++) {
             q.push(q.front());
             q.pop();
-            k++;
         }
-        else {
-            res.push_back(q.front());
-            q.pop();
-            k = 1;
-        }
+        ans[i] = q.front();
+        q.pop();
     }
 
-    cout << '<' << res[0];
-    for (int i = 1; i < res.size(); i++) {
-        cout << ", " << res[i];
+    cout << '<' << ans[0];
+    for (int i = 1; i < n; i++) {
+        cout << ", " << ans[i];
     }
     cout << ">\n";
 
