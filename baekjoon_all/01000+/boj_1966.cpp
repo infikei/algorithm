@@ -1,50 +1,59 @@
-#include <iostream>
-#include <queue>
+// Solve 2022-06-05
+// Update 2023-03-01
+
+#include <bits/stdc++.h>
 using namespace std;
 
+#ifdef BOJ
+#define BOJTEST(x) ((void)0)
+#else
+#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
+#endif
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+using pii = pair<int, int>;
+
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    int T, N, M, index, importance;
-    cin >> T;
+    int t;
+    cin >> t;
 
-    for (int t = 0; t < T; t++) {
-        cin >> N >> M;
+    for (int ti = 0; ti < t; ti++) {
+        int n, m;
+        cin >> n >> m;
 
-        queue<int> q_index;
-        queue<int> q_importance;
-        priority_queue<int> pq_importance;
+        queue<pii> q;
+        priority_queue<int> pq_maxtop;
 
-        for (int i = 0; i < N; i++) {
-            cin >> importance;
-            q_index.push(i);
-            q_importance.push(importance);
-            pq_importance.push(importance);
+        for (int i = 0; i < n; i++) {
+            int x;
+            cin >> x;
+            q.push({ x, i });
+            pq_maxtop.push(x);
         }
 
         int ans = 0;
+        while (true) {
+            pii now = q.front();
+            q.pop();
 
-        while (!q_importance.empty()) {
-            index = q_index.front();
-            q_index.pop();
-            importance = q_importance.front();
-            q_importance.pop();
-
-            if (importance == pq_importance.top()) {
-                pq_importance.pop();
+            if (now.first == pq_maxtop.top()) {
+                pq_maxtop.pop();
                 ans++;
-                if (index == M) {
-                    cout << ans << '\n';
-                    break;
-                }
+                if (now.second == m) break;
             }
             else {
-                q_index.push(index);
-                q_importance.push(importance);
+                q.push(now);
             }
         }
+
+        cout << ans << '\n';
     }
 
     return 0;

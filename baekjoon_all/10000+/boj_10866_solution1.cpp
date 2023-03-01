@@ -1,4 +1,4 @@
-// Solve 2022-06-05
+// Solve 2022-06-06
 // Update 2023-03-01
 
 #include <bits/stdc++.h>
@@ -23,46 +23,60 @@ int main() {
     int n;
     cin >> n;
 
-    queue<int> q;
+    deque<int> dq;
 
     for (int i = 0; i < n; i++) {
         string cmd;
         cin >> cmd;
 
-        if (cmd == "push") {
+        if (cmd == "push_front") {
             int x;
             cin >> x;
-            q.push(x);
+            dq.push_front(x);
         }
-        else if (cmd == "pop") {
-            if (q.empty()) {
+        else if (cmd == "push_back") {
+            int x;
+            cin >> x;
+            dq.push_back(x);
+        }
+        else if (cmd == "pop_front") {
+            if (dq.empty()) {
                 cout << -1 << '\n';
             }
             else {
-                cout << q.front() << '\n';
-                q.pop();
+                cout << dq.front() << '\n';
+                dq.pop_front();
+            }
+        }
+        else if (cmd == "pop_back") {
+            if (dq.empty()) {
+                cout << -1 << '\n';
+            }
+            else {
+                cout << dq.back() << '\n';
+                dq.pop_back();
             }
         }
         else if (cmd == "size") {
-            cout << SIZE(q) << '\n';
+            cout << SIZE(dq) << '\n';
         }
         else if (cmd == "empty") {
-            cout << q.empty() << '\n';
+            cout << dq.empty() << '\n';
         }
         else if (cmd == "front") {
-            if (q.empty()) {
+            if (dq.empty()) {
                 cout << -1 << '\n';
             }
             else {
-                cout << q.front() << '\n';
+                cout << dq.front() << '\n';
             }
         }
         else {
-            if (q.empty()) {
+            if (dq.empty()) {
                 cout << -1 << '\n';
             }
             else {
-                cout << q.back() << '\n';
+                cout << dq.back() << '\n';
             }
         }
     }

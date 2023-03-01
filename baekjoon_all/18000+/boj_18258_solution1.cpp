@@ -1,5 +1,5 @@
 // Solve 2022-06-05
-// Update 2023-02-28
+// Update 2023-03-01
 
 // boj_10845_solution1.cpp 코드와 같음
 

@@ -1,5 +1,5 @@
 # Solve 2022-06-01
-# Update 2023-02-28
+# Update 2023-03-01
 
 import sys
 
@@ -30,7 +30,7 @@ for _ in range(n):
             print(-1)
         else:
             print(q[-1])
-    elif line[0] == "back":
+    else:
         if len(q) == 0:
             print(-1)
         else:

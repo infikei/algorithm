@@ -1,5 +1,5 @@
 // Solve 2022-06-05
-// Update 2023-02-28
+// Update 2023-03-01
 
 // boj_10845_solution2.cpp 코드에서 배열 길이만 바꿔준 버전
 
@@ -87,7 +87,7 @@ int main() {
         else if (cmd == "front") {
             cout << front() << '\n';
         }
-        else if (cmd == "back") {
+        else {
             cout << back() << '\n';
         }
     }

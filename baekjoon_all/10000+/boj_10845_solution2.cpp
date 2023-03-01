@@ -1,5 +1,5 @@
 // Solve 2022-06-05
-// Update 2023-02-28
+// Update 2023-03-01
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -85,7 +85,7 @@ int main() {
         else if (cmd == "front") {
             cout << front() << '\n';
         }
-        else if (cmd == "back") {
+        else {
             cout << back() << '\n';
         }
     }
