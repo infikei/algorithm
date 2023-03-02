@@ -1,4 +1,4 @@
-// Solve 2022-07-28
+// Solve 2022-07-27
 // Update 2023-03-02
 
 #include <bits/stdc++.h>
@@ -17,37 +17,28 @@ using ll = long long;
 using uint = unsigned int;
 using ull = unsigned long long;
 
-struct cmp {
-    bool operator()(int a, int b) {
-        if (abs(a) == abs(b)) {
-            return a > b;
-        }
-        return abs(a) > abs(b);
-    }
-};
-
 int main() {
     FASTIO;
 
     int n;
     cin >> n;
 
-    priority_queue<int, vector<int>, cmp> pq;
+    priority_queue<int, vector<int>, greater<int> > pq_mintop;
     for (int i = 0; i < n; i++) {
         int x;
         cin >> x;
 
         if (x == 0) {
-            if (pq.empty()) {
+            if (pq_mintop.empty()) {
                 cout << 0 << '\n';
             }
             else {
-                cout << pq.top() << '\n';
-                pq.pop();
+                cout << pq_mintop.top() << '\n';
+                pq_mintop.pop();
             }
         }
         else {
-            pq.push(x);
+            pq_mintop.push(x);
         }
     }
 
