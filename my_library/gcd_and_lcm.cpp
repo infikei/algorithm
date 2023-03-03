@@ -1,6 +1,6 @@
-// 최대공약수(GCD) 및 최소공배수(LCM) 구하는 알고리즘
+// 유클리드 호제법을 이용하여 최대공약수(GCD)와 최소공배수(LCM)를 구한다.
 
-#include <iostream>
+#include <bits/stdc++.h>
 using namespace std;
 
 int calc_gcd(int a, int b) {
@@ -15,11 +15,16 @@ int calc_lcm(int a, int b) {
 }
 
 int main() {
+    cout << "수를 입력하세요 : ";
+    int a;
+    cin >> a;
 
-    int a = 24, b = 30;
+    cout << "수를 하나 더 입력하세요 : ";
+    int b;
+    cin >> b;
 
-    cout << calc_gcd(a, b) << '\n';
-    cout << calc_lcm(a, b) << '\n';
+    cout << a << "와 " << b << "의 최대공약수는 " << calc_gcd(a, b) << "이다.\n";
+    cout << a << "와 " << b << "의 최소공배수는 " << calc_lcm(a, b) << "이다.\n";
 
     return 0;
 }
