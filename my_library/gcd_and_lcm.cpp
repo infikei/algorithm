@@ -3,23 +3,23 @@
 #include <iostream>
 using namespace std;
 
-int gcd(int a, int b) {
+int calc_gcd(int a, int b) {
     if (a % b == 0) {
         return b;
     }
-    return gcd(b, a % b);
+    return calc_gcd(b, a % b);
 }
 
-int lcm(int a, int b) {
-    return a / gcd(a, b) * b;
+int calc_lcm(int a, int b) {
+    return a / calc_gcd(a, b) * b;
 }
 
 int main() {
 
     int a = 24, b = 30;
 
-    cout << gcd(a, b) << '\n';
-    cout << lcm(a, b) << '\n';
+    cout << calc_gcd(a, b) << '\n';
+    cout << calc_lcm(a, b) << '\n';
 
     return 0;
 }
