@@ -1,27 +1,40 @@
-#include <iostream>
-#include <string>
+// Solve 2022-06-17
+// Update 2023-03-03
+
+#include <bits/stdc++.h>
 using namespace std;
 
+#ifdef BOJ
+#define BOJTEST(x) ((void)0)
+#else
+#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
+#endif
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    string input;
-    int n = 0, b;
-    cin >> input >> b;
+    string n;
+    int b;
+    cin >> n >> b;
 
-    for (int i = 0; i < input.length(); i++) {
-        n *= b;
-        if (input[i] > '9') {
-            n += input[i] - 'A' + 10;
+    int ans = 0;
+    for (auto ch : n) {
+        ans *= b;
+        if (ch > '9') {
+            ans += ch - 'A' + 10;
         }
         else {
-            n += input[i] - '0';
+            ans += ch - '0';
         }
     }
-
-    cout << n << '\n';
+    cout << ans << '\n';
 
     return 0;
 }

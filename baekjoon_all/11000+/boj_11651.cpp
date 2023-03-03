@@ -1,11 +1,22 @@
-#include <iostream>
-#include <vector>
-#include <algorithm>
-using namespace std;
-typedef pair<int, int> pii;
+// Solve 2022-08-04
+// Update 2023-03-03
 
-vector<pii> v;
-int N;
+#include <bits/stdc++.h>
+using namespace std;
+
+#ifdef BOJ
+#define BOJTEST(x) ((void)0)
+#else
+#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
+#endif
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+using pii = pair<int, int>;
 
 bool cmp(const pii &a, const pii &b) {
     if (a.second == b.second) {
@@ -15,22 +26,21 @@ bool cmp(const pii &a, const pii &b) {
 }
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    cin >> N;
+    int n;
+    cin >> n;
 
-    int x, y;
-    for (int i = 0; i < N; i++) {
+    vector<pii> v;
+    for (int i = 0; i < n; i++) {
+        int x, y;
         cin >> x >> y;
-        v.push_back(make_pair(x, y));
+        v.push_back({ x, y });
     }
+    sort(ALL(v), cmp);
 
-    sort(v.begin(), v.end(), cmp);
-
-    for (int i = 0; i < N; i++) {
-        cout << v[i].first << ' ' << v[i].second << '\n';
+    for (auto a : v) {
+        cout << a.first << ' ' << a.second << '\n';
     }
 
     return 0;

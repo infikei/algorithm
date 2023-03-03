@@ -1,33 +1,42 @@
-#include <iostream>
+// Solve 2022-07-09
+// Update 2023-03-03
+
+#include <bits/stdc++.h>
 using namespace std;
 
-int T[16];
-int P[16];
-int DP[16];
+#ifdef BOJ
+#define BOJTEST(x) ((void)0)
+#else
+#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
+#endif
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+
+const int MAX_N = 16;
+int t[MAX_N], p[MAX_N], dp[MAX_N];
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    int N;
-    cin >> N;
-
-    for (int i = 1; i <= N; i++) {
-        cin >> T[i] >> P[i];
+    int n;
+    cin >> n;
+    for (int i = 0; i < n; i++) {
+        cin >> t[i] >> p[i];
     }
 
     int ans = 0;
-    DP[N] = 0;
-
-    for (int i = N; i >= 1; i--) {
-        DP[i] = 0;
-        for (int j = i + T[i]; j <= N + 1; j++) {
-            DP[i] = max(DP[i], P[i] + DP[j]);
+    for (int i = n - 1; i >= 0; i--) {
+        dp[i] = 0;
+        for (int j = i + t[i]; j <= n; j++) {
+            dp[i] = max(dp[i], p[i] + dp[j]);
         }
-        ans = max(ans, DP[i]);
+        ans = max(ans, dp[i]);
     }
-
     cout << ans << '\n';
 
     return 0;

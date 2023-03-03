@@ -1,42 +1,52 @@
-#include <iostream>
+// Solve 2022-08-03
+// Update 2023-03-03
+
+#include <bits/stdc++.h>
 using namespace std;
 
-int A[100][100], B[100][100], AB[100][100];
-int N, M, K;
+#ifdef BOJ
+#define BOJTEST(x) ((void)0)
+#else
+#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
+#endif
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+
+int a[100][100], b[100][100], ans[100][100];
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    // 입력
-    cin >> N >> M;
-    for (int row = 0; row < N; row++) {
-        for (int col = 0; col < M; col++) {
-            cin >> A[row][col];
+    int n, m, k;
+    cin >> n >> m;
+    for (int row = 0; row < n; row++) {
+        for (int col = 0; col < m; col++) {
+            cin >> a[row][col];
         }
     }
-    cin >> M >> K;
-    for (int row = 0; row < M; row++) {
-        for (int col = 0; col < K; col++) {
-            cin >> B[row][col];
+    cin >> m >> k;
+    for (int row = 0; row < m; row++) {
+        for (int col = 0; col < k; col++) {
+            cin >> b[row][col];
         }
     }
 
-    // 행렬 곱셈
-    for (int row = 0; row < N; row++) {
-        for (int col = 0; col < K; col++) {
-            AB[row][col] = 0;
-            for (int i = 0; i < M; i++) {
-                AB[row][col] += A[row][i] * B[i][col];
+    for (int row = 0; row < n; row++) {
+        for (int col = 0; col < k; col++) {
+            for (int i = 0; i < m; i++) {
+                ans[row][col] += a[row][i] * b[i][col];
             }
         }
     }
 
-    // 출력
-    for (int row = 0; row < N; row++) {
-        for (int col = 0; col < K; col++) {
-            cout << AB[row][col] << ' ';
+    for (int row = 0; row < n; row++) {
+        for (int col = 0; col < k; col++) {
+            cout << ans[row][col] << ' ';
         }
         cout << '\n';
     }

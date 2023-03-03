@@ -1,13 +1,11 @@
-def divide(n, i):
-    if n % i == 0:
-        print(i)
-        return divide(n/i, i)
-    else:
-        return (n, i)
-
+# Solve 2022-05-24
+# Update 2023-03-03
 
 n = int(input())
-for i in range(2, n+1):
-    n, i = divide(n, i)
-    if n == 1:
-        break
+
+i = 2
+while n > 1:
+    while n % i == 0:
+        print(i)
+        n //= i
+    i += 1

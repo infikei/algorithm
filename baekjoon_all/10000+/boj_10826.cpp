@@ -1,12 +1,23 @@
-#include <iostream>
-#include <string>
-#include <algorithm>
+// Solve 2022-11-10
+// Update 2023-03-03
+
+#include <bits/stdc++.h>
 using namespace std;
-#define fastio ios_base::sync_with_stdio(false);cout.tie(NULL);cin.tie(NULL); // boj_15552.cpp
 
-int N;
+#ifdef BOJ
+#define BOJTEST(x) ((void)0)
+#else
+#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
+#endif
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
 
-string unsigned_big_int_add(string a, string b) {
+string ubigint_add(string a, string b) {
     string result;
     int sum = 0, carry = 0;
 
@@ -34,26 +45,27 @@ string unsigned_big_int_add(string a, string b) {
     return result;
 }
 
-string Fibonacci_big(int n) {
-    if (n == 0) {
+string calc_big_fibonacci(int k) {
+    if (k == 0) {
         return "0";
     }
 
-    string F_val[3] = {"0", "0", "1"};
-    for (int i = 2; i <= N; i++) {
-        F_val[0] = F_val[1];
-        F_val[1] = F_val[2];
-        F_val[2] = unsigned_big_int_add(F_val[0], F_val[1]);
+    string f_val[3] = { "0", "0", "1" };
+    for (int i = 2; i <= k; i++) {
+        f_val[0] = f_val[1];
+        f_val[1] = f_val[2];
+        f_val[2] = ubigint_add(f_val[0], f_val[1]);
     }
-    return F_val[2];
+    return f_val[2];
 }
 
 int main() {
-    fastio;
+    FASTIO;
 
-    cin >> N;
+    int n;
+    cin >> n;
 
-    cout << Fibonacci_big(N) << '\n';
+    cout << calc_big_fibonacci(n) << '\n';
 
     return 0;
 }

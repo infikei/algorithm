@@ -1,8 +1,12 @@
-n = int(input())
-li = [0] * n
+# Solve 2022-05-30
+# Update 2023-03-03
 
-for i in range(n):
-    li[i] = tuple(map(int, input().split()))
+import sys
+
+input = lambda : sys.stdin.readline().rstrip()
+
+n = int(input())
+li = [tuple(map(int, input().split())) for _ in range(n)]
 
 for i in sorted(li):
     print(*i)
