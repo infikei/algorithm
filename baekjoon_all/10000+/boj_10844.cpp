@@ -1,36 +1,48 @@
-#include <iostream>
+// Solve 2022-07-02
+// Update 2023-03-04
+
+#include <bits/stdc++.h>
 using namespace std;
 
-long long DP[101][10];
+#ifdef BOJ
+#define BOJTEST(x) ((void)0)
+#else
+#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
+#endif
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+
+const ll MOD = 1e9;
+ll dp[100][10];
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    // 입력 값 저장하기
-    int N;
-    cin >> N;
+    int n;
+    cin >> n;
 
-    // 초기값 설정하기
-    DP[1][0] = 0;
     for (int j = 1; j <= 9; j++) {
-        DP[1][j] = 1;
+        dp[0][j] = 1;
     }
 
     // 점화식을 이용하여 계산하기
-    for (int i = 2; i <= N; i++) {
-        DP[i][0] = DP[i - 1][1];
-        DP[i][9] = DP[i - 1][8];
-        for (int j = 1; j <= 8; j++) {
-            DP[i][j] = (DP[i - 1][j - 1] + DP[i - 1][j + 1]) % 1000000000;
+    for (int i = 1; i < n; i++) {
+        dp[i][0] = dp[i - 1][1];
+        dp[i][9] = dp[i - 1][8];
+        for (int j = 1; j < 9; j++) {
+            dp[i][j] = (dp[i - 1][j - 1] + dp[i - 1][j + 1]) % MOD;
         }
     }
 
-    // 결과 값 출력하기
-    long long ans = DP[N][0];
-    for (int j = 1; j <= 9; j++) {
-        ans = (ans + DP[N][j]) % 1000000000;
+    // 결과 출력하기
+    ll ans = 0;
+    for (int i = 0; i < 10; i++) {
+        ans = (ans + dp[n - 1][i]) % MOD;
     }
     cout << ans << '\n';
 

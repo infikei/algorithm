@@ -1,17 +1,30 @@
-#include <iostream>
+// Solve 2022-10-23
+// Update 2023-03-04
+
+#include <bits/stdc++.h>
 using namespace std;
 
-int N;
-int cnt[2];
+#ifdef BOJ
+#define BOJTEST(x) ((void)0)
+#else
+#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
+#endif
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    cin >> N;
+    int n;
+    cin >> n;
 
-    for (int i = 0; i < N; i++) {
+    int cnt[2] = { 0 };
+    for (int i = 0; i < n; i++) {
         int x;
         cin >> x;
         cnt[x]++;
