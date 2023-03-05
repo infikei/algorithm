@@ -23,11 +23,15 @@ using ull = unsigned long long;
 // using pll = pair<ll, ll>;
 // using pl3 = pair<ll, pll>;
 // using pl4 = pair<pll, pll>;
+// using matrix = vector<vector<int> >;
+// using matrixll = vector<vector<ll> >;
 // using cpx = complex<double>;
 
 // const int INF = 1e9;
 // const ll LLINF = 4e18;
+// const ll MOD = 1000000007;
 // const double PI = acos(-1);
+// const int MAX_SIZE = 1000;
 
 int main() {
     FASTIO;
