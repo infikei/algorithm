@@ -165,13 +165,14 @@ num1, num2, num3 = round(4.6), round(4.2), round(5.678, 2)
 print([num1, num2, num3]) # [5, 4, 5.68]
 
 # int(n, radix)는 radix 진수로 표현된 문자열 n을 입력 값으로 받아 10진수로 변환한 값을 반환한다.
-num1, num2, num3 = int("11", 2), int("0xea", 16), int("0o352", 8)
-print([num1, num2, num3]) # [3, 234, 234]
+num1, num2, num3, num4 = int("11", 2), int("0xea", 16), int("0o352", 8), int("0b11101010", 2)
+print([num1, num2, num3, num4]) # [3, 234, 234, 234]
 
 # hex(n) 함수는 정수 n을 입력 값으로 받아 16진수 문자열을 반환한다.
 # oct(n) 함수는 정수 n을 입력 값으로 받아 8진수 문자열을 반환한다.
-num1, num2 = hex(234), oct(234)
-print([num1, num2]) # ["0xea", "0o352"]
+# bin(n) 함수는 정수 n을 입력 값으로 받아 2진수 문자열을 반환한다.
+num1, num2, num3 = hex(234), oct(234), bin(234)
+print([num1, num2, num3]) # ["0xea", "0o352", "0b11101010"]
 
 # chr(n) 함수는 유니코드 숫자값 n을 입력 값으로 받아 그 코드에 해당하는 문자를 반환한다.
 # ord(c) 함수는 입력 값으로 받은 문자 c의 유니코드 숫자 값을 반환한다.
