@@ -1,4 +1,5 @@
-// Solve 2023-03-03
+// Solve 2022-12-06
+// Update 2023-03-05
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -16,7 +17,7 @@ using ll = long long;
 using uint = unsigned int;
 using ull = unsigned long long;
 
-const ll MOD = 1e6;
+const ll MOD = 1000000007;
 unordered_map<ll, ll> hs;
 
 ll calc_fibonacci(ll k) {

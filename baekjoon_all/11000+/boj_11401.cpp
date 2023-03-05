@@ -1,44 +1,56 @@
-#include <iostream>
-#define fastio ios_base::sync_with_stdio(false);cout.tie(NULL);cin.tie(NULL); // boj_15552.cpp
-using namespace std;
-using ll = long long;
+// Solve 2022-12-06
+// Update 2023-03-05
 
-ll factorial_with_mod(ll x, ll m) {
+#include <bits/stdc++.h>
+using namespace std;
+
+#ifdef BOJ
+#define BOJTEST(x) ((void)0)
+#else
+#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
+#endif
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+
+const ll MOD = 1000000007;
+
+ll calc_factorial(ll k) {
     ll res = 1;
-    for (ll i = 2; i <= x; i++) {
+    for (ll i = 2; i <= k; i++) {
         res *= i;
-        res %= m;
+        res %= MOD;
     }
     return res;
 }
 
-ll power_with_mod(ll x, ll n, ll m) {
-    if (n == 0) {
-        return 1;
+ll power(ll a, ll b) {
+    ll res = 1;
+    while (b > 0) {
+        if (b & 1) {
+            res *= a;
+            res %= MOD;
+        }
+        a *= a;
+        a %= MOD;
+        b >>= 1;
     }
-    if (n == 1) {
-        return x % m;
-    }
-
-    ll k = power_with_mod(x, n / 2, m);
-    if (n % 2 == 0) {
-        return k * k % m;
-    }
-    else {
-        return k * k % m * x % m;
-    }
+    return res;
 }
 
 int main() {
-    fastio;
+    FASTIO;
 
-    ll N, K, M = 1000000007LL;
-    cin >> N >> K;
+    ll n, k;
+    cin >> n >> k;
 
-    ll A = factorial_with_mod(N, M);
-    ll B = factorial_with_mod(K, M) * factorial_with_mod(N - K, M) % M;
-    ll ans = A * power_with_mod(B, M - 2, M) % M;
-
+    ll a = calc_factorial(n);
+    ll b = calc_factorial(n - k) * calc_factorial(k) % MOD;
+    ll ans = a * power(b, MOD - 2) % MOD;
     cout << ans << '\n';
 
     return 0;
