@@ -28,6 +28,8 @@ using ull = unsigned long long;
 // const ll MOD = 1000000007;
 // const double PI = acos(-1);
 // const int MAX_SIZE = 1000;
+// const int MATRIX_SIZE = 2;
+// const int FFT_SIZE = 1 << 21;
 
 int main() {
     FASTIO;
