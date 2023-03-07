@@ -1,5 +1,5 @@
 // Solve 2022-10-22
-// Update 2023-03-05
+// Update 2023-03-06
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -19,7 +19,7 @@ using ull = unsigned long long;
 
 const int MOD = 1000000007;
 
-int calc(int k) {
+int calc_fibonacci(int k) {
     if (k == 0) {
         return 0;
     }
@@ -39,7 +39,7 @@ int main() {
     int n;
     cin >> n;
 
-    cout << calc(n) << '\n';
+    cout << calc_fibonacci(n) << '\n';
 
     return 0;
 }

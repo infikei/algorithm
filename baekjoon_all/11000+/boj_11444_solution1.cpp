@@ -1,5 +1,5 @@
 // Solve 2022-12-06
-// Update 2023-03-05
+// Update 2023-03-06
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -19,13 +19,14 @@ using ull = unsigned long long;
 using matrixll = vector<vector<ll> >;
 
 const ll MOD = 1000000007;
+const int MATRIX_SIZE = 2;
 
 matrixll mat_mul(const matrixll &a, const matrixll &b) {
-    matrixll res(2, vector<ll>(2));
-    for (int row = 0; row < 2; row++) {
-        for (int col = 0; col < 2; col++) {
+    matrixll res(MATRIX_SIZE, vector<ll>(MATRIX_SIZE));
+    for (int row = 0; row < MATRIX_SIZE; row++) {
+        for (int col = 0; col < MATRIX_SIZE; col++) {
             res[row][col] = 0;
-            for (int idx = 0; idx < 2; idx++) {
+            for (int idx = 0; idx < MATRIX_SIZE; idx++) {
                 res[row][col] += a[row][idx] * b[idx][col] % MOD;
                 res[row][col] %= MOD;
             }
@@ -35,8 +36,8 @@ matrixll mat_mul(const matrixll &a, const matrixll &b) {
 }
 
 matrixll mat_power(matrixll a, ll b) {
-    matrixll res(2, vector<ll>(2));
-    for (int i = 0; i < 2; i++) {
+    matrixll res(MATRIX_SIZE, vector<ll>(MATRIX_SIZE));
+    for (int i = 0; i < MATRIX_SIZE; i++) {
         res[i][i] = 1;
     }
 
@@ -53,7 +54,7 @@ matrixll mat_power(matrixll a, ll b) {
 int main() {
     FASTIO;
 
-    matrixll m = {
+    matrixll mat = {
         { 1, 1 },
         { 1, 0 }
     };
@@ -61,8 +62,8 @@ int main() {
     ll n;
     cin >> n;
 
-    matrixll ans = mat_power(m, n);
-    cout << ans[0][1] << '\n';
+    matrixll ans = mat_power(mat, n);
+    cout << ans[1][0] << '\n';
 
     return 0;
 }
