@@ -1,12 +1,12 @@
-numbers = set(range(1, 10001))
-remove_numbers = set()
+# Solve 2022-05-19
+# Update 2023-03-07
 
-for num in numbers:
-    for n in str(num):
-        num += int(n)
-    remove_numbers.add(num)
+nums = set(range(1, 10001))
+remove_nums = set()
 
-s = "1"
-for num in sorted(numbers - remove_numbers - {1}):
-    s += ("\n"+str(num))
-print(s)
+for num in nums:
+    for ch in str(num):
+        num += int(ch)
+    remove_nums.add(num)
+
+print(*sorted(nums - remove_nums), sep="\n")

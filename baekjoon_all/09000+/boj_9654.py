@@ -1,3 +1,6 @@
+# Solve 2022-05-31
+# Update 2023-03-07
+
 print("SHIP NAME      CLASS          DEPLOYMENT IN SERVICE")
 print("N2 Bomber      Heavy Fighter  Limited    21        ")
 print("J-Type 327     Light Combat   Unlimited  1         ")

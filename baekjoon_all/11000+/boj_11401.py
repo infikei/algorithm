@@ -1,4 +1,5 @@
 # Solve 2023-03-05
+# Update 2023-03-07
 
 import sys
 
@@ -13,7 +14,7 @@ def calc_factorial(k):
         res %= MOD
     return res
 
-def power(a, b):
+def calc_power(a, b):
     res = 1
     while b > 0:
         if b % 2 == 1:
@@ -28,5 +29,5 @@ n, k = map(int, input().split())
 
 a = calc_factorial(n)
 b = calc_factorial(n - k) * calc_factorial(k) % MOD
-ans = a * power(b, MOD - 2) % MOD
+ans = a * calc_power(b, MOD - 2) % MOD
 print(ans)

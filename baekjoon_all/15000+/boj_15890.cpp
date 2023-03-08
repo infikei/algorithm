@@ -1,11 +1,11 @@
+// Solve 2022-11-08
+// Update 2023-03-07
+
 #include <iostream>
 using namespace std;
-#define fastio ios_base::sync_with_stdio(false);cout.tie(NULL);cin.tie(NULL); // boj_15552.cpp
 
 int main() {
-    fastio;
-
-    cout << "20180729" << '\n';
+    cout << "20180729\n";
 
     return 0;
 }

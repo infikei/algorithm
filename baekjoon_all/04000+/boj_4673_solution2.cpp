@@ -1,4 +1,4 @@
-// Solve 2023-01-14
+// Solve 2022-06-03
 // Update 2023-03-07
 
 #include <bits/stdc++.h>
@@ -17,25 +17,30 @@ using ll = long long;
 using uint = unsigned int;
 using ull = unsigned long long;
 
-int calc_sum(int k, int mod) {
-    int res = 0;
-    while (k > 0) {
-        res += k % mod;
-        k /= mod;
-    }
-    return res;
-}
+const int MAX_NUM = 10001;
 
 int main() {
     FASTIO;
 
-    for (int num = 1000; num < 10000; num++) {
-        int sum10 = calc_sum(num, 10);
-        int sum12 = calc_sum(num, 12);
-        if (sum10 != sum12) continue;
-        int sum16 = calc_sum(num, 16);
-        if (sum10 != sum16) continue;
-        cout << num << '\n';
+    bool ans[MAX_NUM] = {false};
+
+    for (int num = 1; num < MAX_NUM; num++) {
+        int next = num;
+        string s = to_string(num);
+
+        for (auto ch : s) {
+            next += (ch - '0');
+        }
+
+        if (next < MAX_NUM) {
+            ans[next] = true;
+        }
+    }
+
+    for (int i = 1; i < MAX_NUM; i++) {
+        if (!ans[i]) {
+            cout << i << '\n';
+        }
     }
 
     return 0;
