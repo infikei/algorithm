@@ -1,4 +1,5 @@
 // Solve 2023-03-06
+// Update 2023-03-08
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -18,7 +19,7 @@ using ull = unsigned long long;
 
 const ll MOD = 1000000007;
 
-ll power(ll a, ll b) {
+ll calc_power(ll a, ll b) {
     ll res = 1;
     while (b > 0) {
         if (b & 1) {
@@ -38,7 +39,7 @@ int main() {
     ll a, x;
     cin >> a >> x;
 
-    ll ans = power(a % MOD, x);
+    ll ans = calc_power(a % MOD, x);
     cout << ans << '\n';
 
     return 0;

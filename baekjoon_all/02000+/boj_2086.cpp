@@ -1,4 +1,5 @@
 // Solve 2023-03-06
+// Update 2023-03-08
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -18,13 +19,12 @@ using ull = unsigned long long;
 using matrixll = vector<vector<ll> >;
 
 const ll MOD = 1e9;
-const int MATRIX_SIZE = 3;
+const int MATRIX_SIZE = 2;
 
-matrixll mat_mul(const matrixll &a, const matrixll &b) {
-    matrixll res(MATRIX_SIZE, vector<ll>(MATRIX_SIZE));
+matrixll calc_mat_mul(const matrixll &a, const matrixll &b) {
+    matrixll res(MATRIX_SIZE, vector<ll>(MATRIX_SIZE, 0));
     for (int row = 0; row < MATRIX_SIZE; row++) {
         for (int col = 0; col < MATRIX_SIZE; col++) {
-            res[row][col] = 0;
             for (int idx = 0; idx < MATRIX_SIZE; idx++) {
                 res[row][col] += a[row][idx] * b[idx][col] % MOD;
                 res[row][col] %= MOD;
@@ -34,17 +34,17 @@ matrixll mat_mul(const matrixll &a, const matrixll &b) {
     return res;
 }
 
-matrixll mat_power(matrixll a, ll b) {
-    matrixll res(MATRIX_SIZE, vector<ll>(MATRIX_SIZE));
+matrixll calc_mat_power(matrixll a, ll b) {
+    matrixll res(MATRIX_SIZE, vector<ll>(MATRIX_SIZE, 0));
     for (int i = 0; i < MATRIX_SIZE; i++) {
         res[i][i] = 1;
     }
 
     while (b > 0) {
         if (b & 1) {
-            res = mat_mul(res, a);
+            res = calc_mat_mul(res, a);
         }
-        a = mat_mul(a, a);
+        a = calc_mat_mul(a, a);
         b >>= 1;
     }
     return res;
@@ -53,20 +53,17 @@ matrixll mat_power(matrixll a, ll b) {
 int main() {
     FASTIO;
 
-    matrixll m = {
-        { 1, 1, 1 },
-        { 1, 0, 0 },
-        { 0, 0, 1 }
+    matrixll mat = {
+        { 1, 1 },
+        { 1, 0 }
     };
 
     ll a, b;
     cin >> a >> b;
 
-    matrixll m1 = mat_power(m, a - 1);
-    matrixll m2 = mat_power(m, b);
-    ll ans1 = (m1[1][0] + m1[1][2]) % MOD;
-    ll ans2 = (m2[1][0] + m2[1][2]) % MOD;
-    cout << (ans2 - ans1 + MOD) % MOD << '\n';
+    matrixll mat1 = calc_mat_power(mat, a + 1);
+    matrixll mat2 = calc_mat_power(mat, b + 2);
+    cout << (mat2[1][0] - mat1[1][0] + MOD) % MOD << '\n';
 
     return 0;
 }

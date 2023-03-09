@@ -1,5 +1,5 @@
 // Solve 2023-03-05
-// Update 2023-03-06
+// Update 2023-03-08
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -19,7 +19,7 @@ using ull = unsigned long long;
 
 ll mod;
 
-ll power(ll a, ll b) {
+ll calc_power(ll a, ll b) {
     ll res = 1;
     while (b > 0) {
         if (b & 1) {
@@ -36,11 +36,11 @@ ll power(ll a, ll b) {
 /**
  * @brief 1 + r + r^2 + ... + r^(n-1) 구하는 함수
  */
-ll calc(ll r, ll n) {
+ll calc_sum_of_geometric_seq(ll r, ll n) {
     if (n == 1) {
         return 1;
     }
-    ll res = calc(r, n >> 1) * (1 + power(r, n >> 1)) % mod;
+    ll res = calc_sum_of_geometric_seq(r, n >> 1) * (1 + calc_power(r, n >> 1)) % mod;
     if (n & 1) {
         res *= r;
         res++;
@@ -55,7 +55,7 @@ int main() {
     ll a, r, n;
     cin >> a >> r >> n >> mod;
 
-    ll ans = a * calc(r, n) % mod;
+    ll ans = a * calc_sum_of_geometric_seq(r, n) % mod;
     cout << ans << '\n';
 
     return 0;

@@ -1,4 +1,5 @@
 // Solve 2023-03-05
+// Update 2023-03-08
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -20,7 +21,7 @@ const ll MOD = 1000000007;
 const ll MAX_N = 4000001;
 ll factorials[MAX_N];
 
-ll power(ll a, ll b) {
+ll calc_power(ll a, ll b) {
     ll res = 1;
     while (b > 0) {
         if (b & 1) {
@@ -54,7 +55,7 @@ int main() {
 
         ll a = factorials[n];
         ll b = factorials[n - k] * factorials[k] % MOD;
-        ll ans = a * power(b, MOD - 2) % MOD;
+        ll ans = a * calc_power(b, MOD - 2) % MOD;
         cout << ans << '\n';
     }
 

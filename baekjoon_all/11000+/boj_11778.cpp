@@ -1,4 +1,5 @@
 // Solve 2023-03-07
+// Update 2023-03-08
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -27,7 +28,7 @@ ll calc_gcd(ll a, ll b) {
     return calc_gcd(b, a % b);
 }
 
-matrixll mat_mul(const matrixll &a, const matrixll &b) {
+matrixll calc_mat_mul(const matrixll &a, const matrixll &b) {
     matrixll res(MATRIX_SIZE, vector<ll>(MATRIX_SIZE));
     for (int row = 0; row < MATRIX_SIZE; row++) {
         for (int col = 0; col < MATRIX_SIZE; col++) {
@@ -41,7 +42,7 @@ matrixll mat_mul(const matrixll &a, const matrixll &b) {
     return res;
 }
 
-matrixll mat_power(matrixll a, ll b) {
+matrixll calc_mat_power(matrixll a, ll b) {
     matrixll res(MATRIX_SIZE, vector<ll>(MATRIX_SIZE));
     for (int i = 0; i < MATRIX_SIZE; i++) {
         res[i][i] = 1;
@@ -49,9 +50,9 @@ matrixll mat_power(matrixll a, ll b) {
 
     while (b > 0) {
         if (b & 1) {
-            res = mat_mul(res, a);
+            res = calc_mat_mul(res, a);
         }
-        a = mat_mul(a, a);
+        a = calc_mat_mul(a, a);
         b >>= 1;
     }
     return res;
@@ -68,7 +69,7 @@ int main() {
         { 1, 0 }
     };
 
-    matrixll ans = mat_power(mat, calc_gcd(n, m));
+    matrixll ans = calc_mat_power(mat, calc_gcd(n, m));
     cout << ans[1][0] << '\n';
 
     return 0;

@@ -18,25 +18,25 @@ using uint = unsigned int;
 using ull = unsigned long long;
 using matrixll = vector<vector<ll> >;
 
-const ll MOD = 1000000007;
-const int MATRIX_SIZE = 2;
+const ll MOD = 1000;
+int n;
 
 matrixll calc_mat_mul(const matrixll &a, const matrixll &b) {
-    matrixll res(MATRIX_SIZE, vector<ll>(MATRIX_SIZE, 0));
-    for (int row = 0; row < MATRIX_SIZE; row++) {
-        for (int col = 0; col < MATRIX_SIZE; col++) {
-            for (int idx = 0; idx < MATRIX_SIZE; idx++) {
+    matrixll res(n, vector<ll>(n, 0));
+    for (int row = 0; row < n; row++) {
+        for (int col = 0; col < n; col++) {
+            for (int idx = 0; idx < n; idx++) {
                 res[row][col] += a[row][idx] * b[idx][col] % MOD;
-                res[row][col] %= MOD;
             }
+            res[row][col] %= MOD;
         }
     }
     return res;
 }
 
 matrixll calc_mat_power(matrixll a, ll b) {
-    matrixll res(MATRIX_SIZE, vector<ll>(MATRIX_SIZE, 0));
-    for (int i = 0; i < MATRIX_SIZE; i++) {
+    matrixll res(n, vector<ll>(n, 0));
+    for (int i = 0; i < n; i++) {
         res[i][i] = 1;
     }
 
@@ -53,16 +53,23 @@ matrixll calc_mat_power(matrixll a, ll b) {
 int main() {
     FASTIO;
 
-    matrixll mat = {
-        { 1, 1 },
-        { 1, 0 }
-    };
+    ll b;
+    cin >> n >> b;
 
-    ll n;
-    cin >> n;
+    matrixll a(n, vector<ll>(n, 0));
+    for (int row = 0; row < n; row++) {
+        for (int col = 0; col < n; col++) {
+            cin >> a[row][col];
+        }
+    }
 
-    matrixll ans = calc_mat_power(mat, n);
-    cout << ans[1][0] << '\n';
+    matrixll ans = calc_mat_power(a, b);
+    for (auto row : ans) {
+        for (auto i : row) {
+            cout << i << ' ';
+        }
+        cout << '\n';
+    }
 
     return 0;
 }
