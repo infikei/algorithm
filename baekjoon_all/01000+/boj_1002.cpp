@@ -1,5 +1,5 @@
 // Solve 2022-06-03
-// Update 2023-02-21
+// Update 2023-03-13
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -24,9 +24,10 @@ int main() {
     cin >> t;
 
     for (int ti = 0; ti < t; ti++) {
-        int x1, y1, r1, x2, y2, r2, ans;
+        int x1, y1, r1, x2, y2, r2;
         cin >> x1 >> y1 >> r1 >> x2 >> y2 >> r2;
 
+        int ans;
         if (x1 == x2 && y1 == y2 && r1 == r2) {
             ans = -1;
         }
@@ -48,7 +49,6 @@ int main() {
                 ans = 2;
             }
         }
-
         cout << ans << '\n';
     }
 

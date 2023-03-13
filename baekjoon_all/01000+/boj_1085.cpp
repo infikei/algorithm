@@ -1,11 +1,29 @@
-#include <iostream>
+// Solve 2022-06-03
+// Update 2023-03-13
+
+#include <bits/stdc++.h>
 using namespace std;
 
+#ifdef BOJ
+#define BOJTEST(x) ((void)0)
+#else
+#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
+#endif
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+
 int main() {
-    int x, y, w, h, ans;
+    FASTIO;
+
+    int x, y, w, h;
     cin >> x >> y >> w >> h;
 
-    ans = min(min(x, y), min(w - x, h - y));
+    int ans = min(min(x, y), min(w - x, h - y));
     cout << ans << '\n';
 
     return 0;

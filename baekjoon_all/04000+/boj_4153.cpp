@@ -1,5 +1,5 @@
 // Solve 2022-06-03
-// Update 2023-02-08
+// Update 2023-03-13
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -20,19 +20,18 @@ using ull = unsigned long long;
 int main() {
     FASTIO;
 
-
     while (true) {
-        int a, b, c;
-        cin >> a >> b >> c;
-        if (a == 0 && b == 0 && c == 0) {
+        int arr[3];
+        for (int i = 0; i < 3; i++) {
+            cin >> arr[i];
+            arr[i] *= arr[i];
+        }
+        if (arr[0] == 0) {
             break;
         }
+        sort(arr, arr + 3);
 
-        a *= a;
-        b *= b;
-        c *= c;
-
-        if (a + b == c || b + c == a || c + a == b) {
+        if (arr[0] + arr[1] == arr[2]) {
             cout << "right\n";
         }
         else {
