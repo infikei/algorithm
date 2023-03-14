@@ -1,6 +1,12 @@
-import math
+# Solve 2022-05-29
+# Update 2023-03-14
 
-r = int(input())
+import sys
+from math import pi
 
-print(r**2*math.pi)
-print(r**2*2.0)
+input = lambda : sys.stdin.readline().rstrip()
+
+r = int(input()) ** 2
+
+print("%.6f" % (r * pi))
+print("%.6f" % (r * 2))

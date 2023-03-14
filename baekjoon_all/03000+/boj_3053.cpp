@@ -1,4 +1,4 @@
-// Solve 2022-11-04
+// Solve 2022-06-03
 // Update 2023-03-14
 
 #include <bits/stdc++.h>
@@ -17,28 +17,18 @@ using ll = long long;
 using uint = unsigned int;
 using ull = unsigned long long;
 
+const double PI = acos(-1);
+
 int main() {
     FASTIO;
 
-    int scores[2] = { 100, 100 };
-    int n;
-    cin >> n;
+    double r;
+    cin >> r;
+    r *= r;
 
-    for (int i = 0; i < n; i++) {
-        int x, y;
-        cin >> x >> y;
-
-        if (x > y) {
-            scores[1] -= x;
-        }
-        else if (x < y) {
-            scores[0] -= y;
-        }
-    }
-
-    for (int i = 0; i < 2; i++) {
-        cout << scores[i] << '\n';
-    }
+    SETPRECISION(6);
+    cout << r * PI << '\n';
+    cout << r * 2 << '\n';
 
     return 0;
 }

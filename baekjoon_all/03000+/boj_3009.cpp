@@ -1,30 +1,43 @@
-#include <iostream>
+// Solve 2022-06-03
+// Update 2023-03-14
+
+#include <bits/stdc++.h>
 using namespace std;
 
+#ifdef BOJ
+#define BOJTEST(x) ((void)0)
+#else
+#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
+#endif
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    int x[4], y[4];
-    for (int i = 0; i < 3; i++)
-        cin >> x[i] >> y[i];
+    int p[4][2];
+    for (int i = 0; i < 3; i++) {
+        cin >> p[i][0] >> p[i][1];
+    }
 
-    if (x[0] == x[1])
-        x[3] = x[2];
-    else if (x[0] == x[2])
-        x[3] = x[1];
-    else
-        x[3] = x[0];
+    for (int j = 0; j < 2; j++) {
+        if (p[0][j] == p[1][j]) {
+            p[3][j] = p[2][j];
+        }
+        else if (p[0][j] == p[2][j]) {
+            p[3][j] = p[1][j];
+        }
+        else {
+            p[3][j] = p[0][j];
+        }
+    }
 
-    if (y[0] == y[1])
-        y[3] = y[2];
-    else if (y[0] == y[2])
-        y[3] = y[1];
-    else
-        y[3] = y[0];
-
-    cout << x[3] << ' ' << y[3] << '\n';
+    cout << p[3][0] << ' ' << p[3][1] << '\n';
 
     return 0;
 }

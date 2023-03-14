@@ -1,23 +1,19 @@
-x_list = []
-y_list = []
+# Solve 2022-05-29
+# Update 2023-03-14
 
-for i in range(3):
-    x, y = input().split()
-    x_list.append(x)
-    y_list.append(y)
+import sys
 
-if x_list[0] == x_list[1]:
-    x = x_list[2]
-elif x_list[0] == x_list[2]:
-    x = x_list[1]
-else:
-    x = x_list[0]
+input = lambda : sys.stdin.readline().rstrip()
 
-if y_list[0] == y_list[1]:
-    y = y_list[2]
-elif y_list[0] == y_list[2]:
-    y = y_list[1]
-else:
-    y = y_list[0]
+p = [list(map(int, input().split())) for _ in range(3)]
+p.append([0, 0])
 
-print(x, y)
+for j in range(2):
+    if p[0][j] == p[1][j]:
+        p[3][j] = p[2][j]
+    elif p[0][j] == p[2][j]:
+        p[3][j] = p[1][j]
+    else:
+        p[3][j] = p[0][j]
+
+print(*p[3])
