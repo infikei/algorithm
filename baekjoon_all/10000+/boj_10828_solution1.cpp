@@ -1,4 +1,4 @@
-// Solve 2022-06-06
+// Solve 2022-06-04
 // Update 2023-03-17
 
 #include <bits/stdc++.h>
@@ -23,60 +23,38 @@ int main() {
     int n;
     cin >> n;
 
-    deque<int> dq;
+    stack<int> stck;
 
     for (int i = 0; i < n; i++) {
         string cmd;
         cin >> cmd;
 
-        if (cmd == "push_front") {
+        if (cmd == "push") {
             int x;
             cin >> x;
-            dq.push_front(x);
+            stck.push(x);
         }
-        else if (cmd == "push_back") {
-            int x;
-            cin >> x;
-            dq.push_back(x);
-        }
-        else if (cmd == "pop_front") {
-            if (dq.empty()) {
+        else if (cmd == "pop") {
+            if (stck.empty()) {
                 cout << -1 << '\n';
             }
             else {
-                cout << dq.front() << '\n';
-                dq.pop_front();
-            }
-        }
-        else if (cmd == "pop_back") {
-            if (dq.empty()) {
-                cout << -1 << '\n';
-            }
-            else {
-                cout << dq.back() << '\n';
-                dq.pop_back();
+                cout << stck.top() << '\n';
+                stck.pop();
             }
         }
         else if (cmd == "size") {
-            cout << SIZE(dq) << '\n';
+            cout << SIZE(stck) << '\n';
         }
         else if (cmd == "empty") {
-            cout << dq.empty() << '\n';
-        }
-        else if (cmd == "front") {
-            if (dq.empty()) {
-                cout << -1 << '\n';
-            }
-            else {
-                cout << dq.front() << '\n';
-            }
+            cout << stck.empty() << '\n';
         }
         else {
-            if (dq.empty()) {
+            if (stck.empty()) {
                 cout << -1 << '\n';
             }
             else {
-                cout << dq.back() << '\n';
+                cout << stck.top() << '\n';
             }
         }
     }

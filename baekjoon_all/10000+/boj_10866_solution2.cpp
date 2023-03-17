@@ -1,5 +1,5 @@
 // Solve 2022-06-06
-// Update 2023-03-01
+// Update 2023-03-17
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -17,8 +17,8 @@ using ll = long long;
 using uint = unsigned int;
 using ull = unsigned long long;
 
-int dq_begin = 0, dq_end = 0;
 int dq[10001];
+int dq_begin = 0, dq_end = 0;
 
 void push_front(int x) {
     dq_begin--;

@@ -1,23 +1,31 @@
-n = int(input())
-stack, ans = [], []
-max = 0
-possible = True
+# Solve 2022-05-31
+# Update 2023-03-17
 
-for i in range(n):
+import sys
+
+input = lambda : sys.stdin.readline().rstrip()
+
+n = int(input())
+stck = []
+check = True
+ans = []
+stck_in_max = 0
+
+for _ in range(n):
     now = int(input())
-    while now > max:
-        max += 1
-        stack.append(max)
+    while now > stck_in_max:
+        stck_in_max += 1
+        stck.append(stck_in_max)
         ans.append("+")
 
-    if stack[-1] == now:
-        stack.pop()
+    if stck[-1] == now:
+        stck.pop()
         ans.append("-")
     else:
-        possible = False
+        check = False
         break
 
-if possible:
-    print(*ans, sep='\n')
+if check:
+    print(*ans, sep="\n")
 else:
     print("NO")

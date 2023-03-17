@@ -1,64 +1,60 @@
-#include <iostream>
-#include <string>
+// Solve 2022-06-05
+// Update 2023-03-17
+
+#include <bits/stdc++.h>
 using namespace std;
 
-int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+#ifdef BOJ
+#define BOJTEST(x) ((void)0)
+#else
+#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
+#endif
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
 
-    string input;
-    int li[101];
-    int li_size;
-    bool check;
+int main() {
+    FASTIO;
 
     while (true) {
-        getline(cin, input); // getline : 한 줄씩 입력받는 함수 (기존 cin 함수는 공백 기준으로 나누어서 입력을 받음)
-        li_size = 0;
-        check = true;
-
-        if (input == ".")
+        string line;
+        getline(cin, line);
+        if (line == ".") {
             break;
-
-        for (int i = 0; i < input.size(); i++) {
-            if (input[i] == '(') {
-                li[li_size] = 1;
-                li_size++;
-            }
-            else if (input[i] == '[') {
-                li[li_size] = 2;
-                li_size++;
-            }
-            else if (input[i] == ')') {
-                li_size--;
-                if (li_size < 0) {
-                    check = false;
-                    break;
-                }
-                if (li[li_size] != 1) {
-                    check = false;
-                    break;
-                }
-            }
-            else if (input[i] == ']') {
-                li_size--;
-                if (li_size < 0) {
-                    check = false;
-                    break;
-                }
-                if (li[li_size] != 2) {
-                    check = false;
-                    break;
-                }
-            }
         }
 
-        if (li_size != 0)
+        stack<char> stck;
+        bool check = true;
+
+        for (auto ch : line) {
+            if (ch == '(' || ch == '[') {
+                stck.push(ch);
+            }
+            else if (ch == ')') {
+                if (stck.empty() || stck.top() != '(') {
+                    check = false;
+                    break;
+                }
+                stck.pop();
+            }
+            else if (ch == ']') {
+                if (stck.empty() || stck.top() != '[') {
+                    check = false;
+                    break;
+                }
+                stck.pop();
+            }
+        }
+        if (!stck.empty()) {
             check = false;
-        if (check)
-            cout << "yes\n";
-        else
-            cout << "no\n";
+        }
+
+        if (check) cout << "yes\n";
+        else cout << "no\n";
     }
 
     return 0;

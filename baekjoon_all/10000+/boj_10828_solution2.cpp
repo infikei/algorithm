@@ -1,4 +1,4 @@
-// Solve 2022-06-05
+// Solve 2022-06-04
 // Update 2023-03-17
 
 #include <bits/stdc++.h>
@@ -17,45 +17,37 @@ using ll = long long;
 using uint = unsigned int;
 using ull = unsigned long long;
 
-int q[10001];
-int q_begin = 0, q_end = 0;
+int stck[10001];
+int stck_size = 0;
 
 void push(int x) {
-    q[q_end] = x;
-    q_end++;
+    stck[stck_size] = x;
+    stck_size++;
 }
 
 int pop() {
-    if (q_begin == q_end) {
+    if (stck_size == 0)
         return -1;
-    }
-    q_begin++;
-    return q[q_begin - 1];
+    stck_size--;
+    return stck[stck_size];
 }
 
 int size() {
-    return q_end - q_begin;
+    return stck_size;
 }
 
 int empty() {
-    if (q_begin == q_end) {
+    if (stck_size == 0) {
         return 1;
     }
     return 0;
 }
 
-int front() {
-    if (q_begin == q_end) {
+int top() {
+    if (stck_size == 0) {
         return -1;
     }
-    return q[q_begin];
-}
-
-int back() {
-    if (q_begin == q_end) {
-        return -1;
-    }
-    return q[q_end - 1];
+    return stck[stck_size - 1];
 }
 
 int main() {
@@ -82,11 +74,8 @@ int main() {
         else if (cmd == "empty") {
             cout << empty() << '\n';
         }
-        else if (cmd == "front") {
-            cout << front() << '\n';
-        }
         else {
-            cout << back() << '\n';
+            cout << top() << '\n';
         }
     }
 

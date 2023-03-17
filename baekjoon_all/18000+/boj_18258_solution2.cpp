@@ -1,5 +1,5 @@
 // Solve 2022-06-05
-// Update 2023-03-01
+// Update 2023-03-17
 
 // boj_10845_solution2.cpp 코드에서 배열 길이만 바꿔준 버전
 
@@ -19,8 +19,8 @@ using ll = long long;
 using uint = unsigned int;
 using ull = unsigned long long;
 
-int q_begin = 0, q_end = 0;
 int q[2000001];
+int q_begin = 0, q_end = 0;
 
 void push(int x) {
     q[q_end] = x;
