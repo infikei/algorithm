@@ -1,32 +1,41 @@
-#include <iostream>
-#include <stack>
-#include <queue>
+// Solve 2022-07-24
+// Update 2023-03-20
+
+#include <bits/stdc++.h>
 using namespace std;
 
-bool map[1001][1001] = {false};
-bool visited[1001] = {false};
-int N, M, V;
+#ifdef BOJ
+#define BOJTEST(x) ((void)0)
+#else
+#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
+#endif
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
 
-void reset_visited() {
-    for (int i = 1; i <= N; i++) {
-        visited[i] = false;
-    }
-}
+bool graph[1001][1001] = { false };
+bool visited[1001] = { false };
+int n, v;
 
-void DFS() {
-    stack<int> s;
-    s.push(V);
+void dfs() {
+    stack<int> stck;
+    stck.push(v);
 
-    int now;
-    while (!s.empty()) {
-        now = s.top();
-        s.pop();
+    while (!stck.empty()) {
+        int now = stck.top();
+        stck.pop();
         if (!visited[now]) {
             visited[now] = true;
             cout << now << ' ';
-            for (int i = N; i >= 1; i--) { // N부터 1까지 검사하며 추가
-                if (!visited[i] && map[now][i]) {
-                    s.push(i);
+
+            // n부터 1까지 검사하며 추가
+            for (int next = n; next >= 1; next--) {
+                if (!visited[next] && graph[now][next]) {
+                    stck.push(next);
                 }
             }
         }
@@ -35,20 +44,21 @@ void DFS() {
     cout << '\n';
 }
 
-void BFS() {
+void bfs() {
     queue<int> q;
-    q.push(V);
+    q.push(v);
 
-    int now;
     while (!q.empty()) {
-        now = q.front();
+        int now = q.front();
         q.pop();
         if (!visited[now]) {
             visited[now] = true;
             cout << now << ' ';
-            for (int i = 1; i <= N; i++) { // 1부터 N까지 검사하며 추가
-                if (!visited[i] && map[now][i]) {
-                    q.push(i);
+
+            // 1부터 n까지 검사하며 추가
+            for (int next = 1; next <= n; next++) {
+                if (!visited[next] && graph[now][next]) {
+                    q.push(next);
                 }
             }
         }
@@ -58,23 +68,25 @@ void BFS() {
 }
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    cin >> N >> M >> V;
-    int from, to;
-    for (int i = 0; i < M; i++) {
+    int m;
+    cin >> n >> m >> v;
+
+    for (int i = 0; i < m; i++) {
+        int from, to;
         cin >> from >> to;
-        map[from][to] = true;
-        map[to][from] = true;
+        graph[from][to] = true;
+        graph[to][from] = true;
     }
 
-    DFS();
+    dfs();
 
-    reset_visited();
+    for (int i = 1; i <= n; i++) {
+        visited[i] = false;
+    }
 
-    BFS();
+    bfs();
 
     return 0;
 }

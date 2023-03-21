@@ -1,13 +1,21 @@
+# Solve 2022-05-28
+# Update 2023-03-20
+
+import sys
+
+input = lambda : sys.stdin.readline().rstrip()
+
 while True:
-    n = input()
-    if n == '0':
+    num = input()
+    if num == "0":
         break
-    p = True
-    for i in range(len(n)//2):
-        if n[i] != n[len(n)-1-i]:
-            p = False
+
+    ans = True
+    for i in range(len(num) // 2):
+        if num[i] != num[-1 - i]:
+            ans = False
             break
-    if p:
+    if ans:
         print("yes")
     else:
         print("no")
