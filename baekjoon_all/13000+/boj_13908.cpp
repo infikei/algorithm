@@ -1,8 +1,24 @@
-#include <iostream>
+// Solve 2022-08-20
+// Update 2023-03-24
+
+#include <bits/stdc++.h>
 using namespace std;
 
+#ifdef BOJ
+#define BOJTEST(x) ((void)0)
+#else
+#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
+#endif
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+
 int n, m, cnt;
-bool check_arr[10];
+bool check[10];
 
 void dfs(int depth = 0, int k = m) {
     if (k == 0) {
@@ -13,15 +29,15 @@ void dfs(int depth = 0, int k = m) {
         cnt += j;
         return;
     }
-    else if (depth == n) {
+    if (depth == n) {
         return;
     }
 
     for (int i = 0; i < 10; i++) {
-        if (check_arr[i]) {
-            check_arr[i] = false;
+        if (check[i]) {
+            check[i] = false;
             dfs(depth + 1, k - 1);
-            check_arr[i] = true;
+            check[i] = true;
         }
         else {
             dfs(depth + 1, k);
@@ -30,15 +46,14 @@ void dfs(int depth = 0, int k = m) {
 }
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
     cin >> n >> m;
-    int a;
+
     for (int i = 0; i < m; i++) {
-        cin >> a;
-        check_arr[a] = true;
+        int x;
+        cin >> x;
+        check[x] = true;
     }
 
     dfs();
