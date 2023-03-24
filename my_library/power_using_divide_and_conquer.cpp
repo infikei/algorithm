@@ -19,7 +19,7 @@ using matrixll = vector<vector<ll> >;
 const ll MOD = 1000000007;
 const int MATRIX_SIZE = 2;
 
-ll power(ll a, ll b) {
+ll calc_power(ll a, ll b) {
     ll res = 1;
     while (b > 0) {
         if (b & 1) {
@@ -33,11 +33,10 @@ ll power(ll a, ll b) {
     return res;
 }
 
-matrixll mat_mul(const matrixll &a, const matrixll &b) {
-    matrixll res(MATRIX_SIZE, vector<ll>(MATRIX_SIZE));
+matrixll calc_mat_mul(const matrixll &a, const matrixll &b) {
+    matrixll res(MATRIX_SIZE, vector<ll>(MATRIX_SIZE, 0));
     for (int row = 0; row < MATRIX_SIZE; row++) {
         for (int col = 0; col < MATRIX_SIZE; col++) {
-            res[row][col] = 0;
             for (int idx = 0; idx < MATRIX_SIZE; idx++) {
                 res[row][col] += a[row][idx] * b[idx][col] % MOD;
                 res[row][col] %= MOD;
@@ -47,17 +46,17 @@ matrixll mat_mul(const matrixll &a, const matrixll &b) {
     return res;
 }
 
-matrixll mat_power(matrixll a, ll b) {
-    matrixll res(MATRIX_SIZE, vector<ll>(MATRIX_SIZE));
+matrixll calc_mat_power(matrixll a, ll b) {
+    matrixll res(MATRIX_SIZE, vector<ll>(MATRIX_SIZE, 0));
     for (int i = 0; i < MATRIX_SIZE; i++) {
         res[i][i] = 1;
     }
 
     while (b > 0) {
         if (b & 1) {
-            res = mat_mul(res, a);
+            res = calc_mat_mul(res, a);
         }
-        a = mat_mul(a, a);
+        a = calc_mat_mul(a, a);
         b >>= 1;
     }
     return res;
