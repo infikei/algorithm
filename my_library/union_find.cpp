@@ -27,7 +27,7 @@ void union_parents(int u, int v) {
     int pv = get_parent(v);
 
     if (pu != pv) {
-        if (parent[pu] < parent[pv]) {
+        if (parent[pu] <= parent[pv]) {
             parent[pu] += parent[pv];
             parent[pv] = pu;
         }
