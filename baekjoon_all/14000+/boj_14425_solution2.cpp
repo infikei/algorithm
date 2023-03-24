@@ -1,4 +1,4 @@
-// Solve 2022-11-22
+// Solve 2022-06-03
 // Update 2023-03-23
 
 #include <bits/stdc++.h>
@@ -17,27 +17,28 @@ using ll = long long;
 using uint = unsigned int;
 using ull = unsigned long long;
 
+string words[10000];
+
 int main() {
     FASTIO;
 
-    int t;
-    cin >> t;
+    int n, m;
+    cin >> n >> m;
 
-    for (int ti = 0; ti < t; ti++) {
-        int n, m;
-        cin >> n >> m;
-
-        int ans = 0;
-        for (int a = 1; a < n; a++) {
-            int tmp = a * a + m;
-            for (int b = a + 1; b < n; b++) {
-                if ((b * b + tmp) % (a * b) == 0) {
-                    ans++;
-                }
-            }
-        }
-        cout << ans << '\n';
+    for (int i = 0; i < n; i++) {
+        cin >> words[i];
     }
+    sort(words, words + n);
+
+    int ans = 0;
+    for (int i = 0; i < m; i++) {
+        string tmp;
+        cin >> tmp;
+        if (binary_search(words, words + n, tmp)) {
+            ans++;
+        }
+    }
+    cout << ans << '\n';
 
     return 0;
 }

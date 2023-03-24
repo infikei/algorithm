@@ -1,10 +1,14 @@
-n = int(input())
+# Solve 2022-05-26
+# Update 2023-03-23
 
-i, ans = 0, 665
+n = int(input())
+cnt = 0
+ans = 665
 while True:
     ans += 1
     if "666" in str(ans):
-        i += 1
-        if i == n:
+        cnt += 1
+        if cnt == n:
             break
+
 print(ans)
