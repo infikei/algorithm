@@ -1,5 +1,5 @@
 // Solve 2022-07-09
-// Update 2023-02-10
+// Update 2023-03-26
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -18,11 +18,12 @@ using uint = unsigned int;
 using ull = unsigned long long;
 
 const int MAX_N = 1000;
-int n, arr[MAX_N], dp[MAX_N];
+int arr[MAX_N], dp[MAX_N];
 
 int main() {
     FASTIO;
 
+    int n;
     cin >> n;
     for (int i = 0; i < n; i++) {
         cin >> arr[i];

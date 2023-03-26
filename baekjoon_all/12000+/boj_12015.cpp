@@ -1,5 +1,5 @@
 // Solve 2022-12-08
-// Update 2023-02-10
+// Update 2023-03-26
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -18,17 +18,18 @@ using uint = unsigned int;
 using ull = unsigned long long;
 
 const int MAX_N = 1000000;
-int n, arr[MAX_N];
-vector<int> dp;
+int arr[MAX_N];
 
 int main() {
     FASTIO;
 
+    int n;
     cin >> n;
     for (int i = 0; i < n; i++) {
         cin >> arr[i];
     }
 
+    vector<int> dp;
     dp.push_back(arr[0]);
     for (int i = 1; i < n; i++) {
         int pos = lower_bound(ALL(dp), arr[i]) - dp.begin();
