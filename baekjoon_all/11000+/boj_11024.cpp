@@ -1,25 +1,38 @@
-#include <iostream>
-#include <sstream>
-#include <string>
+// Solve 2022-11-08
+// Update 2023-04-02
+
+#include <bits/stdc++.h>
 using namespace std;
-#define fastio ios_base::sync_with_stdio(false);cout.tie(NULL);cin.tie(NULL); // boj_15552.cpp
+
+#ifdef BOJ
+#define BOJTEST(x) ((void)0)
+#else
+#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
+#endif
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
 
 int main() {
-    fastio;
+    FASTIO;
 
-    int T;
-    cin >> T;
+    int t;
+    cin >> t;
     cin.ignore();
 
-    for (int t = 0; t < T; t++) {
+    for (int ti = 0; ti < t; ti++) {
         string line;
         getline(cin, line);
 
         stringstream ss(line);
-        string word;
+        string w;
         int ans = 0;
-        while (getline(ss, word, ' ')) {
-            ans += stoi(word);
+        while (ss >> w) {
+            ans += stoi(w);
         }
 
         cout << ans << '\n';

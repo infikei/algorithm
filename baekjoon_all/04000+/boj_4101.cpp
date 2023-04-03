@@ -1,5 +1,5 @@
 // Solve 2022-09-14
-// Update 2023-02-08
+// Update 2023-04-02
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -26,7 +26,13 @@ int main() {
         if (a == 0 && b == 0) {
             break;
         }
-        cout << (a > b ? "Yes\n" : "No\n");
+
+        if (a > b) {
+            cout << "Yes\n";
+        }
+        else {
+            cout << "No\n";
+        }
     }
 
     return 0;
