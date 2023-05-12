@@ -1,4 +1,5 @@
 // Solve 2023-05-10
+// Update 2023-05-11
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -24,7 +25,7 @@ struct Point{
 Point points[100000];
 
 ll calc_ccw(const Point &p1, const Point &p2, const Point &p3) {
-    return p1.x * (p2.y - p3.y) + p2.x * (p3.y - p1.y) + p3.x * (p1.y - p2.y);
+    return (p2.x - p1.x) * (p3.y - p1.y) - (p3.x - p1.x) * (p2.y - p1.y);
 }
 
 bool cmp_y_x(const Point &p1, const Point &p2) {
