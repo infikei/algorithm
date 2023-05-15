@@ -1,4 +1,5 @@
 // Solve 2023-03-16
+// Update 2023-05-15
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -15,23 +16,56 @@ using namespace std;
 using ll = long long;
 using uint = unsigned int;
 using ull = unsigned long long;
-using pll = pair<ll, ll>;
 
-pll pt[4];
+struct Point{
+    ll x, y;
+    Point(ll nx = 0, ll ny = 0) : x(nx), y(ny) {}
+    Point operator-(const Point &rhs) const {
+        return { x - rhs.x, y - rhs.y };
+    }
+    bool operator<(const Point &rhs) const {
+        if (x != rhs.x) {
+            return x < rhs.x;
+        }
+        return y < rhs.y;
+    }
+    bool operator>(const Point &rhs) const {
+        if (x != rhs.x) {
+            return x > rhs.x;
+        }
+        return y > rhs.y;
+    }
+    bool operator==(const Point &rhs) const {
+        return x == rhs.x && y == rhs.y;
+    }
+};
 
-inline int ccw(pll p0, pll p1, pll p2) {
-    ll res = (p1.first - p0.first) * (p2.second - p0.second) - (p2.first - p0.first) * (p1.second - p0.second);
+ll calc_cross(const Point &a, const Point &b) {
+    return a.x * b.y - b.x * a.y;
+}
 
+int calc_ccw(const Point &a, const Point &b, const Point &c) {
+    ll res = calc_cross(b - a, c - a);
     if (res > 0) return 1;
     else if (res < 0) return -1;
     else return 0;
 }
 
-int two_lines_intersect() {
-    int ccw012 = ccw(pt[0], pt[1], pt[2]);
-    int ccw013 = ccw(pt[0], pt[1], pt[3]);
-    int ccw230 = ccw(pt[2], pt[3], pt[0]);
-    int ccw231 = ccw(pt[2], pt[3], pt[1]);
+int main() {
+    FASTIO;
+
+    Point pt[4];
+    for (int i = 0; i < 4; i++) {
+        cin >> pt[i].x >> pt[i].y;
+    }
+
+    int ccw012 = calc_ccw(pt[0], pt[1], pt[2]);
+    int ccw013 = calc_ccw(pt[0], pt[1], pt[3]);
+    int ccw230 = calc_ccw(pt[2], pt[3], pt[0]);
+    int ccw231 = calc_ccw(pt[2], pt[3], pt[1]);
+
+    int ans;
+    Point ans2;
 
     if (ccw012 == 0 && ccw013 == 0) {
         // 네 점이 한 직선 위에 있을 경우
@@ -39,75 +73,67 @@ int two_lines_intersect() {
         if (pt[2] > pt[3]) swap(pt[2], pt[3]);
 
         if (pt[0] == pt[3]) {
-            return 10;
+            ans = 2;
+            ans2 = pt[0];
         }
-        if (pt[2] == pt[1]) {
-            return 11;
+        else if (pt[2] == pt[1]) {
+            ans = 2;
+            ans2 = pt[1];
         }
-        if (pt[0] < pt[3] && pt[2] < pt[1]) {
-            return 19;
+        else if (pt[0] < pt[3] && pt[2] < pt[1]) {
+            ans = 9;
         }
-        return 0;
+        else {
+            ans = 0;
+        }
     }
-
-    if (ccw012 == 0 || ccw013 == 0) {
+    else if (ccw012 == 0 || ccw013 == 0) {
         // 세 점이 한 직선 위에 있을 경우
         if (ccw230 == ccw231) {
-            return 0;
+            ans = 0;
         }
-        return 1;
+        else {
+            ans = 1;
+        }
     }
-
-    if (ccw230 == 0 || ccw231 == 0) {
+    else if (ccw230 == 0 || ccw231 == 0) {
         // 세 점이 한 직선 위에 있을 경우
         if (ccw012 == ccw013) {
-            return 0;
+            ans = 0;
         }
-        return 1;
+        else {
+            ans = 1;
+        }
+    }
+    else if (ccw012 + ccw013 == 0 && ccw230 + ccw231 == 0) {
+        ans = 1;
+    }
+    else {
+        ans = 0;
     }
 
-    if (ccw012 + ccw013 == 0 && ccw230 + ccw231 == 0) {
-        return 1;
-    }
-    return 0;
-}
-
-int main() {
-    FASTIO;
-
-    for (int i = 0; i < 4; i++) {
-        cin >> pt[i].first >> pt[i].second;
-    }
-
-    int res = two_lines_intersect();
     SETPRECISION(12);
 
-    if (res == 0) {
+    if (ans == 0) {
         cout << 0 << '\n';
     }
-    else if (res == 1) {
+    else if (ans == 1) {
         cout << 1 << '\n';
 
-        ll x0x1 = pt[0].first - pt[1].first;
-        ll x2x3 = pt[2].first - pt[3].first;
-        ll y0y1 = pt[0].second - pt[1].second;
-        ll y2y3 = pt[2].second - pt[3].second;
-        ll a0 = pt[0].first * pt[1].second - pt[1].first * pt[0].second;
-        ll a1 = pt[2].first * pt[3].second - pt[3].first * pt[2].second;
-        double p = x0x1 * y2y3 - x2x3 * y0y1;
-        double px = (a0 * x2x3 - x0x1 * a1) / p;
-        double py = (a0 * y2y3 - y0y1 * a1) / p;
-        cout << px << ' ' << py << '\n';
+        Point vec01 = pt[0] - pt[1];
+        Point vec23 = pt[2] - pt[3];
+        ll cross01 = calc_cross(pt[0], pt[1]);
+        ll cross23 = calc_cross(pt[2], pt[3]);
+        double k = calc_cross(vec01, vec23);
+        double xx = (cross01 * vec23.x - cross23 * vec01.x) / k;
+        double yy = (cross01 * vec23.y - cross23 * vec01.y) / k;
+        cout << xx << ' ' << yy << '\n';
     }
-    else if (res == 10) {
+    else if (ans == 2) {
         cout << 1 << '\n';
-        cout << pt[0].first << ' ' << pt[0].second << '\n';
+        cout << ans2.x << ' ' << ans2.y << '\n';
     }
-    else if (res == 11) {
-        cout << 1 << '\n';
-        cout << pt[1].first << ' ' << pt[1].second << '\n';
-    }
-    else if (res == 19) {
+    else if (ans == 9) {
         cout << 1 << '\n';
     }
 

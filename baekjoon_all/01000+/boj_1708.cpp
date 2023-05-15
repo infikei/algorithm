@@ -1,5 +1,5 @@
 // Solve 2023-05-10
-// Update 2023-05-11
+// Update 2023-05-15
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -20,31 +20,33 @@ using ull = unsigned long long;
 struct Point{
     ll x, y;
     Point(ll nx = 0, ll ny = 0) : x(nx), y(ny) {}
+    Point operator-(const Point &rhs) const {
+        return { x - rhs.x, y - rhs.y };
+    }
+    bool operator<(const Point &rhs) const {
+        if (y != rhs.y) {
+            return y < rhs.y;
+        }
+        return x < rhs.x;
+    }
 };
 
 Point points[100000];
 
-ll calc_ccw(const Point &p1, const Point &p2, const Point &p3) {
-    return (p2.x - p1.x) * (p3.y - p1.y) - (p3.x - p1.x) * (p2.y - p1.y);
+ll calc_cross(const Point &a, const Point &b) {
+    return a.x * b.y - b.x * a.y;
 }
 
-bool cmp_y_x(const Point &p1, const Point &p2) {
-    if (p1.y != p2.y) {
-        return p1.y < p2.y;
-    }
-    return p1.x < p2.x;
+ll calc_ccw(const Point &a, const Point &b, const Point &c) {
+    return calc_cross(b - a, c - a);
 }
 
-bool cmp_ccw_y_x(const Point &p1, const Point &p2) {
-    ll ccw = calc_ccw(points[0], p1, p2);
-
+bool cmp_ccw_y_x(const Point &a, const Point &b) {
+    ll ccw = calc_ccw(points[0], a, b);
     if (ccw != 0) {
         return ccw > 0;
     }
-    if (p1.y != p2.y) {
-        return p1.y < p2.y;
-    }
-    return p1.x < p2.x;
+    return a < b;
 }
 
 int main() {
@@ -57,29 +59,28 @@ int main() {
         cin >> points[i].x >> points[i].y;
     }
 
-    sort(points, points + n, cmp_y_x);
+    sort(points, points + n);
 
     sort(points + 1, points + n, cmp_ccw_y_x);
 
-    stack<Point> stck;
-    stck.push(points[0]);
-    stck.push(points[1]);
-
+    vector<Point> convex_hull;
+    convex_hull.push_back(points[0]);
+    convex_hull.push_back(points[1]);
     for (int i = 2; i < n; i++) {
-        while (SIZE(stck) >= 2) {
-            Point top2 = stck.top();
-            stck.pop();
-            Point top1 = stck.top();
+        while (SIZE(convex_hull) >= 2) {
+            Point back2 = convex_hull.back();
+            convex_hull.pop_back();
+            Point back1 = convex_hull.back();
 
-            if (calc_ccw(top1, top2, points[i]) > 0) {
-                stck.push(top2); // top1, top2, points[i]가 좌회전이면 top2를 stack에 다시 넣어주고 break
+            if (calc_ccw(back1, back2, points[i]) > 0) {
+                convex_hull.push_back(back2); // back1, back2, points[i]가 좌회전이면 back2를 stack에 다시 넣어주고 break
                 break;
             }
         }
-        stck.push(points[i]);
+        convex_hull.push_back(points[i]);
     }
 
-    cout << SIZE(stck) << '\n';
+    cout << SIZE(convex_hull) << '\n';
 
     return 0;
 }

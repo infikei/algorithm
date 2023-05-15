@@ -1,5 +1,5 @@
 // Solve 2022-09-05
-// Update 2023-03-16
+// Update 2023-05-15
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -16,25 +16,40 @@ using namespace std;
 using ll = long long;
 using uint = unsigned int;
 using ull = unsigned long long;
-using pll = pair<ll, ll>;
 
-inline int ccw(pll p0, pll p1, pll p2) {
-    ll res = (p1.first - p0.first) * (p2.second - p0.second) - (p2.first - p0.first) * (p1.second - p0.second);
+struct Point{
+    ll x, y;
+    Point(ll nx = 0, ll ny = 0) : x(nx), y(ny) {}
+    Point operator-(const Point &rhs) const {
+        return { x - rhs.x, y - rhs.y };
+    }
+};
 
-    if (res > 0) return 1;
-    else if (res < 0) return -1;
+ll calc_cross(const Point &a, const Point &b) {
+    return a.x * b.y - b.x * a.y;
+}
+
+int calc_ccw(const Point &a, const Point &b, const Point &c) {
+    ll ccw = calc_cross(b - a, c - a);
+    if (ccw > 0) return 1;
+    else if (ccw < 0) return -1;
     else return 0;
 }
 
 int main() {
     FASTIO;
 
-    pll pt[4];
+    Point pt[4];
     for (int i = 0; i < 4; i++) {
-        cin >> pt[i].first >> pt[i].second;
+        cin >> pt[i].x >> pt[i].y;
     }
 
-    if (ccw(pt[0], pt[1], pt[2]) + ccw(pt[0], pt[1], pt[3]) == 0 && ccw(pt[2], pt[3], pt[0]) + ccw(pt[2], pt[3], pt[1]) == 0) {
+    int ccw012 = calc_ccw(pt[0], pt[1], pt[2]);
+    int ccw013 = calc_ccw(pt[0], pt[1], pt[3]);
+    int ccw230 = calc_ccw(pt[2], pt[3], pt[0]);
+    int ccw231 = calc_ccw(pt[2], pt[3], pt[1]);
+
+    if (ccw012 + ccw013 == 0 && ccw230 + ccw231 == 0) {
         cout << 1 << '\n';
     }
     else {
