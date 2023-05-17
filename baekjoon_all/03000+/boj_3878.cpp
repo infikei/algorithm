@@ -1,4 +1,5 @@
 // Solve 2023-05-16
+// Update 2023-05-17
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -76,7 +77,7 @@ bool check_inner(const Point &pt, const vector<Point> &convex_hull) {
 }
 
 void make_convex_hull(vector<Point> &points, vector<Point> &convex_hull) {
-    sort(points.begin(), points.end());
+    swap(points[0], *min_element(points.begin(), points.end()));
     cmp_point0 = points[0];
     sort(points.begin() + 1, points.end(), cmp_ccw_y_x);
 

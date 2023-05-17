@@ -1,4 +1,5 @@
 // Solve 2023-05-12
+// Update 2023-05-17
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -36,8 +37,11 @@ ll calc_cross(const Point &a, const Point &b) {
     return a.x * b.y - b.x * a.y;
 }
 
-ll calc_ccw(const Point &a, const Point &b, const Point &c) {
-    return calc_cross(b - a, c - a);
+int calc_ccw(const Point &a, const Point &b, const Point &c) {
+    ll ccw = calc_cross(b - a, c - a);
+    if (ccw > 0) return 1;
+    if (ccw < 0) return -1;
+    return 0;
 }
 
 ll calc_dist2(const Point &a, const Point &b) {
@@ -47,7 +51,7 @@ ll calc_dist2(const Point &a, const Point &b) {
 }
 
 bool cmp_ccw_y_x(const Point &a, const Point &b) {
-    ll ccw = calc_ccw(points[0], a, b);
+    int ccw = calc_ccw(points[0], a, b);
     if (ccw != 0) {
         return ccw > 0;
     }
@@ -68,14 +72,11 @@ int main() {
             cin >> points[i].x >> points[i].y;
         }
 
-        sort(points, points + n);
-
+        swap(points[0], *min_element(points, points + n));
         sort(points + 1, points + n, cmp_ccw_y_x);
 
         vector<Point> convex_hull;
-        convex_hull.push_back(points[0]);
-        convex_hull.push_back(points[1]);
-        for (int i = 2; i < n; i++) {
+        for (int i = 0; i < n; i++) {
             while (SIZE(convex_hull) >= 2) {
                 Point back2 = convex_hull.back();
                 convex_hull.pop_back();
@@ -100,10 +101,10 @@ int main() {
                 int nj = (j + 1) % SIZE(convex_hull);
                 Point vj = convex_hull[nj] - convex_hull[j];
 
-                if (calc_ccw(Point(0, 0), vi, vj) > 0) {
-                    j = nj;
+                if (calc_ccw(Point(0, 0), vi, vj) <= 0) {
+                    break;
                 }
-                else break;
+                j = nj;
             }
 
             ll now_dist2 = calc_dist2(convex_hull[i], convex_hull[j]);
