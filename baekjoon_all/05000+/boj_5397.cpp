@@ -1,59 +1,68 @@
-#include <iostream>
-#include <string>
-#include <stack>
+// Solve 2022-08-19
+// Update 2023-05-18
+
+#include <bits/stdc++.h>
 using namespace std;
 
-int K;
+#ifdef BOJ
+#define BOJTEST(x) ((void)0)
+#else
+#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
+#endif
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+
 string input, ans;
-stack<char> st_left, st_right;
+stack<char> stck_left, stck_right;
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    cin >> K;
+    int t;
+    cin >> t;
 
-    for (int k = 0; k < K; k++) {
+    for (int ti = 0; ti < t; ti++) {
         cin >> input;
-        int input_size = input.length();
 
-        for (int i = 0; i < input_size; i++) {
-            char now = input[i];
-            if (now == '<') {
-                if (!st_left.empty()) {
-                    st_right.push(st_left.top());
-                    st_left.pop();
+        for (auto ch : input) {
+            if (ch == '<') {
+                if (!stck_left.empty()) {
+                    stck_right.push(stck_left.top());
+                    stck_left.pop();
                 }
             }
-            else if (now == '>') {
-                if (!st_right.empty()) {
-                    st_left.push(st_right.top());
-                    st_right.pop();
+            else if (ch == '>') {
+                if (!stck_right.empty()) {
+                    stck_left.push(stck_right.top());
+                    stck_right.pop();
                 }
             }
-            else if (now == '-') {
-                if (!st_left.empty()) {
-                    st_left.pop();
+            else if (ch == '-') {
+                if (!stck_left.empty()) {
+                    stck_left.pop();
                 }
             }
             else {
-                st_left.push(now);
+                stck_left.push(ch);
             }
         }
 
-        while (!st_left.empty()) {
-            st_right.push(st_left.top());
-            st_left.pop();
+        while (!stck_left.empty()) {
+            stck_right.push(stck_left.top());
+            stck_left.pop();
         }
 
         ans = "";
 
-        while (!st_right.empty()) {
-            ans += st_right.top();
-            st_right.pop();
+        while (!stck_right.empty()) {
+            ans.push_back(stck_right.top());
+            stck_right.pop();
         }
-
         cout << ans << '\n';
     }
 
