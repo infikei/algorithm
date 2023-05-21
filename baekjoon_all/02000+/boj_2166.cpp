@@ -1,4 +1,5 @@
 // Solve 2023-03-13
+// Update 2023-05-20
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -17,8 +18,20 @@ using uint = unsigned int;
 using ull = unsigned long long;
 using pll = pair<ll, ll>;
 
-inline ll ccw(pll a, pll b, pll c) {
-    return (b.first - a.first) * (c.second - a.second) - (c.first - a.first) * (b.second - a.second);
+struct Point{
+    ll x, y;
+    Point(ll nx = 0, ll ny = 0) : x(nx), y(ny) {}
+    Point operator-(const Point &rhs) const {
+        return { x - rhs.x, y - rhs.y };
+    }
+};
+
+ll calc_cross(const Point &a, const Point &b) {
+    return a.x * b.y - b.x * a.y;
+}
+
+ll calc_ccw(const Point &a, const Point &b, const Point &c) {
+    return calc_cross(b - a, c - a);
 }
 
 int main() {
@@ -29,15 +42,15 @@ int main() {
 
     ll ans2 = 0;
 
-    pll p[3];
-    cin >> p[0].first >> p[0].second;
-    cin >> p[1].first >> p[1].second;
+    Point points[3];
+    cin >> points[0].x >> points[0].y;
+    cin >> points[1].x >> points[1].y;
 
     for (int i = 2; i < n; i++) {
-        cin >> p[2].first >> p[2].second;
-        ans2 += ccw(p[0], p[1], p[2]);
+        cin >> points[2].x >> points[2].y;
+        ans2 += calc_ccw(points[0], points[1], points[2]);
 
-        p[1] = p[2];
+        points[1] = points[2];
     }
 
     double ans = abs(ans2) * 0.5;
