@@ -1,4 +1,5 @@
 // Solve 2023-05-20
+// Update 2023-05-21
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -22,14 +23,9 @@ int main() {
     int n, a, b;
     cin >> n >> a >> b;
 
-    if (n > b) {
-        cout << "Bus\n";
-    }
-    else {
-        if (a < b) cout << "Bus\n";
-        else if (a > b) cout << "Subway\n";
-        else cout << "Anything\n";
-    }
+    if (a < b) cout << "Bus\n";
+    else if (a > b) cout << "Subway\n";
+    else cout << "Anything\n";
 
     return 0;
 }
