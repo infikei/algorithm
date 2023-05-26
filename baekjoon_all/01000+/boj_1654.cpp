@@ -1,45 +1,46 @@
-#include <iostream>
+// Solve 2022-07-24
+// Update 2023-05-25
+
+#include <bits/stdc++.h>
 using namespace std;
 
-int K_length[10000];
-int max_length;
-int K, N, ans;
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
+using uint = unsigned int;
+
+uint lengths[10000];
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    cin >> K >> N;
-    max_length = 0;
-    for (int i = 0; i < K; i++) {
-        cin >> K_length[i];
-        if (K_length[i] > max_length) {
-            max_length = K_length[i];
-        }
+    int k, n;
+    cin >> k >> n;
+
+    for (int i = 0; i < k; i++) {
+        cin >> lengths[i];
     }
 
-    ans = 0;
-    long long low = 1, high = max_length, mid;
-    while (low <= high) {
-        mid = (low + high) / 2;
-        int cnt = 0;
-        for (int i = 0; i < K; i++) {
-            cnt += K_length[i] / mid;
+    uint low = 1, high = 2147483648;
+    while (low + 1 < high) {
+        uint mid = (low + high) >> 1;
+        int mid_val = 0;
+
+        for (int i = 0; i < k; i++) {
+            mid_val += lengths[i] / mid;
         }
 
-        if (cnt >= N) {
-            low = mid + 1;
-            if (mid > ans) {
-                ans = mid;
-            }
+        if (mid_val >= n) {
+            low = mid;
         }
         else {
-            high = mid - 1;
+            high = mid;
         }
     }
 
-    cout << ans << '\n';
+    cout << low << '\n';
 
     return 0;
 }

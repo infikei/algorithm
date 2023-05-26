@@ -1,46 +1,40 @@
 // Solve 2022-07-24
-// Update 2023-02-06
+// Update 2023-05-25
 
 #include <bits/stdc++.h>
 using namespace std;
 
-#ifdef BOJ
-#define BOJTEST(x) ((void)0)
-#else
-#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
-#endif
 #define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
 #define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
 #define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
 using ll = long long;
-using uint = unsigned int;
-using ull = unsigned long long;
+
+int trees[1000000];
 
 int main() {
     FASTIO;
 
-    const int MAX_N = 1e6;
     int n, m;
     cin >> n >> m;
-    int trees[MAX_N], highest_tree = 0;
+
     for (int i = 0; i < n; i++) {
         cin >> trees[i];
-        highest_tree = max(highest_tree, trees[i]);
     }
 
-    ll low = 0, high = highest_tree;
+    int low = 0, high = 1000000001;
     while (low + 1 < high) {
-        ll mid = (low + high) / 2;
+        int mid = (low + high) >> 1;
+        ll mid_val = 0;
 
-        ll cut_trees_sum = 0;
         for (int i = 0; i < n; i++) {
-            ll tree = trees[i];
-            if (tree > mid) {
-                cut_trees_sum += (tree - mid);
+            int tmp = trees[i] - mid;
+            if (tmp > 0) {
+                mid_val += tmp;
             }
         }
-        if (cut_trees_sum >= m) {
+
+        if (mid_val >= m) {
             low = mid;
         }
         else {
