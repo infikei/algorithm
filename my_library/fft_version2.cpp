@@ -6,17 +6,15 @@ using namespace std;
 #define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
 using ll = long long;
-using uint = unsigned int;
-using ull = unsigned long long;
 using cpx = complex<double>;
 
-const double PI = acos(-1);
+const double PI = M_PI;
+const int FFT_SIZE = 1 << 3;
 
-void fft(vector<cpx> &a, bool inv, bool recursion = false) {
+void fft(vector<cpx> &a, bool inv = false, bool recursion = false) {
     int n = SIZE(a);
     if (n == 1) return;
-
-    int n2 = n / 2;
+    int n2 = n >> 1;
 
     vector<cpx> even_elements(n2), odd_elements(n2);
     for (int i = 0; i < n2; i++) {
@@ -28,45 +26,34 @@ void fft(vector<cpx> &a, bool inv, bool recursion = false) {
 
     double theta = (inv ? -2 * PI / n : 2 * PI / n);
     cpx w(cos(theta), sin(theta));
-    cpx w_pow(1, 0);
+    cpx wp(1, 0);
     for (int i = 0; i < n2; i++) {
-        a[i] = even_elements[i] + odd_elements[i] * w_pow;
-        a[n2 + i] = even_elements[i] - odd_elements[i] * w_pow;
-        w_pow *= w;
+        a[i] = even_elements[i] + odd_elements[i] * wp;
+        a[n2 + i] = even_elements[i] - odd_elements[i] * wp;
+        wp *= w;
     }
 
     if (!recursion && inv) {
-        for (int i = 0; i < n; i++) {
-            a[i] /= n;
-        }
+        for (int i = 0; i < n; i++) a[i] /= n;
     }
 }
 
-vector<int> fft_mul(const vector<int> &a, const vector<int> &b) {
-    vector<cpx> a2(a.begin(), a.end());
-    vector<cpx> b2(b.begin(), b.end());
+void fft_mul(const vector<int> &a, const vector<int> &b, vector<int> &res) {
+    vector<cpx> aa(a.begin(), a.end());
+    vector<cpx> bb(b.begin(), b.end());
 
-    int n2 = 1;
-    while (n2 < SIZE(a) + SIZE(b)) {
-        n2 <<= 1;
-    }
-    a2.resize(n2);
-    fft(a2, false);
-    b2.resize(n2);
-    fft(b2, false);
+    int n = 1;
+    while (n < SIZE(a) + SIZE(b)) n <<= 1;
 
-    for (int i = 0; i < n2; i++) {
-        a2[i] *= b2[i];
-    }
-    fft(a2, true);
+    aa.resize(n);
+    bb.resize(n);
+    fft(aa);
+    fft(bb);
+    for (int i = 0; i < n; i++) aa[i] *= bb[i];
+    fft(aa, true);
 
-    int n = SIZE(a) + SIZE(b) - 1;
-    vector<int> c(n);
-    for (int i = 0; i < n; i++) {
-        c[i] = round(a2[i].real());
-    }
-
-    return c;
+    res.assign(SIZE(a) + SIZE(b) - 1, 0);
+    for (int i = 0; i < SIZE(res); i++) res[i] = round(aa[i].real());
 }
 
 int main() {
@@ -75,8 +62,9 @@ int main() {
     vector<int> a = { 1, 2, 1 };
     vector<int> b = { 1, 2, 1 };
 
-    vector<int> c = fft_mul(a, b);
-    for (auto i : c) {
+    vector<int> c;
+    fft_mul(a, b, c);
+    for (auto &i : c) {
         cout << i << ' ';
     }
     cout << '\n';
