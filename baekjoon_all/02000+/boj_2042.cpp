@@ -1,5 +1,5 @@
 // Solve 2022-12-09
-// Update 2023-06-08
+// Update 2023-06-12
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -15,33 +15,33 @@ ll arr[1000001], seg[4000001];
 ll seg_init(int node, int s, int e) {
     if (s == e) return seg[node] = arr[s];
 
-    int mid = (s + e) / 2;
+    int mid = (s + e) >> 1;
     ll left_val = seg_init(node * 2, s, mid);
     ll right_val = seg_init(node * 2 + 1, mid + 1, e);
     return seg[node] = left_val + right_val;
 }
 
-ll seg_query(int node, int s, int e, int l, int r) {
-    if (r < s || e < l) return 0;
-    if (l <= s && e <= r) return seg[node];
-
-    int mid = (s + e) >> 1;
-    ll left_val = seg_query(node * 2, s, mid, l, r);
-    ll right_val = seg_query(node * 2 + 1, mid + 1, e, l, r);
-    return left_val + right_val;
-}
-
-void seg_update(int node, int s, int e, int idx) {
-    if (idx < s || e < idx) return;
+void seg_update(int node, int s, int e, int qidx) {
+    if (qidx < s || e < qidx) return;
     if (s == e) {
         seg[node] = arr[s];
         return;
     }
 
     int mid = (s + e) >> 1;
-    seg_update(node * 2, s, mid, idx);
-    seg_update(node * 2 + 1, mid + 1, e, idx);
+    seg_update(node * 2, s, mid, qidx);
+    seg_update(node * 2 + 1, mid + 1, e, qidx);
     seg[node] = seg[node * 2] + seg[node * 2 + 1];
+}
+
+ll seg_query(int node, int s, int e, int qs, int qe) {
+    if (qe < s || e < qs) return 0;
+    if (qs <= s && e <= qe) return seg[node];
+
+    int mid = (s + e) >> 1;
+    ll left_val = seg_query(node * 2, s, mid, qs, qe);
+    ll right_val = seg_query(node * 2 + 1, mid + 1, e, qs, qe);
+    return left_val + right_val;
 }
 
 int main() {
