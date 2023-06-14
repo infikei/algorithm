@@ -1,6 +1,14 @@
-#include <iostream>
-#define fastio ios_base::sync_with_stdio(false);cout.tie(NULL);cin.tie(NULL); // boj_15552.cpp
+// Solve 2023-01-09
+// Update 2023-06-14
+
+#include <bits/stdc++.h>
 using namespace std;
+
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
 
 int count_zero(int k) {
     int res = 0;
@@ -14,7 +22,7 @@ int count_zero(int k) {
 }
 
 int main() {
-    fastio;
+    FASTIO;
 
     int t;
     cin >> t;

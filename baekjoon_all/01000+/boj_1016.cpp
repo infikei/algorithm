@@ -1,33 +1,40 @@
-#include <iostream>
+// Solve 2022-09-10
+// Update 2023-06-14
+
+#include <bits/stdc++.h>
 using namespace std;
 
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
+
 bool check[1000002];
-int cnt;
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    long long n_min, n_max;
+    ll n_min, n_max;
     cin >> n_min >> n_max;
 
-    cnt = n_max - n_min + 1;
+    int cnt = n_max - n_min + 1;
+    ll a = 2, a2 = 4;
 
-    for (long long i = 2; i * i <= n_max; i++) {
-        long long k = n_min / (i * i);
+    while (a2 <= n_max) {
+        ll n = n_min / a2 * a2;
+        if (n < n_min) n += a2;
 
-        if (k * i * i < n_min) {
-            k++;
-        }
-
-        while (k * i * i <= n_max) {
-            if (!check[k * (i * i) - n_min]) {
-                check[k * (i * i) - n_min] = true;
+        while (n <= n_max) {
+            if (!check[n - n_min]) {
+                check[n - n_min] = true;
                 cnt--;
             }
-            k++;
+            n += a2;
         }
+
+        a++;
+        a2 = a * a;
     }
 
     cout << cnt << '\n';
