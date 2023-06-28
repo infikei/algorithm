@@ -1,4 +1,5 @@
 // Solve 2023-06-24
+// Update 2023-06-27
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -30,9 +31,8 @@ int dfs(int cur, int s) {
 }
 
 void seg_update(int node, int s, int e, int qidx, int qval) {
-    if (qidx < s || e < qidx) return;
-
     seg[node] += qval;
+
     if (s == e) return;
 
     int mid = (s + e) >> 1;
@@ -74,10 +74,11 @@ int main() {
         cin >> cmd >> u;
 
         if (cmd == 1) {
-            int qidx = intervals[u].s;
             int qval;
             cin >> qval;
-            seg_update(1, 1, n, qidx, qval);
+
+            int qs = intervals[u].s;
+            seg_update(1, 1, n, qs, qval);
         }
         else {
             int qs = intervals[u].s;

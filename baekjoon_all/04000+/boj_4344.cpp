@@ -1,45 +1,42 @@
 // Solve 2022-06-03
-// Update 2023-02-26
+// Update 2023-06-27
 
 #include <bits/stdc++.h>
 using namespace std;
 
-#ifdef BOJ
-#define BOJTEST(x) ((void)0)
-#else
-#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
-#endif
 #define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
 #define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
 #define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
 using ll = long long;
-using uint = unsigned int;
-using ull = unsigned long long;
 
 int main() {
     FASTIO;
 
+    SETPRECISION(3);
+
     int t, score[1000];
     cin >> t;
 
-    SETPRECISION(3);
-
     for (int ti = 0; ti < t; ti++) {
-        int n, sum = 0, cnt = 0;
+        int n;
         cin >> n;
+
+        int sum = 0;
         for (int i = 0; i < n; i++) {
             cin >> score[i];
             sum += score[i];
         }
 
         double avr = (sum * 1.0) / n;
+        int cnt = 0;
         for (int i = 0; i < n; i++) {
             if (score[i] > avr) {
                 cnt++;
             }
         }
-        cout << ((cnt * 100.0) / n) << "%\n";
+
+        cout << round(cnt * 100000.0 / n) / 1000 << "%\n";
     }
 
     return 0;

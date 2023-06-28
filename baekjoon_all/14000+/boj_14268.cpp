@@ -1,4 +1,5 @@
 // Solve 2023-06-24
+// Update 2023-06-27
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -16,7 +17,7 @@ struct Interval{
 
 Interval intervals[100001];
 vector<int> childs[100001];
-int seg[400001], lazy[400001];
+int arr[100001], lazy[400001];
 
 int dfs(int cur, int s) {
     int e = s;
@@ -32,7 +33,7 @@ int dfs(int cur, int s) {
 void seg_lazy_update(int node, int s, int e) {
     if (lazy[node] != 0) {
         if (s == e) {
-            seg[node] += lazy[node];
+            arr[s] += lazy[node];
         }
         else {
             lazy[node << 1] += lazy[node];
@@ -62,7 +63,7 @@ void seg_update(int node, int s, int e, int qs, int qe, int qval) {
 int seg_query(int node, int s, int e, int qidx) {
     seg_lazy_update(node, s, e);
 
-    if (s == e) return seg[node];
+    if (s == e) return arr[s];
 
     int mid = (s + e) >> 1;
     if (qidx <= mid) {
@@ -93,15 +94,16 @@ int main() {
         cin >> cmd >> u;
 
         if (cmd == 1) {
-            int qs = intervals[u].s;
-            int qe = intervals[u].e;
             int qval;
             cin >> qval;
+
+            int qs = intervals[u].s;
+            int qe = intervals[u].e;
             seg_update(1, 1, n, qs, qe, qval);
         }
         else {
-            int qidx = intervals[u].s;
-            cout << seg_query(1, 1, n, qidx) << '\n';
+            int qs = intervals[u].s;
+            cout << seg_query(1, 1, n, qs) << '\n';
         }
     }
 
