@@ -1,4 +1,5 @@
 // Solve 2023-07-04
+// Update 2023-07-06
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -21,8 +22,8 @@ struct Query{
 
 int n, sqrt_n, m;
 int arr[100001];
-priority_queue<Query> pq;
-int cnt[1000001], now_cnt, now_s, now_e;
+priority_queue<Query> query_pq;
+int cnt[1000001], now_s, now_e, now_cnt;
 int ans[100000];
 
 int main() {
@@ -40,15 +41,15 @@ int main() {
     for (int i = 0; i < m; i++) {
         int s, e;
         cin >> s >> e;
-        pq.push({ i, s, e, s / sqrt_n });
+        query_pq.push({ i, s, e, s / sqrt_n });
     }
 
     now_s = now_e = now_cnt = 1;
     cnt[arr[1]]++;
 
     for (int i = 0; i < m; i++) {
-        auto query = pq.top();
-        pq.pop();
+        auto query = query_pq.top();
+        query_pq.pop();
 
         while (query.s < now_s) {
             now_s--;
@@ -56,16 +57,16 @@ int main() {
             if (cnt[arr[now_s]] == 1) now_cnt++;
         }
 
-        while (now_s < query.s) {
-            cnt[arr[now_s]]--;
-            if (cnt[arr[now_s]] == 0) now_cnt--;
-            now_s++;
-        }
-
         while (now_e < query.e) {
             now_e++;
             cnt[arr[now_e]]++;
             if (cnt[arr[now_e]] == 1) now_cnt++;
+        }
+
+        while (now_s < query.s) {
+            cnt[arr[now_s]]--;
+            if (cnt[arr[now_s]] == 0) now_cnt--;
+            now_s++;
         }
 
         while (query.e < now_e) {
