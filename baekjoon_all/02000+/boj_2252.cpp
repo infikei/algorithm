@@ -1,13 +1,9 @@
 // Solve 2023-05-02
+// Update 2023-07-17
 
 #include <bits/stdc++.h>
 using namespace std;
 
-#ifdef BOJ
-#define BOJTEST(x) ((void)0)
-#else
-#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
-#endif
 #define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
 #define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
 #define SIZE(v) (int)v.size()
@@ -26,35 +22,35 @@ int main() {
     vector<int> in_degree(n + 1, 0);
 
     for (int i = 0; i < m; i++) {
-        int u, v;
-        cin >> u >> v;
-        adj[u].push_back(v);
-        in_degree[v]++;
+        int u, nu;
+        cin >> u >> nu;
+        adj[u].push_back(nu);
+        in_degree[nu]++;
     }
 
-    queue<int> q;
+    queue<int> que;
     for (int u = 1; u <= n; u++) {
         if (in_degree[u] == 0) {
-            q.push(u);
+            que.push(u);
         }
     }
 
     vector<int> ans;
     for (int i = 0; i < n; i++) {
-        int u = q.front();
-        q.pop();
+        int u = que.front();
+        que.pop();
         ans.push_back(u);
 
-        for (int v : adj[u]) {
-            in_degree[v]--;
-            if (in_degree[v] == 0) {
-                q.push(v);
+        for (int nu : adj[u]) {
+            in_degree[nu]--;
+            if (in_degree[nu] == 0) {
+                que.push(nu);
             }
         }
     }
 
-    for (int u : ans) {
-        cout << u << ' ';
+    for (int a : ans) {
+        cout << a << ' ';
     }
     cout << '\n';
 
