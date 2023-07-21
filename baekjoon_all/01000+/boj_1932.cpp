@@ -1,35 +1,34 @@
-#include <iostream>
-#include <algorithm>
+// Solve 2022-06-03
+// Update 2023-07-20
+
+#include <bits/stdc++.h>
 using namespace std;
 
-int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
 
-    int n, i, j, temp;
+int dp[2][501];
+
+int main() {
+    FASTIO;
+
+    int n;
     cin >> n;
 
-    int DP[2][500];
-    cin >> DP[0][0];
+    for (int row = 1; row <= n; row++) {
+        int nrow = row % 2; // new row (0 or 1)
+        int prow = 1 - nrow; // previous row (0 or 1)
 
-    for (int row = 1; row < n; row++) {
-        i = row % 2;
-        j = 1 - i;
-
-        cin >> temp;
-        DP[i][0] = temp + DP[j][0];
-
-        for (int col = 1; col < row; col++) {
-            cin >> temp;
-            DP[i][col] = temp + max(DP[j][col - 1], DP[j][col]);
+        for (int col = 1; col <= row; col++) {
+            cin >> dp[nrow][col];
+            dp[nrow][col] += max(dp[prow][col - 1], dp[prow][col]);
         }
-
-        cin >> temp;
-        DP[i][row] = temp + DP[j][row - 1];
     }
 
-    cout << *max_element(DP[i], DP[i] + n) << '\n';
+    cout << *max_element(dp[n % 2] + 1, dp[n % 2] + (n + 1)) << '\n';
 
     return 0;
 }

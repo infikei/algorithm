@@ -1,26 +1,37 @@
-#include <iostream>
-#include <algorithm>
+// Solve 2022-06-03
+// Update 2023-07-20
+
+#include <bits/stdc++.h>
 using namespace std;
 
-int RGB[1000][3];
-int N;
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    cin >> N;
-    cin >> RGB[0][0] >> RGB[0][1] >> RGB[0][2];
+    int n;
+    cin >> n;
 
-    for (int i = 1; i < N; i++) {
-        cin >> RGB[i][0] >> RGB[i][1] >> RGB[i][2];
-        RGB[i][0] += min(RGB[i - 1][1], RGB[i - 1][2]);
-        RGB[i][1] += min(RGB[i - 1][0], RGB[i - 1][2]);
-        RGB[i][2] += min(RGB[i - 1][0], RGB[i - 1][1]);
+    int r, g, b, nr, ng, nb;
+    cin >> r >> g >> b;
+
+    for (int i = 1; i < n; i++) {
+        cin >> nr >> ng >> nb;
+
+        nr += min(g, b);
+        ng += min(r, b);
+        nb += min(r, g);
+
+        r = nr;
+        g = ng;
+        b = nb;
     }
 
-    cout << min(RGB[N - 1][0], min(RGB[N - 1][1], RGB[N - 1][2])) << '\n';
+    cout << min(r, min(g, b)) << '\n';
 
     return 0;
 }

@@ -1,36 +1,36 @@
-#include <iostream>
-#include <algorithm>
+// Solve 2022-06-03
+// Update 2023-07-20
+
+#include <bits/stdc++.h>
 using namespace std;
 
-int DP[300][2];
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
+
+int stairs[301];
+int dp[301][2];
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    int N, score;
-    cin >> N;
+    int n;
+    cin >> n;
 
-    for (int row = 0; row < N; row++) {
-        cin >> score;
-
-        if (row < 2) {
-            if (row == 0) {
-                DP[0][0] = score;
-                DP[0][1] = 0;
-            }
-            else {
-                DP[1][0] = score + DP[0][0];
-                DP[1][1] = score;
-            }
-        }
-
-        DP[row][0] = score + DP[row - 1][1];
-        DP[row][1] = score + max(DP[row - 2][0], DP[row - 2][1]);
+    for (int i = 1; i <= n; i++) {
+        cin >> stairs[i];
     }
 
-    cout << max(DP[N - 1][0], DP[N - 1][1]) << '\n';
+    dp[1][0] = stairs[1];
+
+    for (int i = 2; i <= n; i++) {
+        dp[i][0] = max(dp[i - 2][0], dp[i - 2][1]) + stairs[i];
+        dp[i][1] = dp[i - 1][0] + stairs[i];
+    }
+
+    cout << max(dp[n][0], dp[n][1]) << '\n';
 
     return 0;
 }
