@@ -1,4 +1,4 @@
-// Solve 2022-07-25
+// Solve 2022-06-03
 // Update 2023-07-22
 
 #include <bits/stdc++.h>
@@ -10,30 +10,28 @@ using namespace std;
 #define ALL(v) v.begin(),v.end()
 using ll = long long;
 
-int arr[1000], dp[1000];
-
 int main() {
     FASTIO;
 
     int n;
     cin >> n;
 
+    int val = 0, max_val = -1000;
     for (int i = 0; i < n; i++) {
-        cin >> arr[i];
-    }
+        int x;
+        cin >> x;
 
-    dp[0] = arr[0];
-    for (int i = 1; i < n; i++) {
-        for (int j = 0; j < i; j++) {
-            if (arr[j] < arr[i]) {
-                dp[i] = max(dp[i], dp[j]);
-            }
+        val += x;
+        if (val > max_val) {
+            max_val = val;
         }
 
-        dp[i] += arr[i];
+        if (val < 0) {
+            val = 0;
+        }
     }
 
-    cout << *max_element(dp, dp + n) << '\n';
+    cout << max_val << '\n';
 
     return 0;
 }

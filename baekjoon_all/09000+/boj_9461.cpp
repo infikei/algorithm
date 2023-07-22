@@ -1,31 +1,31 @@
-#include <iostream>
+// Solve 2022-06-03
+// Update 2023-07-22
+
+#include <bits/stdc++.h>
 using namespace std;
 
-long long DP[101] = {0};
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
 
-long long P(int N) {
-    if (DP[N] == 0)
-        DP[N] = P(N - 1) + P(N - 5);
-    return DP[N];
-}
+ll dp[101] = { 0, 1, 1, 1, 2, 2 };
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    DP[1] = 1;
-    DP[2] = 1;
-    DP[3] = 1;
-    DP[4] = 2;
-    DP[5] = 2;
+    for (int i = 6; i <= 100; i++) {
+        dp[i] = dp[i - 5] + dp[i - 1];
+    }
 
-    int T, N;
-    cin >> T;
+    int t;
+    cin >> t;
 
-    for (int t = 0; t < T; t++) {
-        cin >> N;
-        cout << P(N) << '\n';
+    for (int ti = 0; ti < t; ti++) {
+        int n;
+        cin >> n;
+        cout << dp[n] << '\n';
     }
 
     return 0;
