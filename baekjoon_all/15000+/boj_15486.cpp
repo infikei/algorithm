@@ -1,35 +1,37 @@
-#include <iostream>
+// Solve 2022-09-15
+// Update 2023-07-23
+
+#include <bits/stdc++.h>
 using namespace std;
 
-const int SIZE = 1500001;
-int T[SIZE];
-int P[SIZE];
-int DP[SIZE];
-int DP_max = 0;
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
+
+int dp[1500002];
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    int N;
-    cin >> N;
+    int n;
+    cin >> n;
 
-    for (int i = 1; i <= N; i++) {
-        cin >> T[i] >> P[i];
-    }
+    for (int i = 1; i <= n; i++) {
+        int t, p;
+        cin >> t >> p;
 
-    for (int i = 1; i <= N; i++) {
-        DP[i] = max(DP_max, DP[i]);
+        int ni = i + t;
 
-        if (i + T[i] - 1 <= N) {
-            DP[i + T[i] - 1] = max(DP[i + T[i] - 1], DP[i - 1] + P[i]);
+        dp[i] = max(dp[i], dp[i - 1]);
+
+        if (ni <= n + 1) {
+            dp[ni] = max(dp[ni], dp[i] + p);
         }
-
-        DP_max = DP[i];
     }
 
-    cout << DP_max << '\n';
+    cout << max(dp[n], dp[n + 1]) << '\n';
 
     return 0;
 }
