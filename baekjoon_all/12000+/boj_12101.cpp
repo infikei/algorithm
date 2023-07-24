@@ -1,67 +1,54 @@
-#include <iostream>
-#include <string>
+// Solve 2022-10-22
+// Update 2023-07-24
+
+#include <bits/stdc++.h>
 using namespace std;
 
-int DP[11];
-int N, K;
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
 
-void dp_calc() {
-    DP[1] = 1;
-    DP[2] = 2;
-    DP[3] = 4;
-    for (int i = 4; i < 11; i++) {
-        DP[i] = DP[i - 1] + DP[i - 2] + DP[i - 3];
-    }
-}
+int dp[11] = { 0, 1, 2, 4 };
 
 string solve(int n, int k) {
-    if (k >= DP[n]) {
-        return "-1";
+    if (n == 1) {
+        return "1";
     }
-
-    if (n <= 3) {
-        if (n == 1) {
-            return "1";
-        }
-        if (n == 2) {
-            if (k == 0) {
-                return "1+1";
-            }
-            return "2";
-        }
-        if (k == 0) {
-            return "1+1+1";
-        }
-        if (k == 1) {
-            return "1+2";
-        }
-        if (k == 2) {
-            return "2+1";
-        }
+    else if (n == 2 && k == 2) {
+        return "2";
+    }
+    else if (n == 3 && k == 4) {
         return "3";
     }
-
-    if (k < DP[n - 1]) {
+    else if (k <= dp[n - 1]) {
         return "1+" + solve(n - 1, k);
     }
-    else if (k < DP[n - 1] + DP[n - 2]) {
-        return "2+" + solve(n - 2, k - DP[n - 1]);
+    else if (k <= dp[n - 1] + dp[n - 2]) {
+        return "2+" + solve(n - 2, k - dp[n - 1]);
     }
     else {
-        return "3+" + solve(n - 3, k - DP[n - 1] - DP[n - 2]);
+        return "3+" + solve(n - 3, k - dp[n - 1] - dp[n - 2]);
     }
 }
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    dp_calc();
+    for (int i = 4; i < 11; i++) {
+        dp[i] = dp[i - 3] + dp[i - 2] + dp[i - 1];
+    }
 
-    cin >> N >> K;
+    int n, k;
+    cin >> n >> k;
 
-    cout << solve(N, K - 1) << '\n';
+    if (k > dp[n]) {
+        cout << -1 << '\n';
+    }
+    else {
+        cout << solve(n, k) << '\n';
+    }
 
     return 0;
 }

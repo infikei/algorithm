@@ -1,36 +1,41 @@
-#include <iostream>
+// Solve 2022-09-20
+// Update 2023-07-24
+
+#include <bits/stdc++.h>
 using namespace std;
 
-int DP[100001][3];
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
+
+const ll MOD = 1000000009;
+int dp[100001][3];
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    DP[1][0] = 1; // 1 = 1
-    DP[2][1] = 1; // 2 = 2
-    DP[3][0] = 1; // 3 = 2 + 1
-    DP[3][1] = 1; // 3 = 1 + 2
-    DP[3][2] = 1; // 3 = 3
+    dp[1][0] = 1;
+    dp[2][1] = 1;
+    dp[3][0] = 1;
+    dp[3][1] = 1;
+    dp[3][2] = 1;
 
     for (int i = 4; i < 100001; i++) {
-        DP[i][0] = (DP[i - 1][1] + DP[i - 1][2]) % 1000000009;
-        DP[i][1] = (DP[i - 2][0] + DP[i - 2][2]) % 1000000009;
-        DP[i][2] = (DP[i - 3][0] + DP[i - 3][1]) % 1000000009;
+        dp[i][0] = (dp[i - 1][1] + dp[i - 1][2]) % MOD;
+        dp[i][1] = (dp[i - 2][0] + dp[i - 2][2]) % MOD;
+        dp[i][2] = (dp[i - 3][0] + dp[i - 3][1]) % MOD;
     }
 
-    int T;
-    cin >> T;
+    int t;
+    cin >> t;
 
-    for (int t = 0; t < T; t++) {
-        int N;
-        cin >> N;
+    for (int ti = 0; ti < t; ti++) {
+        int n;
+        cin >> n;
 
-        int ans = DP[N][0];
-        ans = (ans + DP[N][1]) % 1000000009;
-        ans = (ans + DP[N][2]) % 1000000009;
-        cout << ans << '\n';
+        cout << ((dp[n][0] + dp[n][1]) % MOD + dp[n][2]) % MOD << '\n';
     }
 
     return 0;

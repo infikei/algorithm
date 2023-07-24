@@ -1,37 +1,35 @@
-#include <iostream>
+// Solve 2022-10-22
+// Update 2023-07-24
+
+#include <bits/stdc++.h>
 using namespace std;
 
-int T, N;
-int DP[10001][3];
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
 
-void dp_calc() {
-    DP[1][0] = 1;
-    DP[2][0] = 1;
-    DP[2][1] = 1;
-    DP[3][0] = 2;
-    DP[3][1] = 0;
-    DP[3][2] = 1;
-
-    for (int i = 4; i < 10001; i++) {
-        DP[i][0] = DP[i - 1][0] + DP[i - 1][1] + DP[i - 1][2];
-        DP[i][1] = DP[i - 2][1] + DP[i - 2][2];
-        DP[i][2] = DP[i - 3][2];
-    }
-}
+int dp[10001][2];
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    dp_calc();
+    dp[2][0] = 1;
 
-    cin >> T;
+    for (int i = 3; i < 10001; i++) {
+        dp[i][0] = 1 + dp[i - 2][0];
+        dp[i][1] = 1 + dp[i - 3][0] + dp[i - 3][1];
+    }
 
-    for (int t = 0; t < T; t++) {
-        cin >> N;
+    int t;
+    cin >> t;
 
-        cout << DP[N][0] + DP[N][1] + DP[N][2] << '\n';
+    for (int ti = 0; ti < t; ti++) {
+        int n;
+        cin >> n;
+
+        cout << 1 + dp[n][0] + dp[n][1] << '\n';
     }
 
     return 0;

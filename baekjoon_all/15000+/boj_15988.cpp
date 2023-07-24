@@ -1,32 +1,33 @@
-#include <iostream>
+// Solve 2022-07-26
+// Update 2023-07-24
+
+#include <bits/stdc++.h>
 using namespace std;
 
-int DP[1000001] = {0};
-int T, N;
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
 
-int dp(int N) {
-    if (DP[N] > 0) {
-        return DP[N];
-    }
-    int result = (dp(N - 1) + dp(N - 2)) % 1000000009;
-    result = (result + dp(N - 3)) % 1000000009;
-    DP[N] = result;
-    return result;
-}
+const int MOD = 1000000009;
+int dp[1000001] = { 0, 1, 2, 4 };
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    DP[1] = 1;
-    DP[2] = 2;
-    DP[3] = 4;
+    for (int i = 4; i < 1000001; i++) {
+        dp[i] = ((dp[i - 3] + dp[i - 2]) % MOD + dp[i - 1]) % MOD;
+    }
 
-    cin >> T;
-    for (int t = 0; t < T; t++) {
-        cin >> N;
-        cout << dp(N) << '\n';
+    int t;
+    cin >> t;
+
+    for (int ti = 0; ti < t; ti++) {
+        int n;
+        cin >> n;
+
+        cout << dp[n] << '\n';
     }
 
     return 0;
