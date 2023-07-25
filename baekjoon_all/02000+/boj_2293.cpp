@@ -1,30 +1,33 @@
-#include <iostream>
+// Solve 2022-09-17
+// Update 2023-07-25
+
+#include <bits/stdc++.h>
 using namespace std;
 
-int N, K;
-int coin[100];
-int DP[10001];
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
+
+int dp[10001] = { 1 };
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    cin >> N >> K;
+    int n, k;
+    cin >> n >> k;
 
-    for (int i = 0; i < N; i++) {
-        cin >> coin[i];
-    }
+    for (int i = 0; i < n; i++) {
+        int coin;
+        cin >> coin;
 
-    DP[0] = 1;
-
-    for (int i = 0; i < N; i++) {
-        for (int j = coin[i]; j <= K; j++) {
-            DP[j] += DP[j - coin[i]];
+        for (int j = coin; j <= k; j++) {
+            dp[j] += dp[j - coin];
         }
     }
 
-    cout << DP[K] << '\n';
+    cout << dp[k] << '\n';
 
     return 0;
 }

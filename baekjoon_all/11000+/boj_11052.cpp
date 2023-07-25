@@ -1,29 +1,34 @@
-#include <iostream>
+// Solve 2022-07-13
+// Update 2023-07-25
+
+#include <bits/stdc++.h>
 using namespace std;
 
-int P[1001];
-int DP[1001];
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
+
+int dp[1001];
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    int N;
-    cin >> N;
+    int n;
+    cin >> n;
 
-    for (int i = 1; i <= N; i++) {
-        cin >> P[i];
-    }
+    for (int i = 1; i <= n; i++) {
+        cin >> dp[i];
 
-    for (int i = 1; i <= N; i++) {
-        DP[i] = P[i];
-        for (int j = 1; j <= i / 2; j++) {
-            DP[i] = max(DP[i], DP[j] + DP[i - j]);
+        int j = 1, j_end = i / 2;
+        while (j <= j_end) {
+            dp[i] = max(dp[i], dp[j] + dp[i - j]);
+            j++;
         }
     }
 
-    cout << DP[N] << '\n';
+    cout << dp[n] << '\n';
 
     return 0;
 }

@@ -1,5 +1,5 @@
 // Solve 2022-09-20
-// Update 2023-07-24
+// Update 2023-07-25
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -10,7 +10,7 @@ using namespace std;
 #define ALL(v) v.begin(),v.end()
 using ll = long long;
 
-const ll MOD = 1000000009;
+const int MOD = 1000000009;
 int dp[100001][3];
 
 int main() {

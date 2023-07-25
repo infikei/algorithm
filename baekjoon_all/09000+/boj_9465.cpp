@@ -1,44 +1,42 @@
-#include <iostream>
+// Solve 2022-09-09
+// Update 2023-07-25
+
+#include <bits/stdc++.h>
 using namespace std;
 
-int sticker[2][100000];
-int DP[2][100000];
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
+
+int dp[2][100000];
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    int T;
-    cin >> T;
+    int t;
+    cin >> t;
 
-    for (int t = 0; t < T; t++) {
-        int N;
-        cin >> N;
-
-        for (int row = 0; row < 2; row++) {
-            for (int col = 0; col < N; col++) {
-                cin >> sticker[row][col];
-            }
-        }
+    for (int ti = 0; ti < t; ti++) {
+        int n;
+        cin >> n;
 
         for (int i = 0; i < 2; i++) {
-            DP[i][0] = sticker[i][0];
-        }
-
-        if (N >= 2) {
-            for (int i = 0; i < 2; i++) {
-                DP[i][1] = DP[1 - i][0] + sticker[i][1];
+            for (int j = 0; j < n; j++) {
+                cin >> dp[i][j];
             }
         }
 
-        for (int j = 2; j < N; j++) {
-            for (int i = 0; i < 2; i++) {
-                DP[i][j] = max(DP[1 - i][j - 1], DP[1 - i][j - 2]) + sticker[i][j];
-            }
+        dp[0][1] += dp[1][0];
+        dp[1][1] += dp[0][0];
+
+        for (int j = 2; j < n; j++) {
+            dp[0][j] += max(dp[1][j - 2], dp[1][j - 1]);
+            dp[1][j] += max(dp[0][j - 2], dp[0][j - 1]);
         }
 
-        cout << max(DP[0][N - 1], DP[1][N - 1]) << '\n';
+        cout << max(dp[0][n - 1], dp[1][n - 1]) << '\n';
     }
 
     return 0;

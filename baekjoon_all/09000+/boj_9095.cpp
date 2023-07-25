@@ -1,5 +1,5 @@
 // Solve 2023-03-23
-// Update 2023-07-20
+// Update 2023-07-25
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -25,6 +25,7 @@ int main() {
     for (int ti = 0; ti < t; ti++) {
         int n;
         cin >> n;
+
         cout << dp[n] << '\n';
     }
 
