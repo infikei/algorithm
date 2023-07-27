@@ -1,62 +1,64 @@
-#include <iostream>
+// Solve 2022-09-13
+// Update 2023-07-27
+
+#include <bits/stdc++.h>
 using namespace std;
 
-int N, M;
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
+
 int arr[2000];
-bool memo[2000][2000];
-
-void initialize_memo() {
-    for (int i = 0; i < N; i++) {
-        int b = i, e = i;
-
-        while (b >= 0 && e < N) {
-            if (arr[b] != arr[e]) {
-                break;
-            }
-            memo[b][e] = true;
-            b--;
-            e++;
-        }
-    }
-
-    for (int i = 0; i < N - 1; i++) {
-        int b = i, e = i + 1;
-
-        while (b >= 0 && e < N) {
-            if (arr[b] != arr[e]) {
-                break;
-            }
-            memo[b][e] = true;
-            b--;
-            e++;
-        }
-    }
-}
+bool dp[2000][2000];
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    cin >> N;
+    int n;
+    cin >> n;
 
-    for (int i = 0; i < N; i++) {
+    for (int i = 0; i < n; i++) {
         cin >> arr[i];
     }
 
-    initialize_memo();
+    for (int i = 0; i < n; i++) {
+        int s = i, e = i;
 
-    cin >> M;
+        while (s >= 0 && e < n) {
+            if (arr[s] != arr[e]) {
+                break;
+            }
 
-    for (int i = 0; i < M; i++) {
-        int b, e;
-        cin >> b >> e;
-        if (memo[b - 1][e - 1]) {
-            cout << 1 << '\n';
+            dp[s][e] = true;
+            s--;
+            e++;
         }
-        else {
-            cout << 0 << '\n';
+    }
+
+    for (int i = 0; i < n; i++) {
+        int s = i, e = i + 1;
+
+        while (s >= 0 && e < n) {
+            if (arr[s] != arr[e]) {
+                break;
+            }
+
+            dp[s][e] = true;
+            s--;
+            e++;
         }
+    }
+
+    int m;
+    cin >> m;
+
+    for (int i = 0; i < m; i++) {
+        int s, e;
+        cin >> s >> e;
+
+        cout << dp[s - 1][e - 1] << '\n';
     }
 
     return 0;
