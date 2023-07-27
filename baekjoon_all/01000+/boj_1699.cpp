@@ -1,32 +1,38 @@
-#include <iostream>
+// Solve 2022-06-29
+// Update 2023-07-26
+
+#include <bits/stdc++.h>
 using namespace std;
 
-int DP[100001] = {0};
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
 
-int dp(int x) {
-    if (DP[x] > 0) {
-        return DP[x];
-    }
-    int result = dp(x - 1) + 1;
-    for (int i = 2; i * i < x; i++) {
-        result = min(result, dp(x - i * i) + dp(i * i));
-    }
-
-    return DP[x] = result;
-}
+int dp[100001];
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    int N;
-    cin >> N;
+    int n;
+    cin >> n;
 
-    for (int i = 1; i * i <= N; i++) {
-        DP[i * i] = 1;
+    for (int i = 1; i <= n; i++) {
+        dp[i] = i;
     }
-    cout << dp(N) << '\n';
+
+    int k = 2, k2 = 4;
+    while (k2 <= n) {
+        for (int i = k2; i <= n; i++) {
+            dp[i] = min(dp[i], dp[i - k2] + 1);
+        }
+
+        k++;
+        k2 = k * k;
+    }
+
+    cout << dp[n] << '\n';
 
     return 0;
 }

@@ -1,4 +1,5 @@
 // Solve 2023-07-09
+// Update 2023-07-26
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -19,14 +20,16 @@ int main() {
         cout << 0 << '\n';
     }
     else {
-        int b = 3, s = 4;
+        int a = 3, s = 4;
 
-        for (int i = 1, i_end = (n >> 1); i < i_end; i++) {
-            b += s << 1;
-            s += b;
+        int i = 1, i_end = n >> 1;
+        while (i < i_end) {
+            a += s << 1; // a_n = a_(n-1) + 2 * S_(n-1)
+            s += a; // S_n = S_(n-1) + a_n
+            i++;
         }
 
-        cout << b << '\n';
+        cout << a << '\n';
     }
 
     return 0;
