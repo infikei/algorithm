@@ -1,38 +1,40 @@
-#include <iostream>
+// Solve 2022-07-06
+// Update 2023-07-29
+
+#include <bits/stdc++.h>
 using namespace std;
 
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
+
+int dp[301][301];
+
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
     int n, m;
     cin >> n >> m;
 
-    int arr[301][301];
-
     for (int i = 1; i <= n; i++) {
         for (int j = 1; j <= m; j++) {
-            cin >> arr[i][j];
-        }
-    }
+            int x;
+            cin >> x;
 
-    int arr2[301][301] = {0};
-
-    for (int i = 1; i <= n; i++) {
-        for (int j = 1; j <= m; j++) {
-            arr2[i][j] = arr[i][j] + arr2[i][j - 1] + arr2[i - 1][j] - arr2[i - 1][j - 1];
+            dp[i][j] = -dp[i - 1][j - 1] + dp[i - 1][j] + dp[i][j - 1] + x;
         }
     }
 
     int k;
     cin >> k;
 
-    for (int t = 0; t < k; t++) {
-        int i, j, x, y;
-        cin >> i >> j >> x >> y;
+    for (int ki = 0; ki < k; ki++) {
+        int xs, ys, xe, ye;
+        cin >> xs >> ys >> xe >> ye;
 
-        cout << arr2[x][y] - arr2[x][j - 1] - arr2[i - 1][y] + arr2[i - 1][j - 1] << '\n';
+        cout << dp[xs - 1][ys - 1] - dp[xs - 1][ye] - dp[xe][ys - 1] + dp[xe][ye] << '\n';
     }
 
     return 0;
