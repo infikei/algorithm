@@ -1,62 +1,53 @@
 // Solve 2023-02-14
-// Update 2023-02-26
+// Update 2023-08-02
 
 #include <bits/stdc++.h>
 using namespace std;
 
-#ifdef BOJ
-#define BOJTEST(x) ((void)0)
-#else
-#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
-#endif
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
 #define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
 #define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
 using ll = long long;
-using uint = unsigned int;
-using ull = unsigned long long;
 
-vector<string> make_triangle(int x) {
-    vector<string> res;
-    if (x == 1) {
-        res = { " ", "*" };
-        return res;
+vector<string> make_triangle(int k) {
+    if (k == 1) return { "*" };
+
+    vector<string> small_triangle = make_triangle(k - 1);
+    reverse(small_triangle.begin(), small_triangle.end());
+
+    vector<string> triangle;
+    triangle.assign((1 << k) - 1, "");
+
+    triangle[0].assign(SIZE(small_triangle.back()) + (1 << k), '*');
+
+    int row = 1, row_end = (1 << (k - 1)) - 1;
+    string space, space2(row_end, ' ');
+
+    while (row <= row_end) {
+        space += " ";
+        space2.pop_back();
+
+        triangle[row] = space + "*" + space2 + small_triangle[row - 1] + space2 + space2 + "*";
+
+        row++;
     }
 
-    vector<string> small_triangle = make_triangle(x - 1);
-    reverse(ALL(small_triangle));
+    row_end <<= 1;
+    space2.assign((1 << (k - 1)) - 2, ' ');
 
-    int row_end = (1 << x) - 1;
-    res.assign(row_end + 1, "");
+    while (row < row_end) {
+        space += " ";
+        space2.pop_back();
 
-    int i_end = row_end * 2 - 1;
-    for (int i = 1; i <= i_end; i++) {
-        res[row_end] += "*";
+        triangle[row] = space + "*" + space2 + space2 + " *";
+
+        row++;
     }
 
-    string tmp = "";
-    for (int row = row_end - 1; row >= 1; row--) {
-        tmp += ' ';
-        res[row] += tmp + '*';
-    }
+    triangle[row] = space + " *";
 
-    tmp = " ";
-    i_end = row_end / 2 + 1;
-    for (int row = 2; row < i_end; row++) {
-        res[row] += tmp + "*";
-        tmp += "  ";
-    }
-
-    tmp = "";
-    int k = 0;
-    for (int row = i_end; row < row_end; row++) {
-        res[row] += tmp + small_triangle[k] + tmp + tmp + "*";
-        tmp += " ";
-        k++;
-    }
-
-    return res;
+    return triangle;
 }
 
 int main() {
@@ -66,11 +57,9 @@ int main() {
     cin >> n;
 
     vector<string> triangle = make_triangle(n);
-    triangle.erase(triangle.begin(), triangle.begin() + 1);
-    if (~n & 1) {
-        reverse(ALL(triangle));
-    }
-    for (auto line : triangle) {
+    if (n & 1) reverse(triangle.begin(), triangle.end());
+
+    for (const string &line : triangle) {
         cout << line << '\n';
     }
 
