@@ -1,9 +1,10 @@
 // Solve 2023-06-01
+// Update 2023-08-07
 
 #include <bits/stdc++.h>
 using namespace std;
 
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
 #define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
 #define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
@@ -32,11 +33,13 @@ int main() {
 
         int lcm_mn = calc_lcm(m, n);
         int ans = -1;
-        for (int i = x; i <= lcm_mn; i += m) {
-            int yy = i % n;
-            if (yy == 0) yy = n;
-            if (yy == y) {
-                ans = i;
+
+        for (int k = x; k <= lcm_mn; k += m) {
+            int r = k % n;
+            if (r == 0) r = n;
+
+            if (r == y) {
+                ans = k;
                 break;
             }
         }

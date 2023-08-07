@@ -10,27 +10,32 @@ using namespace std;
 #define ALL(v) v.begin(),v.end()
 using ll = long long;
 
-unordered_map<int, int> hs;
+int card[500000];
 
 int main() {
     FASTIO;
 
-    int n, x;
+    int n;
     cin >> n;
 
     for (int i = 0; i < n; i++) {
-        cin >> x;
-
-        hs[x]++;
+        cin >> card[i];
     }
 
-    int m;
+    sort(card, card + n);
+
+    int m, x;
     cin >> m;
 
     for (int i = 0; i < m; i++) {
         cin >> x;
 
-        cout << hs[x] << ' ';
+        if (binary_search(card, card + n, x)) {
+            cout << 1 << ' ';
+        }
+        else {
+            cout << 0 << ' ';
+        }
     }
 
     cout << '\n';

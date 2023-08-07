@@ -10,7 +10,7 @@ using namespace std;
 #define ALL(v) v.begin(),v.end()
 using ll = long long;
 
-unordered_map<int, int> hs;
+unordered_set<int> hs;
 
 int main() {
     FASTIO;
@@ -21,7 +21,7 @@ int main() {
     for (int i = 0; i < n; i++) {
         cin >> x;
 
-        hs[x]++;
+        hs.insert(x);
     }
 
     int m;
@@ -30,7 +30,12 @@ int main() {
     for (int i = 0; i < m; i++) {
         cin >> x;
 
-        cout << hs[x] << ' ';
+        if (hs.find(x) != hs.end()) {
+            cout << 1 << ' ';
+        }
+        else {
+            cout << 0 << ' ';
+        }
     }
 
     cout << '\n';

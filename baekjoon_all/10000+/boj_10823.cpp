@@ -1,35 +1,31 @@
-#include <iostream>
-#include <sstream>
-#include <string>
+// Solve 2022-11-05
+// Update 2023-08-07
+
+#include <bits/stdc++.h>
 using namespace std;
-#define fastio ios_base::sync_with_stdio(false);cout.tie(NULL);cin.tie(NULL); // boj_15552.cpp
+
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
 
 string S;
 
 int main() {
-    fastio;
+    FASTIO;
 
-    string S;
+    string s, w;
 
-    while (true) {
-        string tmp;
-        cin >> tmp;
-        if (tmp == "") {
-            break;
-        }
-        S += tmp;
+    while (cin >> w) {
+        s += w;
     }
 
-    stringstream ss(S);
+    stringstream ss(s);
     int ans = 0;
 
-    while (true) {
-        string tmp;
-        getline(ss, tmp, ',');
-        if (tmp == "") {
-            break;
-        }
-        ans += stoi(tmp);
+    while (getline(ss, w, ',')) {
+        ans += stoi(w);
     }
 
     cout << ans << '\n';
