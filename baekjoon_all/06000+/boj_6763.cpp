@@ -1,20 +1,30 @@
-#include <iostream>
+// Solve 2022-11-03
+// Update 2023-08-10
+
+#include <bits/stdc++.h>
 using namespace std;
-#define fastio ios_base::sync_with_stdio(false);cout.tie(NULL);cin.tie(NULL); // boj_15552.cpp
+
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
 
 int main() {
-    fastio;
+    FASTIO;
 
     int limit, speed;
     cin >> limit >> speed;
 
-    if (speed - limit <= 0) {
+    int diff = speed - limit;
+
+    if (diff <= 0) {
         cout << "Congratulations, you are within the speed limit!\n";
     }
-    else if (speed - limit <= 20) {
+    else if (diff <= 20) {
         cout << "You are speeding and your fine is $100.\n";
     }
-    else if (speed - limit <= 30) {
+    else if (diff <= 30) {
         cout << "You are speeding and your fine is $270.\n";
     }
     else {

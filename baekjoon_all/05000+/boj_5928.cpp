@@ -1,21 +1,29 @@
-#include <iostream>
+// Solve 2022-11-03
+// Update 2023-08-10
+
+#include <bits/stdc++.h>
 using namespace std;
-#define fastio ios_base::sync_with_stdio(false);cout.tie(NULL);cin.tie(NULL); // boj_15552.cpp
+
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
 
 int main() {
-    fastio;
+    FASTIO;
 
-    int D, H, M;
-    cin >> D >> H >> M;
+    int d, h, m;
+    cin >> d >> h >> m;
 
-    int starting = (11 * 24 + 11) * 60 + 11;
-    int ending = (D * 24 + H) * 60 + M;
+    int s = (11 * 24 + 11) * 60 + 11;
+    int e = (d * 24 + h) * 60 + m;
 
-    if (ending < starting) {
+    if (s > e) {
         cout << -1 << '\n';
     }
     else {
-        cout << ending - starting << '\n';
+        cout << e - s << '\n';
     }
 
     return 0;
