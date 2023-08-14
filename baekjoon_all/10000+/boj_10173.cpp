@@ -1,29 +1,31 @@
-#include <iostream>
-#include <string>
-#include <algorithm>
+// Solve 2022-09-22
+// Update 2023-08-14
+
+#include <bits/stdc++.h>
 using namespace std;
 
-int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
 
-    string input;
+int main() {
+    FASTIO;
 
     while (true) {
-        getline(cin, input);
+        string s;
+        getline(cin, s);
 
-        if (input == "EOI") {
-            break;
-        }
+        if (s == "EOI") break;
 
-        transform(input.begin(), input.end(), input.begin(), ::tolower);
+        transform(s.begin(), s.end(), s.begin(), ::tolower);
 
-        if (input.find("nemo") != -1) {
-            cout << "Found" << '\n';
+        if (s.find("nemo") != string::npos) {
+            cout << "Found\n";
         }
         else {
-            cout << "Missing" << '\n';
+            cout << "Missing\n";
         }
     }
 

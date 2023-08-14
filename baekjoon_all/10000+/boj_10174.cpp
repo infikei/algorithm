@@ -1,34 +1,42 @@
-#include <iostream>
-#include <string>
-#define fastio ios_base::sync_with_stdio(false);cout.tie(NULL);cin.tie(NULL); // boj_15552.cpp
+// Solve 2023-01-08
+// Update 2023-08-14
+
+#include <bits/stdc++.h>
 using namespace std;
 
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
+
 int main() {
-    fastio;
+    FASTIO;
 
     int n;
     cin >> n;
 
     for (int k = 0; k < n; k++) {
-        string line;
-        getline(cin, line);
-        if (line == "") getline(cin, line);
-        int line_len = line.length();
+        string s;
+        getline(cin, s);
+        if (s == "") getline(cin, s);
 
-        bool is_palindrome = true;
-        for (int i = 0; i < line_len / 2; i++) {
-            char ch0 = line[i];
-            char ch1 = line[line_len - 1 - i];
-            if (ch0 >= 'A' && ch0 <= 'Z') ch0 = ch0 - 'A' + 'a';
-            if (ch1 >= 'A' && ch1 <= 'Z') ch1 = ch1 - 'A' + 'a';
+        bool ans = true;
 
-            if (ch0 != ch1) {
-                is_palindrome = false;
+        for (int i = 0, ie = SIZE(s) / 2; i < ie; i++) {
+            char c = s[i];
+            if (c >= 'A' && c <= 'Z') c = c - 'A' + 'a';
+
+            char c2 = s[SIZE(s) - 1 - i];
+            if (c2 >= 'A' && c2 <= 'Z') c2 = c2 - 'A' + 'a';
+
+            if (c != c2) {
+                ans = false;
                 break;
             }
         }
 
-        if (is_palindrome) cout << "Yes\n";
+        if (ans) cout << "Yes\n";
         else cout << "No\n";
     }
 
