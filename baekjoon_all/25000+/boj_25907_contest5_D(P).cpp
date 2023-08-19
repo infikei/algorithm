@@ -1,39 +1,45 @@
-#include <iostream>
+// Solve 2022-10-30
+// Update 2023-08-18
+
+#include <bits/stdc++.h>
 using namespace std;
 
-int N, ans;
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    cin >> N;
+    int n;
+    cin >> n;
 
-    int low = 1, high = N, mid;
+    int low = 1, high = n;
 
-    while (low <= high) {
-        mid = (low + high) / 2;
+    while (low + 1 < high) {
+        int mid = (low + high) / 2;
+        int sheep;
 
-        cout << "? " << mid;
-        cout << endl;
-        int x;
-        cin >> x;
+        cout << "? " << mid << endl;
+        cin >> sheep;
 
-        if (x > mid - x) {
-            low = mid + 1;
-        }
-        else if (x < mid - x) {
+        int wolf = mid - sheep;
+
+        if (sheep < wolf) {
             high = mid;
         }
+        else if (sheep > wolf) {
+            low = mid;
+        }
         else {
-            ans = mid;
+            high = mid;
             break;
         }
     }
 
-    cout << "! " << ans;
-    cout << endl;
+    cout << "! " << high << endl;
 
     return 0;
 }
