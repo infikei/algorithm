@@ -14,8 +14,6 @@ using namespace std;
 #define ROF(i, ie, a, b) for (int i = (a), ie = (b); i >= ie; i--)
 #define FORR(i, ie, a, b) for (ll i = (a), ie = (b); i <= ie; i++)
 #define ROFF(i, ie, a, b) for (ll i = (a), ie = (b); i >= ie; i--)
-#define COUT(a) cout << (a);
-#define COUTT(a, c) cout << (a) << (c);
 using ll = long long;
 using uint = unsigned int;
 using ull = unsigned long long;
