@@ -1,27 +1,35 @@
-#include <iostream>
-#include <algorithm>
+// Solve 2022-08-02
+// Update 2023-08-22
+
+#include <bits/stdc++.h>
 using namespace std;
 
-int arr[1000000];
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    int T;
-    cin >> T;
+    int t;
+    cin >> t;
 
-    for (int t = 0; t < T; t++) {
-        int N;
-        cin >> N;
+    for (int ti = 0; ti < t; ti++) {
+        int n, x;
+        cin >> n;
 
-        for (int i = 0; i < N; i++) {
-            cin >> arr[i];
+        int ans_min = 1000000, ans_max = -1000000;
+
+        for (int i = 0; i < n; i++) {
+            cin >> x;
+
+            ans_min = min(ans_min, x);
+            ans_max = max(ans_max, x);
         }
 
-        cout << *min_element(arr, arr + N) << ' ';
-        cout << *max_element(arr, arr + N) << '\n';
+        cout << ans_min << ' ' << ans_max << '\n';
     }
 
     return 0;

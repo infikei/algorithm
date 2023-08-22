@@ -1,18 +1,26 @@
-#include <iostream>
-#include <cmath>
+// Solve 2022-11-27
+// Update 2023-08-22
+
+#include <bits/stdc++.h>
 using namespace std;
-#define fastio ios_base::sync_with_stdio(false);cout.tie(NULL);cin.tie(NULL); // boj_15552.cpp
+
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
 
 int main() {
-    fastio;
+    FASTIO;
 
-    int W, H;
-    cin >> W >> H;
+    SETPRECISION(9);
 
-    double D = sqrt(W * W + H * H);
-    cout << fixed;
-    cout.precision(9);
-    cout << W + H - D << '\n';
+    int w, h;
+    cin >> w >> h;
+
+    double d = sqrt(w * w + h * h);
+
+    cout << w + h - d << '\n';
 
     return 0;
 }

@@ -1,63 +1,61 @@
-#include <iostream>
-#include <deque>
+// Solve 2022-08-01
+// Update 2023-08-22
+
+#include <bits/stdc++.h>
 using namespace std;
 
-deque<int> q;
-int N, K, M;
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    cin >> N >> K >> M;
+    int n, k, m;
+    cin >> n >> k >> m;
 
-    for (int i = 1; i <= N; i++) {
-        q.push_back(i);
+    deque<int> dq;
+
+    for (int i = 1; i <= n; i++) {
+        dq.push_back(i);
     }
 
-    int k = 1, m = 1;
-    bool q_direction = true;
+    int mi = 0;
+    bool dq_direction = true;
 
-    while (!q.empty()) {
-        if (q_direction) {
-            if (k < K) {
-                q.push_back(q.front());
-                q.pop_front();
-                k++;
+    while (!dq.empty()) {
+        if (dq_direction) {
+            for (int ki = 1; ki < k; ki++) {
+                dq.push_back(dq.front());
+                dq.pop_front();
             }
-            else {
-                cout << q.front() << '\n';
-                q.pop_front();
-                k = 1;
 
-                if (m < M) {
-                    m++;
-                }
-                else {
-                    q_direction = false;
-                    m = 1;
-                }
+            cout << dq.front() << '\n';
+            dq.pop_front();
+
+            mi++;
+
+            if (mi == m) {
+                dq_direction = false;
+                mi = 0;
             }
         }
         else {
-            if (k < K) {
-                q.push_front(q.back());
-                q.pop_back();
-                k++;
+            for (int ki = 1; ki < k; ki++) {
+                dq.push_front(dq.back());
+                dq.pop_back();
             }
-            else {
-                cout << q.back() << '\n';
-                q.pop_back();
-                k = 1;
 
-                if (m < M) {
-                    m++;
-                }
-                else {
-                    q_direction = true;
-                    m = 1;
-                }
+            cout << dq.back() << '\n';
+            dq.pop_back();
+
+            mi++;
+
+            if (mi == m) {
+                dq_direction = true;
+                mi = 0;
             }
         }
     }
