@@ -1,10 +1,17 @@
-#include <iostream>
-#include <string>
-#define fastio ios_base::sync_with_stdio(false);cout.tie(NULL);cin.tie(NULL); // boj_15552.cpp
+// Solve 2023-01-10
+// Update 2023-08-23
+
+#include <bits/stdc++.h>
 using namespace std;
 
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
+
 int main() {
-    fastio;
+    FASTIO;
 
     while (true) {
         string line;
@@ -12,10 +19,11 @@ int main() {
         if (line == "#") break;
 
         int quick_sum = 0, iter = 0;
-        for (auto a : line) {
+
+        for (const char c : line) {
             iter++;
-            if (a == ' ') continue;
-            quick_sum += iter * (a - 'A' + 1);
+            if (c == ' ') continue;
+            quick_sum += iter * (c - 'A' + 1);
         }
 
         cout << quick_sum << '\n';
