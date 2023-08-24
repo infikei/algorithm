@@ -1,32 +1,34 @@
-#include <iostream>
-#include <string>
+// Solve 2022-10-31
+// Update 2023-08-24
+
+#include <bits/stdc++.h>
 using namespace std;
 
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
+
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    string A, B;
+    string a, b;
     char op;
-    cin >> A >> op >> B;
-
-    int Alen = A.length();
-    int Blen = B.length();
+    cin >> a >> op >> b;
 
     if (op == '+') {
-        if (Alen >= Blen) {
-            A[Alen - Blen]++;
-            cout << A << '\n';
+        if (SIZE(a) >= SIZE(b)) {
+            a[SIZE(a) - SIZE(b)]++;
+            cout << a << '\n';
         }
         else {
-            B[Blen - Alen]++;
-            cout << B << '\n';
+            b[SIZE(b) - SIZE(a)]++;
+            cout << b << '\n';
         }
     }
     else {
-        cout << A;
-        cout << B.substr(1, Blen - 1) << '\n';
+        cout << a << b.substr(1, SIZE(b) - 1) << '\n';
     }
 
     return 0;

@@ -1,26 +1,32 @@
-#include <iostream>
-#include <algorithm>
+// Solve 2022-10-23
+// Update 2023-08-24
+
+#include <bits/stdc++.h>
 using namespace std;
 
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
+
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    int score[5];
+    int score[6] = { 0 };
 
-    for (int i = 0; i < 5; i++) {
-        int sum = 0;
+    for (int i = 1; i <= 5; i++) {
         for (int j = 0; j < 4; j++) {
             int x;
             cin >> x;
-            sum += x;
+
+            score[i] += x;
         }
-        score[i] = sum;
     }
 
-    int idx = max_element(score, score + 5) - score;
-    cout << idx + 1 << ' ' << score[idx] << '\n';
+    int idx = max_element(score + 1, score + 6) - score;
+
+    cout << idx << ' ' << score[idx] << '\n';
 
     return 0;
 }

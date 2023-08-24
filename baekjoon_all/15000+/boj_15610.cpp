@@ -1,4 +1,7 @@
 // Solve 2023-08-11
+// Update 2023-08-24
+
+// 백준 16600번과 같은 문제
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -18,6 +21,7 @@ int main() {
     cin >> a;
 
     double ans = sqrt(a) * 4;
+
     cout << ans << '\n';
 
     return 0;
