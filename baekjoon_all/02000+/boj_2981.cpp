@@ -1,40 +1,45 @@
-#include <iostream>
+// Solve 2022-06-07
+// Update 2023-08-25
+
+#include <bits/stdc++.h>
 using namespace std;
 
-int gcd(int a, int b) {
-    if (a < 0) {
-        a = -a;
-    }
-    if (a % b == 0) {
-        return b;
-    }
-    return gcd(b, a % b);
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
+
+int calc_gcd(int a, int b) {
+    int r = a % b;
+    if (r == 0) return b;
+    return calc_gcd(b, r);
 }
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    int N;
-    cin >> N;
+    int n;
+    cin >> n;
 
     // 들어온 값들의 차이들의 최대공약수를 구해야 함
-    // (이때 비교하는 순서는 결과에 영향을 주지 않으므로 그냥 들어오는 대로 비교함)
-    int temp1, temp2;
-    cin >> temp1 >> temp2;
-    int ans = abs(temp2 - temp1);
-    for (int i = 2; i < N; i++) {
-        cin >> temp2;
-        ans = gcd(temp2 - temp1, ans);
+    // 이때 비교하는 순서는 결과에 영향을 주지 않으므로 그냥 들어오는 대로 비교함
+    int x0, x;
+    cin >> x0 >> x;
+    int ans = abs(x - x0);
+
+    for (int i = 2; i < n; i++) {
+        cin >> x;
+        ans = calc_gcd(abs(x - x0), ans);
     }
 
-    // 약수 검사 시 ans / 2까지만 검사해서 시간 단축하기 (ans는 반복문 이후 따로 출력함)
-    for (int m = 2; m <= ans / 2; m++) {
+    // 약수 검사 시 ans / 2까지만 검사해서 시간 단축
+    for (int m = 2, me = ans / 2; m <= me; m++) {
         if (ans % m == 0) {
             cout << m << ' ';
         }
     }
+
     cout << ans << '\n';
 
     return 0;

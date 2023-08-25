@@ -1,28 +1,32 @@
-#include <iostream>
-#include <string>
-#define fastio ios_base::sync_with_stdio(false);cout.tie(NULL);cin.tie(NULL); // boj_15552.cpp
+// Solve 2022-12-21
+// Update 2023-08-25
+
+#include <bits/stdc++.h>
 using namespace std;
 
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
+
 int main() {
-    fastio;
+    FASTIO;
 
     string bin_num, oct_num;
     cin >> bin_num;
 
-    int k = (int)(bin_num.length()) % 3;
-    if (k == 2) {
-        int j = (bin_num[0] - '0') * 2;
-        j += bin_num[1] - '0';
-        oct_num = ('0' + j);
+    int r = SIZE(bin_num) % 3;
+
+    if (r == 2) {
+        oct_num.push_back((bin_num[0] - '0') * 2 + bin_num[1]);
     }
-    else if (k == 1) {
-        oct_num = bin_num[0];
+    else if (r == 1) {
+        oct_num.push_back(bin_num[0]);
     }
-    for (int i = k; i < bin_num.length(); i += 3) {
-        int j = (bin_num[i] - '0') * 4;
-        j += (bin_num[i + 1] - '0') * 2;
-        j += bin_num[i + 2] - '0';
-        oct_num += ('0' + j);
+
+    for (int i = r, ie = SIZE(bin_num); i < ie; i += 3) {
+        oct_num.push_back((bin_num[i] - '0') * 4 + (bin_num[i + 1] - '0') * 2 + bin_num[i + 2]);
     }
 
     cout << oct_num << '\n';
