@@ -1,7 +1,7 @@
 // Solve 2023-01-09
-// Update 2023-08-15
+// Update 2023-08-27
 
-// 백준 9506번과 같은 문제
+// 백준 같은 문제 : 9506번 = 10181번
 
 #include <bits/stdc++.h>
 using namespace std;

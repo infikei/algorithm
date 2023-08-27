@@ -1,7 +1,7 @@
 // Solve 2023-08-11
-// Update 2023-08-24
+// Update 2023-08-27
 
-// 백준 16600번과 같은 문제
+// 백준 같은 문제 : 15610번 = 16600번 = 20353번
 
 #include <bits/stdc++.h>
 using namespace std;

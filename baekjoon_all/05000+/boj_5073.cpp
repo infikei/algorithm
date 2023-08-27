@@ -1,37 +1,42 @@
-#include <iostream>
-#include <algorithm>
+// Solve 2022-09-01
+// Update 2023-08-27
+
+#include <bits/stdc++.h>
 using namespace std;
 
-int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
 
-    int tri[3];
+int main() {
+    FASTIO;
+
     while (true) {
+        int a[3];
+
         for (int i = 0; i < 3; i++) {
-            cin >> tri[i];
+            cin >> a[i];
         }
 
-        sort(tri, tri + 3);
+        sort(a, a + 3);
 
-        if (tri[2] == 0) {
+        if (a[2] == 0) {
             break;
         }
-        else if (tri[0] + tri[1] <= tri[2]) {
-            cout << "Invalid";
+        else if (a[0] + a[1] <= a[2]) {
+            cout << "Invalid\n";
         }
-        else if (tri[0] == tri[2]) {
-            cout << "Equilateral";
+        else if (a[0] == a[2]) {
+            cout << "Equilateral\n";
         }
-        else if (tri[0] == tri[1] || tri[1] == tri[2]) {
-            cout << "Isosceles";
+        else if (a[0] == a[1] || a[1] == a[2]) {
+            cout << "Isosceles\n";
         }
         else {
-            cout << "Scalene";
+            cout << "Scalene\n";
         }
-
-        cout << '\n';
     }
 
     return 0;

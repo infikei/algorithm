@@ -1,13 +1,13 @@
-# 백준 1837번과 같은 문제
+# Solve 2023-01-09
+# Update 2023-08-27
 
-K, L = map(int, input().split())
-check = True
+# 백준 같은 문제 : 1837번 = 2061번
 
-for i in range(2, L):
-    if K % i == 0:
-        check = False
-        print("BAD %d" % i)
+p, k = map(int, input().split())
+
+for i in range(2, k):
+    if p % i == 0:
+        print("BAD", i)
         break
-
-if check:
+else:
     print("GOOD")

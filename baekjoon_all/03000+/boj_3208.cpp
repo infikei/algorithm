@@ -1,6 +1,7 @@
 // Solve 2023-08-23
+// Update 2023-08-27
 
-// 백준 1952번과 같은 문제
+// 백준 같은 문제 : 1952번 = 3208번
 
 #include <bits/stdc++.h>
 using namespace std;

@@ -1,4 +1,5 @@
 // Solve 2023-07-01
+// Update 2023-08-27
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -9,7 +10,7 @@ using namespace std;
 #define ALL(v) v.begin(),v.end()
 using ll = long long;
 
-int card[200][4];
+int card[200][3];
 int cnt[3][101];
 
 int main() {
@@ -20,18 +21,26 @@ int main() {
 
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < 3; j++) {
-            cin >> card[i][j];
-            cnt[j][card[i][j]]++;
+            int x;
+            cin >> x;
+
+            card[i][j] = x;
+            cnt[j][x]++;
         }
     }
 
     for (int i = 0; i < n; i++) {
+        int score = 0;
+
         for (int j = 0; j < 3; j++) {
-            if (cnt[j][card[i][j]] == 1) {
-                card[i][3] += card[i][j];
+            int x = card[i][j];
+
+            if (cnt[j][x] == 1) {
+                score += x;
             }
         }
-        cout << card[i][3] << '\n';
+
+        cout << score << '\n';
     }
 
     return 0;

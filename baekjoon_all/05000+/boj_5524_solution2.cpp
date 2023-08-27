@@ -16,17 +16,14 @@ int main() {
     int n;
     cin >> n;
 
-    int cnt[2] = { 0 };
-
     for (int i = 0; i < n; i++) {
-        int a, b;
-        cin >> a >> b;
+        string s;
+        cin >> s;
 
-        if (a > b) cnt[0]++;
-        else if (a < b) cnt[1]++;
+        transform(s.begin(), s.end(), s.begin(), ::tolower);
+
+        cout << s << '\n';
     }
-
-    cout << cnt[0] << ' ' << cnt[1] << '\n';
 
     return 0;
 }

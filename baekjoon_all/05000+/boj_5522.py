@@ -1,4 +1,8 @@
-sum = 0
-for i in range(5):
-    sum += int(input())
-print(sum)
+# Solve 2022-05-31
+# Update 2023-08-27
+
+import sys
+
+input = lambda : sys.stdin.readline().rstrip()
+
+print(sum([int(input()) for _ in range(5)]))
