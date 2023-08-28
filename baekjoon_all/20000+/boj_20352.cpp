@@ -1,4 +1,7 @@
 // Solve 2023-08-22
+// Update 2023-08-28
+
+// 백준 같은 문제 : 20352번 = 21335번
 
 #include <bits/stdc++.h>
 using namespace std;

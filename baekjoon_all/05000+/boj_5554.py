@@ -1,4 +1,10 @@
-sum = 0
-for i in range(4):
-    sum += int(input())
-print(sum//60, sum % 60, sep='\n')
+# Solve 2022-05-31
+# Update 2023-08-28
+
+import sys
+
+input = lambda : sys.stdin.readline().rstrip()
+
+ans = sum([int(input()) for _ in range(4)])
+
+print(ans // 60, ans % 60, sep="\n")
