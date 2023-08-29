@@ -1,51 +1,53 @@
-#include <iostream>
+// Solve 2022-08-03
+// Update 2023-08-29
+
+#include <bits/stdc++.h>
 using namespace std;
 
-int A[500000], N, X, cnt;
-long long sum;
-double avr;
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
 
-void input() {
-    cin >> N;
-    for (int i = 0; i < N; i++) {
-        cin >> A[i];
-    }
-    cin >> X;
+int a[500000];
+
+int calc_gcd(int a, int b) {
+    int r = a % b;
+    if (r == 0) return b;
+    return calc_gcd(b, r);
 }
 
-int gcd(int a, int b) {
-    if (a % b == 0) {
-        return b;
-    }
-    else {
-        return gcd(b, a % b);
-    }
-}
-
-bool disjoint(int a, int b) {
-    return gcd(a, b) == 1;
-}
-
-void solve() {
-    cnt = 0;
-    sum = 0;
-    for (int i = 0; i < N; i++) {
-        if (disjoint(X, A[i])) {
-            cnt++;
-            sum += A[i];
-        }
-    }
-    avr = (double)sum / cnt;
+bool is_disjoint(int a, int b) {
+    return calc_gcd(a, b) == 1;
 }
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    input();
+    int n;
+    cin >> n;
 
-    solve();
+    for (int i = 0; i < n; i++) {
+        cin >> a[i];
+    }
+
+    int x;
+    cin >> x;
+
+    int cnt = 0;
+    ll sum = 0;
+
+    for (int i = 0; i < n; i++) {
+        if (is_disjoint(x, a[i])) {
+            cnt++;
+            sum += a[i];
+        }
+    }
+
+    SETPRECISION(9);
+
+    double avr = (double)sum / cnt;
 
     cout << avr << '\n';
 

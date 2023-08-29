@@ -1,63 +1,67 @@
-#include <iostream>
-#include <string>
-#include <vector>
-#include <unordered_map>
-#include <algorithm>
+// Solve 2022-08-20
+// Update 2023-08-29
+
+#include <bits/stdc++.h>
 using namespace std;
-typedef pair<string, string> pss;
 
-int N, M;
-string input_str;
-vector<pss> file_vec;
-unordered_map<string, int> hs;
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
 
-bool cmp(const pss &a, const pss &b) {
-    if (a.first == b.first) {
-        bool a_bool = (hs.find(a.second) != hs.end());
-        bool b_bool = (hs.find(b.second) != hs.end());
-        if (a_bool == b_bool) {
-            return a.second < b.second;
-        }
-        else if (a_bool) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-    return a.first < b.first;
-}
+struct File{
+    string name, ext;
+    int flag;
 
-void input() {
-    cin >> N >> M;
-    for (int i = 0; i < N; i++) {
-        cin >> input_str;
-        int cur = input_str.find('.');
-        int input_str_size = input_str.length();
-        file_vec.push_back(make_pair(input_str.substr(0, cur), input_str.substr(cur + 1, input_str_size - cur + 1)));
+    File(string file = "") : flag(0) {
+        stringstream ss(file);
+        getline(ss, name, '.');
+        getline(ss, ext);
     }
-    for (int i = 0; i < M; i++) {
-        cin >> input_str;
-        hs[input_str] = 1;
-    }
-}
 
-void print() {
-    for (int i = 0; i < N; i++) {
-        cout << file_vec[i].first << '.' << file_vec[i].second << '\n';
+    bool operator<(const File &rhs) const {
+        if (name != rhs.name) return name < rhs.name;
+        if (flag != rhs.flag) return flag > rhs.flag;
+        return ext < rhs.ext;
     }
-}
+};
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    input();
+    int n, m;
+    cin >> n >> m;
 
-    sort(file_vec.begin(), file_vec.end(), cmp);
+    vector<File> files;
 
-    print();
+    for (int i = 0; i < n; i++) {
+        string file;
+        cin >> file;
+
+        files.emplace_back(file);
+    }
+
+    unordered_set<string> ext_hs;
+
+    for (int i = 0; i < m; i++) {
+        string ext;
+        cin >> ext;
+
+        ext_hs.insert(ext);
+    }
+
+    for (File &file : files) {
+        if (ext_hs.find(file.ext) != ext_hs.end()) {
+            file.flag = 1;
+        }
+    }
+
+    sort(files.begin(), files.end());
+
+    for (const File &file : files) {
+        cout << file.name << '.' << file.ext << '\n';
+    }
 
     return 0;
 }

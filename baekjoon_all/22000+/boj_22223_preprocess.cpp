@@ -1,24 +1,18 @@
 // Solve 2022-11-22
+// Update 2023-08-29
 
 #include <bits/stdc++.h>
 using namespace std;
 
-#ifdef BOJ
-#define BOJTEST(x) ((void)0)
-#else
-#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
-#endif
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
 #define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
 #define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
 using ll = long long;
-using uint = unsigned int;
-using ull = unsigned long long;
 
-const int m = 13;
 const int n = 3;
 const int n2 = n * n;
+const int m = 13;
 int arr[n2];
 
 void arr_print() {
@@ -26,8 +20,10 @@ void arr_print() {
         for (int j = 0; j < n; j++) {
             cout << arr[i * n + j] << ' ';
         }
+
         cout << '\n';
     }
+
     cout << '\n';
 }
 
@@ -40,19 +36,24 @@ bool arr_check() {
     for (int i = 0; i < n; i++) {
         int row_sum = 0;
         int col_sum = 0;
+
         for (int j = 0; j < n; j++) {
             row_sum *= 10;
             row_sum += arr[i * n + j];
             col_sum *= 10;
             col_sum += arr[j * n + i];
         }
+
         if (row_sum % m != 0 || hs.find(row_sum) != hs.end()) {
             return false;
         }
+
         hs[row_sum]++;
+
         if (col_sum % m != 0 || hs.find(col_sum) != hs.end()) {
             return false;
         }
+
         hs[col_sum]++;
 
         cross_left_sum *= 10;
@@ -64,10 +65,13 @@ bool arr_check() {
     if (cross_left_sum % m != 0 || hs.find(cross_left_sum) != hs.end()) {
         return false;
     }
+
     hs[cross_left_sum]++;
+
     if (cross_right_sum % m != 0 || hs.find(cross_right_sum) != hs.end()) {
         return false;
     }
+
     hs[cross_right_sum]++;
 
     return true;
@@ -75,10 +79,10 @@ bool arr_check() {
 
 void dfs(int depth = 0) {
     if (depth == n2) {
-        if (!arr_check()) {
-            return;
+        if (arr_check()) {
+            arr_print();
         }
-        arr_print();
+
         return;
     }
 
@@ -86,6 +90,7 @@ void dfs(int depth = 0) {
         if (i == 0 && (depth < n || depth % n == 0)) {
             continue;
         }
+
         arr[depth] = i;
         dfs(depth + 1);
 

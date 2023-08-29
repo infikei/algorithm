@@ -1,58 +1,43 @@
-#include <iostream>
-#include <cmath>
+// Solve 2022-08-03
+// Update 2023-08-29
+
+#include <bits/stdc++.h>
 using namespace std;
 
-int N, A[10000];
-long long ans;
-bool exist_prime;
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
 
-void input() {
-    cin >> N;
-    for (int i = 0; i < N; i++) {
-        cin >> A[i];
+bool is_prime(int k) {
+    for (int i = 2, ie = sqrt(k); i <= ie; i++) {
+        if (k % i == 0) return false;
     }
-}
 
-bool isPrime(int n) {
-    for (int i = 2; i <= sqrt(n); i++) {
-        if (n % i == 0) {
-            return false;
-        }
-    }
     return true;
 }
 
-void solve() {
-    ans = 1;
-    exist_prime = false;
+int main() {
+    FASTIO;
 
-    for (int i = 0; i < N; i++) {
-        if (ans % A[i] != 0 && isPrime(A[i])) {
-            ans *= A[i];
-            exist_prime = true;
+    int n;
+    cin >> n;
+
+    ll ans = 1;
+
+    for (int i = 0; i < n; i++) {
+        int x;
+        cin >> x;
+
+        if (ans % x != 0 && is_prime(x)) {
+            ans *= x;
         }
     }
-}
 
-void print() {
-    if (exist_prime) {
-        cout << ans << '\n';
-    }
-    else {
-        cout << -1 << '\n';
-    }
-}
+    if (ans == 1) ans = -1;
 
-int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
-
-    input();
-
-    solve();
-
-    print();
+    cout << ans << '\n';
 
     return 0;
 }

@@ -1,60 +1,47 @@
-#include <iostream>
-#include <string>
-#include <vector>
-#include <unordered_set>
+// Solve 2022-08-23
+// Update 2023-08-29
+
+#include <bits/stdc++.h>
 using namespace std;
 
-int N, M;
-unordered_set<string> keyword_set;
-
-vector<string> split(const string a) {
-    vector<string> result;
-    int a_size = a.length();
-    string tmp = "";
-
-    for (int i = 0; i < a_size; i++) {
-        if (a[i] == ',') {
-            result.push_back(tmp);
-            tmp = "";
-        }
-        else {
-            tmp += a[i];
-        }
-    }
-    result.push_back(tmp);
-
-    return result;
-}
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    cin >> N >> M;
+    int n, m;
+    cin >> n >> m;
 
-    string input;
+    unordered_set<string> st;
 
-    for (int n = 0; n < N; n++) {
-        cin >> input;
-        keyword_set.insert(input);
+    for (int i = 0; i < n; i++) {
+        string w;
+        cin >> w;
+
+        st.insert(w);
     }
 
-    for (int m = 0; m < M; m++) {
-        cin >> input;
+    int cnt = n;
 
-        vector<string> vec = split(input);
-        int vec_size = vec.size();
+    for (int i = 0; i < m; i++) {
+        string s;
+        cin >> s;
 
-        for (int i = 0; i < vec_size; i++) {
-            string keyword = vec[i];
-            if (keyword_set.find(keyword) != keyword_set.end()) {
-                keyword_set.erase(keyword_set.find(keyword));
+        stringstream ss(s);
+        string w;
+
+        while (getline(ss, w, ',')) {
+            if (st.find(w) != st.end()) {
+                st.erase(w);
+                cnt--;
             }
         }
 
-        int keyword_set_size = keyword_set.size();
-        cout << keyword_set_size << '\n';
+        cout << cnt << '\n';
     }
 
     return 0;

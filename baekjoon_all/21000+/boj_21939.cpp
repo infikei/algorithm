@@ -1,88 +1,86 @@
-#include <iostream>
-#include <string>
-#include <vector>
-#include <queue>
-#include <unordered_map>
+// Solve 2022-09-09
+// Update 2023-08-29
+
+#include <bits/stdc++.h>
 using namespace std;
-typedef pair<int, int> pii;
 
-struct cmp {
-    bool operator()(pii a, pii b) {
-        if (a.second == b.second) {
-            return a.first < b.first;
-        }
-        return a.second < b.second;
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
+
+struct Problem{
+    int p, l;
+    Problem(int p = 0, int l = 0) : p(p), l(l) {}
+    bool operator<(const Problem &rhs) const {
+        if (l != rhs.l) return l < rhs.l;
+        return p < rhs.p;
+    }
+    bool operator>(const Problem &rhs) const {
+        if (l != rhs.l) return l > rhs.l;
+        return p > rhs.p;
     }
 };
-
-struct cmp2 {
-    bool operator()(pii a, pii b) {
-        if (a.second == b.second) {
-            return a.first > b.first;
-        }
-        return a.second > b.second;
-    }
-};
-
-unordered_map<int, int> hs;
-priority_queue<pii, vector<pii>, cmp > pq_max;
-priority_queue<pii, vector<pii>, cmp2> pq_min;
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    int N;
-    cin >> N;
+    int n;
+    cin >> n;
 
-    for (int i = 0; i < N; i++) {
-        int P, L;
-        cin >> P >> L;
-        hs[P] = L;
-        pq_max.push(make_pair(P, L));
-        pq_min.push(make_pair(P, L));
+    unordered_map<int, int> hs;
+    priority_queue<Problem> pq_maxtop;
+    priority_queue<Problem, vector<Problem>, greater<Problem> > pq_mintop;
+
+    for (int i = 0; i < n; i++) {
+        int p, l;
+        cin >> p >> l;
+
+        hs[p] = l;
+        pq_maxtop.emplace(p, l);
+        pq_mintop.emplace(p, l);
     }
 
-    int M;
-    cin >> M;
+    int m;
+    cin >> m;
 
-    for (int i = 0; i < M; i++) {
+    for (int i = 0; i < m; i++) {
         string cmd;
         cin >> cmd;
 
-        if (cmd == "recommend") {
+        if (cmd[0] == 'r') {
             int x;
             cin >> x;
 
             if (x == 1) {
-                // 가장 어려운 문제의 번호를 출력
-                while (hs[pq_max.top().first] != pq_max.top().second) {
-                    pq_max.pop();
+                while (hs[pq_maxtop.top().p] != pq_maxtop.top().l) {
+                    pq_maxtop.pop();
                 }
 
-                cout << pq_max.top().first << '\n';
+                cout << pq_maxtop.top().p << '\n';
             }
             else {
-                // 가장 쉬운 문제의 번호를 출력
-                while (hs[pq_min.top().first] != pq_min.top().second) {
-                    pq_min.pop();
+                while (hs[pq_mintop.top().p] != pq_mintop.top().l) {
+                    pq_mintop.pop();
                 }
 
-                cout << pq_min.top().first << '\n';
+                cout << pq_mintop.top().p << '\n';
             }
         }
-        else if (cmd == "add") {
-            int P, L;
-            cin >> P >> L;
-            hs[P] = L;
-            pq_max.push(make_pair(P, L));
-            pq_min.push(make_pair(P, L));
+        else if (cmd[0] == 'a') {
+            int p, l;
+            cin >> p >> l;
+
+            hs[p] = l;
+            pq_maxtop.emplace(p, l);
+            pq_mintop.emplace(p, l);
         }
         else {
-            int P;
-            cin >> P;
-            hs[P] = -1;
+            int p;
+            cin >> p;
+
+            hs[p] = -1;
         }
     }
 

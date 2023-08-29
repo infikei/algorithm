@@ -1,4 +1,5 @@
 // Solve 2023-07-31
+// Update 2023-08-29
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -12,8 +13,8 @@ using ll = long long;
 int main() {
     FASTIO;
 
-    int ep_q, ep_p, a, b, x0;
-    cin >> ep_q >> ep_p >> a >> b >> x0;
+    int epsilon_q, epsilon_p, a, b, x0;
+    cin >> epsilon_q >> epsilon_p >> a >> b >> x0;
 
     cout << a * x0 + b << '\n';
 
@@ -21,9 +22,8 @@ int main() {
         cout << 0 << ' ' << 0 << '\n';
     }
     else {
-        cout << ep_q << ' ' << ep_p * abs(a) << '\n';
+        cout << epsilon_q << ' ' << epsilon_p * abs(a) << '\n';
     }
-
 
     return 0;
 }

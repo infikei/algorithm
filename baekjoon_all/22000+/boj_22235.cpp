@@ -1,134 +1,96 @@
-#include <iostream>
-#include <string>
+// Solve 2022-08-20
+// Update 2023-08-29
+
+#include <bits/stdc++.h>
 using namespace std;
 
-int N, now_time, now_station;
-string now_time_str;
-bool check = false;
-
-int time_str_to_int(const string &a) {
-    int h = stoi(a.substr(0, 2));
-    int m = stoi(a.substr(3, 2));
-    int s = 0;
-    if (a.length() == 8) {
-        s = stoi(a.substr(6, 2));
-    }
-
-    return h * 3600 + m * 60 + s;
-}
-
-string time_int_to_str(const int &a) {
-    int h = a / 3600;
-    int m = (a / 60) % 60;
-    int s = a % 60;
-
-    string result = "";
-    if (h < 10) {
-        result += '0';
-    }
-    result += to_string(h) + ':';
-    if (m < 10) {
-        result += '0';
-    }
-    result += to_string(m) + ':';
-    if (s < 10) {
-        result += '0';
-    }
-    result += to_string(s);
-
-    return result;
-}
-
-int time_taken(const int &a_begin, const int &a_end) {
-    int result = (a_end - a_begin) * 140 - 20;
-
-    if (a_begin <= 210 && a_end >= 211) {
-        result += 60;
-    }
-    if (a_begin <= 220 && a_end >= 221) {
-        result += 120;
-    }
-    if (a_begin <= 221 && a_end >= 222) {
-        result += 120;
-    }
-    if (a_begin <= 222 && a_end >= 223) {
-        result += 60;
-    }
-    if (a_begin <= 225 && a_end >= 226) {
-        result += 60;
-    }
-    if (a_begin <= 238 && a_end >= 239) {
-        result += 60;
-    }
-    if (a_begin <= 245 && a_end >= 246) {
-        result += 120;
-    }
-    if (a_begin <= 247 && a_end >= 248) {
-        result += 180;
-    }
-    if (a_begin <= 249 && a_end >= 250) {
-        result += 120;
-    }
-    if (a_begin <= 250 && a_end >= 251) {
-        result += 60;
-    }
-    if (a_begin <= 256 && a_end >= 257) {
-        result += 60;
-    }
-    if (a_begin <= 266 && a_end >= 267) {
-        result += 60;
-    }
-
-    return result;
-}
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    cin >> now_time_str >> N;
-    now_time = time_str_to_int(now_time_str);
-    now_station = 225;
+    // 수인분당선 청량리역(K210)에서 인천역(K272)까지 걸리는 시간을 누적 합으로 저장한다.
+    // 이때 각 역의 출발시각을 기준으로 하여 그 사이 시간을 저장할 것이므로 출발역 출발시각~도착역 도착시각 사이의 시간은 20초를 빼주어야 한다.
 
-    for (int n = 0; n < N; n++) {
-        string train_departure_station_str, train_arrive_station_str, train_departure_time_str;
-        cin >> train_departure_station_str >> train_arrive_station_str >> train_departure_time_str;
-        int train_departure_station = stoi(train_departure_station_str.substr(1, 3));
-        int train_arrive_station = stoi(train_arrive_station_str.substr(1, 3));
-        int train_departure_time = time_str_to_int(train_departure_time_str);
+    int suin_bundang_time[73] = { 0 };
 
-        if (now_station < train_departure_station) {
-            continue;
-        }
-        if (now_station >= train_arrive_station) {
-            continue;
-        }
+    suin_bundang_time[11] = 60;
+    suin_bundang_time[21] = 120;
+    suin_bundang_time[22] = 120;
+    suin_bundang_time[23] = 60;
+    suin_bundang_time[26] = 60;
+    suin_bundang_time[39] = 60;
+    suin_bundang_time[46] = 120;
+    suin_bundang_time[48] = 180;
+    suin_bundang_time[50] = 120;
+    suin_bundang_time[51] = 60;
+    suin_bundang_time[57] = 60;
+    suin_bundang_time[67] = 60;
 
-        int train_time = train_departure_time + time_taken(train_departure_station, now_station) + 20;
-        if (now_time > train_time) {
-            continue;
-        }
-
-        train_time += time_taken(now_station, train_arrive_station);
-        now_station = train_arrive_station;
-        now_time = train_time;
-
-        if (now_time >= 24 * 3600) {
-            break;
-        }
-
-        if (now_station == 272) {
-            check = true;
-            break;
-        }
+    for (int i = 10; i <= 72; i++) {
+        suin_bundang_time[i] += suin_bundang_time[i - 1] + 140;
     }
 
-    if (check) {
-        cout << time_int_to_str(now_time) << '\n';
+    // 여기서부터 구현 시작
+
+    string cur_str;
+    int n;
+    cin >> cur_str >> n;
+
+    int pos = 25;
+    int cur = 0;
+    stringstream ss(cur_str);
+    string w;
+    getline(ss, w, ':'); cur += stoi(w) * 3600;
+    getline(ss, w, ':'); cur += stoi(w) * 60;
+    getline(ss, w, ':'); cur += stoi(w);
+
+    for (int i = 0; i < n; i++) {
+        string from_str, to_str, when_str;
+        cin >> from_str >> to_str >> when_str;
+
+        int from = stoi(from_str.substr(2, 2));
+        int to = stoi(to_str.substr(2, 2));
+
+        if (to < pos || pos < from) continue;
+
+        int when = 0;
+        stringstream ss(when_str);
+        string w;
+        getline(ss, w, ':'); when += stoi(w) * 3600;
+        getline(ss, w, ':'); when += stoi(w) * 60;
+
+        when += suin_bundang_time[pos] - suin_bundang_time[from];
+
+        if (when < cur) continue;
+
+        when += suin_bundang_time[to] - suin_bundang_time[pos] - 20;
+        cur = when;
+        pos = to;
+
+        if (cur >= 86400 || pos == 72) break;
+    }
+
+    if (pos != 72 || cur >= 86400) {
+        cout << -1 << '\n';
     }
     else {
-        cout << -1 << '\n';
+        int hh = cur / 3600;
+        int mm = cur / 60 % 60;
+        int ss = cur % 60;
+
+        if (hh < 10) cout << 0 << hh << ':';
+        else cout << hh << ':';
+
+        if (mm < 10) cout << 0 << mm << ':';
+        else cout << mm << ':';
+
+        if (ss < 10) cout << 0 << ss << '\n';
+        else cout << ss << '\n';
     }
 
     return 0;
