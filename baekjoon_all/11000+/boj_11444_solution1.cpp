@@ -1,5 +1,5 @@
 // Solve 2022-12-06
-// Update 2023-07-24
+// Update 2023-08-30
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -16,6 +16,7 @@ const int MATRIX_SIZE = 2;
 
 matrixll calc_mat_mul(const matrixll &a, const matrixll &b) {
     matrixll res(MATRIX_SIZE, vector<ll>(MATRIX_SIZE, 0));
+
     for (int row = 0; row < MATRIX_SIZE; row++) {
         for (int col = 0; col < MATRIX_SIZE; col++) {
             for (int idx = 0; idx < MATRIX_SIZE; idx++) {
@@ -59,6 +60,7 @@ int main() {
     cin >> n;
 
     matrixll ans = calc_mat_power(mat, n);
+
     cout << ans[1][0] << '\n';
 
     return 0;

@@ -1,5 +1,5 @@
 // Solve 2022-12-06
-// Update 2023-07-24
+// Update 2023-08-30
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -17,6 +17,7 @@ ll calc_fibonacci(ll k) {
     if (k < 3) return 1;
 
     ll a, k2 = k >> 1;
+
     if (hs.find(k2) == hs.end()) {
         a = calc_fibonacci(k2);
     }
@@ -26,6 +27,7 @@ ll calc_fibonacci(ll k) {
 
     if (k & 1) {
         ll b;
+
         if (hs.find(k2 + 1) == hs.end()) {
             b = calc_fibonacci(k2 + 1);
         }
@@ -39,6 +41,7 @@ ll calc_fibonacci(ll k) {
     }
     else {
         ll b;
+
         if (hs.find(k2 - 1) == hs.end()) {
             b = calc_fibonacci(k2 - 1);
         }
