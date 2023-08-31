@@ -1,4 +1,7 @@
 // Solve 2023-08-27
+// Update 2023-08-31
+
+// 백준 유사한 문제 : 16693번 ~= 26566번
 
 #include <bits/stdc++.h>
 using namespace std;
