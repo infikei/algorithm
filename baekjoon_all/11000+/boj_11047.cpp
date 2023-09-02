@@ -1,29 +1,37 @@
-#include <iostream>
+// Solve 2022-07-15
+// Update 2023-09-02
+
+#include <bits/stdc++.h>
 using namespace std;
 
-int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
 
-    int N, K;
-    cin >> N >> K;
+int main() {
+    FASTIO;
+
+    int n, k;
+    cin >> n >> k;
 
     int coin[10];
-    for (int i = 0; i < N; i++) {
+
+    for (int i = 0; i < n; i++) {
         cin >> coin[i];
     }
 
-    int ans = 0;
-    for (int i = N - 1; i >= 0; i--) {
-        ans += (K / coin[i]);
-        K = K % coin[i];
-        if (K == 0) {
-            break;
-        }
+    int cnt = 0;
+
+    for (int i = n - 1; i >= 0; i--) {
+        cnt += k / coin[i];
+        k %= coin[i];
+
+        if (k == 0) break;
     }
 
-    cout << ans << '\n';
+    cout << cnt << '\n';
 
     return 0;
 }

@@ -1,5 +1,5 @@
 // Solve 2022-07-13
-// Update 2023-07-25
+// Update 2023-09-02
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -22,6 +22,7 @@ int main() {
         cin >> dp[i];
 
         int j = 1, j_end = i / 2;
+
         while (j <= j_end) {
             dp[i] = max(dp[i], dp[j] + dp[i - j]);
             j++;

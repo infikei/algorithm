@@ -1,5 +1,5 @@
 // Solve 2022-07-25
-// Update 2023-07-22
+// Update 2023-09-02
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -23,6 +23,7 @@ int main() {
     }
 
     dp[0] = arr[0];
+
     for (int i = 1; i < n; i++) {
         for (int j = 0; j < i; j++) {
             if (arr[j] < arr[i]) {

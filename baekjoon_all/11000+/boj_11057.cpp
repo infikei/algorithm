@@ -1,5 +1,5 @@
 // Solve 2022-10-17
-// Update 2023-07-25
+// Update 2023-09-02
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -28,14 +28,17 @@ int main() {
             for (int j = 0; j < i; j++) {
                 dp[i] += dp[j];
             }
+
             dp[i] %= MOD;
         }
     }
 
     int ans = 0;
+
     for (int i = 0; i < 10; i++) {
         ans += dp[i];
     }
+
     ans %= MOD;
 
     cout << ans << '\n';
