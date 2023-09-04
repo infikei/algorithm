@@ -15,5 +15,5 @@
 5. 문제 번호 뒤에는 대회 당시 제출 결과와 현재 해결 여부를 다음의 규칙에 따라 함께 표시합니다.
 
     * P : 대회 당시 정답 (Passed)
-    * FP : 대회 당시 오답 및 대회 이후 정답 (Passed after Failure)
-    * NP : 대회 당시 미제출 및 대회 이후 정답 (Passed after Not Submitted)
+    * FP : 대회 당시 오답 및 대회 이후 정답 (Failure → Passed)
+    * NP : 대회 당시 미제출 및 대회 이후 정답 (Not submitted → Passed)
