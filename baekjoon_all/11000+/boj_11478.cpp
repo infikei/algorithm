@@ -1,26 +1,33 @@
-#include <iostream>
-#include <string>
-#include <unordered_map>
+// Solve 2022-06-03
+// Update 2023-09-05
+
+#include <bits/stdc++.h>
 using namespace std;
 
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
+
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    string S, strTemp;
-    cin >> S;
-    int SIZE = S.size();
+    string s;
+    cin >> s;
 
-    unordered_map<string, int> hs;
-    for (int begin = 0; begin < SIZE; begin++) {
-        for (int end = begin; end < SIZE; end++) {
-            strTemp = S.substr(begin, end - begin + 1);
-            hs[strTemp]++;
+    unordered_set<string> hs;
+
+    for (int i = 0, ie = SIZE(s); i < ie; i++) {
+        string w;
+
+        for (int j = i, je = SIZE(s); j < je; j++) {
+            w.push_back(s[j]);
+            hs.insert(w);
         }
     }
 
-    cout << hs.size() << '\n';
+    cout << SIZE(hs) << '\n';
 
     return 0;
 }

@@ -1,5 +1,5 @@
 // Solve 2022-08-04
-// Update 2023-02-26
+// Update 2023-09-05
 
 #include <iostream>
 using namespace std;
@@ -10,8 +10,7 @@ int main() {
     ll a, b, c;
     cin >> a >> b >> c;
 
-    ll ans = a + b + c;
-    cout << ans << '\n';
+    cout << a + b + c << '\n';
 
     return 0;
 }

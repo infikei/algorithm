@@ -1,4 +1,4 @@
-// Solve 2022-11-12
+// Solve 2022-12-01
 // Update 2023-09-05
 
 #include <bits/stdc++.h>
@@ -13,14 +13,22 @@ using ll = long long;
 int main() {
     FASTIO;
 
-    while (true) {
-        string line;
-        getline(cin, line);
-        if (line == "END") break;
+    int t;
+    cin >> t;
 
-        reverse(line.begin(), line.end());
+    for (int ti = 0; ti < t; ti++) {
+        string s, s2;
+        cin >> s >> s2;
 
-        cout << line << '\n';
+        sort(s.begin(), s.end());
+        sort(s2.begin(), s2.end());
+
+        if (s == s2) {
+            cout << "Possible\n";
+        }
+        else {
+            cout << "Impossible\n";
+        }
     }
 
     return 0;

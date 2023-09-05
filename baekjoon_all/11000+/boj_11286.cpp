@@ -1,5 +1,5 @@
 // Solve 2022-07-28
-// Update 2023-06-26
+// Update 2023-09-05
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -12,9 +12,8 @@ using ll = long long;
 
 struct cmp_abs{
     bool operator()(const int a, const int b) {
-        if (abs(a) == abs(b)) return a > b;
-
-        return abs(a) > abs(b);
+        if (abs(a) != abs(b)) return abs(a) > abs(b);
+        return a > b;
     }
 };
 
