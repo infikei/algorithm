@@ -1,5 +1,5 @@
 // Solve 2022-06-23
-// Update 2023-07-20
+// Update 2023-09-06
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -21,12 +21,14 @@ int main() {
     for (int i = 1; i <= n; i++) {
         int x;
         cin >> x;
+
         dp[i] = dp[i - 1] + x;
     }
 
     for (int i = 0; i < m; i++) {
         int s, e;
         cin >> s >> e;
+
         cout << dp[e] - dp[s - 1] << '\n';
     }
 

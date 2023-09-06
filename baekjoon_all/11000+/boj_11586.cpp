@@ -1,37 +1,41 @@
-#include <iostream>
-#include <string>
-using namespace std;
-#define fastio ios_base::sync_with_stdio(false);cout.tie(NULL);cin.tie(NULL); // boj_15552.cpp
+// Solve 2022-11-17
+// Update 2023-09-06
 
-int N, K;
-string face[100];
+#include <bits/stdc++.h>
+using namespace std;
+
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
 
 int main() {
-    fastio;
+    FASTIO;
 
-    cin >> N;
-    for (int i = 0; i < N; i++) {
-        cin >> face[i];
-    }
-    cin >> K;
+    int n;
+    cin >> n;
 
-    if (K == 1) {
-        for (int i = 0; i < N; i++) {
-            cout << face[i] << '\n';
+    vector<string> vec(n);
+
+    for (string &s : vec) {
+        cin >> s;
+    }
+
+    int k;
+    cin >> k;
+
+    if (k == 2) {
+        for (string &s : vec) {
+            reverse(s.begin(), s.end());
         }
     }
-    else if (K == 2) {
-        for (int i = 0; i < N; i++) {
-            for (int j = N - 1; j >= 0; j--) {
-                cout << face[i][j];
-            }
-            cout << '\n';
-        }
+    else if (k == 3) {
+        reverse(vec.begin(), vec.end());
     }
-    else {
-        for (int i = N - 1; i >= 0; i--) {
-            cout << face[i] << '\n';
-        }
+
+    for (const string &s : vec) {
+        cout << s << '\n';
     }
 
     return 0;

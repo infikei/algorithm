@@ -1,40 +1,37 @@
-#include <iostream>
-#include <string>
+// Solve 2022-10-26
+// Update 2023-09-06
+
+#include <bits/stdc++.h>
 using namespace std;
 
-int N;
-string S[20];
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    cin >> N;
+    int n;
+    cin >> n;
 
-    for (int i = 0; i < N; i++) {
-        cin >> S[i];
+    string s[20];
+
+    for (int i = 0; i < n; i++) {
+        cin >> s[i];
     }
 
-    bool b1 = (S[0] < S[1]);
-    bool b2 = true;
+    bool is_increasing = true, is_decreasing = true;
 
-    for (int i = 1; i < N - 1; i++) {
-        if (b1 != (S[i] < S[i + 1])) {
-            b2 = false;
-            break;
-        }
+    for (int i = 1; i < n; i++) {
+        if (s[i - 1] < s[i]) is_decreasing = false;
+        else is_increasing = false;
     }
 
-    if (!b2) {
-        cout << "NEITHER\n";
-    }
-    else if (b1) {
-        cout << "INCREASING\n";
-    }
-    else {
-        cout << "DECREASING\n";
-    }
+    if (is_increasing) cout << "INCREASING\n";
+    else if (is_decreasing) cout << "DECREASING\n";
+    else cout << "NEITHER\n";
 
     return 0;
 }
