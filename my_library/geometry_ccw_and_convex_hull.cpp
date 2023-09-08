@@ -67,6 +67,7 @@ bool cmp_ccw_x_y(const Point &a, const Point &b) {
 ll calc_dist2(const Point &a, const Point &b) {
     ll dx = b.x - a.x;
     ll dy = b.y - a.y;
+
     return dx * dx + dy * dy;
 }
 
