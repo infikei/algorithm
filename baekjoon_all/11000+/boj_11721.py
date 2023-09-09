@@ -1,11 +1,15 @@
-st = input()
-st_print = []
+# Solve 2022-05-29
+# Update 2023-09-09
 
-for i in st:
-    st_print.append(i)
-    if len(st_print) == 10:
-        print(*st_print, sep="")
-        st_print.clear()
+s = input()
+w = []
 
-if len(st_print) > 0:
-    print(*st_print, sep="")
+for c in s:
+    w.append(c)
+
+    if len(w) == 10:
+        print(*w, sep="")
+        w.clear()
+
+if len(w) > 0:
+    print(*w, sep="")

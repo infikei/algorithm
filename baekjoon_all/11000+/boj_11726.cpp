@@ -1,5 +1,5 @@
 // Solve 2022-07-07
-// Update 2023-07-20
+// Update 2023-09-09
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -19,6 +19,7 @@ int main() {
     cin >> n;
 
     int dp[3] = { 0, 1, 1 };
+
     for (int i = 2; i <= n; i++) {
         dp[0] = dp[1];
         dp[1] = dp[2];
