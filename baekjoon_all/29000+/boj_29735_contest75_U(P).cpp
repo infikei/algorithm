@@ -1,4 +1,5 @@
 // Solve 2023-09-10
+// Update 2023-09-11
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -28,12 +29,8 @@ int main() {
     int ans2_min = ans2 % 60;
 
     cout << ans << '\n';
-
-    if (ans2_hour < 10) cout << 0 << ans2_hour << ':';
-    else cout << ans2_hour << ':';
-
-    if (ans2_min < 10) cout << 0 << ans2_min << '\n';
-    else cout << ans2_min << '\n';
+    cout << setfill('0') << setw(2) << ans2_hour << ':';
+    cout << setfill('0') << setw(2) << ans2_min << '\n';
 
     return 0;
 }

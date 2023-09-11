@@ -1,5 +1,5 @@
 // Solve 2022-08-20
-// Update 2023-08-29
+// Update 2023-09-11
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -41,8 +41,7 @@ int main() {
     int n;
     cin >> cur_str >> n;
 
-    int pos = 25;
-    int cur = 0;
+    int pos = 25, cur = 0;
     stringstream ss(cur_str);
     string w;
     getline(ss, w, ':'); cur += stoi(w) * 3600;
@@ -79,18 +78,13 @@ int main() {
         cout << -1 << '\n';
     }
     else {
-        int hh = cur / 3600;
-        int mm = cur / 60 % 60;
-        int ss = cur % 60;
+        int ans_hour = cur / 3600;
+        int ans_min = cur / 60 % 60;
+        int ans_sec = cur % 60;
 
-        if (hh < 10) cout << 0 << hh << ':';
-        else cout << hh << ':';
-
-        if (mm < 10) cout << 0 << mm << ':';
-        else cout << mm << ':';
-
-        if (ss < 10) cout << 0 << ss << '\n';
-        else cout << ss << '\n';
+        cout << setfill('0') << setw(2) << ans_hour << ':';
+        cout << setfill('0') << setw(2) << ans_min << ':';
+        cout << setfill('0') << setw(2) << ans_sec << '\n';
     }
 
     return 0;

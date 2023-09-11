@@ -1,4 +1,5 @@
 // Solve 2023-09-10
+// Update 2023-09-11
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -16,25 +17,21 @@ int main() {
     int n;
     cin >> today >> n;
 
-    int yyyy = stoi(today.substr(0, 4));
-    int mm = stoi(today.substr(5, 2));
-    int dd = stoi(today.substr(8, 2));
+    int ans_year = stoi(today.substr(0, 4));
+    int ans_month = stoi(today.substr(5, 2));
+    int ans_day = stoi(today.substr(8, 2));
 
-    dd += n;
+    ans_day += n;
 
-    mm += (dd - 1) / 30;
-    dd = (dd - 1) % 30 + 1;
+    ans_month += (ans_day - 1) / 30;
+    ans_day = (ans_day - 1) % 30 + 1;
 
-    yyyy += (mm - 1) / 12;
-    mm = (mm - 1) % 12 + 1;
+    ans_year += (ans_month - 1) / 12;
+    ans_month = (ans_month - 1) % 12 + 1;
 
-    cout << yyyy << '-';
-
-    if (mm < 10) cout << 0 << mm << '-';
-    else cout << mm << '-';
-
-    if (dd < 10) cout << 0 << dd << '\n';
-    else cout << dd << '\n';
+    cout << ans_year << '-';
+    cout << setfill('0') << setw(2) << ans_month << '-';
+    cout << setfill('0') << setw(2) << ans_day << '\n';
 
     return 0;
 }

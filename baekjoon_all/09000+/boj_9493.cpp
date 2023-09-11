@@ -1,4 +1,5 @@
 // Solve 2023-09-05
+// Update 2023-09-11
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -19,17 +20,13 @@ int main() {
 
         ll ans = round((double)(3600 * m * (b - a)) / (a * b));
 
-        ll hh = ans / 3600;
-        ll mm = ans / 60 % 60;
-        ll ss = ans % 60;
+        ll ans_hour = ans / 3600;
+        ll ans_min = ans / 60 % 60;
+        ll ans_sec = ans % 60;
 
-        cout << hh << ':';
-
-        if (mm < 10) cout << 0 << mm << ':';
-        else cout << mm << ':';
-
-        if (ss < 10) cout << 0 << ss << '\n';
-        else cout << ss << '\n';
+        cout << ans_hour << ':';
+        cout << setfill('0') << setw(2) << ans_min << ':';
+        cout << setfill('0') << setw(2) << ans_sec << '\n';
     }
 
     return 0;

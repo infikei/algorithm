@@ -1,4 +1,5 @@
 // Solve 2023-08-22
+// Update 2023-09-11
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -38,23 +39,22 @@ int main() {
             cin >> s[i];
         }
 
-        int m = -1;
+        int ans_month = -1;
+
         if (hs.find(s[0]) != hs.end()) {
-            m = hs[s[0]];
+            ans_month = hs[s[0]];
         }
-        int d = stoi(s[1].substr(0, SIZE(s[1]) - 1));
-        int y = stoi(s[2]) % 100;
 
-        if (m == -1 || d < 1 || d > 31) cout << "Invalid\n";
+        int ans_day = stoi(s[1].substr(0, SIZE(s[1]) - 1));
+        int ans_year = stoi(s[2]) % 100;
+
+        if (ans_month == -1 || ans_day < 1 || ans_day > 31) {
+            cout << "Invalid\n";
+        }
         else {
-            if (m < 10) cout << 0 << m;
-            else cout << m;
-
-            if (d < 10) cout << "/0" << d;
-            else cout << '/' << d;
-
-            if (y < 10) cout << "/0" << y << '\n';
-            else cout << '/' << y << '\n';
+            cout << setfill('0') << setw(2) << ans_month << '/';
+            cout << setfill('0') << setw(2) << ans_day << '/';
+            cout << setfill('0') << setw(2) << ans_year << '\n';
         }
     }
 
