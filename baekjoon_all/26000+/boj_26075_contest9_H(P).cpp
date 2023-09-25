@@ -1,42 +1,51 @@
-#include <iostream>
-#include <string>
-#include <vector>
+// Solve 2022-11-26
+// Update 2023-09-25
+
+#include <bits/stdc++.h>
 using namespace std;
-#define fastio ios_base::sync_with_stdio(false);cout.tie(NULL);cin.tie(NULL); // boj_15552.cpp
-using ull = unsigned long long;
+
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
 
 int main() {
-    fastio;
+    FASTIO;
 
-    int N, M;
-    cin >> N >> M;
-    int NM = N + M;
+    int n, m;
+    cin >> n >> m;
 
-    string S[2];
-    vector<int> idx_of_1[2];
+    int nm = n + m;
+
+    string s[2];
+    cin >> s[0] >> s[1];
+
+    vector<vector<int> > idx_of_1(2, vector<int>());
 
     for (int i = 0; i < 2; i++) {
-        cin >> S[i];
-
-        for (int j = 0; j < NM; j++) {
-            if (S[i][j] == '1') {
+        for (int j = 0; j < nm; j++) {
+            if (s[i][j] == '1') {
                 idx_of_1[i].push_back(j);
             }
         }
     }
 
-    ull cnt = 0;
-    for (int j = 0; j < M; j++) {
-        cnt += (ull)abs(idx_of_1[0][j] - idx_of_1[1][j]);
+    ll cnt = 0;
+
+    for (int j = 0; j < m; j++) {
+        cnt += abs(idx_of_1[0][j] - idx_of_1[1][j]);
     }
 
-    ull ans = 0, k = cnt / 2;
+    ll ans = 0, k = cnt / 2;
+
     if (cnt % 2 == 0) {
         ans = k * k * 2;
     }
     else {
-        ans = (k + 1) * k * 2 + 1;
+        ans = k * (k + 1) * 2 + 1;
     }
+
     cout << ans << '\n';
 
     return 0;
