@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
 #define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
 #define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
@@ -25,8 +25,10 @@ void fft(vector<cpx> &a, bool inv = false) {
         cpx w(cos(theta), sin(theta));
 
         int k2 = k << 1;
+
         for (int i = 0; i < n; i += k2) {
             cpx wp(1, 0);
+
             for (int j = 0; j < k; j++) {
                 cpx even = a[i + j], odd_wp = a[k + i + j] * wp;
                 a[i + j] = even + odd_wp;
@@ -37,7 +39,9 @@ void fft(vector<cpx> &a, bool inv = false) {
     }
 
     if (inv) {
-        for (int i = 0; i < n; i++) a[i] /= n;
+        for (int i = 0; i < n; i++) {
+            a[i] /= n;
+        }
     }
 }
 
@@ -47,11 +51,18 @@ void fft_mul(const vector<int> &a, const vector<int> &b, vector<int> &res) {
 
     fft(aa);
     fft(bb);
-    for (int i = 0; i < FFT_SIZE; i++) aa[i] *= bb[i];
+
+    for (int i = 0; i < FFT_SIZE; i++) {
+        aa[i] *= bb[i];
+    }
+
     fft(aa, true);
 
     res.assign(FFT_SIZE, 0);
-    for (int i = 0; i < FFT_SIZE; i++) res[i] = round(aa[i].real());
+
+    for (int i = 0; i < FFT_SIZE; i++) {
+        res[i] = round(aa[i].real());
+    }
 }
 
 int main() {
@@ -64,11 +75,13 @@ int main() {
     b.resize(FFT_SIZE);
 
     vector<int> res;
+
     fft_mul(a, b, res);
 
-    for (auto &i : res) {
+    for (int &i : res) {
         cout << i << ' ';
     }
+
     cout << '\n';
 
     return 0;
