@@ -1,52 +1,71 @@
-#include <iostream>
-#include <string>
-#include <vector>
-#include <algorithm>
+// Solve 2022-11-06
+// Update 2023-09-29
+
+#include <bits/stdc++.h>
 using namespace std;
-#define fastio ios_base::sync_with_stdio(false);cout.tie(NULL);cin.tie(NULL); // boj_15552.cpp
+
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
 using ll = long long;
-using bigint = pair<bool, string>;
 
-bigint string_to_big_int(string s) {
-    if (s == "-0") {
-        s = "0";
-    }
-    if (s[0] == '-') {
-        return make_pair(false, s.substr(1));
-    }
-    else {
-        return make_pair(true, s);
-    }
-}
+struct bigint{
+    bool sign = false;
+    string num = "0";
 
-bool unsigned_big_int_lt(const string& a, const string& b) {
-    if (a.length() == b.length()) {
-        for (int i = 0; i < (int)a.length(); i++) {
-            if (a[i] != b[i]) {
-                return a[i] < b[i];
-            }
+    bigint(string s = "0") {
+        int pos = 0;
+
+        if (s[pos] == '-') {
+            sign = true;
+            pos++;
         }
-        return false;
+        else if (s[pos] == '+') {
+            pos++;
+        }
+
+        while (pos < SIZE(s) && s[pos] == '0') {
+            pos++;
+        }
+
+        if (pos == SIZE(s)) {
+            num = "0";
+            sign = false;
+        }
+        else {
+            num = s.substr(pos, SIZE(s) - pos);
+        }
     }
-    else {
-        return a.length() < b.length();
+};
+
+bool ubigint_lt(const string &a, const string &b) {
+    if (SIZE(a) != SIZE(b)) return SIZE(a) < SIZE(b);
+
+    for (int i = 0; i < SIZE(a); i++) {
+        if (a[i] != b[i]) return a[i] < b[i];
     }
+
+    return false;
 }
 
-string unsigned_big_int_add(string a, string b) {
-    string result;
+string ubigint_add(string a, string b) {
+    string res;
     int sum = 0, carry = 0;
 
     while (!a.empty() || !b.empty() || carry) {
         sum = carry;
+
         if (!a.empty()) {
-            sum += (a.back() - '0');
+            sum += a.back() - '0';
             a.pop_back();
         }
+
         if (!b.empty()) {
-            sum += (b.back() - '0');
+            sum += b.back() - '0';
             b.pop_back();
         }
+
         if (sum >= 10) {
             sum -= 10;
             carry = 1;
@@ -54,34 +73,40 @@ string unsigned_big_int_add(string a, string b) {
         else {
             carry = 0;
         }
-        result.push_back('0' + sum);
+
+        res.push_back('0' + sum);
     }
 
-    reverse(result.begin(), result.end());
-    return result;
+    while (SIZE(res) >= 2 && res.back() == '0') {
+        res.pop_back();
+    }
+
+    reverse(res.begin(), res.end());
+
+    return res;
 }
 
-string unsigned_big_int_sub(string a, string b) {
-    if (a == b) {
-        return "0";
-    }
-    if (unsigned_big_int_lt(a, b)) {
-        return unsigned_big_int_sub(b, a);
-    }
+string ubigint_sub(string a, string b) {
+    if (a == b) return "0";
 
-    string result;
+    if (ubigint_lt(a, b)) return ubigint_sub(b, a);
+
+    string res;
     int sum = 0, carry = 0;
 
     while (!a.empty() || !b.empty() || carry) {
         sum = carry;
+
         if (!a.empty()) {
-            sum += (a.back() - '0');
+            sum += a.back() - '0';
             a.pop_back();
         }
+
         if (!b.empty()) {
-            sum -= (b.back() - '0');
+            sum -= b.back() - '0';
             b.pop_back();
         }
+
         if (sum < 0) {
             sum += 10;
             carry = -1;
@@ -89,63 +114,70 @@ string unsigned_big_int_sub(string a, string b) {
         else {
             carry = 0;
         }
-        result.push_back('0' + sum);
+    
+        res.push_back('0' + sum);
     }
 
-    // "00123"과 같이 맨 앞에 0이 포함되었을 경우 "123"과 같은 형태로 바꿔주기
-    while (result[(int)result.length() - 1] == '0' && (int)result.length() >= 2) {
-        result = result.substr(0, (int)result.length() - 1);
+    while (SIZE(res) >= 2 && res.back() == '0') {
+        res.pop_back();
     }
 
-    reverse(result.begin(), result.end());
-    return result;
+    reverse(res.begin(), res.end());
+
+    return res;
 }
 
-bigint big_int_add(bigint a, bigint b) {
-    if (a.first) {
-        if (b.first) {
-            return make_pair(true, unsigned_big_int_add(a.second, b.second));
+bigint bigint_add(const bigint &a, const bigint &b) {
+    bigint res;
+
+    if (a.sign) {
+        if (b.sign) {
+            res.sign = true;
+            res.num = ubigint_add(a.num, b.num);
         }
         else {
-            return make_pair(!unsigned_big_int_lt(a.second, b.second), unsigned_big_int_sub(a.second, b.second));
+            res.sign = ubigint_lt(b.num, a.num);
+            res.num = ubigint_sub(a.num, b.num);
         }
     }
     else {
-        if (b.first) {
-            return make_pair(!unsigned_big_int_lt(b.second, a.second), unsigned_big_int_sub(a.second, b.second));
+        if (b.sign) {
+            res.sign = ubigint_lt(a.num, b.num);
+            res.num = ubigint_sub(a.num, b.num);
         }
         else {
-            return make_pair(false, unsigned_big_int_add(a.second, b.second));
+            res.sign = false;
+            res.num = ubigint_add(a.num, b.num);
         }
     }
+
+    return res;
 }
 
 int main() {
-    fastio;
+    FASTIO;
 
-    int T = 3;
-    for (int t = 0; t < T; t++) {
-        int N;
-        cin >> N;
+    for (int ti = 0; ti < 3; ti++) {
+        int n;
+        cin >> n;
 
-        string S;
-        cin >> S;
-        bigint ans = string_to_big_int(S);
+        bigint ans;
 
-        for (int n = 1; n < N; n++) {
-            cin >> S;
-            ans = big_int_add(ans, string_to_big_int(S));
+        for (int i = 0; i < n; i++) {
+            string s;
+            cin >> s;
+
+            ans = bigint_add(ans, bigint(s));
         }
 
-        if (ans.second == "0") {
+        if (ans.num == "0") {
             cout << "0\n";
-            
         }
-        else if (ans.first) {
-            cout << "+\n";
+        else if (ans.sign) {
+            cout << "-\n";
         }
         else {
-            cout << "-\n";
+            cout << "+\n";
         }
     }
 
