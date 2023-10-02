@@ -1,4 +1,5 @@
 // Solve 2023-08-22
+// Update 2023-10-02
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -15,19 +16,19 @@ int main() {
     int n;
     cin >> n;
 
-    int a[100000];
+    int que_or_stck[100000];
 
     for (int i = 0; i < n; i++) {
-        cin >> a[i];
+        cin >> que_or_stck[i];
     }
 
-    deque<int> dq;
+    deque<int> dque;
 
     for (int i = 0; i < n; i++) {
         int b;
         cin >> b;
 
-        if (a[i] == 0) dq.push_front(b);
+        if (que_or_stck[i] == 0) dque.push_back(b);
     }
 
     int m;
@@ -37,9 +38,9 @@ int main() {
         int c;
         cin >> c;
 
-        dq.push_back(c);
-        cout << dq.front() << ' ';
-        dq.pop_front();
+        dque.push_front(c);
+        cout << dque.back() << ' ';
+        dque.pop_back();
     }
 
     cout << '\n';
