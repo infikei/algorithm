@@ -1,4 +1,5 @@
 // Solve 2023-09-22
+// Update 2023-10-05
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -15,55 +16,54 @@ int main() {
     ll n;
     cin >> n;
 
-    string ans = to_string(n);
-    int ans_len = SIZE(ans);
+    string ans_str = to_string(n);
+    int ans_len = SIZE(ans_str);
 
     if (ans_len >= 4) {
-        for (ll c = 1, ce = sqrt(n); c <= ce; c++) {
-            string cc = to_string(c);
+        for (ll c = 1, c_end = sqrt(n); c <= c_end; c++) {
+            if (n % c != 0) continue;
 
-            if (n % c == 0) {
-                ll a = 1;
+            string c_str = to_string(c);
+            ll a = 1;
 
-                while (true) {
-                    a++;
-                    ll val = c * a * a;
-                    int b = 2;
+            while (true) {
+                a++;
+                ll val = c * a * a;
+                int b = 2;
 
-                    if (val > n) break;
+                if (val > n) break;
 
-                    while (val < n) {
-                        val *= a;
-                        b++;
+                while (val < n) {
+                    val *= a;
+                    b++;
+                }
+
+                if (val != n) continue;
+
+                string a_str = to_string(a);
+                string b_str = to_string(b);
+
+                if (c == 1) {
+                    int res_len = SIZE(a_str) + SIZE(b_str) + 1;
+
+                    if (res_len < ans_len) {
+                        ans_len = res_len;
+                        ans_str = a_str + " " + b_str + " ^";
                     }
+                }
+                else {
+                    int res_len = SIZE(c_str) + SIZE(a_str) + SIZE(b_str) + 2;
 
-                    if (val == n) {
-                        string aa = to_string(a);
-                        string bb = to_string(b);
-
-                        if (c == 1) {
-                            int res_len = SIZE(aa) + SIZE(bb) + 1;
-
-                            if (res_len < ans_len) {
-                                ans_len = res_len;
-                                ans = aa + " " + bb + " ^";
-                            }
-                        }
-                        else {
-                            int res_len = SIZE(cc) + SIZE(aa) + SIZE(bb) + 2;
-
-                            if (res_len < ans_len) {
-                                ans_len = res_len;
-                                ans = cc + " " + aa + " " + bb + " ^ *";
-                            }
-                        }
+                    if (res_len < ans_len) {
+                        ans_len = res_len;
+                        ans_str = c_str + " " + a_str + " " + b_str + " ^ *";
                     }
                 }
             }
         }
     }
 
-    cout << ans << '\n';
+    cout << ans_str << '\n';
 
     return 0;
 }
