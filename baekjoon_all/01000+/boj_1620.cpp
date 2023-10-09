@@ -1,5 +1,5 @@
 // Solve 2022-06-03
-// Update 2023-07-12
+// Update 2023-10-09
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -10,31 +10,32 @@ using namespace std;
 #define ALL(v) v.begin(),v.end()
 using ll = long long;
 
-string dogam[100001];
-unordered_map<string, int> hs;
-
 int main() {
     FASTIO;
 
     int n, m;
     cin >> n >> m;
 
-    string s;
+    vector<string> dogam_name(1, "");
+    unordered_map<string, int> dogam_idx;
 
     for (int i = 1; i <= n; i++) {
-        cin >> s;
-        dogam[i] = s;
-        hs[s] = i;
+        string pokemon_name;
+        cin >> pokemon_name;
+
+        dogam_name.push_back(pokemon_name);
+        dogam_idx[pokemon_name] = i;
     }
 
     for (int i = 0; i < m; i++) {
-        cin >> s;
+        string query;
+        cin >> query;
 
-        if (hs.find(s) == hs.end()) {
-            cout << dogam[stoi(s)] << '\n';
+        if (query[0] >= '0' && query[0] <= '9') {
+            cout << dogam_name[stoi(query)] << '\n';
         }
         else {
-            cout << hs[s] << '\n';
+            cout << dogam_idx[query] << '\n';
         }
     }
 

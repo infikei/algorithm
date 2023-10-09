@@ -1,15 +1,15 @@
 # Solve 2022-05-16
-# Update 2023-02-26
+# Update 2023-10-09
 
 hour, minute = map(int, input().split())
 
-if minute >= 45:
-    minute -= 45
-else:
-    minute += 15
-    if hour == 0:
-        hour = 23
-    else:
-        hour -= 1
+minute -= 45
+
+if minute < 0:
+    minute += 60
+    hour -= 1
+
+if hour < 0:
+    hour += 24
 
 print(hour, minute)

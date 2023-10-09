@@ -1,59 +1,41 @@
-#include <iostream>
-#include <string>
-#include <algorithm>
+// Solve 2022-06-08
+// Update 2023-10-09
+
+#include <bits/stdc++.h>
 using namespace std;
 
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
+
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    int T;
-    cin >> T;
+    int t;
+    cin >> t;
 
-    for (int t = 0; t < T; t++) {
+    for (int ti = 0; ti < t; ti++) {
         int n;
         cin >> n;
 
-        if (n == 0) {
-            cout << "0\n";
-            continue;
-        }
-        else if (n == 1) {
-            string name, type;
-            cin >> name >> type;
-            cout << "1\n";
-            continue;
-        }
+        unordered_map<string, int> clothes_type_cnt;
 
-        string clothes_type[31];
-        int clothes_num[31];
+        for (int i = 0; i < n; i++) {
+            string clothes_name, clothes_type;
+            cin >> clothes_name >> clothes_type;
 
-        string name, type;
-        cin >> name >> type;
-        clothes_type[0] = type;
-        clothes_num[0] = 1;
-        int clothes_size = 1;
-
-        for (int i = 1; i < n; i++) {
-            cin >> name >> type;
-            string *p = find(clothes_type, clothes_type + clothes_size, type);
-            if (p != clothes_type + clothes_size) {
-                clothes_num[p - clothes_type]++;
-            }
-            else {
-                clothes_type[clothes_size] = type;
-                clothes_num[clothes_size] = 1;
-                clothes_size++;
-            }
+            clothes_type_cnt[clothes_type]++;
         }
 
         int ans = 1;
-        for (int i = 0; i < clothes_size; i++) {
-            ans *= clothes_num[i] + 1;
+
+        for (auto it = clothes_type_cnt.begin(); it != clothes_type_cnt.end(); it++) {
+            ans *= it->second + 1;
         }
-        ans--;
-        cout << ans << '\n';
+
+        cout << --ans << '\n';
     }
 
     return 0;

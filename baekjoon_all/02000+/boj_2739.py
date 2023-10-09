@@ -1,7 +1,7 @@
 # Solve 2022-05-16
-# Update 2023-02-26
+# Update 2023-10-09
 
 n = int(input())
 
 for i in range(1, 10):
-    print("%d * %d = %d" % (n, i, n * i))
+    print(f"{n} * {i} = {n * i}")

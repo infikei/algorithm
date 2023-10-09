@@ -1,5 +1,5 @@
 // Solve 2022-06-03
-// Update 2023-08-07
+// Update 2023-10-09
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -10,27 +10,29 @@ using namespace std;
 #define ALL(v) v.begin(),v.end()
 using ll = long long;
 
-unordered_map<int, int> hs;
-
 int main() {
     FASTIO;
 
-    int n, x;
+    unordered_map<int, int> num_cnt;
+
+    int n;
     cin >> n;
 
     for (int i = 0; i < n; i++) {
-        cin >> x;
+        int num;
+        cin >> num;
 
-        hs[x]++;
+        num_cnt[num]++;
     }
 
     int m;
     cin >> m;
 
     for (int i = 0; i < m; i++) {
-        cin >> x;
+        int num;
+        cin >> num;
 
-        cout << hs[x] << ' ';
+        cout << num_cnt[num] << ' ';
     }
 
     cout << '\n';

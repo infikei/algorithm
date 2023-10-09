@@ -1,5 +1,5 @@
 // Solve 2022-06-02
-// Update 2023-02-26
+// Update 2023-10-09
 
 #include <iostream>
 using namespace std;
@@ -9,12 +9,14 @@ int main() {
     cin >> hour >> minute >> extra;
 
     minute += extra;
-    while (minute >= 60) {
-        minute -= 60;
-        hour += 1;
+
+    if (minute >= 60) {
+        hour += minute / 60;
+        minute %= 60;
     }
-    while (hour >= 24) {
-        hour -= 24;
+
+    if (hour >= 24) {
+        hour %= 24;
     }
 
     cout << hour << ' ' << minute << '\n';

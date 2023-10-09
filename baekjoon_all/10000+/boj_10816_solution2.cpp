@@ -1,5 +1,5 @@
 // Solve 2022-06-03
-// Update 2023-08-07
+// Update 2023-10-09
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -10,7 +10,7 @@ using namespace std;
 #define ALL(v) v.begin(),v.end()
 using ll = long long;
 
-int card[500000];
+int num_list[500000];
 
 int main() {
     FASTIO;
@@ -19,20 +19,21 @@ int main() {
     cin >> n;
 
     for (int i = 0; i < n; i++) {
-        cin >> card[i];
+        cin >> num_list[i];
     }
 
-    sort(card, card + n);
+    sort(num_list, num_list + n);
 
-    int m, x;
+    int m;
     cin >> m;
 
     for (int i = 0; i < m; i++) {
-        cin >> x;
+        int num;
+        cin >> num;
 
-        auto lo = lower_bound(card, card + n, x);
-        auto up = upper_bound(card, card + n, x);
-        int ans = up - lo;
+        auto lo = lower_bound(num_list, num_list + n, num);
+        auto hi = upper_bound(num_list, num_list + n, num);
+        int ans = hi - lo;
 
         cout << ans << ' ';
     }

@@ -1,4 +1,5 @@
 // Solve 2023-10-01
+// Update 2023-10-09
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -15,29 +16,29 @@ int main() {
     int n;
     cin >> n;
 
-    unordered_map<string, int> hs;
+    unordered_map<string, int> tunnel_in;
 
     for (int i = 0; i < n; i++) {
-        string s;
-        cin >> s;
+        string car;
+        cin >> car;
 
-        hs[s] = i;
+        tunnel_in[car] = i;
     }
 
-    vector<int> vec(n);
+    vector<int> tunnel_out(n);
 
     for (int i = 0; i < n; i++) {
-        string s;
-        cin >> s;
+        string car;
+        cin >> car;
 
-        vec[i] = hs[s];
+        tunnel_out[i] = tunnel_in[car];
     }
 
     int ans = 0;
 
     for (int i = 0; i < n; i++) {
         for (int j = i + 1; j < n; j++) {
-            if (vec[i] > vec[j]) {
+            if (tunnel_out[i] > tunnel_out[j]) {
                 ans++;
                 break;
             }

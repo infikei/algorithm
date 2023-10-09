@@ -1,5 +1,5 @@
 // Solve 2022-06-03
-// Update 2023-08-07
+// Update 2023-10-09
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -10,27 +10,28 @@ using namespace std;
 #define ALL(v) v.begin(),v.end()
 using ll = long long;
 
-unordered_set<int> hs;
+int num_list[500000];
 
 int main() {
     FASTIO;
 
-    int n, x;
+    int n;
     cin >> n;
 
     for (int i = 0; i < n; i++) {
-        cin >> x;
-
-        hs.insert(x);
+        cin >> num_list[i];
     }
+
+    sort(num_list, num_list + n);
 
     int m;
     cin >> m;
 
     for (int i = 0; i < m; i++) {
-        cin >> x;
+        int num;
+        cin >> num;
 
-        if (hs.find(x) != hs.end()) {
+        if (binary_search(num_list, num_list + n, num)) {
             cout << 1 << ' ';
         }
         else {

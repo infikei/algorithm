@@ -1,5 +1,5 @@
 // Solve 2022-06-03
-// Update 2023-08-07
+// Update 2023-10-09
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -10,27 +10,29 @@ using namespace std;
 #define ALL(v) v.begin(),v.end()
 using ll = long long;
 
-int card[500000];
-
 int main() {
     FASTIO;
+
+    unordered_set<int> num_set;
 
     int n;
     cin >> n;
 
     for (int i = 0; i < n; i++) {
-        cin >> card[i];
+        int num;
+        cin >> num;
+
+        num_set.insert(num);
     }
 
-    sort(card, card + n);
-
-    int m, x;
+    int m;
     cin >> m;
 
     for (int i = 0; i < m; i++) {
-        cin >> x;
+        int num;
+        cin >> num;
 
-        if (binary_search(card, card + n, x)) {
+        if (num_set.find(num) != num_set.end()) {
             cout << 1 << ' ';
         }
         else {
