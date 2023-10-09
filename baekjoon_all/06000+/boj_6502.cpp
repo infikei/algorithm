@@ -1,26 +1,37 @@
-#include <iostream>
+// Solve 2022-11-24
+// Update 2023-10-08
+
+#include <bits/stdc++.h>
 using namespace std;
-#define fastio ios_base::sync_with_stdio(false);cout.tie(NULL);cin.tie(NULL); // boj_15552.cpp
+
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
 
 int main() {
-    fastio;
+    FASTIO;
 
-    int iter = 1, r, w, l;
+    int ti = 1;
+
     while (true) {
+        int r;
         cin >> r;
-        if (r == 0) {
-            break;
-        }
+
+        if (r == 0) break;
+
+        int w, l;
         cin >> w >> l;
 
-        cout << "Pizza " << iter;
+        cout << "Pizza " << ti++;
+
         if (r * r * 4 >= w * w + l * l) {
             cout << " fits on the table.\n";
         }
         else {
             cout << " does not fit on the table.\n";
         }
-        iter++;
     }
 
     return 0;

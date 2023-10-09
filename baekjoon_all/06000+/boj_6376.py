@@ -1,13 +1,16 @@
 # Solve 2023-03-07
+# Update 2023-10-08
 
 print("n e")
 print("-", "-" * 11)
 
 e = 0
 fac = 1
+
 for i in range(0, 10):
     if i > 0:
         fac *= i
+
     e += 1 / fac
 
     if i >= 3:
