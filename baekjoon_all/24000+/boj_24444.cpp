@@ -1,62 +1,57 @@
-#include <iostream>
-#include <vector>
-#include <queue>
-#include <algorithm>
+// Solve 2022-09-24
+// Update 2023-10-10
+
+#include <bits/stdc++.h>
 using namespace std;
 
-int N, M, R, cnt;
-vector<int> graph[100001];
-int visited[100001];
-queue<int> Q;
-
-void input() {
-    cin >> N >> M >> R;
-
-    for (int i = 0; i < M; i++) {
-        int u, v;
-        cin >> u >> v;
-        graph[u].push_back(v);
-        graph[v].push_back(u);
-    }
-
-    for (int i = 1; i <= N; i++) {
-        sort(graph[i].begin(), graph[i].end());
-    }
-}
-
-void bfs() {
-    visited[R] = ++cnt;
-    Q.push(R);
-
-    while (!Q.empty()) {
-        int now = Q.front();
-        Q.pop();
-
-        for (auto i : graph[now]) {
-            if (visited[i] == 0) {
-                visited[i] = ++cnt;
-                Q.push(i);
-            }
-        }
-    }
-}
-
-void print() {
-    for (int i = 1; i <= N; i++) {
-        cout << visited[i] << '\n';
-    }
-}
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    input();
+    int n, m, r;
+    cin >> n >> m >> r;
 
-    bfs();
+    vector<vector<int> > adj(n + 1, vector<int>());
 
-    print();
+    for (int i = 0; i < m; i++) {
+        int from, to;
+        cin >> from >> to;
+
+        adj[from].push_back(to);
+        adj[to].push_back(from);
+    }
+
+    for (int u = 1; u <= n; u++) {
+        sort(adj[u].begin(), adj[u].end());
+    }
+
+    vector<int> visited(n + 1, 0);
+    queue<int> que;
+    int cur = 0;
+
+    visited[r] = ++cur;
+    que.push(r);
+
+    while (!que.empty()) {
+        int now = que.front();
+        que.pop();
+
+        for (int &next : adj[now]) {
+            if (visited[next] != 0) continue;
+
+            visited[next] = ++cur;
+            que.push(next);
+        }
+    }
+
+    for (int u = 1; u <= n; u++) {
+        cout << visited[u] << '\n';
+    }
 
     return 0;
 }

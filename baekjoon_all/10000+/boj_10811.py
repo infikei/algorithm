@@ -1,15 +1,16 @@
 # Solve 2023-02-24
-# Update 2023-02-26
+# Update 2023-10-10
 
 import sys
 
 input = lambda : sys.stdin.readline().rstrip()
 
 n, m = map(int, input().split())
-li = [i for i in range(n + 1)]
+baskets = [i for i in range(n + 1)]
 
 for _ in range(m):
-    a, b = map(int, input().split())
-    li[a:b + 1] = reversed(li[a:b + 1])
+    left, right = map(int, input().split())
 
-print(*li[1:])
+    baskets[left:right + 1] = reversed(baskets[left:right + 1])
+
+print(*baskets[1:])

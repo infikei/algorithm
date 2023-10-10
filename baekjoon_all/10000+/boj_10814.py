@@ -1,12 +1,14 @@
+# Solve 2022-05-30
+# Update 2023-10-10
+
 n = int(input())
-li = [[] for _ in range(200)]  # li : list of list
+members = [[] for _ in range(201)]
 
-for i in range(n):
-    a, b = input().split()
-    a = int(a)
-    li[a-1].append((a, b))
+for _ in range(n):
+    age, name = input().split()
+    age = int(age)
+    members[age].append((age, name))
 
-for i in li:  # i : list of tuple, li : list of list of tuple
-    if len(i) > 0:
-        for j in i:  # j : tuple
-            print(*j)
+for li in members:
+    for member in li:
+        print(*member)

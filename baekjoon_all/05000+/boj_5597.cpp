@@ -1,5 +1,5 @@
 // Solve 2022-07-20
-// Update 2023-08-28
+// Update 2023-10-10
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -13,17 +13,17 @@ using ll = long long;
 int main() {
     FASTIO;
 
-    bool students[31] = { false };
+    bool nums[31] = { false };
 
     for (int i = 0; i < 28; i++) {
-        int student_id;
-        cin >> student_id;
+        int num;
+        cin >> num;
 
-        students[student_id] = true;
+        nums[num] = true;
     }
 
     for (int i = 1; i <= 30; i++) {
-        if (!students[i]) {
+        if (!nums[i]) {
             cout << i << '\n';
         }
     }

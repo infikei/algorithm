@@ -1,28 +1,42 @@
-#include <iostream>
-#include <map>
+// Solve 2022-06-03
+// Update 2023-10-10
+
+#include <bits/stdc++.h>
 using namespace std;
 
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
+
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    map<int, bool> m;
-    int A_size, B_size, num, A_and_B_size = 0;
+    int a_cnt, b_cnt;
+    cin >> a_cnt >> b_cnt;
 
-    cin >> A_size >> B_size;
+    set<int> st;
 
-    for (int i = 0; i < A_size; i++) {
-        cin >> num;
-        m[num] = true;
+    for (int i = 0; i < a_cnt; i++) {
+        int x;
+        cin >> x;
+
+        st.insert(x);
     }
-    for (int i = 0; i < B_size; i++) {
-        cin >> num;
-        if (m[num]) {
-            A_and_B_size++;
+
+    int a_and_b_cnt = 0;
+
+    for (int i = 0; i < b_cnt; i++) {
+        int x;
+        cin >> x;
+
+        if (st.find(x) != st.end()) {
+            a_and_b_cnt++;
         }
     }
-    cout << A_size + B_size - A_and_B_size * 2 << '\n';
+
+    cout << a_cnt + b_cnt - a_and_b_cnt * 2 << '\n';
 
     return 0;
 }

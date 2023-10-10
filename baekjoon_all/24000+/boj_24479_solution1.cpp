@@ -10,13 +10,28 @@ using namespace std;
 #define ALL(v) v.begin(),v.end()
 using ll = long long;
 
+int cur;
+vector<vector<int> > adj;
+vector<int> visited;
+
+void dfs(int now) {
+    visited[now] = ++cur;
+
+    for (int &next : adj[now]) {
+        if (visited[next] != 0) continue;
+
+        dfs(next);
+    }
+}
+
 int main() {
     FASTIO;
 
     int n, m, r;
     cin >> n >> m >> r;
 
-    vector<vector<int> > adj(n + 1, vector<int>());
+    adj.assign(n + 1, vector<int>());
+    visited.assign(n + 1, 0);
 
     for (int i = 0; i < m; i++) {
         int from, to;
@@ -27,27 +42,10 @@ int main() {
     }
 
     for (int u = 1; u <= n; u++) {
-        sort(adj[u].begin(), adj[u].end(), greater<int>());
+        sort(adj[u].begin(), adj[u].end());
     }
 
-    vector<int> visited(n + 1, 0);
-    queue<int> que;
-    int cur = 0;
-
-    visited[r] = ++cur;
-    que.push(r);
-
-    while (!que.empty()) {
-        int now = que.front();
-        que.pop();
-
-        for (int &next : adj[now]) {
-            if (visited[next] != 0) continue;
-
-            visited[next] = ++cur;
-            que.push(next);
-        }
-    }
+    dfs(r);
 
     for (int u = 1; u <= n; u++) {
         cout << visited[u] << '\n';

@@ -1,10 +1,11 @@
 # Solve 2022-05-16
-# Update 2023-02-26
+# Update 2023-10-10
 
 import sys
 
 input = lambda : sys.stdin.readline().rstrip()
 
 n = int(input())
-li = list(map(int, input().split()))
-print(min(li), max(li))
+nums = list(map(int, input().split()))
+
+print(min(nums), max(nums))

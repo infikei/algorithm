@@ -1,66 +1,56 @@
-#include <iostream>
-#include <queue>
+// Solve 2022-07-26
+// Update 2023-10-10
+
+#include <bits/stdc++.h>
 using namespace std;
 
-bool graph[1001][1001] = {false};
-bool visited[1001] = {false};
-int N, M, visited_N, cnt;
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
 
-void input() {
-    cin >> N >> M;
-    int from, to;
-    for (int i = 0; i < M; i++) {
+int main() {
+    FASTIO;
+
+    int n, m;
+    cin >> n >> m;
+
+    vector<bool> visited(n + 1, false);
+    vector<vector<int> > adj(n + 1, vector<int>());
+
+    for (int i = 0; i < m; i++) {
+        int from, to;
         cin >> from >> to;
-        graph[from][to] = true;
-        graph[to][from] = true;
-    }
-}
 
-void BFS() {
-    int now = 1;
-    for (int i = 1; i <= N; i++) {
-        if (!visited[i]) {
-            now = i;
-            break;
-        }
+        adj[from].push_back(to);
+        adj[to].push_back(from);
     }
 
-    queue<int> q;
-    q.push(now);
+    int connected_components_num = 0;
 
-    while (!q.empty()) {
-        now = q.front();
-        q.pop();
+    for (int u = 1; u <= n; u++) {
+        if (visited[u]) continue;
 
-        if (!visited[now]) {
-            visited[now] = true;
-            visited_N++;
-            for (int i = 1; i <= N; i++) {
-                if (graph[now][i] && !visited[i]) {
-                    q.push(i);
-                }
+        connected_components_num++;
+        visited[u] = true;
+        queue<int> que;
+        que.push(u);
+
+        while (!que.empty()) {
+            int now = que.front();
+            que.pop();
+
+            for (int next : adj[now]) {
+                if (visited[next]) continue;
+
+                visited[next] = true;
+                que.push(next);
             }
         }
     }
 
-    cnt++;
-}
-
-int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
-
-    input();
-
-    visited_N = 0;
-    cnt = 0;
-
-    while (visited_N < N) {
-        BFS();
-    }
-
-    cout << cnt << '\n';
+    cout << connected_components_num << '\n';
 
     return 0;
 }

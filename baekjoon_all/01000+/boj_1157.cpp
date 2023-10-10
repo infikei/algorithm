@@ -1,31 +1,24 @@
 // Solve 2022-06-05
-// Update 2023-02-26
+// Update 2023-10-10
 
 #include <bits/stdc++.h>
 using namespace std;
 
-#ifdef BOJ
-#define BOJTEST(x) ((void)0)
-#else
-#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
-#endif
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
 #define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
 #define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
 using ll = long long;
-using uint = unsigned int;
-using ull = unsigned long long;
 
 int main() {
     FASTIO;
 
-    string input;
-    cin >> input;
+    string word;
+    cin >> word;
 
     int cnt[26] = { 0 };
 
-    for (auto ch : input) {
+    for (char &ch : word) {
         if ('a' <= ch && ch <= 'z') {
             cnt[ch - 'a']++;
         }
@@ -36,6 +29,7 @@ int main() {
 
     int max_idx = max_element(cnt, cnt + 26) - cnt;
     int max_cnt = cnt[max_idx];
+
     for (int i = max_idx + 1; i < 26; i++) {
         if (cnt[i] == max_cnt) {
             max_idx = -1;
@@ -47,8 +41,7 @@ int main() {
         cout << "?\n";
     }
     else {
-        char ans = 'A' + max_idx;
-        cout << ans << '\n';
+        cout << (char)('A' + max_idx) << '\n';
     }
 
     return 0;

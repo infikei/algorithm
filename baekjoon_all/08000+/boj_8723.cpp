@@ -1,21 +1,30 @@
-#include <iostream>
-#include <algorithm>
+// Solve 2022-11-25
+// Update 2023-10-10
+
+#include <bits/stdc++.h>
 using namespace std;
-#define fastio ios_base::sync_with_stdio(false);cout.tie(NULL);cin.tie(NULL); // boj_15552.cpp
+
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
 
 int main() {
-    fastio;
+    FASTIO;
 
-    int arr[3];
+    int num[3];
+
     for (int i = 0; i < 3; i++) {
-        cin >> arr[i];
+        cin >> num[i];
     }
-    sort(arr, arr + 3);
 
-    if (arr[0] == arr[2]) {
+    sort(num, num + 3);
+
+    if (num[0] == num[2]) {
         cout << 2 << '\n';
     }
-    else if (arr[0] * arr[0] + arr[1] * arr[1] == arr[2] * arr[2]) {
+    else if (num[0] * num[0] + num[1] * num[1] == num[2] * num[2]) {
         cout << 1 << '\n';
     }
     else {

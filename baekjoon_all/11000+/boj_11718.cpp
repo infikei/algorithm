@@ -1,5 +1,5 @@
 // Solve 2023-01-30
-// Update 2023-09-09
+// Update 2023-10-10
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -13,10 +13,10 @@ using ll = long long;
 int main() {
     FASTIO;
 
-    string s;
+    string line;
 
-    while (getline(cin, s)) {
-        cout << s << '\n';
+    while (getline(cin, line)) {
+        cout << line << '\n';
     }
 
     return 0;

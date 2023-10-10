@@ -1,41 +1,44 @@
-#include <iostream>
-#include <string>
-#include <unordered_map>
-#include <queue>
+// Solve 2022-10-29
+// Update 2023-10-10
+
+#include <bits/stdc++.h>
 using namespace std;
 
-int N;
-unordered_map<string, bool> hs;
-priority_queue<string> pq;
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    cin >> N;
+    int n;
+    cin >> n;
 
-    for (int n = 0; n < N; n++) {
+    unordered_set<string> company;
+
+    for (int i = 0; i < n; i++) {
         string name, log;
         cin >> name >> log;
 
         if (log == "enter") {
-            hs[name] = true;
+            company.insert(name);
         }
         else {
-            hs[name] = false;
+            company.erase(name);
         }
     }
 
-    for (auto it = hs.begin(); it != hs.end(); it++) {
-        if (it->second) {
-            pq.push(it->first);
-        }
+    priority_queue<string> pq_maxtop;
+
+    for (auto it = company.begin(); it != company.end(); it++) {
+        pq_maxtop.push(*it);
     }
 
-    while (!pq.empty()) {
-        cout << pq.top() << '\n';
-        pq.pop();
+    while (!pq_maxtop.empty()) {
+        cout << pq_maxtop.top() << '\n';
+        pq_maxtop.pop();
     }
 
     return 0;

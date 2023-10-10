@@ -1,10 +1,10 @@
 # Solve 2023-02-23
-# Update 2023-08-28
+# Update 2023-10-10
 
 import sys
 
 input = lambda : sys.stdin.readline().rstrip()
 
-st = set(range(1, 31)) - set([int(input()) for _ in range(28)])
+nums = set(range(1, 31)) - set([int(input()) for _ in range(28)])
 
-print(*sorted(list(st)), sep="\n")
+print(*sorted(nums), sep="\n")

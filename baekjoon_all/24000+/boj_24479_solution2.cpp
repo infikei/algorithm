@@ -31,21 +31,23 @@ int main() {
     }
 
     vector<int> visited(n + 1, 0);
-    queue<int> que;
+    stack<int> stck;
+
     int cur = 0;
+    stck.push(r);
 
-    visited[r] = ++cur;
-    que.push(r);
+    while (!stck.empty()) {
+        int now = stck.top();
+        stck.pop();
 
-    while (!que.empty()) {
-        int now = que.front();
-        que.pop();
+        if (visited[now] != 0) continue;
+
+        visited[now] = ++cur;
 
         for (int &next : adj[now]) {
             if (visited[next] != 0) continue;
 
-            visited[next] = ++cur;
-            que.push(next);
+            stck.push(next);
         }
     }
 

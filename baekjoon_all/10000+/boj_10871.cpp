@@ -1,5 +1,5 @@
 // Solve 2022-06-02
-// Update 2023-08-03
+// Update 2023-10-10
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -17,13 +17,14 @@ int main() {
     cin >> n >> x;
 
     for (int i = 0; i < n; i++) {
-        int a;
-        cin >> a;
+        int num;
+        cin >> num;
 
-        if (a < x) {
-            cout << a << ' ';
+        if (num < x) {
+            cout << num << ' ';
         }
     }
+
     cout << '\n';
 
     return 0;

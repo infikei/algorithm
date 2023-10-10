@@ -1,56 +1,62 @@
-#include <iostream>
-#define fastio ios_base::sync_with_stdio(false);cout.tie(NULL);cin.tie(NULL); // boj_15552.cpp
+// Solve 2022-12-06
+// Update 2023-10-10
+
+#include <bits/stdc++.h>
 using namespace std;
 
-int N, ans[2];
-int board[128][128];
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
 
-void input() {
-    cin >> N;
-    for (int y = 0; y < N; y++) {
-        for (int x = 0; x < N; x++) {
-            cin >> board[y][x];
-        }
-    }
-}
+void solve(int r0, int c0, int size, const vector<vector<int> > &board, vector<int> &ans) {
+    bool same_color = true;
 
-void solve(int y0, int x0, int size) {
-    bool flag_all_is_same = true;
-
-    for (int y = y0; y < y0 + size; y++) {
-        for (int x = x0; x < x0 + size; x++) {
-            if (board[y][x] != board[y0][x0]) {
-                flag_all_is_same = false;
+    for (int r = r0, r_end = r0 + size; r < r_end; r++) {
+        for (int c = c0, c_end = c0 + size; c < c_end; c++) {
+            if (board[r][c] != board[r0][c0]) {
+                same_color = false;
                 break;
             }
         }
-        if (!flag_all_is_same) {
-            break;
-        }
+
+        if (!same_color) break;
     }
 
-    if (flag_all_is_same) {
-        ans[board[y0][x0]]++;
+    if (same_color) {
+        ans[board[r0][c0]]++;
     }
     else {
-        int half_size = size / 2;
-        solve(y0, x0, half_size);
-        solve(y0, x0 + half_size, half_size);
-        solve(y0 + half_size, x0, half_size);
-        solve(y0 + half_size, x0 + half_size, half_size);
+        int next_size = size / 2;
+
+        solve(r0, c0, next_size, board, ans);
+        solve(r0, c0 + next_size, next_size, board, ans);
+        solve(r0 + next_size, c0, next_size, board, ans);
+        solve(r0 + next_size, c0 + next_size, next_size, board, ans);
     }
 }
 
 int main() {
-    fastio;
+    FASTIO;
 
-    input();
+    int n;
+    cin >> n;
 
-    solve(0, 0, N);
+    vector<vector<int> > board(n, vector<int>(n));
 
-    for (int i = 0; i < 2; i++) {
-        cout << ans[i] << '\n';
+    for (vector<int> &row : board) {
+        for (int &col : row) {
+            cin >> col;
+        }
     }
+
+    vector<int> ans(2, 0);
+
+    solve(0, 0, n, board, ans);
+
+    cout << ans[0] << '\n';
+    cout << ans[1] << '\n';
 
     return 0;
 }

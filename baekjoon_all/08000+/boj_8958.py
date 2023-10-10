@@ -1,13 +1,11 @@
 # Solve 2022-05-19
-# Update 2023-02-26
+# Update 2023-10-10
 
 import sys
 
 input = lambda : sys.stdin.readline().rstrip()
 
-t = int(input())
-
-for _ in range(t):
+for _ in range(int(input())):
     oxox = input()
     score = cumulative = 0
 

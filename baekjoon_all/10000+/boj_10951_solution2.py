@@ -1,9 +1,8 @@
 # Solve 2022-05-16
-# Update 2023-02-26
+# Update 2023-10-10
 
-# Solution 2.
-
-import sys
-
-for line in sys.stdin.readlines():
-    print(sum(map(int, line.split())))
+while True:
+    try:
+        print(sum(map(int, input().split())))
+    except EOFError:
+        break

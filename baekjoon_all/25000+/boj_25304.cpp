@@ -1,21 +1,23 @@
 // Solve 2022-08-13
-// Update 2023-02-26
+// Update 2023-10-10
 
 #include <iostream>
 using namespace std;
 
 int main() {
-    int x, n;
-    cin >> x >> n;
+    int amount, n;
+    cin >> amount >> n;
 
-    int x2 = 0;
+    int calculated_amount = 0;
+
     for (int i = 0; i < n; i++) {
-        int a, b;
-        cin >> a >> b;
-        x2 += a * b;
+        int item_price, item_cnt;
+        cin >> item_price >> item_cnt;
+
+        calculated_amount += item_price * item_cnt;
     }
 
-    if (x == x2) {
+    if (amount == calculated_amount) {
         cout << "Yes\n";
     }
     else {

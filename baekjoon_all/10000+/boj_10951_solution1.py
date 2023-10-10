@@ -1,14 +1,7 @@
 # Solve 2022-05-16
-# Update 2023-02-26
-
-# Solution 1.
+# Update 2023-10-10
 
 import sys
 
-input = lambda : sys.stdin.readline().rstrip()
-
-while True:
-    try:
-        print(sum(map(int, input().split())))
-    except: # except EOFError:
-        break
+for line in sys.stdin.readlines():
+    print(sum(map(int, line.split())))

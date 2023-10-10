@@ -1,22 +1,24 @@
 // Solve 2023-03-01
+// Update 2023-10-10
 
 #include <bits/stdc++.h>
 using namespace std;
 
-#ifdef BOJ
-#define BOJTEST(x) ((void)0)
-#else
-#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
-#endif
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
 #define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
 #define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
 using ll = long long;
-using uint = unsigned int;
-using ull = unsigned long long;
-using pii = pair<int, int>;
-using pi3 = pair<int, pii>;
+
+struct Team{
+    int gold, silver, bronze;
+    Team(int g = 0, int s = 0, int b = 0) : gold(g), silver(s), bronze(b) {}
+    bool operator<(const Team &rhs) {
+        if (gold != rhs.gold) return gold < rhs.gold;
+        if (silver != rhs.silver) return silver < rhs.silver;
+        return bronze < rhs.bronze;
+    }
+};
 
 int main() {
     FASTIO;
@@ -24,21 +26,26 @@ int main() {
     int n, k;
     cin >> n >> k;
 
-    priority_queue<pi3> pq_maxtop;
-    pi3 k_val = { 0, { 0, 0 } };
+    vector<Team> teams;
+    Team target_team;
+
     for (int i = 0; i < n; i++) {
-        int x, a, b, c;
-        cin >> x >> a >> b >> c;
-        pq_maxtop.push({ a, { b, c } });
-        if (x == k) {
-            k_val = { a, { b, c } };
-        }
+        int team_idx, g, s, b;
+        cin >> team_idx >> g >> s >> b;
+
+        Team team = { g, s, b };
+
+        teams.push_back(team);
+
+        if (team_idx == k) target_team = team;
     }
 
     int ans = 1;
-    while (pq_maxtop.top() > k_val) {
-        pq_maxtop.pop();
-        ans++;
+
+    for (Team &team : teams) {
+        if (target_team < team) {
+            ans++;
+        }
     }
 
     cout << ans << '\n';

@@ -1,5 +1,5 @@
 // Solve 2022-06-05
-// Update 2023-08-03
+// Update 2023-10-10
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -19,10 +19,9 @@ int main() {
     stringstream ss(line);
     string word;
     int ans = 0;
+
     while (getline(ss, word, ' ')) {
-        if (word != "") {
-            ans++;
-        }
+        if (word != "") ans++;
     }
 
     cout << ans << '\n';

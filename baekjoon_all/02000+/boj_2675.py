@@ -1,16 +1,16 @@
 # Solve 2022-05-19
-# Update 2023-02-26
+# Update 2023-10-10
 
 import sys
 
 input = lambda : sys.stdin.readline().rstrip()
 
-t = int(input())
-
-for _ in range(t):
-    r, s = input().split()
-    r = int(r)
+for _ in range(int(input())):
+    repeat, word = input().split()
+    repeat = int(repeat)
     ans = ""
-    for ch in s:
-        ans += ch * r
+
+    for ch in word:
+        ans += ch * repeat
+
     print(ans)

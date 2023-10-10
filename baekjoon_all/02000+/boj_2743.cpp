@@ -1,14 +1,14 @@
 // Solve 2022-06-27
-// Update 2023-02-26
+// Update 2023-10-10
 
 #include <iostream>
 using namespace std;
 
 int main() {
-    string input;
-    cin >> input;
+    string word;
+    cin >> word;
 
-    cout << input.length() << '\n';
+    cout << word.length() << '\n';
 
     return 0;
 }

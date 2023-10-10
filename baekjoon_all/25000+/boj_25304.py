@@ -1,19 +1,19 @@
 # Solve 2023-02-22
-# Update 2023-02-26
+# Update 2023-10-10
 
 import sys
 
 input = lambda : sys.stdin.readline().rstrip()
 
-x = int(input())
+amount = int(input())
 n = int(input())
+calculated_amount = 0
 
-x2 = 0
 for i in range(n):
-    a, b = map(int, input().split())
-    x2 += a * b
+    item_price, item_cnt = map(int, input().split())
+    calculated_amount += item_price * item_cnt
 
-if x == x2:
+if amount == calculated_amount:
     print("Yes")
 else:
     print("No")

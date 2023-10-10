@@ -1,5 +1,5 @@
 // Solve 2022-06-05
-// Update 2023-08-03
+// Update 2023-10-10
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -16,23 +16,19 @@ int main() {
     string line;
     getline(cin, line);
 
-    // 양끝에 공백이 없다고 가정하면, 단어의 개수 = 공백의 개수 + 1이다.
+    // 문장의 시작과 마지막에 공백이 없다고 가정하면, 단어의 개수 = 공백의 개수 + 1이다.
+
     int ans = 1;
-    for (const char &ch : line) {
-        if (ch == ' ') {
-            ans++;
-        }
+
+    for (char &ch : line) {
+        if (ch == ' ') ans++;
     }
 
-    // 문장의 시작이 공백인 경우 처리
-    if (line[0] == ' ') {
-        ans--;
-    }
+    // 문장의 시작 또는 마지막이 공백인 경우를 처리한다.
 
-    // 문장의 마지막이 공백인 경우 처리
-    if (line[SIZE(line) - 1] == ' ') {
-        ans--;
-    }
+    if (line[0] == ' ') ans--;
+
+    if (line.back() == ' ') ans--;
 
     cout << ans << '\n';
 
