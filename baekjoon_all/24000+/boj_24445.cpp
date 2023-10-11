@@ -1,5 +1,5 @@
 // Solve 2022-09-24
-// Update 2023-10-10
+// Update 2023-10-11
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -32,9 +32,9 @@ int main() {
 
     vector<int> visited(n + 1, 0);
     queue<int> que;
-    int cur = 0;
+    int visit_num = 0;
 
-    visited[r] = ++cur;
+    visited[r] = ++visit_num;
     que.push(r);
 
     while (!que.empty()) {
@@ -44,7 +44,7 @@ int main() {
         for (int &next : adj[now]) {
             if (visited[next] != 0) continue;
 
-            visited[next] = ++cur;
+            visited[next] = ++visit_num;
             que.push(next);
         }
     }

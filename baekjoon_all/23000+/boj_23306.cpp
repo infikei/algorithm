@@ -1,4 +1,5 @@
 // Solve 2023-08-17
+// Update 2023-10-11
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -12,13 +13,15 @@ using ll = long long;
 int main() {
     FASTIO;
 
-    int n, s, e;
+    int n;
     cin >> n;
 
-    cout << "? 1" << endl;
+    cout << "? " << 1 << endl;
+    int s;
     cin >> s;
 
     cout << "? " << n << endl;
+    int e;
     cin >> e;
 
     cout << "! " << e - s << endl;

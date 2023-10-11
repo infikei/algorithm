@@ -1,14 +1,15 @@
+// Solve 2022-11-03
+// Update 2023-10-11
+
 #include <iostream>
 using namespace std;
-#define fastio ios_base::sync_with_stdio(false);cout.tie(NULL);cin.tie(NULL); // boj_15552.cpp
 
 int main() {
-    fastio;
+    int n;
+    cin >> n;
 
-    int N;
-    cin >> N;
+    int ans = 1 << n;
 
-    int ans = 1 << N;
     cout << ans << '\n';
 
     return 0;

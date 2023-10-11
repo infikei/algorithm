@@ -1,5 +1,11 @@
-T, F, S, P, C = map(int, input().split())
-score1 = 6*T + 3*F + 2*S + P + 2*C
-T, F, S, P, C = map(int, input().split())
-score2 = 6*T + 3*F + 2*S + P + 2*C
-print(score1, score2)
+# Solve 2022-06-02
+# Update 2023-10-11
+
+scores = [0] * 2
+
+for i in range(2):
+    t, f, s, p, c = map(int, input().split())
+
+    scores[i] = 6 * t + 3 * f + 2 * s + p + 2 * c
+
+print(*scores)

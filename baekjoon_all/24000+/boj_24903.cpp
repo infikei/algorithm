@@ -1,4 +1,5 @@
 // Solve 2023-08-18
+// Update 2023-10-11
 
 #include <iostream>
 using namespace std;
@@ -13,10 +14,10 @@ int main() {
 
     int ans[2] = { n - 1, n };
 
-    cout << ans[0];
-    for (int i = 1; i < q; i++) {
-        cout << '\n' << ans[i & 1];
+    for (int i = 0; i < q; i++) {
+        cout << ans[i & 1] << '\n';
     }
+
     cout << endl;
 
     return 0;

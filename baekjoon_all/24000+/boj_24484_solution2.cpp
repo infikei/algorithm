@@ -1,4 +1,5 @@
 // Solve 2023-10-10
+// Update 2023-10-11
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -37,7 +38,7 @@ int main() {
     vector<bool> visited(n + 1, false);
     stack<Node> stck;
 
-    ll cur = 0, ans = 0;
+    ll visit_num = 0, ans = 0;
     stck.push({ r, 0 });
 
     while (!stck.empty()) {
@@ -47,7 +48,7 @@ int main() {
         if (visited[now.num]) continue;
 
         visited[now.num] = true;
-        ans += ++cur * now.depth;
+        ans += ++visit_num * now.depth;
         int next_depth = now.depth + 1;
 
         for (int &next_num : adj[now.num]) {

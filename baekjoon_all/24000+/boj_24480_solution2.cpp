@@ -1,5 +1,5 @@
 // Solve 2022-09-24
-// Update 2023-10-10
+// Update 2023-10-11
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -33,7 +33,7 @@ int main() {
     vector<int> visited(n + 1, 0);
     stack<int> stck;
 
-    int cur = 0;
+    int visit_num = 0;
     stck.push(r);
 
     while (!stck.empty()) {
@@ -42,7 +42,7 @@ int main() {
 
         if (visited[now] != 0) continue;
 
-        visited[now] = ++cur;
+        visited[now] = ++visit_num;
 
         for (int &next : adj[now]) {
             if (visited[next] != 0) continue;

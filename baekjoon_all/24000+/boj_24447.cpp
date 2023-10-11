@@ -1,4 +1,5 @@
 // Solve 2023-10-10
+// Update 2023-10-11
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -31,9 +32,9 @@ int main() {
 
     vector<bool> visited(n + 1, false);
     queue<int> que;
-    ll cur = 0, depth = 0, ans = 0;
+    ll visit_num = 0, depth = 0, ans = 0;
 
-    ans += ++cur * depth;
+    ans += ++visit_num * depth;
     visited[r] = true;
     que.push(r);
 
@@ -47,7 +48,7 @@ int main() {
             for (int &next : adj[now]) {
                 if (visited[next]) continue;
 
-                ans += ++cur * depth;
+                ans += ++visit_num * depth;
                 visited[next] = true;
                 que.push(next);
             }

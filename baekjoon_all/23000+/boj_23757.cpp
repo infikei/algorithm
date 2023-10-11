@@ -1,30 +1,39 @@
-#include <iostream>
-#include <queue>
-#define fastio ios_base::sync_with_stdio(false);cout.tie(NULL);cin.tie(NULL); // boj_15552.cpp
+// Solve 2022-12-15
+// Update 2023-10-11
+
+#include <bits/stdc++.h>
 using namespace std;
 
-int N, M, check;
-priority_queue<int> present_box;
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
 
 int main() {
-    fastio;
+    FASTIO;
 
-    cin >> N >> M;
+    int n, m;
+    cin >> n >> m;
 
-    int c;
-    for (int i = 0; i < N; i++) {
+    priority_queue<int> present_box;
+
+    for (int i = 0; i < n; i++) {
+        int c;
         cin >> c;
+
         present_box.push(c);
     }
 
-    check = 1;
-    int w;
-    for (int i = 0; i < M; i++) {
+    bool check = true;
+
+    for (int i = 0; i < m; i++) {
+        int w;
         cin >> w;
 
-        if (check > 0) {
+        if (check) {
             if (w > present_box.top()) {
-                check = 0;
+                check = false;
             }
             else {
                 w = present_box.top() - w;

@@ -1,5 +1,5 @@
 // Solve 2022-09-24
-// Update 2023-10-10
+// Update 2023-10-11
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -10,12 +10,12 @@ using namespace std;
 #define ALL(v) v.begin(),v.end()
 using ll = long long;
 
-int cur;
+int visit_num;
 vector<vector<int> > adj;
 vector<int> visited;
 
 void dfs(int now) {
-    visited[now] = ++cur;
+    visited[now] = ++visit_num;
 
     for (int &next : adj[now]) {
         if (visited[next] != 0) continue;

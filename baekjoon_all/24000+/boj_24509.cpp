@@ -1,78 +1,69 @@
-#include <iostream>
-#include <vector>
-#include <algorithm>
+// Solve 2022-08-24
+// Update 2023-10-11
+
+#include <bits/stdc++.h>
 using namespace std;
-typedef pair<int, int> pii;
 
-int N, ans[4];
-vector<pii> A, B, C, D;
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
 
-bool cmp(const pii &a, const pii &b) {
-    if (a.second == b.second) {
-        return a.first < b.first;
-    }
-    return a.second > b.second;
-}
+struct Score{
+    int score, id;
+    Score(int score, int id) : score(score), id(id) {}
 
-void input() {
-    cin >> N;
-    for (int i = 0; i < N; i++) {
-        int idx, score;
-        cin >> idx;
-        cin >> score;
-        A.push_back(make_pair(idx, score));
-        cin >> score;
-        B.push_back(make_pair(idx, score));
-        cin >> score;
-        C.push_back(make_pair(idx, score));
-        cin >> score;
-        D.push_back(make_pair(idx, score));
+    bool operator<(const Score &rhs) const {
+        if (score != rhs.score) return score < rhs.score;
+        return id > rhs.id;
     }
-
-    sort(A.begin(), A.end(), cmp);
-    sort(B.begin(), B.end(), cmp);
-    sort(C.begin(), C.end(), cmp);
-    sort(D.begin(), D.end(), cmp);
-}
-
-void print() {
-    ans[0] = A[0].first;
-    ans[1] = B[0].first;
-    if (ans[1] == ans[0]) {
-        ans[1] = B[1].first;
-    }
-    ans[2] = C[0].first;
-    for (int i = 1; i <= 2; i++) {
-        if (ans[2] == ans[1] || ans[2] == ans[0]) {
-            ans[2] = C[i].first;
-        }
-        else {
-            break;
-        }
-    }
-    ans[3] = D[0].first;
-    for (int i = 1; i <= 3; i++) {
-        if (ans[3] == ans[2] || ans[3] == ans[1] || ans[3] == ans[0]) {
-            ans[3] = D[i].first;
-        }
-        else {
-            break;
-        }
-    }
-
-    for (int i = 0; i < 4; i++) {
-        cout << ans[i] << ' ';
-    }
-}
+};
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    input();
+    int n;
+    cin >> n;
 
-    print();
+    priority_queue<Score> scores[4];
+
+    for (int i = 0; i < n; i++) {
+        int id;
+        cin >> id;
+
+        for (int subj = 0; subj < 4; subj++) {
+            int score;
+            cin >> score;
+
+            scores[subj].push({ score, id });
+        }
+    }
+
+    int prize_id[4];
+
+    for (int subj = 0; subj < 4; subj++) {
+        while (true) {
+            bool flag = true;
+
+            for (int prev_subj = 0; prev_subj < subj; prev_subj++) {
+                if (scores[subj].top().id == prize_id[prev_subj]) {
+                    flag = false;
+                    break;
+                }
+            }
+
+            if (flag) break;
+
+            scores[subj].pop();
+        }
+
+        prize_id[subj] = scores[subj].top().id;
+
+        cout << prize_id[subj] << ' ';
+    }
+
+    cout << '\n';
 
     return 0;
 }

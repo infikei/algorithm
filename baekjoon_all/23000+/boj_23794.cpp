@@ -1,5 +1,5 @@
 // Solve 2023-06-13
-// Update 2023-08-06
+// Update 2023-10-11
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -19,19 +19,23 @@ int main() {
     for (int col = 0, col_end = n + 2; col < col_end; col++) {
         cout << '@';
     }
+
     cout << '\n';
 
     for (int row = 0; row < n; row++) {
         cout << '@';
+
         for (int col = 0; col < n; col++) {
             cout << ' ';
         }
+
         cout << "@\n";
     }
 
     for (int col = 0, col_end = n + 2; col < col_end; col++) {
         cout << '@';
     }
+
     cout << '\n';
 
     return 0;

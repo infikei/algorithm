@@ -1,4 +1,5 @@
 // Solve 2023-07-31
+// Update 2023-10-11
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -20,7 +21,7 @@ struct Point{
     }
 };
 
-vector<Point> point(3);
+vector<Point> points(3);
 
 istream& operator>>(istream &is, Point &rhs) {
     is >> rhs.x >> rhs.y;
@@ -32,24 +33,24 @@ ll calc_vol(const Point &p1, const Point &p2) {
 }
 
 double calc_volume() {
-    sort(point.begin(), point.end());
+    sort(points.begin(), points.end());
 
-    if (point[0].x == point[1].x) {
-        ll v12 = calc_vol(point[1], point[2]);
-        ll v02 = calc_vol(point[0], point[2]);
+    if (points[0].x == points[1].x) {
+        ll v12 = calc_vol(points[1], points[2]);
+        ll v02 = calc_vol(points[0], points[2]);
 
         return abs(v12 - v02) * PI / 3;
     }
-    else if (point[1].x == point[2].x) {
-        ll v02 = calc_vol(point[0], point[2]);
-        ll v01 = calc_vol(point[0], point[1]);
+    else if (points[1].x == points[2].x) {
+        ll v02 = calc_vol(points[0], points[2]);
+        ll v01 = calc_vol(points[0], points[1]);
 
         return abs(v02 - v01) * PI / 3;
     }
     else {
-        ll v01 = calc_vol(point[0], point[1]);
-        ll v12 = calc_vol(point[1], point[2]);
-        ll v02 = calc_vol(point[0], point[2]);
+        ll v01 = calc_vol(points[0], points[1]);
+        ll v12 = calc_vol(points[1], points[2]);
+        ll v02 = calc_vol(points[0], points[2]);
 
         return abs(v01 + v12 - v02) * PI / 3;
     }
@@ -61,13 +62,13 @@ int main() {
     SETPRECISION(9);
 
     for (int i = 0; i < 3; i++) {
-        cin >> point[i];
+        cin >> points[i];
     }
 
     cout << calc_volume() << ' ';
 
     for (int i = 0; i < 3; i++) {
-        swap(point[i].x, point[i].y);
+        swap(points[i].x, points[i].y);
     }
 
     cout << calc_volume() << '\n';
