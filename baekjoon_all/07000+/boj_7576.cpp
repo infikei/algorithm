@@ -1,59 +1,74 @@
-#include <iostream>
-#include <queue>
-#define fastio ios_base::sync_with_stdio(false);cout.tie(NULL);cin.tie(NULL); // boj_15552.cpp
-using namespace std;
-using pii = pair<int, int>;
+// Solve 2022-12-07
+// Update 2023-10-12
 
-int N, M, ans, cnt_ripe, cnt_empty, board[1000][1000];
-int dx[4] = {1, -1, 0, 0}, dy[4] = {0, 0, 1, -1};
-queue<pii> Q;
+#include <bits/stdc++.h>
+using namespace std;
+
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
+
+struct Point{
+    int x, y;
+    Point(int x, int y) : x(x), y(y) {}
+};
 
 int main() {
-    fastio;
+    FASTIO;
 
-    cin >> M >> N;
+    int dx[4] = { 1, -1, 0, 0 };
+    int dy[4] = { 0, 0, 1, -1 };
 
-    for (int row = 0; row < N; row++) {
-        for (int col = 0; col < M; col++) {
+    int n, m;
+    cin >> m >> n;
+
+    int board[1000][1000];
+    queue<Point> que;
+    int ripe_cnt = 0, empty_cnt = 0;
+
+    for (int row = 0; row < n; row++) {
+        for (int col = 0; col < m; col++) {
             cin >> board[row][col];
 
             if (board[row][col] == 1) {
-                cnt_ripe++;
-                Q.push(make_pair(row, col));
+                ripe_cnt++;
+                que.push({ row, col });
             }
             else if (board[row][col] == -1) {
-                cnt_empty++;
+                empty_cnt++;
             }
         }
     }
 
-    while (true) {
-        int i_end = Q.size();
-        for (int i = 0; i < i_end; i++) {
-            pii now = Q.front();
-            Q.pop();
+    int ans = 0;
 
-            for (int j = 0; j < 4; j++) {
-                int next_x = now.first + dx[j];
-                int next_y = now.second + dy[j];
-                if (next_x < 0 || next_x >= N || next_y < 0 || next_y >= M) {
-                    continue;
-                }
-                if (board[next_x][next_y] == 0) {
-                    board[next_x][next_y] = 1;
-                    cnt_ripe++;
-                    Q.push(make_pair(next_x, next_y));
+    while (true) {
+        for (int i = 0, i_end = SIZE(que); i < i_end; i++) {
+            Point now = que.front();
+            que.pop();
+
+            for (int d = 0; d < 4; d++) {
+                int nx = now.x + dx[d];
+                int ny = now.y + dy[d];
+
+                if (nx < 0 || nx >= n || ny < 0 || ny >= m) continue;
+
+                if (board[nx][ny] == 0) {
+                    board[nx][ny] = 1;
+                    ripe_cnt++;
+                    que.push({ nx, ny });
                 }
             }
         }
 
-        if (Q.empty()) {
-            break;
-        }
+        if (que.empty()) break;
+
         ans++;
     }
 
-    if (N * M == cnt_ripe + cnt_empty) {
+    if (n * m == ripe_cnt + empty_cnt) {
         cout << ans << '\n';
     }
     else {
