@@ -1,4 +1,5 @@
 # Solve 2023-03-01
+# Update 2023-10-14
 
 import sys
 from collections import deque
@@ -6,21 +7,20 @@ from collections import deque
 input = lambda : sys.stdin.readline().rstrip()
 
 n, m = map(int, input().split())
-dq = deque([i for i in range(1, n + 1)])
-targets = list(map(int, input().split()))
+targets = map(int, input().split())
 
+dque = deque(range(1, n + 1))
 ans = 0
+
 for target in targets:
-    tmp = 0
+    cnt = 0
 
-    while dq[0] != target:
-        dq.append(dq.popleft())
-        tmp += 1
-    tmp2 = len(dq) - tmp
-    if tmp > tmp2:
-        tmp = tmp2
+    while dque[0] != target:
+        dque.append(dque.popleft())
+        cnt += 1
 
-    dq.popleft()
-    ans += tmp
+    ans += min(cnt, len(dque) - cnt)
+
+    dque.popleft()
 
 print(ans)

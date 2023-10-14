@@ -1,21 +1,14 @@
 // Solve 2022-06-06
-// Update 2023-03-01
+// Update 2023-10-14
 
 #include <bits/stdc++.h>
 using namespace std;
 
-#ifdef BOJ
-#define BOJTEST(x) ((void)0)
-#else
-#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
-#endif
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
 #define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
 #define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
 using ll = long long;
-using uint = unsigned int;
-using ull = unsigned long long;
 
 int main() {
     FASTIO;
@@ -23,29 +16,29 @@ int main() {
     int n, m;
     cin >> n >> m;
 
-    deque<int> dq;
+    deque<int> dque;
+
     for (int i = 1; i <= n; i++) {
-        dq.push_back(i);
+        dque.push_back(i);
     }
 
     int ans = 0;
+
     for (int i = 0; i < m; i++) {
         int x;
         cin >> x;
 
-        int tmp = 0;
-        while (dq.front() != x) {
-            dq.push_back(dq.front());
-            dq.pop_front();
-            tmp++;
-        }
-        int tmp2 = SIZE(dq) - tmp;
-        if (tmp > tmp2) {
-            tmp = tmp2;
+        int cnt = 0;
+
+        while (dque.front() != x) {
+            dque.push_back(dque.front());
+            dque.pop_front();
+            cnt++;
         }
 
-        dq.pop_front();
-        ans += tmp;
+        ans += min(cnt, SIZE(dque) - cnt);
+
+        dque.pop_front();
     }
 
     cout << ans << '\n';

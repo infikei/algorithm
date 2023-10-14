@@ -1,10 +1,10 @@
 // Solve 2022-09-10
-// Update 2023-06-14
+// Update 2023-10-14
 
 #include <bits/stdc++.h>
 using namespace std;
 
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
 #define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
 #define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
@@ -23,6 +23,7 @@ int main() {
 
     while (a2 <= n_max) {
         ll n = n_min / a2 * a2;
+
         if (n < n_min) n += a2;
 
         while (n <= n_max) {
@@ -30,6 +31,7 @@ int main() {
                 check[n - n_min] = true;
                 cnt--;
             }
+
             n += a2;
         }
 
