@@ -1,10 +1,10 @@
 // Solve 2022-07-26
-// Update 2023-06-07
+// Update 2023-10-17
 
 #include <bits/stdc++.h>
 using namespace std;
 
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
 #define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
 #define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
@@ -19,6 +19,7 @@ bool check(int row) {
             return false;
         }
     }
+
     return true;
 }
 
@@ -30,7 +31,9 @@ void n_queens(int row = 1) {
 
     for (int i = 1; i <= n; i++) {
         board[row] = i;
+
         if (!check(row)) continue;
+
         n_queens(row + 1);
     }
 }
