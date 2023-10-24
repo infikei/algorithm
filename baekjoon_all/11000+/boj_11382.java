@@ -1,4 +1,5 @@
 // Solve 2023-10-18
+// Update 2023-10-23
 
 // 백준에 제출할 때는 class 이름을 Main으로 설정해야 함.
 
@@ -8,13 +9,9 @@ public class boj_11382 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        long a;
-        long b;
-        long c;
-
-        a = sc.nextLong();
-        b = sc.nextLong();
-        c = sc.nextLong();
+        long a = sc.nextLong();
+        long b = sc.nextLong();
+        long c = sc.nextLong();
 
         System.out.println(a + b + c);
 

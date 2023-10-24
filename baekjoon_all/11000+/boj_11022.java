@@ -1,4 +1,5 @@
 // Solve 2023-10-18
+// Update 2023-10-23
 
 // 백준에 제출할 때는 class 이름을 Main으로 설정해야 함.
 
@@ -6,21 +7,14 @@ import java.util.Scanner;
 
 public class boj_11022 {
     public static void main(String[] args) {
-        Scanner sc;
-        int testNum;
-
-        sc = new Scanner(System.in);
-        testNum = sc.nextInt();
+        Scanner sc = new Scanner(System.in);
+        int testNum = sc.nextInt();
 
         for (int testIdx = 1; testIdx <= testNum; testIdx++) {
-            int a;
-            int b;
+            int a = sc.nextInt();
+            int b = sc.nextInt();
 
-            a = sc.nextInt();
-            b = sc.nextInt();
-
-            System.out.println("Case #" + testIdx + ": " + a + " + "
-                    + b + " = " + (a + b));
+            System.out.println("Case #" + testIdx + ": " + a + " + " + b + " = " + (a + b));
         }
 
         sc.close();
