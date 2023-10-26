@@ -1,68 +1,76 @@
-#include <iostream>
-#include <vector>
-#include <queue>
+// Solve 2022-10-08
+// Update 2023-10-25
+
+#include <bits/stdc++.h>
 using namespace std;
-typedef pair<int, int> pii;
 
-int l, x, y, x_end, y_end;
-int dx[8] = {1, 2, 2, 1, -1, -2, -2, -1};
-int dy[8] = {2, 1, -1, -2, -2, -1, 1, 2};
-bool visited[300][300];
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
 
-void initialize() {
-    for (int i = 0; i < l; i++) {
-        for (int j = 0; j < l; j++) {
-            visited[i][j] = false;
-        }
-    }
-}
+struct Point{
+    int x, y;
+    Point(int x, int y) : x(x), y(y) {}
+};
 
-int bfs() {
-    int res = 0;
-    queue<pii> q;
-    visited[x][y] = true;
-    q.push(make_pair(x, y));
-    q.push(make_pair(-1, -1));
+int main() {
+    FASTIO;
 
-    while (true) {
-        pii now = q.front();
-        q.pop();
+    int dx[8] = { 1, 2, 2, 1, -1, -2, -2, -1 };
+    int dy[8] = { 2, 1, -1, -2, -2, -1, 1, 2 };
 
-        if (now.first == -1) {
-            res++;
-            q.push(make_pair(-1, -1));
+    int t;
+    cin >> t;
+
+    for (int ti = 0; ti < t; ti++) {
+        int l, x0, y0, x1, y1;
+        cin >> l >> x0 >> y0 >> x1 >> y1;
+
+        if (x0 == x1 && y0 == y1) {
+            cout << 0 << '\n';
             continue;
         }
 
-        if (now.first == x_end && now.second == y_end) {
-            return res;
-        }
+        vector<vector<bool> > visited(l, vector<bool>(l, false));
+        queue<Point> bfs_que;
+        int depth = 0;
 
-        for (int i = 0; i < 8; i++) {
-            int x_next = now.first + dx[i];
-            int y_next = now.second + dy[i];
+        visited[x0][y0] = true;
+        bfs_que.emplace(x0, y0);
 
-            if (x_next >= 0 && x_next < l && y_next >= 0 && y_next < l && !visited[x_next][y_next]) {
-                visited[x_next][y_next] = true;
-                q.push(make_pair(x_next, y_next));
+        while (true) {
+            depth++;
+            bool flag_find_ans = false;
+
+            for (int i = 0, ie = SIZE(bfs_que); i < ie; i++) {
+                Point cur = bfs_que.front();
+                bfs_que.pop();
+
+                for (int d = 0; d < 8; d++) {
+                    int nx = cur.x + dx[d];
+                    int ny = cur.y + dy[d];
+
+                    if (nx == x1 && ny == y1) {
+                        flag_find_ans = true;
+                        break;
+                    }
+
+                    if (nx < 0 || nx >= l || ny < 0 || ny >= l) continue;
+                    if (visited[nx][ny]) continue;
+
+                    visited[nx][ny] = true;
+                    bfs_que.emplace(nx, ny);
+                }
+
+                if (flag_find_ans) break;
             }
+
+            if (flag_find_ans) break;
         }
-    }
-}
 
-int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
-
-    int T;
-    cin >> T;
-
-    for (int t = 0; t < T; t++) {
-        cin >> l >> x >> y >> x_end >> y_end;
-
-        initialize();
-        cout << bfs() << '\n';
+        cout << depth << '\n';
     }
 
     return 0;

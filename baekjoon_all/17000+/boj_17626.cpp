@@ -1,5 +1,5 @@
 // Solve 2022-09-09
-// Update 2023-07-26
+// Update 2023-10-25
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -10,19 +10,20 @@ using namespace std;
 #define ALL(v) v.begin(),v.end()
 using ll = long long;
 
-int dp[50001];
-
 int main() {
     FASTIO;
+
+    int dp[50001];
 
     int n;
     cin >> n;
 
-    for (int i = 1; i <= n; i++) {
+    for (int i = 0; i <= n; i++) {
         dp[i] = i;
     }
 
     int k = 2, k2 = 4;
+
     while (k2 <= n) {
         for (int i = k2; i <= n; i++) {
             dp[i] = min(dp[i], dp[i - k2] + 1);

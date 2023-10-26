@@ -1,5 +1,5 @@
 // Solve 2022-12-07
-// Update 2023-10-12
+// Update 2023-10-25
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -34,7 +34,7 @@ int main() {
 
             if (board[row][col] == 1) {
                 ripe_cnt++;
-                que.push({ row, col });
+                que.emplace(row, col);
             }
             else if (board[row][col] == -1) {
                 empty_cnt++;
@@ -58,7 +58,7 @@ int main() {
                 if (board[nx][ny] == 0) {
                     board[nx][ny] = 1;
                     ripe_cnt++;
-                    que.push({ nx, ny });
+                    que.emplace(nx, ny);
                 }
             }
         }
