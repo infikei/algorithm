@@ -1,5 +1,5 @@
 // Solve 2023-01-02
-// Update 2023-10-08
+// Update 2023-10-26
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -24,7 +24,9 @@ int main() {
 
         e += 1.0 / fac;
 
-        if (i > 2) SETPRECISION(9);
+        if (i == 3) {
+            SETPRECISION(9);
+        }
 
         cout << i << ' ' << e << '\n';
     }
