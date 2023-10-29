@@ -1,9 +1,10 @@
 // Solve 2023-06-04
+// Update 2023-10-28
 
 #include <bits/stdc++.h>
 using namespace std;
 
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
 #define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
 #define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
@@ -24,6 +25,7 @@ int main() {
 
     ld low = (c - b) / a, high = (c + b) / a;
     int iter_cnt = 0, max_iter = 80;
+
     while (true) {
         ld mid = (low + high) * 0.5;
         ld fmid = f(mid);
@@ -44,13 +46,11 @@ int main() {
             break;
         }
 
-        iter_cnt++;
-        if (iter_cnt >= max_iter) {
-            break;
-        }
+        if (++iter_cnt >= max_iter) break;
     }
 
     SETPRECISION(16);
+
     cout << high << '\n';
 
     return 0;

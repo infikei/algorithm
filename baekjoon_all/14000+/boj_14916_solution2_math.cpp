@@ -1,4 +1,4 @@
-// Solve 2022-11-13
+// Solve 2022-07-26
 // Update 2023-10-28
 
 #include <bits/stdc++.h>
@@ -13,26 +13,24 @@ using ll = long long;
 int main() {
     FASTIO;
 
-    int c;
-    cin >> c;
+    int arr[15] = { 0, -1, 1, -1, 2, 1, 3, 2, 4, 3, 2, 4, 3, 5, 4 };
 
-    int cnt = 0;
+    int n, ans;
+    cin >> n;
 
-    while (true) {
-        cnt++;
-
-        if (c == 1) break;
-
-        if (c % 2 == 0) {
-            c /= 2;
+    if (n >= 15) {
+        if (n % 5 < 5) {
+            ans = arr[n % 5 + 10] + n / 5 - 2;
         }
         else {
-            c *= 3;
-            c += 1;
+            ans = arr[n % 5] + n / 5;
         }
     }
+    else {
+        ans = arr[n];
+    }
 
-    cout << cnt << '\n';
+    cout << ans << '\n';
 
     return 0;
 }

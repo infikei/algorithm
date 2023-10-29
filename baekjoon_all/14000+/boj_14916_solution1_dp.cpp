@@ -1,4 +1,4 @@
-// Solve 2022-11-01
+// Solve 2022-07-26
 // Update 2023-10-28
 
 #include <bits/stdc++.h>
@@ -13,10 +13,16 @@ using ll = long long;
 int main() {
     FASTIO;
 
-    int x;
-    cin >> x;
+    int dp[100001] = { 0, -1, 1, -1, 2, 1, 3, 2, 4 };
 
-    cout << "FA\n";
+    int n;
+    cin >> n;
+
+    for (int i = 9; i <= n; i++) {
+        dp[i] = min(dp[i - 2] + 1, dp[i - 5] + 1);
+    }
+
+    cout << dp[n] << '\n';
 
     return 0;
 }

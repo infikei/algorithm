@@ -1,5 +1,5 @@
 // Solve 2023-07-10
-// Update 2023-07-28
+// Update 2023-10-28
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -19,6 +19,7 @@ int main() {
     cin >> n;
 
     ll prev_a = 1, a = 2, s = 3;
+
     for (int i = 1; i < n; i++) {
         swap(prev_a, a);
         a += s << 1;
