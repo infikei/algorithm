@@ -1,27 +1,36 @@
-#include <iostream>
-#include <sstream>
-#include <string>
-#define fastio ios_base::sync_with_stdio(false);cout.tie(NULL);cin.tie(NULL); // boj_15552.cpp
+// Solve 2022-12-27
+// Update 2023-11-20
+
+#include <bits/stdc++.h>
 using namespace std;
 
-int N;
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
 
 int main() {
-    fastio;
+    FASTIO;
 
-    cin >> N;
+    int n;
+    cin >> n;
+    cin.ignore();
 
-    string input, output, word;
-    for (int i = 0; i < N; i++) {
-        getline(cin, input);
-        if (input == "") getline(cin, input);
+    for (int i = 0; i < n; i++) {
+        string handle;
+        getline(cin, handle);
 
-        stringstream ss(input);
+        stringstream ss(handle);
+        string word;
         getline(ss, word, ' ');
-        output = "god";
-        while (getline(ss, word, ' ')) output += word;
+        string result = "god";
 
-        cout << output << '\n';
+        while (getline(ss, word, ' ')) {
+            result += word;
+        }
+
+        cout << result << '\n';
     }
 
     return 0;
