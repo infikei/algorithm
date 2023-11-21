@@ -1,4 +1,5 @@
 // Solve 2023-09-07
+// Update 2023-11-21
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -15,29 +16,27 @@ int main() {
     int n, k;
     cin >> n >> k;
 
-    vector<ll> dist2;
+    vector<ll> dist2(n);
 
-    for (int i = 0; i < n; i++) {
-        int point_cnt;
-        cin >> point_cnt;
+    for (int ni = 0; ni < n; ni++) {
+        int points_cnt;
+        cin >> points_cnt;
 
         ll now_dist2 = 0;
 
-        for (int j = 0; j < point_cnt; j++) {
+        for (int i = 0; i < points_cnt; i++) {
             ll x, y;
             cin >> x >> y;
 
             now_dist2 = max(now_dist2, x * x + y * y);
         }
 
-        dist2.push_back(now_dist2);
+        dist2[ni] = now_dist2;
     }
 
     sort(dist2.begin(), dist2.end());
 
-    SETPRECISION(2);
-
-    cout << (double)dist2[k - 1] << '\n';
+    cout << dist2[k - 1] << ".00\n";
 
     return 0;
 }
