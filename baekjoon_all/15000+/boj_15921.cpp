@@ -1,15 +1,14 @@
 // Solve 2023-02-20
+// Update 2023-11-22
 
 #include <bits/stdc++.h>
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+using namespace std;
+
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
 #define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
-#define INF (int)1e9
-#define LLINF (ll)4e18
-using namespace std;
 using ll = long long;
-using uint = unsigned int;
-using ull = unsigned long long;
 
 int main() {
     FASTIO;
@@ -17,14 +16,16 @@ int main() {
     int n;
     cin >> n;
 
-    int practice_sum = 0;
+    int score_sum = 0;
+
     for (int i = 0; i < n; i++) {
-        int x;
-        cin >> x;
-        practice_sum += x;
+        int score;
+        cin >> score;
+
+        score_sum += score;
     }
 
-    if (practice_sum == 0) {
+    if (score_sum == 0) {
         cout << "divide by zero\n";
     }
     else {

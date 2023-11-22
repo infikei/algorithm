@@ -1,4 +1,5 @@
 // Solve 2023-07-25
+// Update 2023-11-22
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -10,10 +11,11 @@ using namespace std;
 using ll = long long;
 
 const int MOD = 1000000009;
-int dp[50001] = { 1, 2, 3 };
 
 int main() {
     FASTIO;
+
+    int dp[50001] = { 1, 2, 3 };
 
     for (int i = 3; i < 50001; i++) {
         dp[i] = ((dp[i - 3] + dp[i - 2]) % MOD + dp[i - 1]) % MOD;

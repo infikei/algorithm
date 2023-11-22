@@ -1,46 +1,56 @@
-#include <iostream>
-using namespace std;
-typedef long long ll;
+// Solve 2022-09-23
+// Update 2023-11-22
 
-ll N, K;
-bool first_check, ans;
-int arr_y[100001];
+#include <bits/stdc++.h>
+using namespace std;
+
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    cin >> N;
+    int n;
+    cin >> n;
 
-    for (int i = 1; i <= N; i++) {
-        cin >> arr_y[i];
+    int f[100001];
+
+    for (int x = 1; x <= n; x++) {
+        cin >> f[x];
     }
 
-    cin >> K;
+    ll k;
+    cin >> k;
 
-    if (arr_y[1] < K) {
-        first_check = true;
+    bool is_f1_below_k = false;
+
+    if (f[1] < k) {
+        is_f1_below_k = true;
     }
 
-    for (ll i = 1; i <= N; i++) {
-        if ((ll)arr_y[i] == K * i) {
-            ans = true;
+    bool intersects = false;
+
+    for (int x = 1; x <= n; x++) {
+        ll kx = k * x;
+
+        if (f[x] == kx) {
+            intersects = true;
             break;
         }
-        bool now_check = ((ll)arr_y[i] < K * i);
-        if (first_check != now_check) {
-            ans = true;
+
+        bool is_fx_below_kx = (f[x] < kx);
+
+        if (is_f1_below_k != is_fx_below_kx) {
+            intersects = true;
             break;
         }
     }
 
-    if (ans) {
-        cout << "T\n";
-    }
-    else {
-        cout << "F\n";
-    }
+    if (intersects) cout << "T\n";
+    else cout << "F\n";
 
     return 0;
 }
