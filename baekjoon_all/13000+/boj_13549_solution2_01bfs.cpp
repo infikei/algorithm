@@ -1,5 +1,5 @@
 // Solve 2023-01-06
-// Update 2023-02-11
+// Update 2023-11-23
 
 // 풀이 방법에 관한 글 : https://www.acmicpc.net/board/view/38887
 // 1. 다익스트라 알고리즘
@@ -10,69 +10,58 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#ifdef BOJ
-#define BOJTEST(x) ((void)0)
-#else
-#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
-#endif
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
 #define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
 #define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
 using ll = long long;
-using uint = unsigned int;
-using ull = unsigned long long;
 
 const int MAX_N = 100000;
-int n, k;
-int dist[MAX_N + 1];
-bool visited[MAX_N + 1];
-
-void solve() {
-    deque<int> dq;
-
-    dist[n] = 0;
-    visited[n] = true;
-    dq.push_back(n);
-
-    while (!dq.empty()) {
-        int now = dq.front();
-        int now_dist = dist[now];
-        dq.pop_front();
-
-        if (now == k) {
-            return;
-        }
-
-        int next = now * 2;
-        if (next <= MAX_N && !visited[next]) {
-            dist[next] = now_dist;
-            visited[next] = true;
-            dq.push_front(next);
-        }
-
-        next = now - 1;
-        if (next >= 0 && !visited[next]) {
-            dist[next] = now_dist + 1;
-            visited[next] = true;
-            dq.push_back(next);
-        }
-
-        next = now + 1;
-        if (next <= MAX_N && !visited[next]) {
-            dist[next] = now_dist + 1;
-            visited[next] = true;
-            dq.push_back(next);
-        }
-    }
-}
 
 int main() {
     FASTIO;
 
+    int n, k;
     cin >> n >> k;
 
-    solve();
+    vector<int> dist(MAX_N + 1, 0);
+    vector<bool> visited(MAX_N + 1, false);
+    deque<int> dque;
+
+    visited[n] = true;
+    dque.push_back(n);
+
+    while (!dque.empty()) {
+        int now = dque.front();
+        int now_dist = dist[now];
+        dque.pop_front();
+
+        if (now == k) break;
+
+        int next = now * 2;
+
+        if (next <= MAX_N && !visited[next]) {
+            dist[next] = now_dist;
+            visited[next] = true;
+            dque.push_front(next);
+        }
+
+        next = now - 1;
+
+        if (next >= 0 && !visited[next]) {
+            dist[next] = now_dist + 1;
+            visited[next] = true;
+            dque.push_back(next);
+        }
+
+        next = now + 1;
+
+        if (next <= MAX_N && !visited[next]) {
+            dist[next] = now_dist + 1;
+            visited[next] = true;
+            dque.push_back(next);
+        }
+    }
 
     cout << dist[k] << '\n';
 

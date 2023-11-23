@@ -1,69 +1,91 @@
-#include <iostream>
-#include <vector>
-#include <queue>
-#define fastio ios_base::sync_with_stdio(false);cout.tie(NULL);cin.tie(NULL); // boj_15552.cpp
+// Solve 2023-01-06
+// Update 2023-11-23
+
+#include <bits/stdc++.h>
 using namespace std;
+
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
 using pii = pair<int, int>;
 
-const int INF = 987654321, MAX_VERTEX = 800;
-int vertex, edge, v1, v2, route1, route2, ans;
-vector<pii> cost[MAX_VERTEX + 1];
-int dist[MAX_VERTEX + 1];
+const int INF = 1e8;
 
-void input() {
-    cin >> vertex >> edge;
-    int a, b, c;
-    for (int i = 0; i < edge; i++) {
-        cin >> a >> b >> c;
-        cost[a].push_back(make_pair(b, c));
-        cost[b].push_back(make_pair(a, c));
+int main() {
+    FASTIO;
+
+    int n, e;
+    cin >> n >> e;
+
+    vector<vector<pii> > edges(n + 1, vector<pii>());
+
+    for (int i = 0; i < e; i++) {
+        int from, to, dist;
+        cin >> from >> to >> dist;
+
+        edges[from].emplace_back(to, dist);
+        edges[to].emplace_back(from, dist);
     }
+
+    int v1, v2;
     cin >> v1 >> v2;
-}
 
-void dijkstra(int start) {
+    vector<int> dists(n + 1, INF);
     priority_queue<pii, vector<pii>, greater<pii> > pq_mintop;
-
-    for (int i = 1; i <= vertex; i++) {
-        dist[i] = INF;
-    }
-
-    dist[start] = 0;
-    pq_mintop.push(make_pair(0, start));
+    dists[v1] = 0;
+    pq_mintop.emplace(0, v1);
 
     while (!pq_mintop.empty()) {
         int now = pq_mintop.top().second;
-        int now_cost = pq_mintop.top().first;
+        int dist_to_now = pq_mintop.top().first;
         pq_mintop.pop();
 
-        int i_end = cost[now].size();
-        for (int i = 0; i < i_end; i++) {
-            int next = cost[now][i].first;
-            int next_cost = cost[now][i].second;
+        if (dists[now] < dist_to_now) continue;
 
-            if (dist[next] > now_cost + next_cost) {
-                dist[next] = now_cost + next_cost;
-                pq_mintop.push(make_pair(dist[next], next));
+        for (pii edge : edges[now]) {
+            int next = edge.first;
+            int dist_to_next = dist_to_now + edge.second;
+
+            if (dists[next] > dist_to_next) {
+                dists[next] = dist_to_next;
+                pq_mintop.emplace(dist_to_next, next);
             }
         }
     }
-}
 
-int main() {
-    fastio;
+    int route1 = dists[1] + dists[v2];
+    int route2 = dists[v2] + dists[n];
 
-    input();
+    dists.assign(n + 1, INF);
+    dists[v2] = 0;
+    pq_mintop.emplace(0, v2);
 
-    dijkstra(v1);
-    route1 = min(dist[v2] + dist[1], INF);
-    route2 = min(dist[v2] + dist[vertex], INF);
+    while (!pq_mintop.empty()) {
+        int now = pq_mintop.top().second;
+        int dist_to_now = pq_mintop.top().first;
+        pq_mintop.pop();
 
-    dijkstra(v2);
-    route1 = min(route1 + dist[vertex], INF);
-    route2 = min(route2 + dist[1], INF);
+        if (dists[now] < dist_to_now) continue;
 
-    ans = min(route1, route2);
-    if (ans == INF) cout << -1 << '\n';
+        for (pii edge : edges[now]) {
+            int next = edge.first;
+            int dist_to_next = dist_to_now + edge.second;
+
+            if (dists[next] > dist_to_next) {
+                dists[next] = dist_to_next;
+                pq_mintop.emplace(dist_to_next, next);
+            }
+        }
+    }
+
+    route1 += dists[n];
+    route2 += dists[1];
+
+    int ans = min(route1, route2);
+
+    if (ans >= INF) cout << -1 << '\n';
     else cout << ans << '\n';
 
     return 0;

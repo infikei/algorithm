@@ -1,65 +1,60 @@
-#include <iostream>
-#include <vector>
-#include <queue>
-#define fastio ios_base::sync_with_stdio(false);cout.tie(NULL);cin.tie(NULL); // boj_15552.cpp
+// Solve 2023-01-05
+// Update 2023-11-23
+
+#include <bits/stdc++.h>
 using namespace std;
+
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
 using pii = pair<int, int>;
 
-const int INF = 987654321, MAX_VERTEX = 20000;
-int vertex, edge, start_node;
-vector<pii> cost[MAX_VERTEX + 1];
-int dist[MAX_VERTEX + 1];
+const int INF = 1e9;
 
-void input() {
-    cin >> vertex >> edge >> start_node;
-    int u, v, w;
-    for (int i = 0; i < edge; i++) {
-        cin >> u >> v >> w;
-        cost[u].push_back(make_pair(v, w));
+int main() {
+    FASTIO;
+
+    int n, e, start;
+    cin >> n >> e >> start;
+
+    vector<vector<pii> > edges(n + 1, vector<pii>());
+
+    for (int i = 0; i < e; i++) {
+        int from, to, dist;
+        cin >> from >> to >> dist;
+
+        edges[from].emplace_back(to, dist);
     }
-}
 
-void dijkstra() {
+    vector<int> dists(n + 1, INF);
     priority_queue<pii, vector<pii>, greater<pii> > pq_mintop;
-
-    for (int i = 1; i <= vertex; i++) {
-        dist[i] = INF;
-    }
-
-    dist[start_node] = 0;
-    pq_mintop.push(make_pair(0, start_node));
+    dists[start] = 0;
+    pq_mintop.emplace(0, start);
 
     while (!pq_mintop.empty()) {
         int now = pq_mintop.top().second;
-        int now_cost = pq_mintop.top().first;
+        int dist_to_now = pq_mintop.top().first;
         pq_mintop.pop();
 
-        int i_end = cost[now].size();
-        for (int i = 0; i < i_end; i++) {
-            int next = cost[now][i].first;
-            int next_cost = cost[now][i].second;
+        if (dists[now] < dist_to_now) continue;
 
-            if (dist[next] > now_cost + next_cost) {
-                dist[next] = now_cost + next_cost;
-                pq_mintop.push(make_pair(dist[next], next));
+        for (pii edge : edges[now]) {
+            int next = edge.first;
+            int dist_to_next = dist_to_now + edge.second;
+
+            if (dists[next] > dist_to_next) {
+                dists[next] = dist_to_next;
+                pq_mintop.emplace(dist_to_next, next);
             }
         }
     }
-}
 
-void print() {
-    for (int i = 1; i <= vertex; i++) {
-        if (dist[i] == INF) cout << "INF\n";
-        else cout << dist[i] << '\n';
+    for (int i = 1; i <= n; i++) {
+        if (dists[i] == INF) cout << "INF\n";
+        else cout << dists[i] << '\n';
     }
-}
-
-int main() {
-    fastio;
-
-    input();
-    dijkstra();
-    print();
 
     return 0;
 }
