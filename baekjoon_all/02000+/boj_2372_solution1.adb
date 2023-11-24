@@ -1,6 +1,6 @@
 with Ada.Text_IO;
 
-procedure Boj_2372 is
+procedure Main is
 begin
     Ada.Text_IO.Put_Line("Animal      Count");
     Ada.Text_IO.Put_Line("-----------------");
@@ -9,4 +9,4 @@ begin
     Ada.Text_IO.Put_Line("Cows           40");
     Ada.Text_IO.Put_Line("Goats          22");
     Ada.Text_IO.Put_Line("Steers          2");
-end Boj_2372;
+end Main;

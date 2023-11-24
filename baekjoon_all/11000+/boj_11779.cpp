@@ -1,68 +1,77 @@
-#include <iostream>
-#include <vector>
-#include <queue>
-#define fastio ios_base::sync_with_stdio(false);cout.tie(NULL);cin.tie(NULL); // boj_15552.cpp
+// Solve 2023-01-23
+// Update 2023-11-24
+
+#include <bits/stdc++.h>
 using namespace std;
+
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
 using pii = pair<int, int>;
 
-const int INF = 987654321;
-int n, m, start, finish;
-vector<vector<pii> > edges;
-vector<int> cost_dp, route_dp, route;
+const int INF = 1e9;
 
-void dijkstra() {
+int main() {
+    FASTIO;
+
+    int n, m;
+    cin >> n >> m;
+
+    vector<vector<pii> > buses(n + 1, vector<pii>());
+
+    for (int i = 0; i < m; i++) {
+        int from, to, cost;
+        cin >> from >> to >> cost;
+
+        buses[from].emplace_back(to, cost);
+    }
+
+    int s, e;
+    cin >> s >> e;
+
+    vector<int> costs(n + 1, INF);
+    vector<int> previous_city(n + 1, -1);
     priority_queue<pii, vector<pii>, greater<pii> > pq_mintop;
-    cost_dp.assign(n + 1, INF);
-    cost_dp[start] = 0;
-    pq_mintop.push(make_pair(0, start));
-    route_dp.assign(n + 1, 0);
+    costs[s] = 0;
+    pq_mintop.emplace(0, s);
 
     while (!pq_mintop.empty()) {
-        int now_node = pq_mintop.top().second;
-        int now_cost = pq_mintop.top().first;
+        int now = pq_mintop.top().second;
+        int cost_to_now = pq_mintop.top().first;
         pq_mintop.pop();
-        if (now_cost > cost_dp[now_node]) continue;
 
-        int i_end = edges[now_node].size();
-        for (int i = 0; i < i_end; i++) {
-            int next_node = edges[now_node][i].first;
-            int next_cost = edges[now_node][i].second;
-            if (cost_dp[next_node] > now_cost + next_cost) {
-                cost_dp[next_node] = now_cost + next_cost;
-                pq_mintop.push(make_pair(cost_dp[next_node], next_node));
-                route_dp[next_node] = now_node;
+        if (now == e) break;
+        if (costs[now] < cost_to_now) continue;
+
+        for (pii bus : buses[now]) {
+            int next = bus.first;
+            int cost_to_next = cost_to_now + bus.second;
+
+            if (costs[next] > cost_to_next) {
+                costs[next] = cost_to_next;
+                previous_city[next] = now;
+                pq_mintop.emplace(cost_to_next, next);
             }
         }
     }
-}
 
-void find_route() {
-    int now = finish;
-    route.push_back(now);
-    while (now != start) {
-        now = route_dp[now];
-        route.push_back(now);
+    vector<int> route;
+    int pos = e;
+
+    while (pos != -1) {
+        route.push_back(pos);
+        pos = previous_city[pos];
     }
-}
 
-int main() {
-    fastio;
+    cout << costs[e] << '\n';
+    cout << SIZE(route) << '\n';
 
-    cin >> n >> m;
-    edges.assign(n + 1, vector<pii>(0));
-    for (int i = 0; i < m; i++) {
-        int u, v, c;
-        cin >> u >> v >> c;
-        edges[u].push_back(make_pair(v, c));
+    for (auto it = route.rbegin(); it != route.rend(); it++) {
+        cout << *it << ' ';
     }
-    cin >> start >> finish;
 
-    dijkstra();
-    find_route();
-
-    cout << cost_dp[finish] << '\n';
-    cout << route.size() << '\n';
-    for (int i = route.size() - 1; i >= 0; i--) cout << route[i] << ' ';
     cout << '\n';
 
     return 0;
