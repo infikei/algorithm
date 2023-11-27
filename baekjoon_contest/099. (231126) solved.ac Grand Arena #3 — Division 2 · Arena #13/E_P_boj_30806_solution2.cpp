@@ -1,4 +1,5 @@
 // Solve 2023-11-26
+// Update 2023-11-27
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -11,7 +12,7 @@ using ll = long long;
 
 const int MOD = 998'244'353;
 
-ll calc_power(ll a, ll b) {
+int calc_power(ll a, int b) {
     ll res = 1;
 
     while (b > 0) {
@@ -80,14 +81,14 @@ int main() {
         cnt_cnt[it->second]++;
     }
 
-    Comb comb(1'000'000);
+    Comb comb(n);
     vector<int> ans(n + 1, 0);
 
     for (auto it = cnt_cnt.begin(); it != cnt_cnt.end(); it++) {
         int now_cnt = it->first;
 
         for (int k = 1; k <= now_cnt; k++) {
-            ans[k] = (ans[k] + (ll)comb.c(now_cnt, k) * it->second % MOD) % MOD;;
+            ans[k] = (ans[k] + (ll)comb.c(now_cnt, k) * it->second % MOD) % MOD;
         }
     }
 

@@ -1,4 +1,5 @@
 // Solve 2023-11-26
+// Update 2023-11-27
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -9,9 +10,9 @@ using namespace std;
 #define ALL(v) v.begin(),v.end()
 using ll = long long;
 
-const int MOD = 998244353;
+const int MOD = 998'244'353;
 
-ll calc_power(ll a, ll b) {
+int calc_power(ll a, int b) {
     ll res = 1;
 
     while (b > 0) {
@@ -26,6 +27,10 @@ ll calc_power(ll a, ll b) {
     }
 
     return res;
+}
+
+int calc_modinv(int a) {
+    return calc_power(a, MOD - 2);
 }
 
 int main() {
@@ -61,10 +66,8 @@ int main() {
         ll comb = 1;
 
         for (int k = 1; k <= now_cnt; k++) {
-            comb = comb * (now_cnt + 1 - k) % MOD;
-            comb = comb * calc_power(k, MOD - 2) % MOD;
-            ans[k] += comb * it->second % MOD;
-            ans[k] %= MOD;
+            comb = comb * (now_cnt + 1 - k) % MOD * calc_modinv(k) % MOD;
+            ans[k] = (ans[k] + comb * it->second % MOD) % MOD;
         }
     }
 
