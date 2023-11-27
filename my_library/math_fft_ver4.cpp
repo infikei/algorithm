@@ -23,7 +23,6 @@ void fft(vector<cpx> &a, bool inv = false) {
     for (int k = 1; k < n; k <<= 1) {
         double theta = (inv ? -PI / k : PI / k);
         cpx w(cos(theta), sin(theta));
-
         int k2 = k << 1;
 
         for (int i = 0; i < n; i += k2) {
