@@ -1,74 +1,93 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
 #define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
 #define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
 using ll = long long;
-using uint = unsigned int;
-using ull = unsigned long long;
-using pii = pair<int, int>;
-using pi3 = pair<int, pii>;
 
-const int INF = 1e9;
-const ll LLINF = 4e18;
-int vertex, edge;
-vector<pi3> edges;
-vector<int> dists;
+const ll INF = 1e9; // (정점의 개수 * 간선의 개수 * 간선의 가중치의 최댓값) 보다 크게 설정
 
-bool bellman_ford(int s) {
-    dists.assign(vertex + 1, INF);
-    dists[s] = 0;
+struct Edge{
+    int from, to, cost;
 
-    // 최단거리를 (n - 1)번 반복하여 갱신
-    for (int iter = 1; iter < vertex; iter++) {
-        for (auto now_edge : edges) {
-            int from = now_edge.first;
-            if (dists[from] == INF) continue;
-            int to = now_edge.second.first;
-            if (dists[to] > dists[from] + now_edge.second.second) {
-                dists[to] = dists[from] + now_edge.second.second;
-            }
-        }
-    }
-
-    // 음의 사이클이 있는지 확인하고 있으면 false 반환
-    for (auto now_edge : edges) {
-        int from = now_edge.first;
-        if (dists[from] == INF) continue;
-        int to = now_edge.second.first;
-        if (dists[to] > dists[from] + now_edge.second.second) {
-            return false;
-        }
-    }
-
-    return true;
-}
+    Edge(int from, int to, int cost) : from(from), to(to), cost(cost) {}
+};
 
 int main() {
     FASTIO;
 
-    int start;
-    cin >> vertex >> edge >> start;
+    int n; // 정점의 개수 (각 정점은 0 이상 n - 1 이하의 값을 가진다)
+    int m; // 간선의 개수
+    int start; // 시작 정점의 번호
+    cin >> n >> m >> start;
 
-    for (int i = 0; i < edge; i++) {
-        int from, to, dist;
-        cin >> from >> to >> dist;
-        edges.push_back({ from, { to, dist } });
-        edges.push_back({ to, { from, dist } }); // 양방향일 경우
+    // 간선 입력
+
+    vector<Edge> edges;
+
+    for (int i = 0; i < m; i++) {
+        int edge_from, edge_to, edge_cost;
+        cin >> edge_from >> edge_to >> edge_cost;
+
+        edges.emplace_back(edge_from, edge_to, edge_cost);
+        edges.emplace_back(edge_to, edge_from, edge_cost); // 간선이 양방향일 경우
     }
 
-    bool completed = bellman_ford(start);
-    if (completed) {
-        cout << "음의 사이클이 없으므로 dists에 결과가 저장됨.\n";
-        for (int i = 1; i <= vertex; i++) {
-            cout << dists[i] << ' ';
+    // 벨만-포드 알고리즘
+    // 모든 간선에 대해 거리값을 업데이트하는 작업을 (정점의 개수 - 1) 회 반복
+
+    vector<ll> cost(n, INF); // 모든 정점의 거리 값을 무한으로 설정
+    cost[start] = 0; // 시작 정점의 거리 값을 0으로 설정
+    int iter = n - 1; // 반복할 횟수는 (정점의 개수 - 1) 로 설정
+
+    // (정점의 개수 - 1) 회 반복
+    while (iter > 0) {
+        iter--;
+
+        // 모든 간선에 대해 거리값 업데이트
+        for (Edge edge : edges) {
+            // 간선의 출발 정점을 아직 방문하지 않은 경우 skip
+            if (cost[edge.from] == INF) continue;
+
+            ll cost_update = cost[edge.from] + edge.cost;
+
+            if (cost[edge.to] > cost_update) {
+                cost[edge.to] = cost_update;
+            }
         }
-        cout << '\n';
+    }
+
+    // 그래프에 음의 사이클이 존재하는지 확인
+
+    bool flag_has_negative_cycle = false;
+
+    // 모든 간선에 대해 검사
+    for (Edge edge : edges) {
+        // 간선의 출발 정점을 아직 방문하지 않은 경우 skip
+        if (cost[edge.from] == INF) continue;
+
+        ll cost_update = cost[edge.from] + edge.cost;
+
+        // 여전히 거리 값이 줄어드는 정점이 존재한다면 그래프에 음의 사이클이 존재함
+        if (cost[edge.to] > cost_update) {
+            flag_has_negative_cycle = true;
+            break;
+        }
+    }
+
+    // 결과 출력
+
+    if (flag_has_negative_cycle) {
+        cout << "음의 사이클이 존재한다.\n";
     }
     else {
-        cout << "음의 사이클이 있음.\n";
+        cout << "음의 사이클이 존재하지 않는다.\n";
+
+        for (int u = 0; u < n; u++) {
+            cout << u << " : " << cost[u] << '\n';
+        }
     }
 
     return 0;
