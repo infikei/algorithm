@@ -13,7 +13,12 @@ using namespace std;
 #define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
 using ll = long long;
-using pii = pair<int, int>;
+
+struct Edge{
+    int from, to, cost;
+
+    Edge(int from, int to, int cost) : from(from), to(to), cost(cost) {}
+};
 
 int main() {
     FASTIO;
@@ -25,21 +30,21 @@ int main() {
         int n, m, w;
         cin >> n >> m >> w;
 
-        vector<vector<pii>> edges(n + 1, vector<pii>());
+        vector<Edge> edges;
 
         for (int i = 0; i < m; i++) {
             int edge_from, edge_to, edge_cost;
             cin >> edge_from >> edge_to >> edge_cost;
 
-            edges[edge_from].emplace_back(edge_to, edge_cost);
-            edges[edge_to].emplace_back(edge_from, edge_cost);
+            edges.emplace_back(edge_from, edge_to, edge_cost);
+            edges.emplace_back(edge_to, edge_from, edge_cost);
         }
 
         for (int i = 0; i < w; i++) {
             int edge_from, edge_to, edge_cost;
             cin >> edge_from >> edge_to >> edge_cost;
 
-            edges[edge_from].emplace_back(edge_to, -edge_cost);
+            edges.emplace_back(edge_from, edge_to, -edge_cost);
         }
 
         vector<ll> cost(n + 1, 0);
@@ -48,32 +53,18 @@ int main() {
         while (iter > 0) {
             iter--;
 
-            for (int u = 1; u <= n; u++) {
-                for (pii edge : edges[u]) {
-                    int nu = edge.first;
-                    ll cost_to_nu = cost[u] + edge.second;
-
-                    if (cost[nu] > cost_to_nu) {
-                        cost[nu] = cost_to_nu;
-                    }
-                }
+            for (Edge edge : edges) {
+                cost[edge.to] = min(cost[edge.to], cost[edge.from] + edge.cost);
             }
         }
 
         bool flag_has_negative_cycle = false;
 
-        for (int u = 1; u <= n; u++) {
-            for (pii edge : edges[u]) {
-                int nu = edge.first;
-                ll cost_to_nu = cost[u] + edge.second;
-
-                if (cost[nu] > cost_to_nu) {
-                    flag_has_negative_cycle = true;
-                    break;
-                }
+        for (Edge edge : edges) {
+            if (cost[edge.to] > cost[edge.from] + edge.cost) {
+                flag_has_negative_cycle = true;
+                break;
             }
-
-            if (flag_has_negative_cycle) break;
         }
 
         if (flag_has_negative_cycle) cout << "YES\n";

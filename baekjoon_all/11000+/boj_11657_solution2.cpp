@@ -9,9 +9,14 @@ using namespace std;
 #define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
 using ll = long long;
-using pii = pair<int, int>;
 
 const int INF = 1e9;
+
+struct Edge{
+    int from, to, cost;
+
+    Edge(int from, int to, int cost) : from(from), to(to), cost(cost) {};
+};
 
 int main() {
     FASTIO;
@@ -19,13 +24,13 @@ int main() {
     int n, m;
     cin >> n >> m;
 
-    vector<vector<pii>> edges(n + 1, vector<pii>());
+    vector<Edge> edges;
 
     for (int i = 0; i < m; i++) {
         int edge_from, edge_to, edge_cost;
         cin >> edge_from >> edge_to >> edge_cost;
 
-        edges[edge_from].emplace_back(edge_to, edge_cost);
+        edges.emplace_back(edge_from, edge_to, edge_cost);
     }
 
     vector<ll> dist(n + 1, INF);
@@ -35,36 +40,22 @@ int main() {
     while (iter > 0) {
         iter--;
 
-        for (int u = 1; u <= n; u++) {
-            if (dist[u] == INF) continue;
+        for (Edge edge : edges) {
+            if (dist[edge.from] == INF) continue;
 
-            for (pii edge : edges[u]) {
-                int nu = edge.first;
-                ll dist_to_nu = dist[u] + edge.second;
-
-                if (dist[nu] > dist_to_nu) {
-                    dist[nu] = dist_to_nu;
-                }
-            }
+            dist[edge.to] = min(dist[edge.to], dist[edge.from] + edge.cost);
         }
     }
 
     bool flag_has_negative_cycle = false;
 
-    for (int u = 1; u <= n; u++) {
-        if (dist[u] == INF) continue;
+    for (Edge edge : edges) {
+        if (dist[edge.from] == INF) continue;
 
-        for (pii edge : edges[u]) {
-            int nu = edge.first;
-            ll dist_to_nu = dist[u] + edge.second;
-
-            if (dist[nu] > dist_to_nu) {
-                flag_has_negative_cycle = true;
-                break;
-            }
+        if (dist[edge.to] > dist[edge.from] + edge.cost) {
+            flag_has_negative_cycle = true;
+            break;
         }
-
-        if (flag_has_negative_cycle) break;
     }
 
     if (flag_has_negative_cycle) {
