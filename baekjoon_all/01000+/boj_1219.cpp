@@ -1,4 +1,5 @@
 // Solve 2023-11-28
+// Update 2023-11-30
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -54,10 +55,10 @@ int main() {
         }
     }
 
-    if (money[d] == -INF) {
-        cout << "gg\n";
-    }
-    else {
+    // 양의 사이클이 존재하고 양의 사이클에서 정점 d로 이동하는 경로가 존재하는지 여부
+    bool flag_has_positive_cycle = false;
+
+    if (money[d] != -INF) {
         queue<int> bfs_que;
         vector<bool> visited(n, false);
 
@@ -94,11 +95,18 @@ int main() {
         }
 
         if (visited[d]) {
-            cout << "Gee\n";
+            flag_has_positive_cycle = true;
         }
-        else {
-            cout << money[d] << '\n';
-        }
+    }
+
+    if (money[d] == -INF) {
+        cout << "gg\n";
+    }
+    else if (flag_has_positive_cycle) {
+        cout << "Gee\n";
+    }
+    else {
+        cout << money[d] << '\n';
     }
 
     return 0;
