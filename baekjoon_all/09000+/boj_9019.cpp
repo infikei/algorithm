@@ -1,23 +1,14 @@
 // Solve 2023-02-11
+// Update 2023-12-11
 
 #include <bits/stdc++.h>
 using namespace std;
 
-#ifdef BOJ
-#define BOJTEST(x) ((void)0)
-#else
-#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
-#endif
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
 #define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
-#define INF (int)1e9
-#define LLINF (ll)4e18
 using ll = long long;
-using uint = unsigned int;
-using ull = unsigned long long;
-
-int a, b, parent[10000];
 
 int d(int x) { return (x * 2) % 10000; }
 
@@ -27,70 +18,57 @@ int l(int x) { return x % 1000 * 10 + x / 1000; }
 
 int r(int x) { return x % 10 * 1000 + x / 10; }
 
-void bfs() {
-    for (int i = 0; i < 10000; i++) {
-        parent[i] = -1;
-    }
+int dslr(int x, int type) {
+    if (type == 0) return d(x);
+    if (type == 1) return s(x);
+    if (type == 2) return l(x);
+    return r(x);
+}
 
-    queue<int> q;
-    q.push(a);
+void bfs(int a, int b, vector<int> &parent) {
+    queue<int> bfs_que;
+    bfs_que.push(a);
     parent[a] = a;
 
-    while (!q.empty()) {
-        int i_end = SIZE(q);
-        for (int i = 0; i < i_end; i++) {
-            int now = q.front();
-            q.pop();
+    while (!bfs_que.empty()) {
+        for (int i = 0, ie = SIZE(bfs_que); i < ie; i++) {
+            int now = bfs_que.front();
+            bfs_que.pop();
 
-            int next;
+            for (int type = 0; type < 4; type++) {
+                int next = dslr(now, type);
 
-            next = d(now);
-            if (parent[next] == -1) {
-                parent[next] = now;
-                if (next == b) return;
-                q.push(next);
-            }
+                if (next == b) {
+                    parent[next] = now;
+                    return;
+                }
 
-            next = s(now);
-            if (parent[next] == -1) {
-                parent[next] = now;
-                if (next == b) return;
-                q.push(next);
-            }
-
-            next = l(now);
-            if (parent[next] == -1) {
-                parent[next] = now;
-                if (next == b) return;
-                q.push(next);
-            }
-
-            next = r(now);
-            if (parent[next] == -1) {
-                parent[next] = now;
-                if (next == b) return;
-                q.push(next);
+                if (parent[next] == -1) {
+                    parent[next] = now;
+                    bfs_que.push(next);
+                }
             }
         }
     }
 }
 
-void find_path() {
-    string ans;
-
+void find_path(int a, int b, vector<int> &parent, string &path) {
     int cur = b;
+
     while (cur != a) {
         int prev = parent[cur];
         char ch;
-        if (d(prev) == cur) { ch = 'D'; }
-        else if (s(prev) == cur) { ch = 'S'; }
-        else if (l(prev) == cur) { ch = 'L'; }
-        else { ch = 'R'; }
-        ans = ch + ans;
+
+        if (d(prev) == cur) ch = 'D';
+        else if (s(prev) == cur) ch = 'S';
+        else if (l(prev) == cur) ch = 'L';
+        else ch = 'R';
+
+        path.push_back(ch);
         cur = prev;
     }
 
-    cout << ans << '\n';
+    reverse(path.begin(), path.end());
 }
 
 int main() {
@@ -100,11 +78,15 @@ int main() {
     cin >> t;
 
     for (int ti = 0; ti < t; ti++) {
+        int a, b;
         cin >> a >> b;
 
-        bfs();
+        vector<int> parent(10000, -1);
+        string path;
+        bfs(a, b, parent);
+        find_path(a, b, parent, path);
 
-        find_path();
+        cout << path << '\n';
     }
 
     return 0;

@@ -1,5 +1,5 @@
 // Solve 2022-08-03
-// Update 2023-07-26
+// Update 2023-12-11
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -18,7 +18,8 @@ int main() {
     string s, s2;
     cin >> s >> s2;
 
-    int len_s = SIZE(s), len_s2 = SIZE(s2);
+    int len_s = SIZE(s);
+    int len_s2 = SIZE(s2);
 
     for (int i = 1; i <= len_s; i++) {
         for (int j = 1; j <= len_s2; j++) {

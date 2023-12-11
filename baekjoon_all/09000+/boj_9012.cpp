@@ -1,5 +1,5 @@
 // Solve 2022-06-05
-// Update 2023-07-01
+// Update 2023-12-11
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -19,6 +19,7 @@ int main() {
     for (int ti = 0; ti < t; ti++) {
         string parentheses;
         cin >> parentheses;
+
         int vps = 0;
 
         for (char par : parentheses) {
@@ -26,15 +27,11 @@ int main() {
                 vps++;
             }
             else {
-                vps--;
-                if (vps < 0) break;
+                if (--vps < 0) break;
             }
         }
 
-        if (vps == 0)
-            cout << "YES\n";
-        else
-            cout << "NO\n";
+        cout << (vps == 0 ? "YES" : "NO") << '\n';
     }
 
     return 0;

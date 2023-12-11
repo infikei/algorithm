@@ -1,4 +1,5 @@
 // Solve 2023-08-22
+// Update 2023-12-11
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -16,26 +17,22 @@ int main() {
     cin >> t;
 
     for (int ti = 1; ti <= t; ti++) {
-        int n, a;
+        int n;
         cin >> n;
-
-        vector<int> vec;
-
-        for (int i = n; i >= 0; i--) {
-            cin >> a;
-
-            vec.push_back(a * i);
-        }
-
-        vec.pop_back();
 
         cout << "Case " << ti << ": " << n - 1 << ' ';
 
-        for (const int &num : vec) {
-            cout << num << ' ';
+        for (int i = n; i > 0; i--) {
+            int a;
+            cin >> a;
+
+            cout << a * i << ' ';
         }
 
         cout << '\n';
+
+        int a;
+        cin >> a;
     }
 
     return 0;

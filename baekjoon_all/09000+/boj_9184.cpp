@@ -1,36 +1,52 @@
-#include <iostream>
+// Solve 2022-06-03
+// Update 2023-12-11
+
+#include <bits/stdc++.h>
 using namespace std;
 
-int DP[21][21][21];
-
-int w(int a, int b, int c) {
-    if (a <= 0 || b <= 0 || c <= 0)
-        return 1;
-    if (a > 20 || b > 20 || c > 20)
-        return w(20, 20, 20);
-    if (DP[a][b][c] != 0) // 이미 DP에 저장된 값이라면 바로 반환한다.
-        return DP[a][b][c];
-
-    // 그렇지 않다면 계산해서 DP에 저장하고 그 값을 반환한다.
-    if (a < b && b < c)
-        DP[a][b][c] = w(a, b, c - 1) + w(a, b - 1, c - 1) - w(a, b - 1, c);
-    else
-        DP[a][b][c] = w(a - 1, b, c) + w(a - 1, b - 1, c) + w(a - 1, b, c - 1) - w(a - 1, b - 1, c - 1);
-    return DP[a][b][c];
-}
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    int a, b, c;
+    vector<vector<vector<int>>> dp(21, vector<vector<int>>(21, vector<int>(21, 1)));
+
+    for (int a = 1; a < 21; a++) {
+        for (int b = 1; b < 21; b++) {
+            for (int c = 1; c < 21; c++) {
+                if (a < b && b < c) {
+                    dp[a][b][c] = dp[a][b][c - 1] + dp[a][b - 1][c - 1] - dp[a][b - 1][c];
+                }
+                else {
+                    dp[a][b][c] = dp[a - 1][b][c] + dp[a - 1][b - 1][c] + dp[a - 1][b][c - 1] - dp[a - 1][b - 1][c - 1];
+                }
+            }
+        }
+    }
 
     while (true) {
+        int a, b, c;
         cin >> a >> b >> c;
-        if (a == -1 && b == -1 && c == -1)
-            break;
-        cout << "w(" << a << ", " << b << ", " << c << ") = " << w(a, b, c) << '\n';
+
+        if (a == -1 && b == -1 && c == -1) break;
+
+        int ans;
+
+        if (a <= 0 || b <= 0 || c <= 0) {
+            ans = 1;
+        }
+        else if (a > 20 || b > 20 || c > 20) {
+            ans = dp[20][20][20];
+        }
+        else {
+            ans = dp[a][b][c];
+        }
+
+        cout << "w(" << a << ", " << b << ", " << c << ") = " << ans << '\n';
     }
 
     return 0;

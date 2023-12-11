@@ -1,15 +1,14 @@
 # Solve 2022-05-28
-# Update 2023-03-23
+# Update 2023-12-11
 
 import sys
 
 input = lambda : sys.stdin.readline().rstrip()
 
-t = int(input())
-
-for _ in range(t):
+for _ in range(int(input())):
     parentheses = input()
     vps = 0
+
     for par in parentheses:
         if par == "(":
             vps += 1
