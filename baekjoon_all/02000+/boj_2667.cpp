@@ -1,72 +1,75 @@
-#include <iostream>
-#include <string>
-#include <vector>
-#include <algorithm>
+// Solve 2022-09-27
+// Update 2023-12-12
+
+#include <bits/stdc++.h>
 using namespace std;
 
-int N, cnt;
-string graph[25];
-bool visited[25][25];
-vector<int> ans;
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
 
-void input() {
-    cin >> N;
-
-    for (int row = 0; row < N; row++) {
-        cin >> graph[row];
-    }
-}
-
-int dfs(int r, int c) {
-    int res = 1;
-    visited[r][c] = true;
-
-    if (r > 0 && !visited[r - 1][c] && graph[r - 1][c] == '1') {
-        res += dfs(r - 1, c);
-    }
-    if (r < (N - 1) && !visited[r + 1][c] && graph[r + 1][c] == '1') {
-        res += dfs(r + 1, c);
-    }
-    if (c > 0 && !visited[r][c - 1] && graph[r][c - 1] == '1') {
-        res += dfs(r, c - 1);
-    }
-    if (c < (N - 1) && !visited[r][c + 1] && graph[r][c + 1] == '1') {
-        res += dfs(r, c + 1);
-    }
-
-    return res;
-}
-
-void solve() {
-    for (int row = 0; row < N; row++) {
-        for (int col = 0; col < N; col++) {
-            if (graph[row][col] == '1' && !visited[row][col]) {
-                cnt++;
-                ans.push_back(dfs(row, col));
-            }
-        }
-    }
-}
-
-void print() {
-    cout << cnt << '\n';
-
-    sort(ans.begin(), ans.end());
-    for (auto a : ans) {
-        cout << a << '\n';
-    }
-}
+struct Point{
+    int x, y;
+    Point(int x, int y) : x(x), y(y) {}
+};
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    input();
+    int dx[4] = { 0, 0, -1, 1 };
+    int dy[4] = { -1, 1, 0, 0 };
 
-    solve();
+    int n;
+    cin >> n;
 
-    print();
+    vector<string> board(n, "");
+
+    for (string &row : board) {
+        cin >> row;
+    }
+
+    vector<vector<bool>> visited(n, vector<bool>(n, false));
+    vector<int> ans_vec;
+
+    for (int x = 0; x < n; x++) {
+        for (int y = 0; y < n; y++) {
+            if (board[x][y] != '1' || visited[x][y]) continue;
+
+            visited[x][y] = true;
+            queue<Point> bfs_que;
+            bfs_que.emplace(x, y);
+            int val = 1;
+
+            while (!bfs_que.empty()) {
+                Point now = bfs_que.front();
+                bfs_que.pop();
+
+                for (int d = 0; d < 4; d++) {
+                    int nx = now.x + dx[d];
+                    int ny = now.y + dy[d];
+
+                    if (nx < 0 || nx >= n || ny < 0 || ny >= n) continue;
+                    if (board[nx][ny] != '1' || visited[nx][ny]) continue;
+
+                    visited[nx][ny] = true;
+                    bfs_que.emplace(nx, ny);
+                    val++;
+                }
+            }
+
+            ans_vec.push_back(val);
+        }
+    }
+
+    sort(ans_vec.begin(), ans_vec.end());
+
+    cout << SIZE(ans_vec) << '\n';
+
+    for (int ans : ans_vec) {
+        cout << ans << '\n';
+    }
 
     return 0;
 }

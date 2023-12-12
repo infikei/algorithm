@@ -1,73 +1,80 @@
 // Solve 2023-02-14
+// Update 2023-12-12
 
 #include <bits/stdc++.h>
 using namespace std;
 
-#ifdef BOJ
-#define BOJTEST(x) ((void)0)
-#else
-#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
-#endif
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
 #define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
-#define INF (int)1e9
-#define LLINF (ll)4e18
 using ll = long long;
-using uint = unsigned int;
-using ull = unsigned long long;
 
-const int MAX_N = 200;
-int n, m, parent[MAX_N + 1];
-bool ans;
-
-int get_parent(int k) {
-    if (parent[k] == k) {
-        return k;
+int get_parent(int u, vector<int> &parent) {
+    if (parent[u] < 0) {
+        return u;
     }
 
-    parent[k] = get_parent(parent[k]);
-    return parent[k];
+    return parent[u] = get_parent(parent[u], parent);
+}
+
+void union_parents(int u, int v, vector<int> &parent) {
+    int pu = get_parent(u, parent);
+    int pv = get_parent(v, parent);
+
+    if (pu != pv) {
+        if (parent[pu] <= parent[pv]) {
+            parent[pu] += parent[pv];
+            parent[pv] = pu;
+        }
+        else {
+            parent[pv] += parent[pu];
+            parent[pu] = pv;
+        }
+    }
 }
 
 int main() {
     FASTIO;
 
+    int n, m;
     cin >> n >> m;
 
-    for (int i = 1; i <= n; i++) {
-        parent[i] = i;
-    }
+    vector<int> parent(n + 1, -1);
 
-    for (int from = 1; from <= n; from++) {
-        for (int to = 1; to <= n; to++) {
+    for (int u = 1; u <= n; u++) {
+        for (int v = 1; v <= n; v++) {
             int x;
             cin >> x;
+
             if (x == 1) {
-                parent[get_parent(to)] = get_parent(from);
+                union_parents(u, v, parent);
             }
         }
     }
 
-    ans = true;
-    int t0;
-    cin >> t0;
-    int pt0 = get_parent(t0);
+    int u;
+    cin >> u;
+
+    int pu = get_parent(u, parent);
+    bool ans = true;
+
     for (int i = 1; i < m; i++) {
-        int t;
-        cin >> t;
-        if (get_parent(t) != pt0) {
+        int v;
+        cin >> v;
+
+        int pv = get_parent(v, parent);
+
+        if (pu != pv) {
             ans = false;
-            // 남은 입력 모두 받아주고 break하기
-            for (i++; i < m; i++) {
-                cin >> t;
+
+            while (++i < m) {
+                cin >> v;
             }
-            break;
         }
     }
 
-    if (ans) cout << "YES\n";
-    else cout << "NO\n";
+    cout << (ans ? "YES" : "NO") << '\n';
 
     return 0;
 }
