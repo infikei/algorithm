@@ -1,5 +1,5 @@
 // Solve 2022-09-09
-// Update 2023-07-25
+// Update 2023-12-13
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -10,10 +10,10 @@ using namespace std;
 #define ALL(v) v.begin(),v.end()
 using ll = long long;
 
-int dp[2][100000];
-
 int main() {
     FASTIO;
+
+    int dp[2][100000];
 
     int t;
     cin >> t;

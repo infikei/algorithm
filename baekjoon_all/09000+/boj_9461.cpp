@@ -1,5 +1,5 @@
 // Solve 2022-06-03
-// Update 2023-07-22
+// Update 2023-12-13
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -10,10 +10,10 @@ using namespace std;
 #define ALL(v) v.begin(),v.end()
 using ll = long long;
 
-ll dp[101] = { 0, 1, 1, 1, 2, 2 };
-
 int main() {
     FASTIO;
+
+    ll dp[101] = { 0, 1, 1, 1, 2, 2 };
 
     for (int i = 6; i <= 100; i++) {
         dp[i] = dp[i - 5] + dp[i - 1];
@@ -25,6 +25,7 @@ int main() {
     for (int ti = 0; ti < t; ti++) {
         int n;
         cin >> n;
+
         cout << dp[n] << '\n';
     }
 

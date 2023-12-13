@@ -1,5 +1,5 @@
 // Solve 2022-11-06
-// Update 2023-08-27
+// Update 2023-12-13
 
 // 백준 같은 문제 : 9506번 = 10181번
 
@@ -36,7 +36,9 @@ int main() {
                 que.push(i);
 
                 int j = n / i;
+
                 if (i == j) break;
+
                 sum += j;
                 stck.push(j);
             }

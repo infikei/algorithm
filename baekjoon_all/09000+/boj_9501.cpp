@@ -1,4 +1,5 @@
 // Solve 2023-07-16
+// Update 2023-12-13
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -20,6 +21,7 @@ int main() {
         cin >> n >> d;
 
         int ans = 0;
+
         for (int i = 0; i < n; i++) {
             int vi, fi, ci;
             cin >> vi >> fi >> ci;

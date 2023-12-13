@@ -1,5 +1,5 @@
 // Solve 2023-09-05
-// Update 2023-09-11
+// Update 2023-12-13
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -16,10 +16,10 @@ int main() {
     while (true) {
         ll m, a, b;
         cin >> m >> a >> b;
+
         if (m == 0) break;
 
         ll ans = round((double)(3600 * m * (b - a)) / (a * b));
-
         ll ans_hour = ans / 3600;
         ll ans_min = ans / 60 % 60;
         ll ans_sec = ans % 60;
