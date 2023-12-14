@@ -1,8 +1,6 @@
 # Solve 2022-06-01
-# Update 2023-10-17
+# Update 2023-12-14
 
 ans = [0, 1, 0, 0, 2, 10, 4, 40, 92, 352, 724, 2680, 14200, 73712, 365596]
 
-n = int(input())
-
-print(ans[n])
+print(ans[int(input())])

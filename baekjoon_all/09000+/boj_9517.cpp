@@ -1,34 +1,45 @@
-#include <iostream>
+// Solve 2022-11-22
+// Update 2023-12-14
+
+#include <bits/stdc++.h>
 using namespace std;
-#define fastio ios_base::sync_with_stdio(false);cout.tie(NULL);cin.tie(NULL); // boj_15552.cpp
+
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
 
 int main() {
-    fastio;
+    FASTIO;
 
-    int K, N;
-    cin >> K >> N;
+    int k, n;
+    cin >> k >> n;
 
-    int now_time = 0, now_person = K, ans_person = 0;
-    for (int n = 0; n < N; n++) {
-        int T;
-        char Z;
-        cin >> T >> Z;
+    int now_time = 0;
+    int now_person = k;
+    int bomb_person = -1;
 
-        if (ans_person != 0) {
-            continue;
-        }
+    for (int i = 0; i < n; i++) {
+        int t;
+        char z;
+        cin >> t >> z;
 
-        now_time += T;
+        if (bomb_person > 0) continue;
+
+        now_time += t;
+
         if (now_time >= 210) {
-            ans_person = now_person;
+            bomb_person = now_person;
             continue;
         }
-        if (Z == 'T') {
+
+        if (z == 'T') {
             now_person = now_person % 8 + 1;
         }
     }
 
-    cout << ans_person << '\n';
+    cout << bomb_person << '\n';
 
     return 0;
 }

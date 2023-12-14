@@ -1,5 +1,5 @@
 // Solve 2022-07-26
-// Update 2023-10-17
+// Update 2023-12-14
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -10,11 +10,12 @@ using namespace std;
 #define ALL(v) v.begin(),v.end()
 using ll = long long;
 
-int n, ans[15] = { 0, 1, 0, 0, 2, 10, 4, 40, 92, 352, 724, 2680, 14200, 73712, 365596 };
-
 int main() {
     FASTIO;
 
+    int ans[15] = { 0, 1, 0, 0, 2, 10, 4, 40, 92, 352, 724, 2680, 14200, 73712, 365596 };
+
+    int n;
     cin >> n;
 
     cout << ans[n] << '\n';

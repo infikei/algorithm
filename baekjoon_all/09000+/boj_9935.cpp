@@ -1,37 +1,36 @@
-#include <iostream>
-#include <string>
-#define fastio ios_base::sync_with_stdio(false);cout.tie(NULL);cin.tie(NULL); // boj_15552.cpp
+// Solve 2022-12-17
+// Update 2023-12-14
+
+#include <bits/stdc++.h>
 using namespace std;
 
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
+
 int main() {
-    fastio;
+    FASTIO;
 
-    string input_str, bomb, output_str;
-    cin >> input_str >> bomb;
+    string s, bomb;
+    cin >> s >> bomb;
 
-    int bomb_size = bomb.length(), output_str_size = 0;
-    char bomb_end = bomb[bomb_size - 1];
+    string ans;
 
-    for (auto ch : input_str) {
-        output_str.push_back(ch);
-        output_str_size++;
+    for (char ch : s) {
+        ans.push_back(ch);
 
-        if (output_str_size < bomb_size) {
-            continue;
-        }
+        if (SIZE(ans) < SIZE(bomb)) continue;
 
-        if (ch == bomb_end && output_str.substr(output_str_size - bomb_size, bomb_size) == bomb) {
-            for (int i = 0; i < bomb_size; i++) {
-                output_str.pop_back();
+        if (ch == bomb.back() && ans.substr(SIZE(ans) - SIZE(bomb), SIZE(bomb)) == bomb) {
+            for (int i = 0; i < SIZE(bomb); i++) {
+                ans.pop_back();
             }
-            output_str_size -= bomb_size;
         }
     }
 
-    if (output_str == "") {
-        output_str = "FRULA";
-    }
-    cout << output_str << '\n';
+    cout << (ans.empty() ? "FRULA" : ans) << '\n';
 
     return 0;
 }

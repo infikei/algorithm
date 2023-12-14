@@ -1,4 +1,5 @@
 // Solve 2023-10-01
+// Update 2023-12-14
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -24,10 +25,10 @@ int main() {
 
         st.insert(s);
 
-        string rs = s;
-        reverse(rs.begin(), rs.end());
+        string rev_s = s;
+        reverse(rev_s.begin(), rev_s.end());
 
-        if (st.find(rs) != st.end()) {
+        if (st.find(rev_s) != st.end()) {
             ans = s;
         }
     }

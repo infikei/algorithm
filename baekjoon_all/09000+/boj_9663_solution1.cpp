@@ -1,5 +1,5 @@
 // Solve 2022-07-26
-// Update 2023-10-17
+// Update 2023-12-14
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -10,10 +10,7 @@ using namespace std;
 #define ALL(v) v.begin(),v.end()
 using ll = long long;
 
-int board[15];
-int n, ans;
-
-bool check(int row) {
+bool check_board(vector<int> &board, int row) {
     for (int i = 1; i < row; i++) {
         if (board[row] == board[i] || abs(board[row] - board[i]) == row - i) {
             return false;
@@ -23,7 +20,7 @@ bool check(int row) {
     return true;
 }
 
-void n_queens(int row = 1) {
+void n_queens(int n, vector<int> &board, int &ans, int row = 1) {
     if (row == n + 1) {
         ans++;
         return;
@@ -32,18 +29,22 @@ void n_queens(int row = 1) {
     for (int i = 1; i <= n; i++) {
         board[row] = i;
 
-        if (!check(row)) continue;
+        if (!check_board(board, row)) continue;
 
-        n_queens(row + 1);
+        n_queens(n, board, ans, row + 1);
     }
 }
 
 int main() {
     FASTIO;
 
+    int n;
     cin >> n;
 
-    n_queens();
+    vector<int> board(15, 0);
+    int ans = 0;
+
+    n_queens(n, board, ans);
 
     cout << ans << '\n';
 
