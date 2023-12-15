@@ -1,5 +1,5 @@
 // Solve 2023-01-08
-// Update 2023-08-14
+// Update 2023-12-15
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -15,20 +15,17 @@ int main() {
 
     int n;
     cin >> n;
+    cin.ignore();
 
     for (int k = 0; k < n; k++) {
         string s;
         getline(cin, s);
-        if (s == "") getline(cin, s);
-
+        transform(s.begin(), s.end(), s.begin(), ::tolower);
         bool ans = true;
 
         for (int i = 0, ie = SIZE(s) / 2; i < ie; i++) {
             char c = s[i];
-            if (c >= 'A' && c <= 'Z') c = c - 'A' + 'a';
-
             char c2 = s[SIZE(s) - 1 - i];
-            if (c2 >= 'A' && c2 <= 'Z') c2 = c2 - 'A' + 'a';
 
             if (c != c2) {
                 ans = false;
@@ -36,8 +33,7 @@ int main() {
             }
         }
 
-        if (ans) cout << "Yes\n";
-        else cout << "No\n";
+        cout << (ans ? "Yes" : "No") << '\n';
     }
 
     return 0;

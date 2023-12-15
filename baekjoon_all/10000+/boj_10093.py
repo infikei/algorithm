@@ -1,14 +1,9 @@
 # Solve 2023-03-14
+# Update 2023-12-15
 
-import sys
+a, b = sorted(map(int, input().split()))
 
-input = lambda : sys.stdin.readline().rstrip()
-
-a, b = map(int, input().split())
-if a > b:
-    a, b = b, a
-
-if a == b or a + 1 == b:
+if b - a <= 1:
     print(0)
 else:
     print(b - a - 1)

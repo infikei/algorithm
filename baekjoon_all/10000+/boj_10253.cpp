@@ -1,35 +1,42 @@
-#include <iostream>
-#include <cmath>
+// Solve 2022-08-03
+// Update 2023-12-15
+
+#include <bits/stdc++.h>
 using namespace std;
 
-long long gcd(long long a, long long b) {
-    if (a % b == 0) {
-        return b;
-    }
-    return gcd(b, a % b);
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
+
+ll calc_gcd(ll a, ll b) {
+    ll r = a % b;
+
+    if (r == 0) return b;
+
+    return calc_gcd(b, r);
 }
 
-void calc(long long& a, long long& b) {
-    long long x = b / a + 1;
-    long long GCD = gcd(x, b);
-    a = (a * x - b) / GCD;
-    b = b / GCD * x;
+void calc(ll &a, ll &b) {
+    ll x = b / a + 1;
+    ll gcd = calc_gcd(x, b);
+    a = (a * x - b) / gcd;
+    b = b / gcd * x;
 
-    GCD = gcd(b, a);
-    a /= GCD;
-    b /= GCD;
+    gcd = calc_gcd(b, a);
+    a /= gcd;
+    b /= gcd;
 }
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    int T;
-    cin >> T;
+    int t;
+    cin >> t;
 
-    for (int t = 0; t < T; t++) {
-        long long a, b;
+    for (int ti = 0; ti < t; ti++) {
+        ll a, b;
         cin >> a >> b;
 
         while (a != 1) {

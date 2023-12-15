@@ -1,15 +1,14 @@
+// Solve 2022-06-25
+// Update 2023-12-15
+
 #include <iostream>
 using namespace std;
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    int k, n, m;
+    cin >> k >> n >> m;
 
-    int K, N, M;
-    cin >> K >> N >> M;
-
-    cout << max(0, K * N - M) << '\n';
+    cout << max(0, k * n - m) << '\n';
 
     return 0;
 }

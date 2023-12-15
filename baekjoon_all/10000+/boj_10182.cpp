@@ -1,4 +1,5 @@
 // Solve 2023-08-15
+// Update 2023-12-15
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -21,7 +22,6 @@ int main() {
         string h_oh;
         char c;
         double d, ans;
-
         cin >> h_oh >> c >> d;
 
         if (h_oh == "H") ans = -log10(d);
