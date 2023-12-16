@@ -1,20 +1,25 @@
-#include <iostream>
+// Solve 2022-11-23
+// Update 2023-12-16
+
+#include <bits/stdc++.h>
 using namespace std;
-#define fastio ios_base::sync_with_stdio(false);cout.tie(NULL);cin.tie(NULL); // boj_15552.cpp
+
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
 
 int main() {
-    fastio;
+    FASTIO;
 
-    int A, B, Q, R;
     while (true) {
-        cin >> A >> B;
-        if (A == 0 && B == 0) {
-            break;
-        }
+        int a, b;
+        cin >> a >> b;
 
-        Q = A / B;
-        R = A % B;
-        cout << Q << ' ' << R << " / " << B << '\n';
+        if (a == 0 && b == 0) break;
+
+        cout << a / b << ' ' << a % b << " / " << b << '\n';
     }
 
     return 0;

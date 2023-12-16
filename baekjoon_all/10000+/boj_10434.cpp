@@ -1,25 +1,20 @@
-#include <iostream>
-#include <cmath>
+// Solve 2022-08-19
+// Update 2023-12-16
+
+#include <bits/stdc++.h>
 using namespace std;
 
-bool MEMO[10001];
-int P, p2, M;
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
 
-void initialize_MEMO() {
-    for (int i = 1; i <= 10000; i++) {
-        MEMO[i] = false;
-    }
-}
+bool is_prime(int n) {
+    if (n == 1) return false;
 
-bool is_prime_int(int a) {
-    if (a == 1) {
-        return false;
-    }
-
-    double sqrt_a = sqrt(a);
-
-    for (int i = 2; i <= sqrt_a; i++) {
-        if (a % i == 0) {
+    for (int i = 2, ie = sqrt(n); i <= ie; i++) {
+        if (n % i == 0) {
             return false;
         }
     }
@@ -27,54 +22,51 @@ bool is_prime_int(int a) {
     return true;
 }
 
-int calc_to_check_happy_int(int a) {
-    int result = 0;
-    while (a > 0) {
-        result += (a % 10) * (a % 10);
-        a = a / 10;
+int calc_sum_of_digit_squared(int n) {
+    int res = 0;
+
+    while (n > 0) {
+        int d = n % 10;
+        n /= 10;
+        res += d * d;
     }
 
-    return result;
+    return res;
 }
 
-bool is_happy_int(int a) {
-    if (a == 1) {
-        return true;
-    }
+bool is_happy(int n) {
+    if (n == 1) return true;
 
-    initialize_MEMO();
-    MEMO[a] = true;
+    vector<bool> visited(10001, false);
+    visited[n] = true;
+
     while (true) {
-        a = calc_to_check_happy_int(a);
-        if (a == 1) {
-            return true;
-        }
-        else if (MEMO[a]) {
-            return false;
-        }
-        else {
-            MEMO[a] = true;
-        }
+        n = calc_sum_of_digit_squared(n);
+
+        if (n == 1) return true;
+        if (visited[n]) return false;
+
+        visited[n] = true;
     }
 }
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    cin >> P;
-    for (int p = 1; p <= P; p++) {
-        cin >> p2 >> M;
-        cout << p2 << ' ' << M << ' ';
+    int t;
+    cin >> t;
 
-        if (is_prime_int(M) && is_happy_int(M)) {
-            cout << "YES";
+    for (int ti = 1; ti <= t; ti++) {
+        int tii, n;
+        cin >> tii >> n;
+        cout << tii << ' ' << n << ' ';
+
+        if (is_prime(n) && is_happy(n)) {
+            cout << "YES\n";
         }
         else {
-            cout << "NO";
+            cout << "NO\n";
         }
-        cout << '\n';
     }
 
     return 0;
