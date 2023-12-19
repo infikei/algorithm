@@ -1,5 +1,5 @@
 // Solve 2022-08-12
-// Update 2023-07-01
+// Update 2023-12-19
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -16,24 +16,20 @@ int main() {
     string s;
     cin >> s;
 
-    int ans = 0, now = 0;
+    int ans = 0;
+    int layer = 0;
+
     for (int i = 0, i_end = SIZE(s); i < i_end; i++) {
-        if (s[i] == '(') {
-            if (s[i + 1] == ')') {
-                ans += now;
-            }
-            else {
-                now++;
-            }
+        if (s[i] == '(' && s[i + 1] == ')') {
+            ans += layer;
+            i++;
+        }
+        else if (s[i] == '(') {
+            layer++;
+            ans++;
         }
         else {
-            if (s[i - 1] == '(') {
-                continue;
-            }
-            else {
-                now--;
-                ans++;
-            }
+            layer--;
         }
     }
 

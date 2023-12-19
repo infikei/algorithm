@@ -1,8 +1,11 @@
-k = int(input())
+# Solve 2022-05-30
+# Update 2023-12-19
+
 li = []
 
-for i in range(k):
+for _ in range(int(input())):
     x = int(input())
+
     if x == 0:
         li.pop()
     else:

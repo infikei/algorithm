@@ -1,4 +1,5 @@
 // Solve 2023-08-07
+// Update 2023-12-19
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -9,20 +10,27 @@ using namespace std;
 #define ALL(v) v.begin(),v.end()
 using ll = long long;
 
-int n, num[8];
-bool visited[8];
-
-int dfs(int depth, int val, int prev) {
-    if (depth == n) return val;
+int dfs(int n, vector<int> &nums, vector<bool> &visited, int depth = 0, int abs_sum = 0, int prev_num = 0) {
+    if (depth == n) {
+        return abs_sum;
+    }
 
     int res = 0;
 
     for (int i = 0; i < n; i++) {
         if (visited[i]) continue;
 
+        int new_abs_sum = 0;
+
+        if (depth >= 1) {
+            new_abs_sum = abs_sum + abs(nums[i] - prev_num);
+        }
+
         visited[i] = true;
-        res = max(res, dfs(depth + 1, val + abs(num[i] - prev), num[i]));
+        int new_res = dfs(n, nums, visited, depth + 1, new_abs_sum, nums[i]);
         visited[i] = false;
+
+        res = max(res, new_res);
     }
 
     return res;
@@ -31,19 +39,17 @@ int dfs(int depth, int val, int prev) {
 int main() {
     FASTIO;
 
+    int n;
     cin >> n;
 
-    for (int i = 0; i < n; i++) {
-        cin >> num[i];
+    vector<int> nums(n);
+
+    for (int &num : nums) {
+        cin >> num;
     }
 
-    int ans = 0;
-
-    for (int i = 0; i < n; i++) {
-        visited[i] = true;
-        ans = max(ans, dfs(1, 0, num[i]));
-        visited[i] = false;
-    }
+    vector<bool> visited(n, false);
+    int ans = dfs(n, nums, visited);
 
     cout << ans << '\n';
 

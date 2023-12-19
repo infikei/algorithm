@@ -1,5 +1,5 @@
 // Solve 2023-03-13
-// Update 2023-08-14
+// Update 2023-12-19
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -16,31 +16,26 @@ int main() {
     string n;
     cin >> n;
 
-    bool check = true;
-    int tmp = 0;
+    bool is_possible = true;
+    int digit_sum = 0;
 
-    for (const char c : n) {
-        tmp += c - '0';
+    for (char d : n) {
+        digit_sum += d - '0';
     }
 
-    if (tmp % 3 != 0) {
-        check = false;
+    if (digit_sum % 3 != 0) {
+        is_possible = false;
     }
 
-    if (check) {
+    if (is_possible) {
         sort(n.begin(), n.end(), greater<int>());
 
         if (n.back() != '0') {
-            check = false;
+            is_possible = false;
         }
     }
 
-    if (check) {
-        cout << n << '\n';
-    }
-    else {
-        cout << -1 << '\n';
-    }
+    cout << (is_possible ? n : "-1") << '\n';
 
     return 0;
 }

@@ -1,5 +1,5 @@
 // Solve 2022-06-20
-// Update 2023-10-10
+// Update 2023-12-19
 
 #include <iostream>
 using namespace std;
@@ -17,15 +17,15 @@ int main() {
     int v;
     cin >> v;
 
-    int ans = 0;
+    int cnt = 0;
 
     for (int i = 0; i < n; i++) {
         if (nums[i] == v) {
-            ans++;
+            cnt++;
         }
     }
 
-    cout << ans << '\n';
+    cout << cnt << '\n';
 
     return 0;
 }

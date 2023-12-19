@@ -1,4 +1,5 @@
 // Solve 2023-08-14
+// Update 2023-12-19
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -11,15 +12,15 @@ using ll = long long;
 
 struct Point{
     int x, y;
-};
 
-Point point[100000];
+    Point(int x = 0, int y = 0) : x(x), y(y) {}
+};
 
 istream& operator>>(istream &is, Point &rhs) {
     return is >> rhs.x >> rhs.y;
 }
 
-inline int calc_dist(const Point &a, const Point &b) {
+int calc_dist(const Point &a, const Point &b) {
     return abs(a.x - b.x) + abs(a.y - b.y);
 }
 
@@ -29,21 +30,24 @@ int main() {
     int n;
     cin >> n;
 
-    for (int i = 0; i < n; i++) {
-        cin >> point[i];
+    vector<Point> points(n);
+
+    for (Point &p : points) {
+        cin >> p;
     }
 
     int dist_sum = 0;
 
     for (int i = 1; i < n; i++) {
-        dist_sum += calc_dist(point[i - 1], point[i]);
+        dist_sum += calc_dist(points[i - 1], points[i]);
     }
 
     int ans = dist_sum;
 
     for (int i = 2; i < n; i++) {
-        int val = dist_sum - calc_dist(point[i - 2], point[i - 1]) - calc_dist(point[i - 1], point[i]) + calc_dist(point[i - 2], point[i]);
-        ans = min(ans, val);
+        int cur = dist_sum + calc_dist(points[i - 2], points[i])\
+                - calc_dist(points[i - 2], points[i - 1]) - calc_dist(points[i - 1], points[i]);
+        ans = min(ans, cur);
     }
 
     cout << ans << '\n';

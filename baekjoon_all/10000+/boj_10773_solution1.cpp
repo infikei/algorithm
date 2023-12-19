@@ -1,5 +1,5 @@
 // Solve 2022-06-05
-// Update 2023-07-01
+// Update 2023-12-19
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -17,6 +17,7 @@ int main() {
     cin >> k;
 
     stack<int> stck;
+
     for (int i = 0; i < k; i++) {
         int x;
         cin >> x;
@@ -26,6 +27,7 @@ int main() {
     }
 
     int ans = 0;
+
     while (!stck.empty()) {
         ans += stck.top();
         stck.pop();

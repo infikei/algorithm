@@ -1,5 +1,5 @@
 // Solve 2022-06-03
-// Update 2023-08-07
+// Update 2023-12-19
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -25,6 +25,7 @@ int main() {
         if (x < ans_min) {
             ans_min = x;
         }
+
         if (x > ans_max) {
             ans_max = x;
         }

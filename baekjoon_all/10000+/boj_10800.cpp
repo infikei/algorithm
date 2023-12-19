@@ -1,78 +1,92 @@
-#include <iostream>
-#include <vector>
-#include <tuple>
-#include <algorithm>
+// Solve 2022-08-12
+// Update 2023-12-19
+
+#include <bits/stdc++.h>
 using namespace std;
-typedef tuple<int, int, int> tiii;
 
-int N, ans[200001];
-vector<tiii> v;
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
 
-bool cmp(const tiii &a, const tiii &b) {
-    return get<2>(a) < get<2>(b);
+struct Ball{
+    int index, color, size;
+
+    Ball(int i, int c, int s) : index(i), color(c), size(s) {}
+};
+
+bool cmp_size(const Ball &a, const Ball &b) {
+    return a.size < b.size;
 }
 
-bool cmp2(const tiii &a, const tiii &b) {
-    if (get<1>(a) == get<1>(b)) {
-        return get<2>(a) < get<2>(b);
+bool cmp_color_size(const Ball &a, const Ball &b) {
+    if (a.color != b.color) {
+        return a.color < b.color;
     }
-    return get<1>(a) < get<1>(b);
+
+    return a.size < b.size;
 }
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    cin >> N;
-    int c, s;
-    for (int i = 1; i <= N; i++) {
+    int n;
+    cin >> n;
+
+    vector<Ball> balls;
+
+    for (int i = 1; i <= n; i++) {
+        int c, s;
         cin >> c >> s;
-        v.push_back(make_tuple(i, c, s));
+
+        balls.emplace_back(i, c, s);
     }
 
-    sort(v.begin(), v.end(), cmp);
+    sort(balls.begin(), balls.end(), cmp_size);
+    vector<int> ans(n + 1, 0);
+    int prev_size_sum = 0;
+    int duplicate_cnt = 0;
 
-    int sum = 0, duplicated = 0;
-    for (int i = 0; i < N; i++) {
-        int now_size = get<2>(v[i]);
+    for (int i = 0; i < n; i++) {
+        Ball now_ball = balls[i];
 
-        if (i > 0 && now_size == get<2>(v[i - 1])) {
-            duplicated++;
+        if (i > 0 && now_ball.size == balls[i - 1].size) {
+            duplicate_cnt++;
         }
         else {
-            duplicated = 0;
+            duplicate_cnt = 0;
         }
 
-        ans[get<0>(v[i])] = sum - duplicated * now_size;
-        sum += now_size;
+        ans[now_ball.index] = prev_size_sum - now_ball.size * duplicate_cnt;
+        prev_size_sum += now_ball.size;
     }
 
-    sort(v.begin(), v.end(), cmp2);
+    sort(balls.begin(), balls.end(), cmp_color_size);
+    prev_size_sum = 0;
+    duplicate_cnt = 0;
 
-    sum = 0, duplicated = 0;
-    for (int i = 0; i < N; i++) {
-        int now_color = get<1>(v[i]);
-        int now_size = get<2>(v[i]);
+    for (int i = 0; i < n; i++) {
+        Ball now_ball = balls[i];
 
-        if (i > 0 && now_color != get<1>(v[i - 1])) {
-            sum = 0;
-            duplicated = 0;
+        if (i > 0 && now_ball.color != balls[i - 1].color) {
+            prev_size_sum = 0;
+            duplicate_cnt = 0;
         }
         else {
-            if (i > 0 && now_size == get<2>(v[i - 1])) {
-                duplicated++;
+            if (i > 0 && now_ball.size == balls[i - 1].size) {
+                duplicate_cnt++;
             }
             else {
-                duplicated = 0;
+                duplicate_cnt = 0;
             }
         }
 
-        ans[get<0>(v[i])] -= sum - duplicated * now_size;
-        sum += now_size;
+        ans[now_ball.index] -= prev_size_sum - duplicate_cnt * now_ball.size;
+        prev_size_sum += now_ball.size;
     }
 
-    for (int i = 1; i <= N; i++) {
+    for (int i = 1; i <= n; i++) {
         cout << ans[i] << '\n';
     }
 

@@ -1,32 +1,40 @@
-#include <iostream>
-#include <string>
-#include <map>
+// Solve 2022-09-01
+// Update 2023-12-19
+
+#include <bits/stdc++.h>
 using namespace std;
 
-int N;
-map<string, int> m;
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    cin >> N;
+    int n;
+    cin >> n;
 
-    string str;
-    for (int i = 0; i < N; i++) {
-        cin >> str;
-        m[str]++;
-    }
-    for (int i = 1; i < N; i++) {
-        cin >> str;
-        m[str]++;
+    unordered_map<string, int> hs_map;
+
+    for (int i = 0; i < n; i++) {
+        string name;
+        cin >> name;
+
+        hs_map[name]++;
     }
 
-    map<string, int>::iterator iter;
-    for (iter = m.begin(); iter != m.end(); iter++) {
-        if ((iter->second) % 2 == 1) {
-            cout << iter->first << '\n';
+    for (int i = 1; i < n; i++) {
+        string name;
+        cin >> name;
+
+        hs_map[name]--;
+    }
+
+    for (auto it = hs_map.begin(); it != hs_map.end(); it++) {
+        if (it->second == 1) {
+            cout << it->first << '\n';
             break;
         }
     }
