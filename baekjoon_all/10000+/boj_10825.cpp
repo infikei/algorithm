@@ -1,4 +1,5 @@
 // Solve 2023-08-07
+// Update 2023-12-20
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -21,8 +22,6 @@ struct Student{
     }
 };
 
-Student student[100000];
-
 istream& operator>>(istream &is, Student &rhs) {
     return is >> rhs.name >> rhs.kor >> rhs.eng >> rhs.mat;
 }
@@ -33,14 +32,16 @@ int main() {
     int n;
     cin >> n;
 
-    for (int i = 0; i < n; i++) {
-        cin >> student[i];
+    vector<Student> students(n);
+
+    for (Student &stu : students) {
+        cin >> stu;
     }
 
-    sort(student, student + n);
+    sort(students.begin(), students.end());
 
-    for (int i = 0; i < n; i++) {
-        cout << student[i].name << '\n';
+    for (Student &stu : students) {
+        cout << stu.name << '\n';
     }
 
     return 0;

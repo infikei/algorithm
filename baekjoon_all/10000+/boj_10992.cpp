@@ -1,5 +1,5 @@
 // Solve 2022-09-15
-// Update 2023-08-02
+// Update 2023-12-20
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -16,11 +16,14 @@ int main() {
     int n;
     cin >> n;
 
-    string space(n - 1, ' '), space2 = "* ";
+    string space(n - 1, ' ');
+    string space2 = "* ";
 
     cout << space << "*\n";
 
-    for (int iter = n - 2; iter > 0; iter--) {
+    int iter = n - 2;
+
+    while (--iter >= 0) {
         space.pop_back();
 
         cout << space << space2 << "*\n";
@@ -29,9 +32,7 @@ int main() {
     }
 
     if (n > 1) {
-        string star(n * 2 - 1, '*');
-
-        cout << star << '\n';
+        cout << string(n * 2 - 1, '*') << '\n';
     }
 
     return 0;

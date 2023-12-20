@@ -1,5 +1,5 @@
 // Solve 2022-11-13
-// Update 2023-08-02
+// Update 2023-12-20
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -16,7 +16,8 @@ int main() {
     int n;
     cin >> n;
 
-    string space(n - 1, ' '), space2 = " ";
+    string space(n - 1, ' ');
+    string space2 = " ";
 
     cout << space << '*' << '\n';
 

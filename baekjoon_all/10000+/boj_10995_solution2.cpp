@@ -1,5 +1,5 @@
 // Solve 2022-10-01
-// Update 2023-08-02
+// Update 2023-12-20
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -17,13 +17,19 @@ int main() {
     cin >> n;
 
     string line = "*";
-    for (int i = 1; i < n; i++) {
+    int iter = n - 1;
+
+    while (--iter >= 0) {
         line += " *";
     }
-    line += "\n";
-    
+
+    line.push_back('\n');
+
     for (int i = 1; i <= n; i++) {
-        if (i % 2 == 0) cout << ' ';
+        if (i % 2 == 0) {
+            cout << ' ';
+        }
+
         cout << line;
     }
 

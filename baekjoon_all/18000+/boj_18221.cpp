@@ -1,4 +1,5 @@
 // Solve 2023-08-31
+// Update 2023-12-20
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -16,7 +17,8 @@ int main() {
     cin >> n;
 
     int room[1000][1000];
-    int sx = 0, sy = 0, px = 0, py = 0;
+    int sx = 0, sy = 0; // 성규의 좌표
+    int px = 0, py = 0; // 교수님의 좌표
 
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
@@ -31,7 +33,8 @@ int main() {
         }
     }
 
-    int dx = sx - px, dy = sy - py;
+    int dx = sx - px;
+    int dy = sy - py;
     int ans = 0;
 
     if (dx * dx + dy * dy >= 25) {
@@ -39,15 +42,16 @@ int main() {
 
         for (int i = min(sx, px), ie = max(sx, px); i <= ie; i++) {
             for (int j = min(sy, py), je = max(sy, py); j <= je; j++) {
-                if (room[i][j] == 1) cnt++;
-
-                if (cnt >= 3) break;
+                if (room[i][j] == 1) {
+                    if (++cnt >= 3) {
+                        ans = 1;
+                        break;
+                    }
+                }
             }
 
-            if (cnt >= 3) break;
+            if (ans == 1) break;
         }
-
-        if (cnt >= 3) ans = 1;
     }
 
     cout << ans << '\n';

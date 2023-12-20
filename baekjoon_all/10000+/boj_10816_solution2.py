@@ -1,17 +1,15 @@
 # Solve 2023-10-09
+# Update 2023-12-20
 
 import sys
 from bisect import bisect_left, bisect_right
 
 input = lambda : sys.stdin.readline().rstrip()
 
-n = int(input())
+_ = input()
+nums = sorted(map(int, input().split()))
+_ = input()
+queries = map(int, input().split())
+answers = map(lambda x: bisect_right(nums, x) - bisect_left(nums, x), queries)
 
-num_list = sorted(map(int, input().split()))
-
-m = int(input())
-
-query_list = map(int, input().split())
-ans_list = map(lambda x: bisect_right(num_list, x) - bisect_left(num_list, x), query_list)
-
-print(*ans_list)
+print(*answers)

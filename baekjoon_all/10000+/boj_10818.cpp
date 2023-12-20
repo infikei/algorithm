@@ -1,5 +1,5 @@
 // Solve 2022-06-03
-// Update 2023-12-19
+// Update 2023-12-20
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -16,7 +16,8 @@ int main() {
     int n;
     cin >> n;
 
-    int ans_min = 1000000, ans_max = -1000000;
+    int ans_min = 1000000;
+    int ans_max = -1000000;
 
     for (int i = 0; i < n; i++) {
         int x;

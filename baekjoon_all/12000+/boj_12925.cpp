@@ -1,41 +1,40 @@
 // Solve 2023-03-12
+// Update 2023-12-20
 
 #include <bits/stdc++.h>
 using namespace std;
 
-#ifdef BOJ
-#define BOJTEST(x) ((void)0)
-#else
-#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
-#endif
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
 #define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
 #define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
 using ll = long long;
-using uint = unsigned int;
-using ull = unsigned long long;
-using matrixll = vector<vector<ll> >;
+using matrix = vector<vector<int>>;
 
-const ll MOD = 1000;
-const int MATRIX_SIZE = 2;
+const int MOD = 1000;
 
-matrixll calc_mat_mul(const matrixll &a, const matrixll &b) {
-    matrixll res(MATRIX_SIZE, vector<ll>(MATRIX_SIZE, 0));
-    for (int row = 0; row < MATRIX_SIZE; row++) {
-        for (int col = 0; col < MATRIX_SIZE; col++) {
-            for (int idx = 0; idx < MATRIX_SIZE; idx++) {
+matrix calc_mat_mul(const matrix &a, const matrix &b) {
+    int n = SIZE(a);
+    matrix res(n, vector<int>(n, 0));
+
+    for (int row = 0; row < n; row++) {
+        for (int col = 0; col < n; col++) {
+            for (int idx = 0; idx < n; idx++) {
                 res[row][col] += a[row][idx] * b[idx][col];
             }
+
             res[row][col] %= MOD;
         }
     }
+
     return res;
 }
 
-matrixll calc_mat_power(matrixll a, ll b) {
-    matrixll res(MATRIX_SIZE, vector<ll>(MATRIX_SIZE, 0));
-    for (int i = 0; i < MATRIX_SIZE; i++) {
+matrix calc_mat_power(matrix a, int b) {
+    int n = SIZE(a);
+    matrix res(n, vector<int>(n, 0));
+
+    for (int i = 0; i < n; i++) {
         res[i][i] = 1;
     }
 
@@ -43,9 +42,11 @@ matrixll calc_mat_power(matrixll a, ll b) {
         if (b & 1) {
             res = calc_mat_mul(res, a);
         }
+
         a = calc_mat_mul(a, a);
         b >>= 1;
     }
+
     return res;
 }
 
@@ -55,22 +56,21 @@ int main() {
     int t;
     cin >> t;
 
-    matrixll mat = {
+    matrix mat = {
         { 6, -4 },
         { 1, 0 }
     };
 
     for (int ti = 1; ti <= t; ti++) {
-        ll n;
+        int n;
         cin >> n;
 
-        matrixll ans_mat = calc_mat_power(mat, n - 1);
-        ll ans = (6 * ans_mat[0][0] + (ans_mat[0][1] << 1) - 1 + (MOD << 3)) % MOD;
-        string ans_str = to_string(ans);
-        while (SIZE(ans_str) < 3) {
-            ans_str = "0" + ans_str;
-        }
-        cout << "Case #" << ti << ": " << ans_str << '\n';
+        matrix ans_mat = calc_mat_power(mat, n - 1);
+        int ans = (ans_mat[0][0] * 6 + ans_mat[0][1] * 2 - 1) % MOD;
+
+        if (ans < 0) ans += MOD;
+
+        cout << "Case #" << ti << ": " << setfill('0') << setw(3) << ans << '\n';
     }
 
     return 0;

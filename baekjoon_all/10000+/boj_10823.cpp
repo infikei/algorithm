@@ -1,5 +1,5 @@
 // Solve 2022-11-05
-// Update 2023-08-07
+// Update 2023-12-20
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -9,8 +9,6 @@ using namespace std;
 #define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
 using ll = long long;
-
-string S;
 
 int main() {
     FASTIO;

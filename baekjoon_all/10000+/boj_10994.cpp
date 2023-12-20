@@ -1,5 +1,5 @@
 // Solve 2023-02-15
-// Update 2023-08-02
+// Update 2023-12-20
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -19,9 +19,8 @@ vector<string> make_square(int k) {
         line = "* " + line + " *";
     }
 
-    string star(k * 4 - 3, '*'), space(k * 4 - 5, ' ');
-    square.push_back("*" + space + "*");
-    square.push_back(star);
+    square.push_back("*" + string(k * 4 - 5, ' ') + "*");
+    square.push_back(string(k * 4 - 3, '*'));
 
     return square;
 }
@@ -34,11 +33,11 @@ int main() {
 
     vector<string> square = make_square(n);
 
-    for (int iter = SIZE(square) - 1; iter > 0; iter--) {
-        cout << square[iter] << '\n';
+    for (int i = SIZE(square) - 1; i > 0; i--) {
+        cout << square[i] << '\n';
     }
 
-    for (const string &line : square) {
+    for (string &line : square) {
         cout << line << '\n';
     }
 

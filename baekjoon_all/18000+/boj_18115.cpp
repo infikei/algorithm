@@ -1,50 +1,61 @@
-#include <iostream>
-#include <stack>
-#include <deque>
+// Solve 2022-08-19
+// Update 2023-12-20
+
+#include <bits/stdc++.h>
 using namespace std;
 
-int N, cmd[1000000], ans[1000000];
-deque<int> dq;
-stack<int> st;
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    cin >> N;
-    for (int i = 0; i < N; i++) {
-        cin >> cmd[i];
+    int n;
+    cin >> n;
+
+    vector<int> cmds(n);
+
+    for (int &cmd : cmds) {
+        cin >> cmd;
     }
 
-    for (int i = 1; i <= N; i++) {
-        dq.push_back(i);
+    deque<int> dque;
+
+    for (int i = 1; i <= n; i++) {
+        dque.push_back(i);
     }
 
-    for (int i = 0; i < N; i++) {
-        if (cmd[i] == 1) {
-            st.push(dq.front());
-            dq.pop_front();
+    stack<int> stck;
+
+    for (int &cmd : cmds) {
+        if (cmd == 1) {
+            stck.push(dque.front());
+            dque.pop_front();
         }
-        else if (cmd[i] == 2) {
-            int a = dq.front();
-            dq.pop_front();
-            st.push(dq.front());
-            dq.pop_front();
-            dq.push_front(a);
+        else if (cmd == 2) {
+            int a = dque.front();
+            dque.pop_front();
+            stck.push(dque.front());
+            dque.pop_front();
+            dque.push_front(a);
         }
         else {
-            st.push(dq.back());
-            dq.pop_back();
+            stck.push(dque.back());
+            dque.pop_back();
         }
     }
 
-    for (int i = 1; i <= N; i++) {
-        ans[st.top()] = i;
-        st.pop();
+    vector<int> ans(n + 1, 0);
+
+    for (int i = 1; i <= n; i++) {
+        ans[stck.top()] = i;
+        stck.pop();
     }
 
-    for (int i = 1; i <= N; i++) {
+    for (int i = 1; i <= n; i++) {
         cout << ans[i] << ' ';
     }
 

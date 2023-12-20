@@ -1,4 +1,5 @@
 // Solve 2023-09-15
+// Update 2023-12-20
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -31,7 +32,6 @@ int main() {
     }
 
     int votes_include_cnt = n - votes_exclude_cnt * 2;
-
     int votes_level = 0;
 
     if (votes_include_cnt > 0) {

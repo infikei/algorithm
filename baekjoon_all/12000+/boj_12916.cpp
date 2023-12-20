@@ -1,4 +1,5 @@
 // Solve 2023-07-12
+// Update 2023-12-20
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -8,18 +9,19 @@ using namespace std;
 #define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
 using ll = long long;
-using matrixll = vector<vector<ll> >;
+using matrixll = vector<vector<ll>>;
 
 const ll MOD = 1000000007;
 
-matrixll calc_mat_mul(const matrixll &a, const matrixll &b, const int n) {
+matrixll calc_mat_mul(const matrixll &a, const matrixll &b) {
+    int n = SIZE(a);
     matrixll res(n, vector<ll>(n));
 
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            for (int k = 0; k < n; k++) {
-                res[i][j] += a[i][k] * b[k][j];
-                res[i][j] %= MOD;
+    for (int row = 0; row < n; row++) {
+        for (int col = 0; col < n; col++) {
+            for (int idx = 0; idx < n; idx++) {
+                res[row][col] += a[row][idx] * b[idx][col];
+                res[row][col] %= MOD;
             }
         }
     }
@@ -27,15 +29,20 @@ matrixll calc_mat_mul(const matrixll &a, const matrixll &b, const int n) {
     return res;
 }
 
-matrixll calc_mat_power(matrixll a, const int n, int k) {
+matrixll calc_mat_power(matrixll a, int k) {
+    int n = SIZE(a);
     matrixll res(n, vector<ll>(n));
-    for (int i = 0; i < n; i++) res[i][i] = 1;
+
+    for (int i = 0; i < n; i++) {
+        res[i][i] = 1;
+    }
 
     while (k > 0) {
         if (k & 1) {
-            res = calc_mat_mul(res, a, n);
+            res = calc_mat_mul(res, a);
         }
-        a = calc_mat_mul(a, a, n);
+
+        a = calc_mat_mul(a, a);
         k >>= 1;
     }
 
@@ -49,18 +56,21 @@ int main() {
     cin >> n >> k;
 
     matrixll mat(n, vector<ll>(n));
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            cin >> mat[i][j];
+
+    for (vector<ll> &row : mat) {
+        for (ll &x : row) {
+            cin >> x;
         }
     }
 
-    mat = calc_mat_power(mat, n, k);
+    mat = calc_mat_power(mat, k);
     ll ans = 0;
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            ans += mat[i][j];
+
+    for (vector<ll> &row : mat) {
+        for (ll &x : row) {
+            ans += x;
         }
+
         ans %= MOD;
     }
 

@@ -1,5 +1,5 @@
 // Solve 2023-02-14
-// Update 2023-08-02
+// Update 2023-12-20
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -21,11 +21,13 @@ vector<string> make_triangle(int k) {
 
     triangle[0].assign(SIZE(small_triangle.back()) + (1 << k), '*');
 
-    int row = 1, row_end = (1 << (k - 1)) - 1;
-    string space, space2(row_end, ' ');
+    int row = 1;
+    int row_end = (1 << (k - 1)) - 1;
+    string space;
+    string space2(row_end, ' ');
 
     while (row <= row_end) {
-        space += " ";
+        space.push_back(' ');
         space2.pop_back();
 
         triangle[row] = space + "*" + space2 + small_triangle[row - 1] + space2 + space2 + "*";
@@ -37,7 +39,7 @@ vector<string> make_triangle(int k) {
     space2.assign((1 << (k - 1)) - 2, ' ');
 
     while (row < row_end) {
-        space += " ";
+        space.push_back(' ');
         space2.pop_back();
 
         triangle[row] = space + "*" + space2 + space2 + " *";
@@ -57,9 +59,12 @@ int main() {
     cin >> n;
 
     vector<string> triangle = make_triangle(n);
-    if (n & 1) reverse(triangle.begin(), triangle.end());
 
-    for (const string &line : triangle) {
+    if (n & 1) {
+        reverse(triangle.begin(), triangle.end());
+    }
+
+    for (string &line : triangle) {
         cout << line << '\n';
     }
 

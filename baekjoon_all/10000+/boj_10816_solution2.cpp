@@ -1,5 +1,5 @@
 // Solve 2022-06-03
-// Update 2023-10-09
+// Update 2023-12-20
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -10,29 +10,29 @@ using namespace std;
 #define ALL(v) v.begin(),v.end()
 using ll = long long;
 
-int num_list[500000];
-
 int main() {
     FASTIO;
 
     int n;
     cin >> n;
 
+    int nums[500000];
+
     for (int i = 0; i < n; i++) {
-        cin >> num_list[i];
+        cin >> nums[i];
     }
 
-    sort(num_list, num_list + n);
+    sort(nums, nums + n);
 
     int m;
     cin >> m;
 
     for (int i = 0; i < m; i++) {
-        int num;
-        cin >> num;
+        int target_num;
+        cin >> target_num;
 
-        auto lo = lower_bound(num_list, num_list + n, num);
-        auto hi = upper_bound(num_list, num_list + n, num);
+        auto lo = lower_bound(nums, nums + n, target_num);
+        auto hi = upper_bound(nums, nums + n, target_num);
         int ans = hi - lo;
 
         cout << ans << ' ';

@@ -1,5 +1,5 @@
 // Solve 2023-02-08
-// Update 2023-08-03
+// Update 2023-12-20
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -17,6 +17,7 @@ int main() {
     cin >> n;
 
     int ans = 1;
+
     for (int i = 2; i <= n; i++) {
         ans *= i;
     }

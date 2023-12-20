@@ -1,18 +1,15 @@
 # Solve 2023-10-09
+# Update 2023-12-20
 
 import sys
 from collections import Counter
 
 input = lambda : sys.stdin.readline().rstrip()
 
-n = int(input())
+_ = input()
+cnt = Counter(input().split())
+_ = input()
+queries = input().split()
+answers = [str(cnt[query]) if query in cnt else "0" for query in queries]
 
-num_list = map(int, input().split())
-num_cnt = Counter(num_list)
-
-m = int(input())
-
-query_list = map(int, input().split())
-ans_list = map(lambda x: num_cnt[x], query_list)
-
-print(*ans_list)
+print(" ".join(answers))

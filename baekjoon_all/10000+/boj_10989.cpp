@@ -1,5 +1,5 @@
 // Solve 2023-02-23
-// Update 2023-10-10
+// Update 2023-12-20
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -26,7 +26,9 @@ int main() {
     }
 
     for (int num = 1; num <= 10000; num++) {
-        for (int i = num_cnt[num]; i > 0; i--) {
+        int iter = num_cnt[num];
+
+        while (--iter >= 0) {
             cout << num << '\n';
         }
     }

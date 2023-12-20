@@ -1,5 +1,5 @@
 // Solve 2022-06-04
-// Update 2023-06-26
+// Update 2023-12-20
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -25,6 +25,7 @@ int main() {
         if (cmd == "push") {
             int x;
             cin >> x;
+
             stck.push(x);
         }
         else if (cmd == "pop") {

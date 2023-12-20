@@ -1,5 +1,5 @@
 // Solve 2022-06-03
-// Update 2023-10-09
+// Update 2023-12-20
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -13,10 +13,10 @@ using ll = long long;
 int main() {
     FASTIO;
 
-    unordered_map<int, int> num_cnt;
-
     int n;
     cin >> n;
+
+    unordered_map<int, int> num_cnt;
 
     for (int i = 0; i < n; i++) {
         int num;

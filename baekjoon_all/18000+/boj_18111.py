@@ -1,29 +1,36 @@
+# Solve 2022-05-22
+# Update 2023-12-20
+
 import sys
-input = sys.stdin.readline
+from collections import Counter
 
-N, M, B = map(int, input().split())
-board = [0] * N
-for i in range(N):
-    board[i] = list(map(int, input().split()))
-time_ans = 1000000000000000000
+input = lambda : sys.stdin.readline().rstrip()
 
-board_min = min(map(min, board))
-board_max = max(map(max, board))
+n, m, b = map(int, input().split())
+board = []
 
-for height in range(board_min, board_max+1):
-    lower = 0
-    higher = 0
-    for i in range(N):
-        for j in range(M):
-            a = board[i][j] - height
-            if a > 0:
-                lower += a
-            else:
-                higher -= a
-    if B + lower >= higher:
-        time = lower * 2 + higher
-        if time <= time_ans:
-            time_ans = time
+for _ in range(n):
+    board += list(map(int, input().split()))
+
+board = Counter(board)
+time_min = 500 * 500 * 256 * 2
+height_ans = 0
+
+for height in range(min(board), max(board) + 1):
+    # 블록을 놓아야 하는 횟수
+    higher_cnt = sum([board[h] * (height - h) for h in range(min(board), height)])
+
+    # 블록을 제거해야 하는 횟수
+    lower_cnt = sum([board[h] * (h - height) for h in range(height + 1, max(board) + 1)])
+
+    # 기존에 가지고 있는 블록의 개수와 제거해야 하는 블록의 개수의 총합이
+    # 놓아야 하는 블록의 개수 이상이어야 한다.
+    if b + lower_cnt >= higher_cnt:
+        time = lower_cnt * 2 + higher_cnt
+
+        if time <= time_min:
+            time_min = time
             height_ans = height
 
-print(time_ans, height_ans)
+print(time_min, height_ans)
+

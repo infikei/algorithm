@@ -1,13 +1,12 @@
 # Solve 2023-03-04
+# Update 2023-12-20
 
 import sys
+from collections import Counter
 
 input = lambda : sys.stdin.readline().rstrip()
 
 n = int(input())
-li = [int(input()) for _ in range(n)]
+cnt = Counter([int(input()) for _ in range(n)])
 
-if li.count(0) > li.count(1):
-    print("Junhee is not cute!")
-else:
-    print("Junhee is cute!")
+print("Junhee is not cute!" if cnt[0] > cnt[1] else "Junhee is cute!")

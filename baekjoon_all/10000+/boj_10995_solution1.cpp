@@ -1,5 +1,5 @@
 // Solve 2022-10-01
-// Update 2023-08-02
+// Update 2023-12-20
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -21,9 +21,14 @@ int main() {
             cout << ' ';
         }
 
-        for (int i = 1; i <= n; i++) {
-            cout << "* ";
+        cout << '*';
+
+        int iter = n - 1;
+
+        while (--iter >= 0) {
+            cout << " *";
         }
+
         cout << '\n';
     }
 

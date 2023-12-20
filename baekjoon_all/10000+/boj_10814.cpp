@@ -1,4 +1,5 @@
 // Solve 2023-10-10
+// Update 2023-12-20
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -12,6 +13,7 @@ using ll = long long;
 struct Member{
     int age;
     string name;
+
     Member(int age, string name) : age(age), name(name) {}
 };
 

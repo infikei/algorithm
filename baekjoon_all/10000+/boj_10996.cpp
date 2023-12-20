@@ -1,5 +1,5 @@
 // Solve 2022-11-07
-// Update 2023-08-02
+// Update 2023-12-20
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -18,15 +18,18 @@ int main() {
 
     for (int i = 0; i < n; i++) {
         cout << '*';
+
         for (int j = (n - 1) / 2; j > 0; j--) {
             cout << " *";
         }
+
         cout << '\n';
 
         if (n > 1) {
             for (int j = n / 2; j > 0; j--) {
                 cout << " *";
             }
+
             cout << '\n';
         }
     }
