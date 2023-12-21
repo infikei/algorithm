@@ -1,4 +1,5 @@
 // Solve 2023-08-13
+// Update 2023-12-21
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -12,15 +13,18 @@ using ll = long long;
 int main() {
     FASTIO;
 
-    int arr[3];
+    int score_sum = 0;
+    int score_min = 100;
 
     for (int i = 0; i < 3; i++) {
-        cin >> arr[i];
+        int score;
+        cin >> score;
+
+        score_sum += score;
+        score_min = min(score_min, score);
     }
 
-    sort(arr, arr + 3);
-
-    cout << arr[1] + arr[2] << '\n';
+    cout << score_sum - score_min << '\n';
 
     return 0;
 }

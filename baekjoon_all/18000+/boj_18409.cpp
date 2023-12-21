@@ -1,5 +1,5 @@
 // Solve 2022-11-17
-// Update 2023-08-12
+// Update 2023-12-21
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -10,10 +10,10 @@ using namespace std;
 #define ALL(v) v.begin(),v.end()
 using ll = long long;
 
-char aeiou[5] = { 'a', 'e', 'i', 'o', 'u' };
-
 int main() {
     FASTIO;
+
+    char aeiou[5] = { 'a', 'e', 'i', 'o', 'u' };
 
     int n;
     string s;
@@ -21,8 +21,8 @@ int main() {
 
     int cnt = 0;
 
-    for (const char ch : s) {
-        for (const char a : aeiou) {
+    for (char &ch : s) {
+        for (char &a : aeiou) {
             if (ch == a) {
                 cnt++;
                 break;

@@ -1,4 +1,5 @@
 // Solve 2023-10-23
+// Update 2023-12-21
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -15,16 +16,16 @@ int main() {
     int n;
     cin >> n;
 
-    int arr[500000];
+    vector<int> nums(n);
 
-    for (int i = 0; i < n; i++) {
-        cin >> arr[i];
+    for (int &x : nums) {
+        cin >> x;
     }
 
-    sort(arr, arr + n);
+    sort(nums.begin(), nums.end());
 
-    for (int i = 0; i < n; i++) {
-        cout << arr[i] << ' ';
+    for (int &x : nums) {
+        cout << x << ' ';
     }
 
     cout << '\n';

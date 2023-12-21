@@ -1,5 +1,5 @@
 // Solve 2023-01-15
-// Update 2023-08-12
+// Update 2023-12-21
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -16,21 +16,18 @@ int main() {
     string n;
     cin >> n;
 
-    int sum1 = 0, sum2 = 0;
+    int left_sum = 0;
+    int right_sum = 0;
 
     for (int i = 0, i_end = SIZE(n) / 2; i < i_end; i++) {
-        sum1 += n[i] - '0';
-    }
-    for (int i = SIZE(n) / 2, i_end = SIZE(n); i < i_end; i++) {
-        sum2 += n[i] - '0';
+        left_sum += n[i] - '0';
     }
 
-    if (sum1 == sum2) {
-        cout << "LUCKY\n";
+    for (int i = SIZE(n) / 2, i_end = SIZE(n); i < i_end; i++) {
+        right_sum += n[i] - '0';
     }
-    else {
-        cout << "READY\n";
-    }
+
+    cout << (left_sum == right_sum ? "LUCKY" : "READY") << '\n';
 
     return 0;
 }

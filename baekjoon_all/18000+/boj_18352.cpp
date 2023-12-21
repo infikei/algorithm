@@ -1,5 +1,5 @@
 // Solve 2023-01-10
-// Update 2023-11-24
+// Update 2023-12-21
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -17,7 +17,7 @@ int main() {
     int n, m, k, x;
     cin >> n >> m >> k >> x;
 
-    vector<vector<int> > edges(n + 1, vector<int>());
+    vector<vector<int>> edges(n + 1, vector<int>());
 
     for (int i = 0; i < m; i++) {
         int from, to;
@@ -61,7 +61,7 @@ int main() {
         cout << -1 << '\n';
     }
     else {
-        for (int ans : ans_vec) {
+        for (int &ans : ans_vec) {
             cout << ans << '\n';
         }
     }

@@ -1,21 +1,26 @@
-#include <iostream>
-#include <cmath>
+// Solve 2022-09-05
+// Update 2023-12-21
+
+#include <bits/stdc++.h>
 using namespace std;
 
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
+
+const double PI = 3.141592;
+
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    int d[2];
-    for (int i = 0; i < 2; i++) {
-        cin >> d[i];
-    }
+    int d1, d2;
+    cin >> d1 >> d2;
 
-    cout << fixed;
-    cout.precision(8);
+    SETPRECISION(8);
 
-    cout << 2 * (d[0] + (double)d[1] * 3.141592) << '\n';
+    cout << 2 * (d1 + d2 * PI) << '\n';
 
     return 0;
 }

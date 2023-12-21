@@ -1,4 +1,5 @@
 // Solve 2023-09-17
+// Update 2023-12-21
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -112,13 +113,17 @@ void update_3() {
                     else if (c == '+' && cur == 0) c = '-';
                 }
 
-                if (right[0] != '-') right = "-" + right;
+                if (right[0] != '-') {
+                    right = "-" + right;
+                }
             }
             else if (desc_type[i] == 2 || desc_type[i] == 3) {
                 if (right[0] == '+') right[0] = '-';
                 else right = "-" + right;
             }
-            else break;
+            else {
+                break;
+            }
 
             string new_ans = left + right;
 

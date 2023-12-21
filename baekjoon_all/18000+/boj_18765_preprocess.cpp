@@ -1,4 +1,5 @@
 // Solve 2023-09-17
+// Update 2023-12-21
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -13,8 +14,35 @@ const int MAX = 1000;
 
 vector<string> ans;
 vector<bool> connect_mult;
-vector<string> desc;
 vector<int> desc_type;
+vector<string> desc;
+
+void print_answer() {
+    for (int i = 0; i <= MAX; i++) {
+        cout << ans[i] << '\n';
+    }
+}
+
+void print_for_test(int s, int e) {
+    cout << "=== [print for test] ===\n";
+    for (int i = s; i <= e; i++) {
+        cout << i << " (" << SIZE(ans[i]) << ") : " << ans[i] << " (" << desc[i] << ")\n";
+    }
+}
+
+void print_for_checking_if_more_than_75() {
+    cout << "=== [print for checking if more than 75] ===\n";
+    int cnt = 0;
+
+    for (int i = 0; i <= MAX; i++) {
+        if (SIZE(ans[i]) > 75) {
+            cnt++;
+            cout << i << " (" << SIZE(ans[i]) << ") : " << ans[i] << " (" << desc[i] << ")\n";
+        }
+    }
+
+    cout << "Count : " << cnt << '\n';
+}
 
 void write_answer_as_file() {
     ofstream fout;
@@ -27,31 +55,6 @@ void write_answer_as_file() {
     fout.close();
 }
 
-void print_answer() {
-    for (int i = 0; i <= MAX; i++) {
-        cout << ans[i] << '\n';
-    }
-}
-
-void print_for_test(int s, int e) {
-    for (int i = s; i <= e; i++) {
-        cout << i << " (" << SIZE(ans[i]) << ") : " << ans[i] << " (" << desc[i] << ")\n";
-    }
-}
-
-void print_for_checking_if_more_than_75() {
-    int cnt = 0;
-
-    for (int i = 0; i <= MAX; i++) {
-        if (SIZE(ans[i]) > 75) {
-            cnt++;
-            cout << i << " (" << SIZE(ans[i]) << ") : " << ans[i] << " (" << desc[i] << ")\n";
-        }
-    }
-
-    cout << cnt << '\n';
-}
-
 void update_1(bool init = false) {
     for (int n = 6; n <= MAX; n++) {
         // 방법 1.
@@ -59,8 +62,8 @@ void update_1(bool init = false) {
         if (init) {
             ans[n] = ans[n - 1] + "+!![]";
             connect_mult[n] = false;
-            desc[n] = to_string(n - 1) + " + 1";
             desc_type[n] = 1;
+            desc[n] = to_string(n - 1) + " + 1";
         }
         else {
             string new_ans = ans[n - 1] + "+!![]";
@@ -68,8 +71,8 @@ void update_1(bool init = false) {
             if (SIZE(ans[n]) > SIZE(new_ans)) {
                 ans[n] = new_ans;
                 connect_mult[n] = false;
-                desc[n] = to_string(n - 1) + " + 1";
                 desc_type[n] = 6;
+                desc[n] = to_string(n - 1) + " + 1";
             }
         }
 
@@ -91,8 +94,8 @@ void update_1(bool init = false) {
             if (SIZE(ans[n]) >= SIZE(new_ans)) {
                 ans[n] = new_ans;
                 connect_mult[n] = true;
-                desc[n] = to_string(i) + " * " + to_string(ii);
                 desc_type[n] = 2;
+                desc[n] = to_string(i) + " * " + to_string(ii);
             }
         }
 
@@ -111,8 +114,8 @@ void update_1(bool init = false) {
             if (SIZE(ans[n]) >= SIZE(new_ans)) {
                 ans[n] = new_ans;
                 connect_mult[n] = true;
-                desc[n] = "char";
                 desc_type[n] = 3;
+                desc[n] = "char";
             }
         }
     }
@@ -125,8 +128,8 @@ void update_3() {
         if (SIZE(ans[n]) > SIZE(new_ans)) {
             ans[n] = new_ans;
             connect_mult[n] = false;
-            desc[n] = to_string(n + 1) + " - 1";
             desc_type[n] = 4;
+            desc[n] = to_string(n + 1) + " - 1";
         }
 
         int i = 1;
@@ -148,21 +151,25 @@ void update_3() {
                     else if (c == '+' && cur == 0) c = '-';
                 }
 
-                if (right[0] != '-') right = "-" + right;
+                if (right[0] != '-') {
+                    right = "-" + right;
+                }
             }
             else if (desc_type[i] == 2 || desc_type[i] == 3) {
                 if (right[0] == '+') right[0] = '-';
                 else right = "-" + right;
             }
-            else break;
+            else {
+                break;
+            }
 
             string new_ans = left + right;
 
             if (SIZE(ans[n]) > SIZE(new_ans)) {
                 ans[n] = new_ans;
                 connect_mult[n] = false;
-                desc[n] = to_string(ii) + " - " + to_string(i);
                 desc_type[n] = 5;
+                desc[n] = to_string(ii) + " - " + to_string(i);
             }
         }
     }
@@ -173,8 +180,8 @@ int main() {
 
     ans.assign(MAX + 1, "");
     connect_mult.assign(MAX + 1, false);
-    desc.assign(MAX + 1, "");
     desc_type.assign(MAX + 1, 1);
+    desc.assign(MAX + 1, "");
 
     ans[0] = "+[]";
     ans[1] = "+!![]";
@@ -189,9 +196,9 @@ int main() {
     update_3();
     update_1();
 
-    print_for_checking_if_more_than_75();
-    print_for_test(0, 12);
     // print_answer();
+    print_for_test(0, 12);
+    print_for_checking_if_more_than_75();
     // write_answer_as_file();
 
     return 0;
