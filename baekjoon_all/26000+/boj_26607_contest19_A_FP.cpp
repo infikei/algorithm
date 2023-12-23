@@ -1,43 +1,57 @@
-#include <iostream>
-#define fastio ios_base::sync_with_stdio(false);cout.tie(NULL);cin.tie(NULL); // boj_15552.cpp
+// Solve 2023-01-02
+// Update 2023-12-23
+
+#include <bits/stdc++.h>
 using namespace std;
 
-const int MAX_N = 80, MAX_X = 200;
-int n, k, x;
-int a[MAX_N + 1], b[MAX_N + 1];
-bool dp[MAX_N + 1][MAX_N + 1][MAX_N * MAX_X + 1];
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
 
 int main() {
-    fastio;
+    FASTIO;
 
+    int n, k, x;
     cin >> n >> k >> x;
 
+    vector<int> a(n + 1);
+    vector<int> b(n + 1);
     int max_a = 0;
+
     for (int i = 1; i <= n; i++) {
         cin >> a[i] >> b[i];
         max_a = max(max_a, a[i]);
     }
 
-    for (int i = 1; i <= n; i++) {
-        dp[i][1][a[i]] = true;
-        for (int j = 1; j <= k; j++) {
-            for (int m = 1; m <= j * max_a; m++) {
-                if (dp[i - 1][j][m] || (m >= a[i] && dp[i - 1][j - 1][m - a[i]])) {
-                    dp[i][j][m] = true;
+    vector<vector<vector<bool>>> dp(n + 1, vector<vector<bool>>(k + 1, vector<bool>(n * x + 1, false)));
+
+    for (int ni = 1; ni <= n; ni++) {
+        dp[ni][1][a[ni]] = true;
+
+        for (int ki = 1; ki <= k; ki++) {
+            for (int si = 1; si <= ki * max_a; si++) {
+                if (dp[ni - 1][ki][si] || (si >= a[ni] && dp[ni - 1][ki - 1][si - a[ni]])) {
+                    dp[ni][ki][si] = true;
                 }
             }
         }
     }
 
-    int max_sum_a = 0, kx = k * x;
-    for (int m = 1; m <= k * max_a; m++) {
-        if (!dp[n][k][m]) continue;
-        if (abs(kx - 2 * m) < abs(kx - 2 * max_sum_a)) {
-            max_sum_a = m;
+    int max_sum_a = 0;
+    int kx = k * x;
+
+    for (int si = 1, si_end = k * max_a; si <= si_end; si++) {
+        if (!dp[n][k][si]) continue;
+
+        if (abs(kx - 2 * si) < abs(kx - 2 * max_sum_a)) {
+            max_sum_a = si;
         }
     }
 
-    int ans = max_sum_a * (k * x - max_sum_a);
+    int ans = max_sum_a * (kx - max_sum_a);
+
     cout << ans << '\n';
 
     return 0;

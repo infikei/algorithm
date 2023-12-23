@@ -1,5 +1,5 @@
 // Solve 2023-01-08
-// Update 2023-08-11
+// Update 2023-12-23
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -13,14 +13,16 @@ using ll = long long;
 int main() {
     FASTIO;
 
-    int n, ans = 0;
+    int n;
     cin >> n;
 
-    for (int i = 0; i < 3; i++) {
-        int a;
-        cin >> a;
+    int ans = 0;
 
-        ans += min(n, a);
+    for (int i = 0; i < 3; i++) {
+        int x;
+        cin >> x;
+
+        ans += min(n, x);
     }
 
     cout << ans << '\n';
