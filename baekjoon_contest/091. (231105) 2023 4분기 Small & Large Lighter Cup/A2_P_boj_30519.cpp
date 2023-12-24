@@ -1,4 +1,5 @@
 // Solve 2023-11-05
+// Update 2023-12-25
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -18,47 +19,47 @@ int main() {
     string s;
     cin >> c >> s;
 
-    vector<vector<int> > dp(4, vector<int>(4, 0));
+    vector<vector<int>> dp(4, vector<int>(4, 0));
 
     if (c == 'R') dp[0][1] = 1;
     else if (c == 'S') dp[0][2] = 1;
     else dp[0][3] = 1;
 
-    for (int pos = 0; pos < SIZE(s); pos++) {
-        vector<vector<int> > dp2 = dp;
+    for (char &c : s) {
+        vector<vector<int>> prev_dp = dp;
 
-        if (s[pos] == 'R') {
+        if (c == 'R') {
             for (int j = 1; j <= 3; j++) {
-                dp[j][1] += dp2[0][j];
+                dp[j][1] += prev_dp[0][j];
                 dp[j][1] %= MOD;
 
                 for (int i = 1; i <= 3; i++) {
                     if (i == 3 && j == 1) continue;
-                    dp[j][1] += dp2[i][j];
+                    dp[j][1] += prev_dp[i][j];
                     dp[j][1] %= MOD;
                 }
             }
         }
-        else if (s[pos] == 'S') {
+        else if (c == 'S') {
             for (int j = 1; j <= 3; j++) {
-                dp[j][2] += dp2[0][j];
+                dp[j][2] += prev_dp[0][j];
                 dp[j][2] %= MOD;
 
                 for (int i = 1; i <= 3; i++) {
                     if (i == 1 && j == 2) continue;
-                    dp[j][2] += dp2[i][j];
+                    dp[j][2] += prev_dp[i][j];
                     dp[j][2] %= MOD;
                 }
             }
         }
         else {
             for (int j = 1; j <= 3; j++) {
-                dp[j][3] += dp2[0][j];
+                dp[j][3] += prev_dp[0][j];
                 dp[j][3] %= MOD;
 
                 for (int i = 1; i <= 3; i++) {
                     if (i == 2 && j == 3) continue;
-                    dp[j][3] += dp2[i][j];
+                    dp[j][3] += prev_dp[i][j];
                     dp[j][3] %= MOD;
                 }
             }

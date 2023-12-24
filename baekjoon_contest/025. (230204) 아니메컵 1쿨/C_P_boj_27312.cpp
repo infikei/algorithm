@@ -1,5 +1,5 @@
 // Solve 2023-02-04
-// Update 2023-08-18
+// Update 2023-12-25
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -26,8 +26,9 @@ int main() {
         cout << "? " << i << ' ' << i << endl;
         cin >> ans[i];
 
-        ans[i]++;
-        if (ans[i] > a[i]) ans[i] = 1;
+        if (++ans[i] > a[i]) {
+            ans[i] = 1;
+        }
     }
 
     for (int i = m + 1; i <= n; i++) {
@@ -35,9 +36,11 @@ int main() {
     }
 
     cout << '!';
+
     for (int i = 1; i <= n; i++) {
         cout << ' ' << ans[i];
     }
+
     cout << endl;
 
     return 0;

@@ -1,4 +1,5 @@
 // Solve 2023-11-12
+// Update 2023-12-25
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -15,8 +16,10 @@ int main() {
     int t;
     cin >> t;
 
-    int l0, r0, ans = 0;
+    int l0, r0;
     cin >> l0 >> r0;
+
+    int ans = 0;
 
     if (l0 == r0 && l0 != 0) ans++;
 

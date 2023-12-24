@@ -1,25 +1,29 @@
+// Solve 2023-02-04
+// Update 2023-12-25
+
 #include <bits/stdc++.h>
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+using namespace std;
+
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
 #define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
-#define INF (int)1e9
-#define LLINF (ll)4e18
-using namespace std;
 using ll = long long;
-using uint = unsigned int;
-using ull = unsigned long long;
 
 int main() {
     FASTIO;
 
     string s;
     cin >> s;
-    int ans = s.length() + 2;
-    for (auto a : s) {
-        if (a == '_') {
+
+    int ans = SIZE(s) + 2;
+
+    for (char &c : s) {
+        if (c == '_') {
             ans += 5;
         }
     }
+
     cout << ans << '\n';
 
     return 0;

@@ -1,4 +1,5 @@
 // Solve 2023-11-13
+// Update 2023-12-25
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -15,7 +16,7 @@ int main() {
     int n, m;
     cin >> n >> m;
 
-    vector<vector<int> > table(n + 1, vector<int>(2, -1));
+    vector<vector<int>> table(n + 1, vector<int>(2, -1));
 
     for (int i = 0; i < m; i++) {
         int a, c;
@@ -30,7 +31,8 @@ int main() {
         }
     }
 
-    int ans_min = 0, ans_max = 0;
+    int ans_min = 0;
+    int ans_max = 0;
 
     for (int i = 1; i <= n; i++) {
         if (table[i][0] == 1 && table[i][1] == 0) ans_min++;

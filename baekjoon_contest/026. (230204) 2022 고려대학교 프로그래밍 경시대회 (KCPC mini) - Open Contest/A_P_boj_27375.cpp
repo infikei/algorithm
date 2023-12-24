@@ -1,5 +1,5 @@
 // Solve 2023-02-04
-// Update 2023-08-22
+// Update 2023-12-25
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -11,10 +11,7 @@ using namespace std;
 using ll = long long;
 using pii = pair<int, int>;
 
-int n, k, ans;
-vector<pii> vec;
-
-void dfs(int depth = 0, int start = 1, int hakjum = 0) {
+void dfs(int n, int k, int &ans, vector<pii> &lectures, int depth = 0, int start = 1, int hakjum = 0) {
     if (depth == n) {
         if (hakjum == k) ans++;
         return;
@@ -22,28 +19,33 @@ void dfs(int depth = 0, int start = 1, int hakjum = 0) {
 
     if (hakjum > k) return;
 
-    if (vec[depth].first < 500 && vec[depth].first >= start) {
-        dfs(depth + 1, vec[depth].second + 1, hakjum + vec[depth].second - vec[depth].first + 1);
+    if (lectures[depth].first < 500 && lectures[depth].first >= start) {
+        int next_start = lectures[depth].second + 1;
+        int next_hakjum = hakjum + lectures[depth].second - lectures[depth].first + 1;
+        dfs(n, k, ans, lectures, depth + 1, next_start, next_hakjum);
     }
 
-    dfs(depth + 1, start, hakjum);
+    dfs(n, k, ans, lectures, depth + 1, start, hakjum);
 }
 
 int main() {
     FASTIO;
 
+    int n, k;
     cin >> n >> k;
+
+    vector<pii> lectures;
 
     for (int i = 0; i < n; i++) {
         int w, s, e;
         cin >> w >> s >> e;
 
-        vec.push_back({ w * 100 + s, w * 100 + e });
+        lectures.emplace_back(w * 100 + s, w * 100 + e);
     }
 
-    sort(vec.begin(), vec.end());
-
-    dfs();
+    sort(lectures.begin(), lectures.end());
+    int ans = 0;
+    dfs(n, k, ans, lectures);
 
     cout << ans << '\n';
 

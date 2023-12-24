@@ -1,4 +1,5 @@
 // Solve 2023-11-11
+// Update 2023-12-25
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -29,8 +30,10 @@ int main() {
         cin >> cmd >> l >> r;
 
         if (cmd == 1) {
-            int k, ans = 0;
+            int k;
             cin >> k;
+
+            int ans = 0;
 
             for (int i = l; i <= r; i++) {
                 if (a[i] == k) {

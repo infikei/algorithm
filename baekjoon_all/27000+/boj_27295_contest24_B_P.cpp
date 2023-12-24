@@ -1,5 +1,5 @@
 // Solve 2023-01-29
-// Update 2023-08-18
+// Update 2023-12-25
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -10,55 +10,54 @@ using namespace std;
 #define ALL(v) v.begin(),v.end()
 using ll = long long;
 
-ll n, b, xs, ys;
-
 ll calc_gcd(ll a, ll b) {
-    if (a % b == 0) {
-        return b;
-    }
-    return calc_gcd(b, a % b);
-}
+    ll r = a % b;
 
-void solve() {
-    if (xs == 0) {
-        cout << "EZPZ\n";
-        return;
-    }
+    if (r == 0) return b;
 
-    ll p = ys - b * n;
-    ll q = xs;
-
-    if (p % q == 0) {
-        cout << p / q << '\n';
-        return;
-    }
-
-    if (q < 0) {
-        p = -p;
-        q = -q;
-    }
-
-    ll gcd_p_q = calc_gcd(abs(p), q);
-    p /= gcd_p_q;
-    q /= gcd_p_q;
-
-    cout << p << '/' << q << '\n';
+    return calc_gcd(b, r);
 }
 
 int main() {
     FASTIO;
 
+    ll n, b;
     cin >> n >> b;
+
+    ll x_sum = 0;
+    ll y_sum = 0;
 
     for (ll i = 0; i < n; i++) {
         ll xi, yi;
         cin >> xi >> yi;
 
-        xs += xi;
-        ys += yi;
+        x_sum += xi;
+        y_sum += yi;
     }
 
-    solve();
+    if (x_sum == 0) {
+        cout << "EZPZ\n";
+    }
+    else {
+        ll p = y_sum - b * n;
+        ll q = x_sum;
+
+        if (p % q == 0) {
+            cout << p / q << '\n';
+        }
+        else {
+            if (q < 0) {
+                p = -p;
+                q = -q;
+            }
+
+            ll gcd_p_q = calc_gcd(abs(p), q);
+            p /= gcd_p_q;
+            q /= gcd_p_q;
+
+            cout << p << '/' << q << '\n';
+        }
+    }
 
     return 0;
 }

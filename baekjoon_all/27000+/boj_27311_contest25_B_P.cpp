@@ -1,63 +1,63 @@
+// Solve 2023-02-04
+// Update 2023-12-25
+
 #include <bits/stdc++.h>
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+using namespace std;
+
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
 #define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
-#define INF (int)1e9
-#define LLINF (ll)4e18
-using namespace std;
 using ll = long long;
-using uint = unsigned int;
-using ull = unsigned long long;
-using pii = pair<int, int>;
-using pi4 = pair<pii, pii>;
 
-int r, c;
-string latte[10];
+struct Area{
+    int x0, x1, y0, y1;
 
-pi4 square_min_max(pi4 area, char ch) {
-    int r0 = area.first.first, r1 = area.first.second;
-    int c0 = area.second.first, c1 = area.second.second;
+    Area(int x0, int x1, int y0, int y1) : x0(x0), x1(x1), y0(y0), y1(y1) {}
+};
 
-    int r_min = r1, r_max = r0;
-    int c_min = c1, c_max = c0;
-    for (int row = r0; row <= r1; row++) {
-        for (int col = c0; col <= c1; col++) {
-            if (latte[row][col] == ch) {
-                r_min = min(r_min, row); r_max = max(r_max, row);
-                c_min = min(c_min, col); c_max = max(c_max, col);
+Area square_min_max(vector<string> &latte, Area area, char ch) {
+    int x_min = area.x1, x_max = area.x0;
+    int y_min = area.y1, y_max = area.y0;
+
+    for (int x = area.x0; x <= area.x1; x++) {
+        for (int y = area.y0; y <= area.y1; y++) {
+            if (latte[x][y] == ch) {
+                x_min = min(x_min, x); x_max = max(x_max, x);
+                y_min = min(y_min, y); y_max = max(y_max, y);
             }
         }
     }
-    return {{r_min, r_max}, {c_min, c_max}};
+
+    return { x_min, x_max, y_min, y_max };
 }
 
-bool is_heart() {
-    pi4 area_n = square_min_max({{0, r - 1}, {0, c - 1}}, '#');
-    int r0 = area_n.first.first, r1 = area_n.first.second;
-    int c0 = area_n.second.first, c1 = area_n.second.second;
-    if (r1 - r0 != c1 - c0 || r1 - r0 < 1) {
-        return false;
-    }
+bool is_heart(vector<string> &latte) {
+    int r = SIZE(latte);
+    int c = SIZE(latte[0]);
 
-    pi4 area_m = square_min_max({{r0, r1}, {c0, c1}}, '.');
-    int r2 = area_m.first.first, r3 = area_m.first.second;
-    int c2 = area_m.second.first, c3 = area_m.second.second;
-    if (r3 - r2 != c3 - c2 || r3 - r2 < 0) {
-        return false;
-    }
-    if ((r0 != r2 && r1 != r3) || (c0 != c2 && c1 != c3)) {
-        return false;
-    }
+    Area cream = square_min_max(latte, { 0, r - 1, 0, c - 1 }, '#');
 
-    for (int row = r0; row <= r1; row++) {
-        for (int col = c0; col <= c1; col++) {
-            if (row >= r2 && row <= r3 && col >= c2 && col <= c3) {
-                if (latte[row][col] != '.') {
+    if (cream.x1 - cream.x0 != cream.y1 - cream.y0) return false;
+    if (cream.x1 - cream.x0 < 1) return false;
+
+    Area not_cream = square_min_max(latte, { cream.x0, cream.x1, cream.y0, cream.y1 }, '.');
+
+    if (not_cream.x1 - not_cream.x0 != not_cream.y1 - not_cream.y0) return false;
+    if (not_cream.x1 - not_cream.x0 < 0) return false;
+
+    if (cream.x0 != not_cream.x0 && cream.x1 != not_cream.x1) return false;
+    if (cream.y0 != not_cream.y0 && cream.y1 != not_cream.y1) return false;
+
+    for (int x = cream.x0; x <= cream.x1; x++) {
+        for (int y = cream.y0; y <= cream.y1; y++) {
+            if (x >= not_cream.x0 && x <= not_cream.x1 && y >= not_cream.y0 && y <= not_cream.y1) {
+                if (latte[x][y] != '.') {
                     return false;
                 }
             }
             else {
-                if (latte[row][col] != '#') {
+                if (latte[x][y] != '#') {
                     return false;
                 }
             }
@@ -74,11 +74,16 @@ int main() {
     cin >> t;
 
     for (int ti = 0; ti < t; ti++) {
+        int r, c;
         cin >> r >> c;
-        for (int row = 0; row < r; row++) {
-            cin >> latte[row];
+
+        vector<string> latte(r);
+
+        for (string &row : latte) {
+            cin >> row;
         }
-        cout << (is_heart() ? 1 : 0) << '\n';
+
+        cout << (is_heart(latte) ? 1 : 0) << '\n';
     }
 
     return 0;

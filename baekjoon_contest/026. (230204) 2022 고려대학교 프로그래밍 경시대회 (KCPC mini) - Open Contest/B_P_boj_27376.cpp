@@ -1,5 +1,5 @@
 // Solve 2023-02-04
-// Update 2023-08-22
+// Update 2023-12-25
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -12,7 +12,9 @@ using ll = long long;
 
 struct Light{
     ll x, t, s;
+
     Light(ll x, ll t, ll s) : x(x), t(t), s(s) {}
+
     bool operator<(const Light &rhs) const {
         if (x != rhs.x) return x < rhs.x;
         if (t != rhs.t) return t < rhs.t;
@@ -32,18 +34,19 @@ int main() {
         ll x, t, s;
         cin >> x >> t >> s;
 
-        lights.push_back({ x, t, s });
+        lights.emplace_back(x, t, s);
     }
 
-    sort(ALL(lights));
+    sort(lights.begin(), lights.end());
 
-    ll now_t = 0, now_x = 0;
+    ll now_t = 0;
+    ll now_x = 0;
 
-    for (Light light : lights) {
+    for (Light &light : lights) {
         now_t += light.x - now_x;
         now_x = light.x;
-
         ll t2 = light.t * 2;
+
         if ((now_t - light.s + t2) % t2 >= light.t) {
             now_t = ((now_t - light.s + t2) / t2) * t2 + light.s;
         }
