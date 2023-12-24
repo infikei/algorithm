@@ -1,7 +1,7 @@
 # Solve 2023-03-10
-# Update 2023-10-10
+# Update 2023-12-24
 
 s = input()
-idx = int(input())
+i = int(input())
 
-print(s[idx - 1])
+print(s[i - 1])

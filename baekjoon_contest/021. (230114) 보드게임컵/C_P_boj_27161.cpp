@@ -1,23 +1,36 @@
-#include <iostream>
-#include <string>
-#define fastio ios_base::sync_with_stdio(false);cout.tie(NULL);cin.tie(NULL); // boj_15552.cpp
+// Solve 2023-01-14
+// Update 2023-12-24
+
+#include <bits/stdc++.h>
 using namespace std;
 
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
+
 int main() {
-    fastio;
+    FASTIO;
 
     int n;
     cin >> n;
 
-    int game_time = 0, game_dt = 1;
-    for (int i = 0; i < n; i++) {
-        string card_type;
-        int card_time;
-        cin >> card_type >> card_time;
+    int t = 0;
+    int direction = 1;
 
-        game_time = (game_time + game_dt + 11) % 12 + 1;
-        if (game_time != card_time && card_type == "HOURGLASS") game_dt *= -1;
-        cout << game_time << (game_time == card_time && card_type != "HOURGLASS" ? " YES\n" : " NO\n");
+    for (int i = 0; i < n; i++) {
+        string s;
+        int x;
+        cin >> s >> x;
+
+        t = (t + direction + 11) % 12 + 1;
+
+        if (t != x && s == "HOURGLASS") {
+            direction = -direction;
+        }
+
+        cout << t << ' ' << (t == x && s != "HOURGLASS" ? "YES" : "NO") << '\n';
     }
 
     return 0;

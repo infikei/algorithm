@@ -1,4 +1,5 @@
 // Solve 2023-09-29
+// Update 2023-12-24
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -23,10 +24,10 @@ int main() {
 
     int ans = 0;
 
-    while (!s.empty()) {
-        if (s.back() == '0') ans++;
-
-        s.pop_back();
+    for (char &c : s) {
+        if (c == '0') {
+            ans++;
+        }
     }
 
     cout << ans << '\n';

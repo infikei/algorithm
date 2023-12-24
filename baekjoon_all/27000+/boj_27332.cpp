@@ -1,4 +1,5 @@
 // Solve 2023-09-29
+// Update 2023-12-24
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -15,8 +16,7 @@ int main() {
     int a, b;
     cin >> a >> b;
 
-    if (a + b * 7 <= 30) cout << 1 << '\n';
-    else cout << 0 << '\n';
+    cout << (a + b * 7 <= 30 ? 1 : 0) << '\n';
 
     return 0;
 }

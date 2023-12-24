@@ -1,23 +1,35 @@
-#include <iostream>
-#define fastio ios_base::sync_with_stdio(false);cout.tie(NULL);cin.tie(NULL); // boj_15552.cpp
+// Solve 2023-01-14
+// Update 2023-12-24
+
+#include <bits/stdc++.h>
 using namespace std;
 
-int n, ans, arr[33];
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
 
 int main() {
-    fastio;
+    FASTIO;
 
+    int n;
     cin >> n;
-    for (int i = 0; i < n; i++) {
-        cin >> arr[i];
+
+    vector<int> numbers(n);
+
+    for (int &x : numbers) {
+        cin >> x;
     }
 
-    ans = arr[0];
+    int ans = numbers[0];
+
     for (int i = 1; i < n; i++) {
-        if (arr[i - 1] + 1 != arr[i]) {
-            ans += arr[i];
+        if (numbers[i - 1] + 1 != numbers[i]) {
+            ans += numbers[i];
         }
     }
+
     cout << ans << '\n';
 
     return 0;

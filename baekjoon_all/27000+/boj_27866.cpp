@@ -1,5 +1,5 @@
 // Solve 2023-03-10
-// Update 2023-10-10
+// Update 2023-12-24
 
 #include <iostream>
 #include <string>
@@ -7,10 +7,10 @@ using namespace std;
 
 int main() {
     string s;
-    int idx;
-    cin >> s >> idx;
+    int i;
+    cin >> s >> i;
 
-    cout << s[idx - 1] << '\n';
+    cout << s[i - 1] << '\n';
 
     return 0;
 }

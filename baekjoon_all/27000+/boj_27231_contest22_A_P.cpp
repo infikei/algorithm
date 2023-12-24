@@ -1,73 +1,82 @@
-#include <iostream>
-#include <string>
-#include <vector>
-#include <algorithm>
-#include <cmath>
-#define fastio ios_base::sync_with_stdio(false);cout.tie(NULL);cin.tie(NULL); // boj_15552.cpp
+// Solve 2023-01-15
+// Update 2023-12-24
+
+#include <bits/stdc++.h>
 using namespace std;
+
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
 using ll = long long;
 
-void solve(ll n) {
-    string s = to_string(n);
-    bool check = true;
-    for (auto a : s) {
-        if (a != '0' && a != '1') {
-            check = false;
-            break;
-        }
-    }
-    if (check) {
-        cout << "Hello, BOJ 2023!\n";
-        return;
-    }
-
-    vector<ll> vec[10];
-    for (int i = 0; i < s.length(); i++) {
-        vec[i].push_back(stoll(s.substr(0, i + 1)));
-        for (int j = 0; j < i; j++) {
-            ll tmp = stoll(s.substr(j + 1, i - j));
-            for (auto a : vec[j]) {
-                vec[i].push_back(a + tmp);
-            }
-        }
-
-        // 정렬 후 중복 제거
-        sort(vec[i].begin(), vec[i].end());
-        vec[i].erase(unique(vec[i].begin(), vec[i].end()), vec[i].end());
-    }
-
-    ll vec_max = vec[s.length() - 1].back();
-    int res = 0, iter = 1;
-    while (true) {
-        ll n_sum = 0, n_tmp = n;
-        while (n_tmp > 0) {
-            n_sum += pow(n_tmp % 10, iter);
-            n_tmp /= 10;
-        }
-        if (n_sum > vec_max) break;
-
-        for (auto a : vec[s.length() - 1]) {
-            if (a == n_sum) {
-                res++;
-                break;
-            }
-        }
-        iter++;
-    }
-    cout << res << '\n';
-}
-
 int main() {
-    fastio;
+    FASTIO;
 
     int t;
     cin >> t;
 
     for (int ti = 0; ti < t; ti++) {
-        ll n;
-        cin >> n;
+        string s;
+        cin >> s;
 
-        solve(n);
+        bool check_if_infinite = true;
+
+        for (char &c : s) {
+            if (c != '0' && c != '1') {
+                check_if_infinite = false;
+                break;
+            }
+        }
+
+        if (check_if_infinite) {
+            cout << "Hello, BOJ 2023!\n";
+            continue;
+        }
+
+        int n = stoi(s);
+        vector<vector<int>> rhs_sums(SIZE(s), vector<int>());
+
+        for (int i = 0, ie = SIZE(s); i < ie; i++) {
+            rhs_sums[i].push_back(stoi(s.substr(0, i + 1)));
+
+            for (int j = 0; j < i; j++) {
+                int right = stoi(s.substr(j + 1, i - j));
+
+                for (int left : rhs_sums[j]) {
+                    rhs_sums[i].push_back(left + right);
+                }
+            }
+
+            // 정렬 후 중복 제거
+            sort(rhs_sums[i].begin(), rhs_sums[i].end());
+            rhs_sums[i].erase(unique(rhs_sums[i].begin(), rhs_sums[i].end()), rhs_sums[i].end());
+        }
+
+        int max_rhs_sum = rhs_sums.back().back();
+        int iter = 1;
+        int ans = 0;
+
+        while (true) {
+            ll lhs_sum = 0;
+
+            for (char &c : s) {
+                lhs_sum += pow(c - '0', iter);
+            }
+
+            if (lhs_sum > max_rhs_sum) break;
+
+            for (int rhs_sum : rhs_sums.back()) {
+                if (lhs_sum == rhs_sum) {
+                    ans++;
+                    break;
+                }
+            }
+
+            iter++;
+        }
+
+        cout << ans << '\n';
     }
 
     return 0;

@@ -1,4 +1,5 @@
 # Solve 2023-03-10
+# Update 2023-12-24
 
 import sys
 
@@ -10,8 +11,9 @@ n = int(input())
 while True:
     print("? 1")
     flush()
-    ch = input()
-    if ch == "Y":
+    response = input()
+
+    if response == "Y":
         break
 
 print("! 1")
