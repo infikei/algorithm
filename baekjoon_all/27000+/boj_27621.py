@@ -1,4 +1,5 @@
 # Solve 2023-10-22
+# Update 2023-12-25
 
 ans = [
     [0, 0, 0],
@@ -53,4 +54,4 @@ ans = [
     [0],
 ]
 
-print(*ans[int(input())], sep=" ")
+print(*ans[int(input())])
