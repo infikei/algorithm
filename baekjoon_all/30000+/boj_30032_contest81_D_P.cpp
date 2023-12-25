@@ -1,4 +1,5 @@
 // Solve 2023-09-17
+// Update 2023-12-25
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -15,7 +16,7 @@ int main() {
     int n, d;
     cin >> n >> d;
 
-    vector<string> graph(n, "");
+    vector<string> graph(n);
 
     for (string &s : graph) {
         cin >> s;

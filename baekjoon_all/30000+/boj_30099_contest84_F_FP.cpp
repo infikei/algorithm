@@ -1,4 +1,5 @@
 // Solve 2023-09-26
+// Update 2023-12-25
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -18,8 +19,8 @@ int main() {
     int n;
     cin >> n;
 
-    vector<vector<int> > board(n, vector<int>(n, -1));
-    vector<vector<int> > board_cnt(n, vector<int>(n, 0));
+    vector<vector<int>> board(n, vector<int>(n, -1));
+    vector<vector<int>> board_cnt(n, vector<int>(n, 0));
 
     for (int col = 0; col < n; col++) {
         cin >> board[0][col];
@@ -71,7 +72,7 @@ int main() {
             }
         }
 
-        for (int col = n % 3 == 0 ? 1 : 0; col < n; col += 3) {
+        for (int col = (n % 3 == 0 ? 1 : 0); col < n; col += 3) {
             if (board_cnt[prow][col] == 1) board[row][col] = 0;
             else board[row][col] = 1;
         }

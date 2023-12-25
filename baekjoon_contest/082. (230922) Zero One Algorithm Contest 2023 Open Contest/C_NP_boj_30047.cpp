@@ -1,4 +1,5 @@
 // Solve 2023-09-24
+// Update 2023-12-25
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -28,33 +29,31 @@ int main() {
             vec.push_back(0);
         }
 
-        int flag = 1;
+        bool while_flag = true;
 
-        while (flag > 0) {
-            flag = 0;
+        while (while_flag) {
+            while_flag = false;
 
             while (SIZE(vec) >= 2 && vec[SIZE(vec) - 2] == -1 && vec[SIZE(vec) - 1] >= 0) {
-                int x = vec.back();
+                int val = vec.back();
                 vec.pop_back();
 
                 while (!vec.empty() && vec.back() == -1) {
                     vec.pop_back();
-                    x++;
+                    val++;
                 }
 
-                vec.push_back(x);
-
-                flag++;
+                vec.push_back(val);
+                while_flag = true;
             }
 
             while (SIZE(vec) >= 3 && vec[SIZE(vec) - 3] == -2 && vec[SIZE(vec) - 2] >= 0 && vec[SIZE(vec) - 1] >= 0) {
-                int x = min(vec[SIZE(vec) - 2], vec[SIZE(vec) - 1]);
+                int val = min(vec[SIZE(vec) - 2], vec[SIZE(vec) - 1]);
                 vec.pop_back();
                 vec.pop_back();
                 vec.pop_back();
-                vec.push_back(x);
-
-                flag++;
+                vec.push_back(val);
+                while_flag = true;
             }
         }
     }

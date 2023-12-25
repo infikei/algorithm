@@ -1,4 +1,5 @@
 // Solve 2023-09-25
+// Update 2023-12-25
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -24,11 +25,9 @@ int main() {
     sort(price.begin(), price.end(), greater<int>());
 
     deque<int> dque;
-
     dque.push_back(price[0]);
     dque.push_back(price[1]);
     dque.push_front(price[2]);
-
     int ans = price[0] * (price[1] + price[2]);
 
     for (int i = 3; i < n; i++) {
@@ -43,7 +42,6 @@ int main() {
     }
 
     ans += dque.front() * dque.back();
-
     cout << ans << '\n';
 
     for (int i = 0; i < n; i++) {

@@ -1,4 +1,5 @@
 // Solve 2023-11-05
+// Update 2023-12-25
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -18,7 +19,7 @@ int main() {
 
     int cnt[26] = { 0 };
 
-    for (char c : s) {
+    for (char &c : s) {
         cnt[c - 'a']++;
     }
 
@@ -35,8 +36,7 @@ int main() {
         }
     }
 
-    if (ans) cout << "Yes\n";
-    else cout << "No\n";
+    cout << (ans ? "Yes" : "No") << '\n';
 
     return 0;
 }

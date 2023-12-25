@@ -1,4 +1,5 @@
 // Solve 2023-10-07
+// Update 2023-12-25
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -24,12 +25,7 @@ int main() {
         sum_of_p += p;
     }
 
-    if (sum_of_p % x == 0) {
-        cout << 1 << '\n';
-    }
-    else {
-        cout << 0 << '\n';
-    }
+    cout << (sum_of_p % x == 0 ? 1 : 0) << '\n';
 
     return 0;
 }

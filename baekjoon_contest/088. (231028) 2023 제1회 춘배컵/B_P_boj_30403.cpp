@@ -1,4 +1,5 @@
 // Solve 2023-10-28
+// Update 2023-12-25
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -28,7 +29,8 @@ int main() {
         }
     }
 
-    bool lower = true, upper = true;
+    bool lower = true;
+    bool upper = true;
 
     for (int i = 0; i < 7; i++) {
         if (!check[i]) {

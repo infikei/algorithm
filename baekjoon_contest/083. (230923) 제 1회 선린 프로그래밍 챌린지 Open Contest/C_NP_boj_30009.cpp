@@ -1,4 +1,5 @@
 // Solve 2023-09-25
+// Update 2023-12-25
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -15,15 +16,17 @@ int main() {
     int n, x, y, r;
     cin >> n >> x >> y >> r;
 
-    int xl = x - r, xr = x + r;
-    int cnt_a = 0, cnt_b = 0;
+    int xl = x - r;
+    int xr = x + r;
+    int cnt_a = 0;
+    int cnt_b = 0;
 
     for (int i = 0; i < n; i++) {
-        int xx;
-        cin >> xx;
+        int nx;
+        cin >> nx;
 
-        if (xl < xx && xx < xr) cnt_a++;
-        else if (xx == xl || xx == xr) cnt_b++;
+        if (xl < nx && nx < xr) cnt_a++;
+        else if (nx == xl || nx == xr) cnt_b++;
     }
 
     cout << cnt_a << ' ' << cnt_b << '\n';

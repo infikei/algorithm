@@ -1,4 +1,5 @@
 // Solve 2023-09-17
+// Update 2023-12-25
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -11,7 +12,9 @@ using ll = long long;
 
 struct Oksusu{
     int row, col, value;
+
     Oksusu(int r = 0, int c = 0, int v = 0) : row(r), col(c), value(v) {}
+
     bool operator<(const Oksusu &rhs) const {
         return value < rhs.value;
     }
@@ -26,7 +29,7 @@ int main() {
     int n, m;
     cin >> n >> m;
 
-    vector<vector<int> > farm(n, vector<int>(m, 0));
+    vector<vector<int>> farm(n, vector<int>(m, 0));
     priority_queue<Oksusu> oksusu_maxtop;
 
     for (int r = 0; r < n; r++) {
@@ -35,7 +38,7 @@ int main() {
             cin >> v;
 
             if (r == 0 || r == n - 1 || c == 0 || c == m - 1) {
-                oksusu_maxtop.push({ r, c, v });
+                oksusu_maxtop.emplace(r, c, v);
             }
             else {
                 farm[r][c] = v;
@@ -59,7 +62,7 @@ int main() {
             if (nr < 0 || nr >= n || nc < 0 || nc >= m) continue;
             if (farm[nr][nc] == 0) continue;
 
-            oksusu_maxtop.push({ nr, nc, farm[nr][nc] });
+            oksusu_maxtop.emplace(nr, nc, farm[nr][nc]);
             farm[nr][nc] = 0;
         }
     }

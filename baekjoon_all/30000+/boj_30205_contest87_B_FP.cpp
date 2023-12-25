@@ -1,4 +1,5 @@
 // Solve 2023-10-07
+// Update 2023-12-25
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -54,8 +55,7 @@ int main() {
         }
     }
 
-    if (ans) cout << 1 << '\n';
-    else cout << 0 << '\n';
+    cout << (ans ? 1 : 0) << '\n';
 
     return 0;
 }

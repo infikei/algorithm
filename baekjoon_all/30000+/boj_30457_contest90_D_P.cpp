@@ -1,4 +1,5 @@
 // Solve 2023-11-05
+// Update 2023-12-25
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -12,16 +13,17 @@ using ll = long long;
 int main() {
     FASTIO;
 
-    int n, ans = 0;
+    int n;
     cin >> n;
 
-    unordered_map<int, int> hs_map;
+    int cnt[1001] = { 0 };
+    int ans = 0;
 
     for (int i = 0; i < n; i++) {
         int x;
         cin >> x;
 
-        if (++hs_map[x] <= 2) {
+        if (++cnt[x] <= 2) {
             ans++;
         }
     }

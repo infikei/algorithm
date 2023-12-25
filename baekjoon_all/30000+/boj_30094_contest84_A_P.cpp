@@ -1,4 +1,5 @@
 // Solve 2023-09-24
+// Update 2023-12-25
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -14,6 +15,7 @@ const ll MOD = 998244353;
 struct Num{
     ll val = 0;
     int idx = 0;
+
     bool operator<(const Num &rhs) const {
         return val < rhs.val;
     }
@@ -26,7 +28,8 @@ int main() {
     cin >> n;
 
     vector<Num> nums(n);
-    ll max_val = 0, n1 = n - 1;
+    ll max_val = 0;
+    int n1 = n - 1;
 
     for (int i = 0; i < n; i++) {
         ll c, a;
@@ -47,7 +50,8 @@ int main() {
         min_val += nums[i].val * (n1 - i);
     }
 
-    ll cnt = 1, cur = 1;
+    ll cnt = 1;
+    ll cur = 1;
 
     for (int i = 1; i < n; i++) {
         if (nums[i - 1].val == nums[i].val) {

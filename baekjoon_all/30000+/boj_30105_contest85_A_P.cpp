@@ -1,4 +1,5 @@
 // Solve 2023-09-24
+// Update 2023-12-25
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -28,7 +29,7 @@ int main() {
     }
 
     for (int i = 1; i < n; i++) {
-        unordered_set<int> hs_res;
+        unordered_set<int> new_hs;
 
         for (int j = 0; j < n; j++) {
             if (j == i) continue;
@@ -36,30 +37,32 @@ int main() {
             int y = abs(vec[j] - vec[i]);
 
             if (hs.find(y) != hs.end()) {
-                hs_res.insert(y);
+                new_hs.insert(y);
             }
         }
 
-        swap(hs, hs_res);
+        swap(hs, new_hs);
 
         if (hs.empty()) break;
     }
 
-    vector<int> ans_vec;
+    vector<int> ans;
 
     for (auto it = hs.begin(); it != hs.end(); it++) {
-        ans_vec.push_back(*it);
+        ans.push_back(*it);
     }
 
-    sort(ans_vec.begin(), ans_vec.end());
+    sort(ans.begin(), ans.end());
 
-    cout << SIZE(ans_vec) << '\n';
+    cout << SIZE(ans) << '\n';
 
-    for (int &x : ans_vec) {
-        cout << x << ' ';
+    if (SIZE(ans) > 0) {
+        for (int &x : ans) {
+            cout << x << ' ';
+        }
+
+        cout << '\n';
     }
-
-    cout << '\n';
 
     return 0;
 }

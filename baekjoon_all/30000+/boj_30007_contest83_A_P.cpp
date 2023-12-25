@@ -1,4 +1,5 @@
 // Solve 2023-09-23
+// Update 2023-12-25
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -19,7 +20,8 @@ int main() {
         int a, b, x;
         cin >> a >> b >> x;
 
-        cout << a * (x - 1) + b << '\n';
+        int w = a * (x - 1) + b;
+        cout << w << '\n';
     }
 
     return 0;

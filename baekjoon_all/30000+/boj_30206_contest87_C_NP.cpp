@@ -1,4 +1,5 @@
 // Solve 2023-10-09
+// Update 2023-12-25
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -17,7 +18,7 @@ int main() {
     int n, m;
     cin >> n >> m;
 
-    vector<vector<int> > adj(n + 1, vector<int>());
+    vector<vector<int>> adj(n + 1, vector<int>());
 
     for (int i = 0; i < m; i++) {
         int u, v;

@@ -1,4 +1,5 @@
 // Solve 2023-11-05
+// Update 2023-12-25
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -15,8 +16,7 @@ int main() {
     int n;
     cin >> n;
 
-    if (n % 2 == 1) cout << "Goose\n";
-    else cout << "Duck\n";
+    cout << (n % 2 == 1 ? "Goose" : "Duck") << '\n';
 
     return 0;
 }

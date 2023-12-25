@@ -1,4 +1,5 @@
 // Solve 2023-10-28
+// Update 2023-12-25
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -15,7 +16,8 @@ int main() {
     int n, k;
     cin >> n >> k;
 
-    int ans = 0, x0 = 0;
+    int ans = 0;
+    int x0 = 0;
 
     for (int i = 0; i < n; i++) {
         int x;

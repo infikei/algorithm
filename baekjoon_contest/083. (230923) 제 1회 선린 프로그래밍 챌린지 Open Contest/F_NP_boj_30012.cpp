@@ -1,4 +1,5 @@
 // Solve 2023-09-25
+// Update 2023-12-25
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -25,7 +26,8 @@ int main() {
     cin >> k >> l;
 
     int k2 = k * 2;
-    int min_val = 2e9, min_idx = 0;
+    int min_val = 2e9;
+    int min_idx = 0;
 
     for (int i = 0; i < n; i++) {
         int dist = abs(frog_e[i] - frog_s);

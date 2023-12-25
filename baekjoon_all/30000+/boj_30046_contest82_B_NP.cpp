@@ -1,4 +1,5 @@
 // Solve 2023-09-24
+// Update 2023-12-25
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -15,40 +16,39 @@ int main() {
     int n;
     cin >> n;
 
-    vector<string> hjs(3);
+    vector<string> hjses(3);
 
-    for (string &s : hjs) {
-        cin >> s;
+    for (string &hjs : hjses) {
+        cin >> hjs;
     }
 
     bool ans = false;
 
-    for (int i = 1; i <= 3; i++) {
+    for (int h = 1; h <= 3; h++) {
         for (int j = 1; j <= 3; j++) {
-            if (j == i) continue;
+            if (j == h) continue;
 
-            for (int k = 1; k <= 3; k++) {
-                if (k == i || k == j) continue;
+            for (int s = 1; s <= 3; s++) {
+                if (s == h || s == j) continue;
 
-                vector<string> hjs2 = hjs;
+                vector<string> changed_hjses = hjses;
 
-                for (string &s : hjs2) {
-                    for (char &c : s) {
-                        if (c == 'H') c = '0' + i;
+                for (string &hjs : changed_hjses) {
+                    for (char &c : hjs) {
+                        if (c == 'H') c = '0' + h;
                         else if (c == 'J') c = '0' + j;
-                        else if (c == 'S') c = '0' + k;
+                        else if (c == 'S') c = '0' + s;
                     }
                 }
 
-                if (hjs2[0] < hjs2[1] && hjs2[1] < hjs2[2]) {
+                if (changed_hjses[0] < changed_hjses[1] && changed_hjses[1] < changed_hjses[2]) {
                     ans = true;
                 }
             }
         }
     }
 
-    if (ans) cout << "HJS! HJS! HJS!\n";
-    else cout << "Hmm...\n";
+    cout << (ans ? "HJS! HJS! HJS!" : "Hmm...") << '\n';
 
     return 0;
 }
