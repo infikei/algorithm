@@ -1,25 +1,14 @@
 // Solve 2023-02-19
+// Update 2023-12-25
 
 #include <bits/stdc++.h>
 using namespace std;
 
-#ifdef BOJ
-#define BOJTEST(x) ((void)0)
-#else
-#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
-#endif
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
 #define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
-#define INF (int)1e9
-#define LLINF (ll)4e18
 using ll = long long;
-using uint = unsigned int;
-using ull = unsigned long long;
-
-deque<char> dq;
-deque<int> dq_idx;
-int dq_size;
 
 int main() {
     FASTIO;
@@ -27,46 +16,42 @@ int main() {
     int n;
     cin >> n;
 
+    deque<pair<char, int>> dque;
+
     for (int i = 0; i < n; i++) {
         int cmd;
         cin >> cmd;
 
         if (cmd == 1) {
-            char ch;
-            cin >> ch;
-            dq.push_back(ch);
-            dq_idx.push_back(dq_size);
-            dq_size++;
+            char c;
+            cin >> c;
+            dque.emplace_back(c, SIZE(dque));
         }
         else if (cmd == 2) {
-            char ch;
-            cin >> ch;
-            dq.push_front(ch);
-            dq_idx.push_front(dq_size);
-            dq_size++;
+            char c;
+            cin >> c;
+            dque.emplace_front(c, SIZE(dque));
         }
         else {
-            if (dq.empty()) continue;
-            if (dq_idx.front() < dq_idx.back()) {
-                dq.pop_back();
-                dq_idx.pop_back();
-                dq_size--;
+            if (dque.empty()) continue;
+
+            if (dque.front().second < dque.back().second) {
+                dque.pop_back();
             }
             else {
-                dq.pop_front();
-                dq_idx.pop_front();
-                dq_size--;
+                dque.pop_front();
             }
         }
     }
 
-    if (dq.empty()) {
+    if (dque.empty()) {
         cout << 0 << '\n';
     }
     else {
-        for (auto ch : dq) {
-            cout << ch;
+        for (auto p : dque) {
+            cout << p.first;
         }
+
         cout << '\n';
     }
 

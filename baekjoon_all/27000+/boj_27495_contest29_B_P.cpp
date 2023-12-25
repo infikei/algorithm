@@ -1,58 +1,57 @@
 // Solve 2023-02-19
+// Update 2023-12-25
 
 #include <bits/stdc++.h>
 using namespace std;
 
-#ifdef BOJ
-#define BOJTEST(x) ((void)0)
-#else
-#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
-#endif
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
 #define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
-#define INF (int)1e9
-#define LLINF (ll)4e18
 using ll = long long;
-using uint = unsigned int;
-using ull = unsigned long long;
-
-string graph[9][9];
-pair<string, vector<string> > new_graph[8];
 
 int main() {
     FASTIO;
 
-    for (int row = 0; row < 9; row++) {
-        for (int col = 0; col < 9; col++) {
-            cin >> graph[row][col];
+    vector<vector<string>> board(9, vector<string>(9));
+
+    for (vector<string> &vec : board) {
+        for (string &s : vec) {
+            cin >> s;
         }
     }
 
+    vector<pair<string, vector<string>>> goals;
     int idx = 0;
-    for (int row = 0; row < 9; row += 3) {
-        for (int col = 0; col < 9; col += 3) {
-            if (row == 3 && col == 3) continue;
 
-            new_graph[idx].first = graph[row + 1][col + 1];
-            for (int i = 0; i < 3; i++) {
-                for (int j = 0; j < 3; j++) {
-                    if (i == 1 && j == 1) continue;
-                    new_graph[idx].second.push_back(graph[row + i][col + j]);
+    for (int row3 = 0; row3 < 9; row3 += 3) {
+        for (int col3 = 0; col3 < 9; col3 += 3) {
+            if (row3 == 3 && col3 == 3) continue;
+
+            pair<string, vector<string>> cur_goal;
+            cur_goal.first = board[row3 + 1][col3 + 1];
+
+            for (int row = 0; row < 3; row++) {
+                for (int col = 0; col < 3; col++) {
+                    if (row == 1 && col == 1) continue;
+
+                    cur_goal.second.push_back(board[row3 + row][col3 + col]);
                 }
             }
-            sort(ALL(new_graph[idx].second));
 
+            sort(cur_goal.second.begin(), cur_goal.second.end());
+            goals.push_back(cur_goal);
             idx++;
         }
     }
-    sort(new_graph, new_graph + 8);
+
+    sort(goals.begin(), goals.end());
 
     for (int i = 0; i < 8; i++) {
-        int ii = i + 1;
-        cout << '#' << ii << ". " << new_graph[i].first << '\n';
+        cout << '#' << i + 1 << ". " << goals[i].first << '\n';
+
         for (int j = 0; j < 8; j++) {
-            cout << '#' << ii << '-' << j + 1 << ". " << new_graph[i].second[j] << '\n';
+            cout << '#' << i + 1 << '-' << j + 1 << ". " << goals[i].second[j] << '\n';
         }
     }
 
