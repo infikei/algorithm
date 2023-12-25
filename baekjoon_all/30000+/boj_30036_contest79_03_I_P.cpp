@@ -1,4 +1,5 @@
 // Solve 2023-09-16
+// Update 2023-12-25
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -13,13 +14,12 @@ int main() {
     FASTIO;
 
     int i, n, k;
-    cin >> i >> n >> k;
-
     string colors;
-    cin >> colors;
+    cin >> i >> n >> k >> colors;
 
-    vector<string> graph(n, "");
-    int pos_r = 0, pos_c = 0;
+    vector<string> graph(n);
+    int pos_r = 0;
+    int pos_c = 0;
 
     for (int row = 0; row < n; row++) {
         cin >> graph[row];
@@ -35,7 +35,8 @@ int main() {
     string cmds;
     cin >> cmds;
 
-    int ink_m = 0, ink_c = -1;
+    int ink_m = 0;
+    int ink_c = -1;
 
     for (char cmd : cmds) {
         if (cmd == 'U') {
@@ -67,6 +68,7 @@ int main() {
         }
         else if (cmd == 'J') {
             if (++ink_c >= i) ink_c = 0;
+
             char color = colors[ink_c];
 
             for (int row = pos_r - ink_m, row_end = pos_r + ink_m; row <= row_end; row++) {

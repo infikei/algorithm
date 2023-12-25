@@ -1,4 +1,5 @@
 // Solve 2023-09-16
+// Update 2023-12-25
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -28,7 +29,9 @@ int main() {
     int ans = 0;
 
     for (int i = 0; i < n; i++) {
-        if (a[i] <= b[i]) ans++;
+        if (a[i] <= b[i]) {
+            ans++;
+        }
     }
 
     cout << ans << '\n';

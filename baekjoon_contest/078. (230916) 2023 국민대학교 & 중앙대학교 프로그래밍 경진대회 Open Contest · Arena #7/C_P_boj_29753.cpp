@@ -1,4 +1,5 @@
 // Solve 2023-09-16
+// Update 2023-12-25
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -26,15 +27,14 @@ int main() {
 
     string grade_str[9] = { "F", "D0", "D+", "C0", "C+", "B0", "B+", "A0", "A+" };
     int grade_num[9] = { 0, 100, 150, 200, 250, 300, 350, 400, 450 };
-    int expected_grade_avr[9];
 
     int n;
     double x;
     cin >> n >> x;
 
     int min_grade_avr = round(x * 100);
-
-    int hak_sum = 0, grade_sum = 0;
+    int hak_sum = 0;
+    int grade_sum = 0;
 
     for (int i = 1; i < n; i++) {
         int hak;
@@ -49,6 +49,7 @@ int main() {
     cin >> hak;
 
     hak_sum += hak;
+    int expected_grade_avr[9];
 
     for (int i = 0; i < 9; i++) {
         int expected_grade_sum = grade_sum + hak * grade_num[i];
@@ -57,8 +58,7 @@ int main() {
 
     int pos = upper_bound(expected_grade_avr, expected_grade_avr + 9, min_grade_avr) - expected_grade_avr;
 
-    if (pos == 9) cout << "impossible\n";
-    else cout << grade_str[pos] << '\n';
+    cout << (pos == 9 ? "impossible" : grade_str[pos]) << '\n';
 
     return 0;
 }

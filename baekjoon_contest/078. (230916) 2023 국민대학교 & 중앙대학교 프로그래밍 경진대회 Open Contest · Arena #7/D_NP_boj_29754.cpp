@@ -1,4 +1,5 @@
 // Solve 2023-09-18
+// Update 2023-12-25
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -17,9 +18,10 @@ int main() {
 
     m /= 7;
 
-    unordered_map<string, int> name_to_idx_hs;
-    vector<string> idx_to_name_vec;
-    vector<vector<int> > day_cnt, hour_cnt;
+    unordered_map<string, int> name_to_idx;
+    vector<string> idx_to_name;
+    vector<vector<int>> day_cnt;
+    vector<vector<int>> hour_cnt;
 
     for (int i = 0; i < n; i++) {
         string name, t_s_str, t_e_str;
@@ -31,24 +33,24 @@ int main() {
         int t_e = stoi(t_e_str.substr(0, 2)) * 60 + stoi(t_e_str.substr(3, 2));
         int idx;
 
-        if (name_to_idx_hs.find(name) == name_to_idx_hs.end()) {
-            idx = SIZE(name_to_idx_hs);
-            name_to_idx_hs[name] = idx;
+        if (name_to_idx.find(name) == name_to_idx.end()) {
+            idx = SIZE(name_to_idx);
+            name_to_idx[name] = idx;
             day_cnt.push_back(vector<int>(m, 0));
             hour_cnt.push_back(vector<int>(m, 0));
-            idx_to_name_vec.push_back(name);
+            idx_to_name.push_back(name);
         }
         else {
-            idx = name_to_idx_hs[name];
+            idx = name_to_idx[name];
         }
 
         day_cnt[idx][week]++;
         hour_cnt[idx][week] += t_e - t_s;
     }
 
-    vector<string> ans_vec;
+    vector<string> ans;
 
-    for (int i = 0, ie = SIZE(idx_to_name_vec); i < ie; i++) {
+    for (int i = 0, ie = SIZE(idx_to_name); i < ie; i++) {
         bool check = true;
 
         for (int j = 0; j < m; j++) {
@@ -63,20 +65,21 @@ int main() {
             }
         }
 
-        if (check) ans_vec.push_back(idx_to_name_vec[i]);
-    }
-
-    if (ans_vec.empty()) {
-        cout << -1 << '\n';
-    }
-    else {
-        sort(ans_vec.begin(), ans_vec.end());
-
-        for (string &ans : ans_vec) {
-            cout << ans << '\n';
+        if (check) {
+            ans.push_back(idx_to_name[i]);
         }
     }
 
+    if (ans.empty()) {
+        cout << -1 << '\n';
+    }
+    else {
+        sort(ans.begin(), ans.end());
+
+        for (string &a : ans) {
+            cout << a << '\n';
+        }
+    }
 
     return 0;
 }

@@ -1,4 +1,5 @@
 // Solve 2023-09-19
+// Update 2023-12-25
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -13,7 +14,6 @@ int main() {
     FASTIO;
 
     int dp[70001][6] = { 0 };
-
     dp[1][1] = 1;
 
     for (int i = 1; i <= 264; i++) {
@@ -35,8 +35,7 @@ int main() {
         int n, l;
         cin >> n >> l;
 
-        if (l >= 6) cout << 0 << '\n';
-        else cout << dp[n][l] << '\n';
+        cout << (l >= 6 ? 0 : dp[n][l]) << '\n';
     }
 
     return 0;

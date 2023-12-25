@@ -1,4 +1,5 @@
 // Solve 2023-09-16
+// Update 2023-12-25
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -15,10 +16,9 @@ int main() {
     int w, h;
     cin >> w >> h;
 
-    double area = w * h * 0.5;
-
     SETPRECISION(1);
 
+    double area = w * h * 0.5;
     cout << area << '\n';
 
     return 0;

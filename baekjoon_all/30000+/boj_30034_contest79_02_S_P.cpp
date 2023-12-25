@@ -1,4 +1,5 @@
 // Solve 2023-09-16
+// Update 2023-12-25
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -21,7 +22,6 @@ int main() {
     for (int i = 0; i < n; i++) {
         char c;
         cin >> c;
-
         st.insert(c);
     }
 
@@ -31,7 +31,6 @@ int main() {
     for (int i = 0; i < m; i++) {
         char c;
         cin >> c;
-
         st.insert(c);
     }
 
@@ -41,7 +40,6 @@ int main() {
     for (int i = 0; i < k; i++) {
         char c;
         cin >> c;
-
         st.erase(c);
     }
 
@@ -52,13 +50,13 @@ int main() {
     string line;
     getline(cin, line);
 
-    vector<string> ans_vec;
+    vector<string> split_words;
     string cur_word;
 
     for (char c : line) {
         if (st.find(c) != st.end()) {
             if (!cur_word.empty()) {
-                ans_vec.push_back(cur_word);
+                split_words.push_back(cur_word);
                 cur_word = "";
             }
         }
@@ -68,10 +66,10 @@ int main() {
     }
 
     if (!cur_word.empty()) {
-        ans_vec.push_back(cur_word);
+        split_words.push_back(cur_word);
     }
 
-    for (string &w : ans_vec) {
+    for (string &w : split_words) {
         cout << w << '\n';
     }
 

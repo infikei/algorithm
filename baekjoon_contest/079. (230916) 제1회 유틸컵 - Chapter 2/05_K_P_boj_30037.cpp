@@ -1,4 +1,5 @@
 // Solve 2023-09-17
+// Update 2023-12-25
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -87,7 +88,7 @@ int main() {
         // 결과 출력하기
 
         for (string &w : words) {
-            if (w == "") continue;
+            if (w.empty()) continue;
 
             cout << w << ' ';
         }

@@ -1,4 +1,5 @@
 // Solve 2023-09-10
+// Update 2023-12-25
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -15,7 +16,7 @@ int main() {
     int y, x;
     cin >> y >> x;
 
-    vector<string> vec(y, "");
+    vector<string> vec(y);
 
     for (string &s : vec) {
         cin >> s;
