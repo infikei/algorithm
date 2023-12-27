@@ -1,4 +1,5 @@
 // Solve 2023-09-10
+// Update 2023-12-26
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -17,7 +18,6 @@ int main() {
 
     int s = max(a, k - x);
     int e = min(b, k + x);
-
     int cnt = e - s + 1;
 
     if (cnt <= 0) {

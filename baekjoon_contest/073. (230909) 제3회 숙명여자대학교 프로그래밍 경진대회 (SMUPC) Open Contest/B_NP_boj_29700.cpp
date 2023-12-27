@@ -1,4 +1,5 @@
 // Solve 2023-09-11
+// Update 2023-12-26
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -28,7 +29,9 @@ int main() {
                 cnt = 0;
             }
             else {
-                if (++cnt >= k) ans++;
+                if (++cnt >= k) {
+                    ans++;
+                }
             }
         }
     }

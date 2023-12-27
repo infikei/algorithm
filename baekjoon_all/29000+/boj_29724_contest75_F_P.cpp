@@ -1,4 +1,5 @@
 // Solve 2023-09-10
+// Update 2023-12-26
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -15,7 +16,8 @@ int main() {
     int n;
     cin >> n;
 
-    int weight_sum = 0, apple_cnt_sum = 0;
+    int weight_sum = 0;
+    int apple_cnt_sum = 0;
 
     for (int i = 0; i < n; i++) {
         char t;
@@ -24,7 +26,6 @@ int main() {
 
         if (t == 'A') {
             int apple_cnt = (w / 12) * (h / 12) * (l / 12);
-
             apple_cnt_sum += apple_cnt;
             weight_sum += apple_cnt * 500 + 1000;
         }

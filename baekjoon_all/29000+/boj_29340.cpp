@@ -1,4 +1,5 @@
 // Solve 2023-08-23
+// Update 2023-12-26
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -12,8 +13,10 @@ using ll = long long;
 int main() {
     FASTIO;
 
-    string a, b, ans;
+    string a, b;
     cin >> a >> b;
+
+    string ans;
 
     for (int i = 0, ie = SIZE(a); i < ie; i++) {
         ans.push_back(max(a[i], b[i]));

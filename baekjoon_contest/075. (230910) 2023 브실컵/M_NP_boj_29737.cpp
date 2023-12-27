@@ -1,4 +1,5 @@
 // Solve 2023-09-13
+// Update 2023-12-26
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -34,7 +35,7 @@ int main() {
         User user;
         cin >> user.handle;
 
-        vector<string> streak(7, "");
+        vector<string> streak(7);
 
         for (string &s : streak) {
             cin >> s;

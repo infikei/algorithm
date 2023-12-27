@@ -1,4 +1,5 @@
 // Solve 2023-09-10
+// Update 2023-12-26
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -13,7 +14,6 @@ int main() {
     FASTIO;
 
     unordered_set<string> st;
-
     st.insert("Never gonna give you up");
     st.insert("Never gonna let you down");
     st.insert("Never gonna run around and desert you");
@@ -37,8 +37,7 @@ int main() {
         }
     }
 
-    if (ans) cout << "Yes\n";
-    else cout << "No\n";
+    cout << (ans ? "Yes" : "No") << '\n';
 
     return 0;
 }

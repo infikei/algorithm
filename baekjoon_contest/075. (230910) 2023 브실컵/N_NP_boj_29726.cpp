@@ -1,4 +1,5 @@
 // Solve 2023-09-13
+// Update 2023-12-26
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -21,7 +22,8 @@ int main() {
         cin >> a[i];
     }
 
-    int i = 0, j = n - m - 1;
+    int i = 0;
+    int j = n - m - 1;
     int left_min = a[i];
     int ans = a[j] - a[i];
 

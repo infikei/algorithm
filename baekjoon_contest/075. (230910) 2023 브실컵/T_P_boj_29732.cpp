@@ -1,4 +1,5 @@
 // Solve 2023-09-10
+// Update 2023-12-26
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -22,13 +23,14 @@ int main() {
     for (int i = 0; i < n; i++) {
         if (s[i] == 'R') {
             for (int j = max(0, i - k), je = min(n - 1, i + k); j <= je; j++) {
-                if (++check[j] == 1) cnt++;
+                if (++check[j] == 1) {
+                    cnt++;
+                }
             }
         }
     }
 
-    if (cnt <= m) cout << "Yes\n";
-    else cout << "No\n";
+    cout << (cnt <= m ? "Yes" : "No") << '\n';
 
     return 0;
 }

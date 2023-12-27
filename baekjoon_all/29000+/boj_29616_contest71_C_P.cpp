@@ -1,4 +1,5 @@
 // Solve 2023-09-03
+// Update 2023-12-26
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -27,7 +28,8 @@ int main() {
         pp *= 10;
     }
 
-    int per[100], cnt[100];
+    int per[100];
+    int cnt[100];
     int gcd = pp;
 
     for (int ni = 0; ni < n; ni++) {
@@ -40,8 +42,10 @@ int main() {
         cnt[ni] = per[ni] / gcd;
     }
 
-    int nper[100], ncnt[100];
-    int ngcd = pp, mult = 1;
+    int nper[100];
+    int ncnt[100];
+    int ngcd = pp;
+    int mult = 1;
 
     for (int ni = 0; ni < n; ni++) {
         cin >> nper[ni];

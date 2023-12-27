@@ -1,4 +1,5 @@
 // Solve 2023-09-05
+// Update 2023-12-26
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -21,7 +22,7 @@ int main() {
         cin >> prob_cnt[difficulty];
     }
 
-    priority_queue<int, vector<int>, greater<int> > pq_mintop[6];
+    priority_queue<int, vector<int>, greater<int>> pq_mintop[6];
 
     for (int i = 0; i < n; i++) {
         int difficulty, t;
@@ -33,7 +34,8 @@ int main() {
     int ans = 240;
 
     for (int difficulty = 1; difficulty <= 5; difficulty++) {
-        int first = 0, last = 0;
+        int first = 0;
+        int last = 0;
 
         for (int i = 0, ie = prob_cnt[difficulty]; i < ie; i++) {
             if (i == 0) first = pq_mintop[difficulty].top();

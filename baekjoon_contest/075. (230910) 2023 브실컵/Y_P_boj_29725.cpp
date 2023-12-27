@@ -1,4 +1,5 @@
 // Solve 2023-09-10
+// Update 2023-12-26
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -14,7 +15,6 @@ int main() {
 
     char cc[10] = { 'P', 'p', 'N', 'n', 'B', 'b', 'R', 'r', 'Q', 'q' };
     int nn[10] = { 1, -1, 3, -3, 3, -3, 5, -5, 9, -9 };
-
     int ans = 0;
 
     for (int i = 0; i < 8; i++) {

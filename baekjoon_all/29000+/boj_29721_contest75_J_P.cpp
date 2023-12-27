@@ -1,4 +1,5 @@
 // Solve 2023-09-10
+// Update 2023-12-26
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -31,19 +32,15 @@ int main() {
 
         points[i].x = x;
         points[i].y = y;
-
         st.insert((x - 1) * 100000ll + y - 1);
     }
 
     set<ll> ans_st;
 
-    for (int i = 0; i < k; i++) {
-        int x = points[i].x;
-        int y = points[i].y;
-
+    for (Point &p : points) {
         for (int d = 0; d < 4; d++) {
-            int nx = x + dx[d];
-            int ny = y + dy[d];
+            int nx = p.x + dx[d];
+            int ny = p.y + dy[d];
 
             if (nx <= 0 || nx > n || ny <= 0 || ny > n) continue;
 

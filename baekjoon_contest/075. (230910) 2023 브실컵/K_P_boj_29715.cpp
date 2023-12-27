@@ -1,4 +1,5 @@
 // Solve 2023-09-10
+// Update 2023-12-26
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -15,7 +16,8 @@ int main() {
     int n, m, x, y;
     cin >> n >> m >> x >> y;
 
-    int m0 = 0, m1 = 0;
+    int m0 = 0;
+    int m1 = 0;
 
     for (int i = 0; i < m; i++) {
         int a, b;
@@ -26,17 +28,23 @@ int main() {
     }
 
     int cnt = 1;
+    int i = 0, ii = n - m1, ie = m0;
 
-    for (int i = 0, ii = n - m1, ie = m0; i < ie; i++, ii--) {
+    while (i < ie) {
         cnt *= ii;
+        i++;
+        ii--;
     }
 
-    for (int i = 0, ii = 9 - m, ie = n - m; i < ie; i++, ii--) {
+    i = 0, ii = 9 - m, ie = n - m;
+
+    while (i < ie) {
         cnt *= ii;
+        i++;
+        ii--;
     }
 
     int ans = cnt * x + (cnt - 1) / 3 * y;
-
     cout << ans << '\n';
 
     return 0;

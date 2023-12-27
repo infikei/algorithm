@@ -1,4 +1,5 @@
 // Solve 2023-09-10
+// Update 2023-12-26
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -9,7 +10,7 @@ using namespace std;
 #define ALL(v) v.begin(),v.end()
 using ll = long long;
 
-struct cmp_str{
+struct cmp_study{
     bool operator()(string &a, string &b) {
         if (SIZE(a) != SIZE(b)) return SIZE(a) < SIZE(b);
         return a < b;
@@ -23,9 +24,8 @@ int main() {
     cin >> n;
     cin.ignore();
 
-    vector<string> vec;
-    vector<int> boj_vec;
-
+    vector<string> study;
+    vector<int> boj_study;
     regex re("boj.kr/([0-9]+)");
     smatch match;
 
@@ -34,22 +34,22 @@ int main() {
         getline(cin, s);
 
         if (regex_match(s, match, re)) {
-            boj_vec.push_back(stoi(match[1]));
+            boj_study.push_back(stoi(match[1]));
         }
         else {
-            vec.push_back(s);
+            study.push_back(s);
         }
     }
 
-    sort(vec.begin(), vec.end(), cmp_str());
-    sort(boj_vec.begin(), boj_vec.end());
+    sort(study.begin(), study.end(), cmp_study());
+    sort(boj_study.begin(), boj_study.end());
 
-    for (const string &s : vec) {
+    for (string &s : study) {
         cout << s << '\n';
     }
 
-    for (const int &i : boj_vec) {
-        cout << "boj.kr/" << i << '\n';
+    for (int &x : boj_study) {
+        cout << "boj.kr/" << x << '\n';
     }
 
     return 0;

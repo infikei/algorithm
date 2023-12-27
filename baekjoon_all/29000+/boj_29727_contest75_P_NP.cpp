@@ -1,4 +1,5 @@
 // Solve 2023-09-11
+// Update 2023-12-26
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -23,9 +24,7 @@ int main() {
 
         xa = min(n, max(xa, -1ll));
         xb = min(n, max(xb, -1ll));
-
         ll dx = xb - xa;
-
         ans += dx * (dx - 1) / 2 * (n + 1);
     }
     else if (xa == xb) {
@@ -33,9 +32,7 @@ int main() {
 
         ya = min(n, max(ya, -1ll));
         yb = min(n, max(yb, -1ll));
-
         ll dy = yb - ya;
-
         ans += dy * (dy - 1) / 2 * (n + 1);
     }
 

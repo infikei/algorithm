@@ -1,4 +1,5 @@
 // Solve 2023-09-10
+// Update 2023-12-26
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -13,22 +14,19 @@ int main() {
     FASTIO;
 
     int n;
-    cin >> n;
-
     string s;
-    cin >> s;
+    cin >> n >> s;
 
     int s_cnt[26] = { 0 };
 
-    for (char c : s) {
+    for (char &c : s) {
         s_cnt[c - 'A']++;
     }
 
     string bs = "BRONZESILVER";
-
     int bs_cnt[26] = { 0 };
 
-    for (char c : bs) {
+    for (char &c : bs) {
         bs_cnt[c - 'A']++;
     }
 

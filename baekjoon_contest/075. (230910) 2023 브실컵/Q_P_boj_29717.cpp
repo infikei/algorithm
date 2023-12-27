@@ -1,4 +1,5 @@
 // Solve 2023-09-10
+// Update 2023-12-26
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -20,8 +21,8 @@ int main() {
         cin >> n;
 
         ll n_val = n * (n + 1) >> 1;
-
-        ll low = -1, high = 3e9;
+        ll low = -1;
+        ll high = 3e9;
 
         while (low + 1 < high) {
             ll mid = (low + high) >> 1;

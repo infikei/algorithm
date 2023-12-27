@@ -1,4 +1,5 @@
 // Solve 2023-09-04
+// Update 2023-12-26
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -46,7 +47,8 @@ void print_irreducible_fraction(ll n, ll m) {
 int main() {
     FASTIO;
 
-    ll x1 = 0, y1 = 0, x2 = 0, y2 = 0;
+    ll x1 = 0, y1 = 0;
+    ll x2 = 0, y2 = 0;
 
     for (int i = 0; i < 4; i++) {
         ll x, y;

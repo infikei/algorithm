@@ -1,4 +1,5 @@
 // Solve 2023-08-22
+// Update 2023-12-26
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -11,10 +12,13 @@ using ll = long long;
 
 struct Point{
     int x, y;
+
     Point(int x = 0, int y = 0) : x(x), y(y) {}
+
     Point operator+(const Point &rhs) const {
         return { x + rhs.x, y + rhs.y };
     }
+
     Point& operator+=(const Point &rhs) {
         (*this) = (*this) + rhs;
         return *this;
@@ -32,11 +36,11 @@ Point direction[4] = {
 
 void make_board() {
     Point cur = { MAX - 1, MAX - 1 };
-    int val = MAX * MAX, direction_idx = 0;
+    int val = MAX * MAX;
+    int direction_idx = 0;
 
     while (--val > 0) {
         board[cur.x][cur.y] = val;
-
         Point next = cur + direction[direction_idx];
 
         if (next.x < 0 || next.x >= MAX || next.y < 0 || next.y >= MAX || board[next.x][next.y] != 0) {
@@ -50,6 +54,7 @@ void make_board() {
 
 void make_entire_cmd(string &cmd) {
     cmd.assign(MAX - 1, 'A');
+
     for (int i = MAX - 1; i > 0; i -= 2) {
         string x(i, 'X');
         string d(i, 'D');

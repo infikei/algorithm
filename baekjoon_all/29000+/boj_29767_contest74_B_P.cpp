@@ -1,4 +1,5 @@
 // Solve 2023-09-09
+// Update 2023-12-26
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -23,7 +24,6 @@ int main() {
         cin >> x;
 
         prefix_sum += x;
-
         pq_maxtop.push(prefix_sum);
     }
 

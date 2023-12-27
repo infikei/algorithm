@@ -1,4 +1,5 @@
 // Solve 2023-09-10
+// Update 2023-12-26
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -43,7 +44,8 @@ int main() {
 
     sort(vec.begin(), vec.end());
 
-    int ans_min = ans, ans_max = ans;
+    int ans_min = ans;
+    int ans_max = ans;
 
     for (int i = 0, ii = SIZE(vec) - 1, ie = m - k; i < ie; i++, ii--) {
         ans_min += vec[i];

@@ -1,4 +1,5 @@
 // Solve 2023-09-10
+// Update 2023-12-26
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -17,7 +18,8 @@ int main() {
     ll n, m;
     cin >> n >> m;
 
-    ll a = m, b = m - 1;
+    ll a = m;
+    ll b = m - 1;
 
     for (ll i = 1; i < n; i++) {
         a *= m;

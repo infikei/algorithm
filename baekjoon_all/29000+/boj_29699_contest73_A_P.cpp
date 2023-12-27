@@ -1,4 +1,5 @@
 // Solve 2023-09-09
+// Update 2023-12-26
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -12,12 +13,11 @@ using ll = long long;
 int main() {
     FASTIO;
 
-    string s = "WelcomeToSMUPC";
     int n;
     cin >> n;
 
+    string s = "WelcomeToSMUPC";
     n = (n - 1) % 14;
-
     cout << s[n] << '\n';
 
     return 0;

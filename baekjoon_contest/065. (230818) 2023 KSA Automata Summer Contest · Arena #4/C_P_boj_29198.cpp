@@ -1,4 +1,5 @@
 // Solve 2023-08-18
+// Update 2023-12-26
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -27,7 +28,7 @@ int main() {
     int cnt[26] = { 0 };
 
     for (int i = 0; i < k; i++) {
-        for (const char c : vec[i]) {
+        for (char c : vec[i]) {
             cnt[c - 'A']++;
         }
     }

@@ -1,5 +1,5 @@
 // Solve 2023-09-10
-// Update 2023-09-11
+// Update 2023-12-26
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -21,9 +21,7 @@ int main() {
     int e = stoi(e_str.substr(0, 2)) * 60 + stoi(e_str.substr(3, 2));
 
     int today_max = (e - s - 1) / t;
-
     int ans = n / today_max;
-
     int ans2 = s + t * (n % today_max + 1);
     int ans2_hour = ans2 / 60;
     int ans2_min = ans2 % 60;

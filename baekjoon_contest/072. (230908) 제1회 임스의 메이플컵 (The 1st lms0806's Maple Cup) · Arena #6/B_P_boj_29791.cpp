@@ -1,4 +1,5 @@
 // Solve 2023-09-08
+// Update 2023-12-26
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -15,37 +16,35 @@ int main() {
     int n, m;
     cin >> n >> m;
 
-    int a[1000000], b[1000000];
+    int arr[1000000];
 
     for (int i = 0; i < n; i++) {
-        cin >> a[i];
+        cin >> arr[i];
     }
 
-    for (int i = 0; i < m; i++) {
-        cin >> b[i];
-    }
-
-    sort(a, a + n);
-
-    sort(b, b + m);
-
+    sort(arr, arr + n);
     int cnt_a = 1;
-    int cur = a[0];
+    int cur = arr[0];
 
     for (int i = 1; i < n; i++) {
-        if (a[i] >= cur + 100) {
+        if (arr[i] >= cur + 100) {
             cnt_a++;
-            cur = a[i];
+            cur = arr[i];
         }
     }
 
+    for (int i = 0; i < m; i++) {
+        cin >> arr[i];
+    }
+
+    sort(arr, arr + m);
     int cnt_b = 1;
-    cur = b[0];
+    cur = arr[0];
 
     for (int i = 1; i < m; i++) {
-        if (b[i] >= cur + 360) {
+        if (arr[i] >= cur + 360) {
             cnt_b++;
-            cur = b[i];
+            cur = arr[i];
         }
     }
 

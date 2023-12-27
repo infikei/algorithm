@@ -1,4 +1,5 @@
 // Solve 2023-09-12
+// Update 2023-12-26
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -27,7 +28,8 @@ int main() {
         }
     }
 
-    int b_cnt = 1, s_cnt = 0;
+    int b_cnt = 1;
+    int s_cnt = 0;
 
     for (int i = 2; i <= n; i++) {
         if (is_prime[i]) {

@@ -1,4 +1,5 @@
 // Solve 2023-09-10
+// Update 2023-12-26
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -15,14 +16,17 @@ int main() {
     int s0, n, m;
     cin >> s0 >> n >> m;
 
-    int s = s0, u = 0;
+    int s = s0;
+    int u = 0;
 
     for (int i = 0, ie = n + m; i < ie; i++) {
         int x;
         cin >> x;
 
         if (x == 1) {
-            if (++u > s) s *= 2;
+            if (++u > s) {
+                s *= 2;
+            }
         }
         else {
             u--;

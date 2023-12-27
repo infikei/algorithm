@@ -1,4 +1,5 @@
 // Solve 2023-09-03
+// Update 2023-12-26
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -15,16 +16,19 @@ int main() {
     string s;
     cin >> s;
 
-    int sum = 0, cnt = 0;
+    int sum = 0;
+    int cnt = 0;
+    int pos = 0, pos_end = SIZE(s);
 
-    for (int i = 0, ie = SIZE(s); i < ie; i++) {
+    while (pos < pos_end) {
         string w;
-        w += s[i];
+        w.push_back(s[pos]);
 
-        if (i + 1 < ie && s[i + 1] == '+') {
-            w += s[++i];
+        if (pos + 1 < pos_end && s[pos + 1] == '+') {
+            w.push_back(s[++pos]);
         }
 
+        pos++;
         cnt++;
 
         if (w == "A+") sum += 45;
@@ -38,7 +42,6 @@ int main() {
     }
 
     double avg = sum * 0.1 / cnt;
-
     cout << avg << '\n';
 
     return 0;

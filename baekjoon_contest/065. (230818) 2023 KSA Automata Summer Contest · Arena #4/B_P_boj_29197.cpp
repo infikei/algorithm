@@ -1,4 +1,5 @@
 // Solve 2023-08-18
+// Update 2023-12-26
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -11,7 +12,9 @@ using ll = long long;
 
 struct Point{
     int x, y;
-    Point(int nx = 0, int ny = 0) : x(nx), y(ny) {}
+
+    Point(int x = 0, int y = 0) : x(x), y(y) {}
+
     bool operator<(const Point &rhs) const {
         if (x != rhs.x) return x < rhs.x;
         return y < rhs.y;
