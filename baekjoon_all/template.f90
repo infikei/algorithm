@@ -1,4 +1,4 @@
-! Solve 2023-
+! Solve 2024-
 
 ! 터미널에 아래를 차례대로 입력
 ! cd baekjoon_all

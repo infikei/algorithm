@@ -1,4 +1,4 @@
-# Solve 2023-
+# Solve 2024-
 
 import sys
 # from itertools import product
