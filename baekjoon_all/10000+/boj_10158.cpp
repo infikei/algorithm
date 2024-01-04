@@ -1,5 +1,5 @@
 // Solve 2022-12-06
-// Update 2023-12-15
+// Update 2024-01-03
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -16,27 +16,19 @@ int main() {
     int w, h, p, q, t;
     cin >> w >> h >> p >> q >> t;
 
-    int dp = t % (w * 2);
-    int x = p + dp;
+    int np = (p + t) % (w * 2);
 
-    if (x > w * 2) {
-        x -= w * 2;
-    }
-    else if (x > w) {
-        x = w * 2 - x;
+    if (np > w) {
+        np = w * 2 - np;
     }
 
-    int dq = t % (h * 2);
-    int y = q + dq;
+    int nq = (q + t) % (h * 2);
 
-    if (y > h * 2) {
-        y -= h * 2;
-    }
-    else if (y > h) {
-        y = h * 2 - y;
+    if (nq > h) {
+        nq = h * 2 - nq;
     }
 
-    cout << x << ' ' << y << '\n';
+    cout << np << ' ' << nq << '\n';
 
     return 0;
 }
