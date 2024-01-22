@@ -1,77 +1,90 @@
-#include <iostream>
-#include <vector>
-#include <queue>
+// Solve 2022-11-04
+// Update 2024-01-22
+
+#include <bits/stdc++.h>
 using namespace std;
-#define fastio ios_base::sync_with_stdio(false);cout.tie(NULL);cin.tie(NULL); // boj_15552.cpp
+
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
 using pii = pair<int, int>;
 using pic = pair<int, char>;
 
-int N, K, L, ans, board[101][101];
-int D2[4][2] = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
+int dx[4] = { 0, 1, 0, -1 };
+int dy[4] = { 1, 0, -1, 0 };
+int board[101][101];
+int n, k, l;
+int cur_time = 0;
+int cur_direction = 0;
 queue<pii> snake;
 queue<pic> change_direction;
 
-void input() {
-    cin >> N >> K;
-    for (int k = 0; k < K; k++) {
+int main() {
+    FASTIO;
+
+    cin >> n >> k;
+
+    for (int i = 0; i < k; i++) {
         int x, y;
         cin >> x >> y;
         board[x][y] = 2;
     }
-    cin >> L;
-    for (int l = 0; l < L; l++) {
+
+    cin >> l;
+
+    for (int i = 0; i < l; i++) {
         int x;
         char ch;
         cin >> x >> ch;
-        change_direction.push(make_pair(x, ch));
+        change_direction.emplace(x, ch);
     }
-}
 
-void solve() {
-    int now_direction = 1;
-    int now_x = 1, now_y = 1;
+    int cur_x = 1;
+    int cur_y = 1;
+
+    snake.emplace(1, 1);
     board[1][1] = 1;
-    snake.push(make_pair(1, 1));
 
     while (true) {
-        ans++;
-        now_x += D2[now_direction][0];
-        now_y += D2[now_direction][1];
+        cur_time++;
+        cur_x += dx[cur_direction];
+        cur_y += dy[cur_direction];
 
-        if (now_x < 1 || now_x > N || now_y < 1 || now_y > N) {
-            return;
-        }
-        if (board[now_x][now_y] == 1) {
-            return;
+        if (cur_x < 1 || cur_x > n || cur_y < 1 || cur_y > n) {
+            break;
         }
 
-        if (board[now_x][now_y] == 0) {
+        if (board[cur_x][cur_y] == 1) {
+            break;
+        }
+
+        if (board[cur_x][cur_y] == 0) {
             board[snake.front().first][snake.front().second] = 0;
             snake.pop();
         }
-        board[now_x][now_y] = 1;
-        snake.push(make_pair(now_x, now_y));
 
-        if (!change_direction.empty() && ans == change_direction.front().first) {
+        board[cur_x][cur_y] = 1;
+        snake.emplace(cur_x, cur_y);
+
+        if (!change_direction.empty() && cur_time == change_direction.front().first) {
             if (change_direction.front().second == 'L') {
-                now_direction = (now_direction + 1) % 4;
+                if (--cur_direction == -1) {
+                    cur_direction = 3;
+                }
             }
             else {
-                now_direction = (now_direction + 3) % 4;
+                if (++cur_direction == 4) {
+                    cur_direction = 0;
+                }
             }
+
             change_direction.pop();
         }
     }
-}
 
-int main() {
-    fastio;
-
-    input();
-
-    solve();
-
-    cout << ans << '\n';
+    cout << cur_time << '\n';
 
     return 0;
 }
