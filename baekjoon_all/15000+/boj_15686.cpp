@@ -1,77 +1,69 @@
-#include <iostream>
-#include <vector>
-using namespace std;
-typedef pair<int, int> pii;
+// Solve 2022-09-12
+// Update 2024-01-23
 
-int N, M, ans;
+#include <bits/stdc++.h>
+using namespace std;
+
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
+using pii = pair<int, int>;
+
+int n, m;
+int min_dist_sum;
 vector<pii> house_list;
 vector<pii> chicken_list;
-vector<int> chicken_idx;
+vector<pii> chicken_selected;
 
-void input() {
-    cin >> N >> M;
+void dfs(int depth = 0, int idx = 0) {
+    if (depth == m) {
+        int cur_dist_sum = 0;
 
-    for (int i = 0; i < N; i++) {
-        for (int j = 0; j < N; j++) {
-            int x;
-            cin >> x;
-            if (x == 1) {
-                house_list.push_back(make_pair(i, j));
+        for (pii house : house_list) {
+            int chicken_dist = 100;
+
+            for (pii chicken : chicken_selected) {
+                chicken_dist = min(chicken_dist, abs(house.first - chicken.first) + abs(house.second - chicken.second));
             }
-            else if (x == 2) {
-                chicken_list.push_back(make_pair(i, j));
-            }
-        }
-    }
-}
 
-void dfs(int depth = 0, int a = 0) {
-    if (depth == M) {
-        int house_list_sz = house_list.size();
-        int chicken_idx_sz = chicken_idx.size();
-        vector<int> house_dist(house_list_sz);
-
-        pii chicken = chicken_list[chicken_idx[0]];
-        for (int j = 0; j < house_list_sz; j++) {
-            pii house = house_list[j];
-            house_dist[j] = abs(house.first - chicken.first) + abs(house.second - chicken.second);
+            cur_dist_sum += chicken_dist;
         }
 
-        for (int i = 1; i < chicken_idx_sz; i++) {
-            pii chicken = chicken_list[chicken_idx[i]];
-            for (int j = 0; j < house_list_sz; j++) {
-                pii house = house_list[j];
-                house_dist[j] = min(house_dist[j], abs(house.first - chicken.first) + abs(house.second - chicken.second));
-            }
-        }
-
-        int result = 0;
-
-        for (int i = 0; i < house_list_sz; i++) {
-            result += house_dist[i];
-        }
-
-        ans = min(ans, result);
+        min_dist_sum = min(min_dist_sum, cur_dist_sum);
         return;
     }
 
-    for (int i = a; i < (int)chicken_list.size(); i++) {
-        chicken_idx.push_back(i);
+    for (int i = idx; i < SIZE(chicken_list); i++) {
+        chicken_selected.push_back(chicken_list[i]);
         dfs(depth + 1, i + 1);
-        chicken_idx.pop_back();
+        chicken_selected.pop_back();
     }
 }
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    input();
+    cin >> n >> m;
 
-    ans = 987654321;
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            int x;
+            cin >> x;
+
+            if (x == 1) {
+                house_list.emplace_back(i, j);
+            }
+            else if (x == 2) {
+                chicken_list.emplace_back(i, j);
+            }
+        }
+    }
+
+    min_dist_sum = 10000;
     dfs();
-    cout << ans << '\n';
+    cout << min_dist_sum << '\n';
 
     return 0;
 }
