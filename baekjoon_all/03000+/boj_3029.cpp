@@ -1,37 +1,33 @@
-#include <iostream>
-#include <string>
+// Solve 2022-11-18
+// Update 2024-01-24
+
+#include <bits/stdc++.h>
 using namespace std;
-#define fastio ios_base::sync_with_stdio(false);cout.tie(NULL);cin.tie(NULL); // boj_15552.cpp
+
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
 
 int main() {
-    fastio;
+    FASTIO;
 
-    string now_time, target_time;
-    cin >> now_time >> target_time;
+    string cur_time;
+    string target_time;
+    cin >> cur_time >> target_time;
 
-    int now_time_int = stoi(now_time.substr(0, 2)) * 3600 + stoi(now_time.substr(3, 2)) * 60 + stoi(now_time.substr(6, 2));
-    int target_time_int = stoi(target_time.substr(0, 2)) * 3600 + stoi(target_time.substr(3, 2)) * 60 + stoi(target_time.substr(6, 2));
+    int cur = stoi(cur_time.substr(0, 2)) * 3600 + stoi(cur_time.substr(3, 2)) * 60 + stoi(cur_time.substr(6, 2));
+    int target = stoi(target_time.substr(0, 2)) * 3600 + stoi(target_time.substr(3, 2)) * 60 + stoi(target_time.substr(6, 2));
+    int dt = target - cur;
 
-    if (target_time_int <= now_time_int) {
-        target_time_int += 86400;
+    if (dt <= 0) {
+        dt += 86400;
     }
 
-    int waiting_time_int = target_time_int - now_time_int;
-    int h = waiting_time_int / 3600;
-    int m = (waiting_time_int % 3600) / 60;
-    int s = waiting_time_int % 60;
-    if (h < 10) {
-        cout << 0;
-    }
-    cout << h << ':';
-    if (m < 10) {
-        cout << 0;
-    }
-    cout << m << ':';
-    if (s < 10) {
-        cout << 0;
-    }
-    cout << s;
+    cout << setw(2) << setfill('0') << dt / 3600 << ':';
+    cout << setw(2) << setfill('0') << dt % 3600 / 60 << ':';
+    cout << setw(2) << setfill('0') << dt % 60 << '\n';
 
     return 0;
 }
