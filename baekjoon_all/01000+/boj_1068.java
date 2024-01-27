@@ -1,17 +1,19 @@
 // Solve 2024-01-23
+// Update 2024-01-26
 
-// 백준에 제출할 때는 class 이름을 Main으로 설정해야 함.
+// 백준에 제출할 때는 class 이름을 Main으로 설정해야 한다.
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.StringTokenizer;
 
 public class boj_1068 {
+
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int n = Integer.parseInt(br.readLine());
@@ -35,7 +37,7 @@ public class boj_1068 {
 
         int erasedNode = Integer.parseInt(br.readLine());
         int ans = 0;
-        Deque<Integer> deque = new ArrayDeque<>();
+        Deque<Integer> deque = new LinkedList<>();
 
         if (rootNode != erasedNode) {
             deque.addLast(rootNode);
@@ -60,4 +62,5 @@ public class boj_1068 {
         System.out.println(ans);
         br.close();
     }
+
 }
