@@ -1,4 +1,5 @@
 // Solve 2024-01-26
+// Update 2024-01-27
 
 // 백준에 제출할 때는 class 이름을 Main으로 설정해야 한다.
 
@@ -9,16 +10,18 @@ import java.io.InputStreamReader;
 public class boj_2023 {
 
     static int n;
+    static StringBuilder sb = new StringBuilder();
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         n = Integer.parseInt(br.readLine());
         dfs(0, 0);
+        System.out.println(sb);
     }
 
     static void dfs(int depth, int num) {
         if (depth == n) {
-            System.out.println(num);
+            sb.append(num).append("\n");
             return;
         }
 
