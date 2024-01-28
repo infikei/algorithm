@@ -1,5 +1,5 @@
 // Solve 2024-01-26
-// Update 2024-01-27
+// Update 2024-01-28
 
 // 백준에 제출할 때는 class 이름을 Main으로 설정해야 한다.
 
@@ -17,6 +17,7 @@ public class boj_2023 {
         n = Integer.parseInt(br.readLine());
         dfs(0, 0);
         System.out.println(sb);
+        br.close();
     }
 
     static void dfs(int depth, int num) {

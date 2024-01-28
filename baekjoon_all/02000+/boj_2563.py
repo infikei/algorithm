@@ -1,21 +1,18 @@
 # Solve 2023-02-26
+# Update 2024-01-28
 
 import sys
 
 input = lambda : sys.stdin.readline().rstrip()
 
+board = [[False] * 100 for _ in range(100)]
 n = int(input())
-MAX_SIZE = 101
-graph = [[False] * MAX_SIZE for _ in range(MAX_SIZE)]
 
 for _ in range(n):
     x, y = map(int, input().split())
+
     for nx in range(x, x + 10):
         for ny in range(y, y + 10):
-            graph[nx][ny] = True
+            board[nx][ny] = True
 
-ans = 0
-for x in range(MAX_SIZE):
-    ans += graph[x].count(True)
-
-print(ans)
+print(sum(map(lambda board_row: board_row.count(True), board)))

@@ -1,37 +1,37 @@
 // Solve 2022-09-13
-// Update 2023-02-26
+// Update 2024-01-28
 
 #include <bits/stdc++.h>
 using namespace std;
 
-#ifdef BOJ
-#define BOJTEST(x) ((void)0)
-#else
-#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
-#endif
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
 #define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
 #define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
 using ll = long long;
-using uint = unsigned int;
-using ull = unsigned long long;
 
 int main() {
     FASTIO;
 
-    int max_idx = 0, max_val = 0;
-    for (int i = 0; i < 81; i++) {
-        int x;
-        cin >> x;
-        if (x > max_val) {
-            max_val = x;
-            max_idx = i;
+    int max_num = -1;
+    int row_of_max_num = -1;
+    int col_of_max_num = -1;
+
+    for (int i = 1; i <= 9; i++) {
+        for (int j = 1; j <= 9; j++) {
+            int num;
+            cin >> num;
+
+            if (num > max_num) {
+                max_num = num;
+                row_of_max_num = i;
+                col_of_max_num = j;
+            }
         }
     }
 
-    cout << max_val << '\n';
-    cout << max_idx / 9 + 1 << ' ' << max_idx % 9 + 1 << '\n';
+    cout << max_num << '\n';
+    cout << row_of_max_num << ' ' << col_of_max_num << '\n';
 
     return 0;
 }

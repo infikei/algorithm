@@ -1,5 +1,5 @@
 // Solve 2022-07-24
-// Update 2023-08-09
+// Update 2024-01-28
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -9,9 +9,8 @@ using namespace std;
 #define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
 using ll = long long;
-using uint = unsigned int;
 
-uint lengths[10000];
+int lengths[10000];
 
 int main() {
     FASTIO;
@@ -23,11 +22,12 @@ int main() {
         cin >> lengths[i];
     }
 
-    uint low = 1, high = 2147483648;
+    ll low = 1;
+    ll high = 2147483648LL;
 
     while (low + 1 < high) {
-        uint mid = (low + high) >> 1;
-        int mid_val = 0;
+        ll mid = (low + high) >> 1;
+        ll mid_val = 0;
 
         for (int i = 0; i < k; i++) {
             mid_val += lengths[i] / mid;

@@ -1,6 +1,7 @@
 // Solve 2024-01-25
+// Update 2024-01-28
 
-// 백준에 제출할 때는 class 이름을 Main으로 설정해야 함.
+// 백준에 제출할 때는 class 이름을 Main으로 설정해야 한다.
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -94,6 +95,7 @@ public class boj_16236 {
         while (movePosition()) {}
 
         System.out.println(curTime);
+        br.close();
     }
 
     static boolean movePosition() {

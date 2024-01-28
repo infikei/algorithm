@@ -1,32 +1,31 @@
 // Solve 2023-11-17
+// Update 2024-01-28
 
-// 백준에 제출할 때는 class 이름을 Main으로 설정해야 함.
+// 백준에 제출할 때는 class 이름을 Main으로 설정해야 한다.
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 
 public class boj_2562 {
+
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        int maxValue = 0;
-        int maxIndex = 0;
+        int maxNum = 0;
+        int idxOfMaxNum = 0;
 
         for (int i = 1; i <= 9; i++) {
-            int value = Integer.parseInt(br.readLine());
+            int num = Integer.parseInt(br.readLine());
 
-            if (value > maxValue) {
-                maxValue = value;
-                maxIndex = i;
+            if (num > maxNum) {
+                maxNum = num;
+                idxOfMaxNum = i;
             }
         }
 
+        System.out.println(maxNum);
+        System.out.println(idxOfMaxNum);
         br.close();
-        bw.write(maxValue + "\n" + maxIndex + "\n");
-        bw.flush();
-        bw.close();
     }
+
 }

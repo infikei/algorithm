@@ -1,11 +1,12 @@
 // Solve 2022-06-03
-// Update 2023-10-10
+// Update 2024-01-28
 
 #include <iostream>
 using namespace std;
 
 int main() {
-    int max_num = 0, max_idx = 0;
+    int max_num = 0;
+    int max_idx = 0;
 
     for (int i = 1; i <= 9; i++) {
         int num;
