@@ -1,5 +1,5 @@
 // Solve 2023-02-23
-// Update 2023-12-20
+// Update 2024-01-29
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -16,19 +16,19 @@ int main() {
     int n;
     cin >> n;
 
-    int num_cnt[10001] = { 0 };
+    int cnt[10001] = { 0 };
 
     for (int i = 0; i < n; i++) {
         int num;
         cin >> num;
 
-        num_cnt[num]++;
+        cnt[num]++;
     }
 
     for (int num = 1; num <= 10000; num++) {
-        int iter = num_cnt[num];
+        int iter = cnt[num];
 
-        while (--iter >= 0) {
+        while (iter-- > 0) {
             cout << num << '\n';
         }
     }
