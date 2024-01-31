@@ -1,4 +1,5 @@
 // Solve 2024-01-14
+// Update 2024-01-30
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -9,86 +10,51 @@ using namespace std;
 #define ALL(v) v.begin(),v.end()
 using ll = long long;
 
-void hanoi_3(int depth, char begin, char end) {
+void hanoi_3(int depth, char from, char to, char tmp) {
     if (depth == 1) {
-        cout << begin << ' ' << end << '\n';
+        cout << from << ' ' << to << '\n';
         return;
     }
 
-    char mid;
-
-    if (begin == 'A' || end == 'A') {
-        if (begin == 'B' || end == 'B') {
-            mid = 'C';
-        }
-        else {
-            mid = 'B';
-        }
-    }
-    else {
-        mid = 'A';
-    }
-
-    hanoi_3(depth - 1, begin, mid);
-    cout << begin << ' ' << end << '\n';
-    hanoi_3(depth - 1, mid, end);
+    hanoi_3(depth - 1, from, tmp, to);
+    cout << from << ' ' << to << '\n';
+    hanoi_3(depth - 1, tmp, to, from);
 }
 
-void hanoi_4(int depth, char begin, char end) {
+void hanoi_4(int depth, char from, char to, char tmp1, char tmp2) {
     if (depth == 1) {
-        cout << begin << ' ' << end << '\n';
-        return;
-    }
-    else if (depth == 2) {
-        char mid = 'A';
-
-        if (begin == 'A') {
-            mid = 'B';
-        }
-
-        cout << begin << ' ' << mid << '\n';
-        cout << begin << ' ' << end << '\n';
-        cout << mid << ' ' << end << '\n';
+        cout << from << ' ' << to << '\n';
         return;
     }
 
-    char mid1, mid2;
-
-    if (begin == 'A') {
-        mid1 = 'B';
-        mid2 = 'C';
-    }
-    else if (begin == 'B') {
-        mid1 = 'A';
-        mid2 = 'C';
-    }
-    else {
-        mid1 = 'A';
-        mid2 = 'B';
+    if (depth == 2) {
+        cout << from << ' ' << tmp2 << '\n';
+        cout << from << ' ' << to << '\n';
+        cout << tmp2 << ' ' << to << '\n';
+        return;
     }
 
-    hanoi_3(depth - 2, begin, mid1);
-    cout << begin << ' ' << mid2 << '\n';
-    cout << begin << ' ' << end << '\n';
-    cout << mid2 << ' ' << end << '\n';
-    hanoi_4(depth - 2, mid1, end);
+    hanoi_3(depth - 2, from, tmp1, tmp2);
+    cout << from << ' ' << tmp2 << '\n';
+    cout << from << ' ' << to << '\n';
+    cout << tmp2 << ' ' << to << '\n';
+    hanoi_4(depth - 2, tmp1, to, from, tmp2);
 }
 
 int main() {
     FASTIO;
 
-    int d[21] = { 0, 1, 3 };
+    int dp[21] = { 0, 1, 3 };
 
     for (int i = 3; i <= 20; i++) {
-        d[i] = 3 + d[i - 2] + (1 << (i - 2)) - 1;
+        dp[i] = dp[i - 2] + 3 + (1 << (i - 2)) - 1;
     }
 
     int n;
     cin >> n;
 
-    cout << d[n] << '\n';
-
-    hanoi_4(n, 'A', 'D');
+    cout << dp[n] << '\n';
+    hanoi_4(n, 'A', 'D', 'B', 'C');
 
     return 0;
 }

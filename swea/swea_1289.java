@@ -1,4 +1,5 @@
 // Solve 2024-01-29
+// Update 2024-01-30
 
 // SWEA에 제출할 때는 class 이름을 Solution으로 설정해야 한다.
 
@@ -25,10 +26,10 @@ public class swea_1289 {
                 }
             }
 
-            sb.append(String.format("#%d %d%n", ti, ans));
+            sb.append("#").append(ti).append(" ").append(ans).append("\n");
         }
 
-        System.out.println(sb);
+        System.out.print(sb);
         br.close();
     }
 
