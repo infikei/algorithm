@@ -1,4 +1,5 @@
 // Solve 2024-01-30
+// Update 2024-01-31
 
 // 백준에 제출할 때는 class 이름을 Main으로 설정해야 한다.
 
@@ -9,15 +10,15 @@ import java.util.StringTokenizer;
 
 public class boj_15649 {
 
-    static int n, m;
     static StringBuilder sb;
+    static int n, m;
     static int[] seq;
     static boolean[] selected;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine(), " ");
         sb = new StringBuilder();
+        StringTokenizer st = new StringTokenizer(br.readLine(), " ");
         n = Integer.parseInt(st.nextToken());
         m = Integer.parseInt(st.nextToken());
         seq = new int[m];
