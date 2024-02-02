@@ -1,5 +1,5 @@
 // Solve 2022-08-20
-// Update 2023-08-25
+// Update 2024-02-01
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -10,13 +10,14 @@ using namespace std;
 #define ALL(v) v.begin(),v.end()
 using ll = long long;
 
-int n, s[10], b[10], ans = 1e9;
+int n, ans;
+int s[10], b[10];
 
 void dfs(int depth = 0, int s_prod = 1, int b_sum = 0) {
     if (depth == n) {
-        if (b_sum != 0) {
-            ans = min(ans, abs(s_prod - b_sum));
-        }
+        if (b_sum == 0) return;
+
+        ans = min(ans, abs(s_prod - b_sum));
         return;
     }
 
@@ -33,6 +34,7 @@ int main() {
         cin >> s[i] >> b[i];
     }
 
+    ans = abs(s[0] - b[0]);
     dfs();
 
     cout << ans << '\n';

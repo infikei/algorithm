@@ -1,4 +1,5 @@
 // Solve 2024-01-31
+// Update 2024-02-01
 
 // 백준에 제출할 때는 class 이름을 Main으로 설정해야 한다.
 
@@ -27,7 +28,11 @@ public class boj_15650_bitmask {
             }
 
             if (cnt == m) {
-                for (int j = 1, bit = (twoPowerN >> 1); bit != 0; j++, bit >>= 1) {
+                int j = 0;
+
+                for (int bit = (twoPowerN >> 1); bit != 0; bit >>= 1) {
+                    j++;
+
                     if ((i & bit) == 0) {
                         sb.append(j).append(" ");
                     }

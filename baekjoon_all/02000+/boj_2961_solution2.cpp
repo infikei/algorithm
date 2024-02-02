@@ -1,5 +1,5 @@
 // Solve 2022-08-20
-// Update 2023-08-25
+// Update 2024-02-01
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -24,8 +24,9 @@ int main() {
 
     int ans = abs(s[0] - b[0]);
 
-    for (int i = 1, ie = (1 << n); i < ie; i++) {
-        int s_prod = 1, b_sum = 0;
+    for (int i = 1; i < (1 << n); i++) {
+        int s_prod = 1;
+        int b_sum = 0;
 
         for (int j = 0; j < n; j++) {
             if ((i & (1 << j)) != 0) {

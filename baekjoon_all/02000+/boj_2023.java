@@ -1,5 +1,5 @@
 // Solve 2024-01-26
-// Update 2024-01-28
+// Update 2024-02-01
 
 // 백준에 제출할 때는 class 이름을 Main으로 설정해야 한다.
 
@@ -10,13 +10,15 @@ import java.io.InputStreamReader;
 public class boj_2023 {
 
     static int n;
-    static StringBuilder sb = new StringBuilder();
+    static StringBuilder sb;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        sb = new StringBuilder();
         n = Integer.parseInt(br.readLine());
         dfs(0, 0);
-        System.out.println(sb);
+
+        System.out.print(sb);
         br.close();
     }
 
@@ -38,7 +40,9 @@ public class boj_2023 {
     static boolean isPrime(int k) {
         if (k == 1) return false;
 
-        for (int i = 2, ie = (int) Math.sqrt(k); i <= ie; i++) {
+        int iEnd = (int) Math.sqrt(k);
+
+        for (int i = 2; i <= iEnd; i++) {
             if (k % i == 0) {
                 return false;
             }
