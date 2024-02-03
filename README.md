@@ -1,4 +1,4 @@
-# algorithm
+# 💻 algorithm
 
 1. 이곳은 백준 등의 사이트에 나와있는 다양한 문제들을 해결하면서 작성한 풀이를 저장하기 위한 공간입니다.
 
@@ -14,11 +14,11 @@
 
 3. 2023년 2월 6일부터 V2 프로젝트가 시작되었습니다.
 
-    - 백준 풀이를 저장하는 폴더의 분류 기준을 10000 단위에서 1000 단위로 변경했습니다. (:white_check_mark: 완료)
-    - 백준 대회 문제만 저장하는 폴더를 만들었습니다. (:white_check_mark: 완료)
-    - 기존 풀이를 최신화하고 C++과 Python 두 가지 언어로 작성할 계획입니다. (:arrows_counterclockwise: 순차적으로 진행 중)
+    - 백준 풀이를 저장하는 폴더의 분류 기준을 10000 단위에서 1000 단위로 변경했습니다. (✅ 완료)
+    - 백준 대회 문제만 저장하는 폴더를 만들었습니다. (✅ 완료)
+    - 기존 풀이를 최신화하고 C++과 Python 두 가지 언어로 작성할 계획입니다. (🔄 순차적으로 진행 중)
 
-### My Profile
+## My Profile
 
 ![hyp3rflow's solved.ac stats](https://github-readme-solvedac.hyp3rflow.vercel.app/api/?handle=infikei)
 
