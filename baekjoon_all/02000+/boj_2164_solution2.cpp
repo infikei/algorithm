@@ -16,19 +16,19 @@ int main() {
     int n;
     cin >> n;
 
-    queue<int> que;
-
-    for (int i = 1; i <= n; i++) {
-        que.push(i);
+    if (n == 1) {
+        cout << 1 << '\n';
     }
+    else {
+        int pow = 1;
 
-    for (int i = 1; i < n; i++) {
-        que.pop();
-        que.push(que.front());
-        que.pop();
+        while (true) {
+            if (n <= (pow <<= 1)) break;
+        }
+
+        // cout << pow - (pow - n) * 2 << '\n';
+        cout << n * 2 - pow << '\n';
     }
-
-    cout << que.front() << '\n';
 
     return 0;
 }
