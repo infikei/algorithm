@@ -16,22 +16,20 @@ int main() {
     int n, k;
     cin >> n >> k;
 
-    queue<int> que;
+    vector<int> vec;
 
     for (int i = 1; i <= n; i++) {
-        que.push(i);
+        vec.push_back(i);
     }
 
     vector<int> ans(n);
+    int idx = 0;
 
     for (int i = 0; i < n; i++) {
-        for (int j = 1; j < k; j++) {
-            que.push(que.front());
-            que.pop();
-        }
-
-        ans[i] = que.front();
-        que.pop();
+        idx += k - 1;
+        idx %= SIZE(vec);
+        ans[i] = vec[idx];
+        vec.erase(vec.begin() + idx);
     }
 
     cout << '<' << ans[0];

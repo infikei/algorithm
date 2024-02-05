@@ -1,5 +1,5 @@
 // Solve 2022-09-09
-// Update 2023-09-02
+// Update 2024-02-05
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -11,8 +11,9 @@ using namespace std;
 using ll = long long;
 
 struct Num{
-    int val, pop;
-    Num(int x = 0, int t = 0) : val(x), pop(t) {}
+    int num, idx;
+
+    Num(int num, int idx) : num(num), idx(idx) {}
 };
 
 int main() {
@@ -27,17 +28,16 @@ int main() {
         int x;
         cin >> x;
 
-        while (!dque.empty() && dque.front().pop <= i) {
+        if (!dque.empty() && dque.front().idx == i - l) {
             dque.pop_front();
         }
 
-        while (!dque.empty() && dque.back().val >= x) {
+        while (!dque.empty() && dque.back().num >= x) {
             dque.pop_back();
         }
 
-        dque.emplace_back(x, i + l);
-
-        cout << dque.front().val << ' ';
+        dque.emplace_back(x, i);
+        cout << dque.front().num << ' ';
     }
 
     cout << '\n';
