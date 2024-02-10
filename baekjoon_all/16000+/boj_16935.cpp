@@ -1,4 +1,5 @@
 // Solve 2024-02-07
+// Update 2024-02-08
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -15,141 +16,175 @@ int main() {
     int n, m, r;
     cin >> n >> m >> r;
 
-    int board[100][100];
+    int n2 = n / 2;
+    int m2 = m / 2;
+    int board[2][2][50][50];
+    int new_board[2][2][50][50];
 
-    for (int x = 0; x < n; x++) {
-        for (int y = 0; y < m; y++) {
-            cin >> board[x][y];
+    for (int x = 0; x < n2; x++) {
+        for (int y = 0; y < m2; y++) {
+            cin >> board[0][0][x][y];
+        }
+
+        for (int y = 0; y < m2; y++) {
+            cin >> board[0][1][x][y];
         }
     }
 
-    int four[2][2] = { { 0, 1 }, { 2, 3 } };
-    bool top_bottom = false;
-    bool left_right = false;
-    int rotate = 0;
+    for (int x = 0; x < n2; x++) {
+        for (int y = 0; y < m2; y++) {
+            cin >> board[1][0][x][y];
+        }
 
-    for (int i = 0; i < r; i++) {
+        for (int y = 0; y < m2; y++) {
+            cin >> board[1][1][x][y];
+        }
+    }
+
+    bool vertical_reverse = false;
+    bool horizontal_reverse = false;
+    int rotate_cnt = 0;
+    int four[2][2] = { { 0, 1 }, { 2, 3 } };
+
+    while (r-- > 0) {
         int cmd;
         cin >> cmd;
 
         if (cmd == 1) {
-            if (rotate & 1) {
-                left_right = !left_right;
+            // 상하 반전
+            if (rotate_cnt & 1) {
+                horizontal_reverse = !horizontal_reverse;
             }
             else {
-                top_bottom = !top_bottom;
+                vertical_reverse = !vertical_reverse;
             }
 
             swap(four[0][0], four[1][0]);
             swap(four[0][1], four[1][1]);
         }
         else if (cmd == 2) {
-            if (rotate & 1) {
-                top_bottom = !top_bottom;
+            // 좌우 반전
+            if (rotate_cnt & 1) {
+                vertical_reverse = !vertical_reverse;
             }
             else {
-                left_right = !left_right;
+                horizontal_reverse = !horizontal_reverse;
             }
 
             swap(four[0][0], four[0][1]);
             swap(four[1][0], four[1][1]);
         }
         else if (cmd == 3) {
-            if (++rotate == 4) {
-                rotate = 0;
+            // 오른쪽으로 90도 회전
+            if (++rotate_cnt == 4) {
+                rotate_cnt = 0;
             }
 
-            int tmp = four[0][0];
-            four[0][0] = four[1][0];
-            four[1][0] = four[1][1];
-            four[1][1] = four[0][1];
-            four[0][1] = tmp;
+            swap(four[0][1], four[0][0]);
+            swap(four[0][0], four[1][0]);
+            swap(four[1][0], four[1][1]);
         }
         else if (cmd == 4) {
-            if (--rotate == -1) {
-                rotate = 3;
+            // 왼쪽으로 90도 회전
+            if (--rotate_cnt == -1) {
+                rotate_cnt = 3;
             }
 
-            int tmp = four[0][0];
-            four[0][0] = four[0][1];
-            four[0][1] = four[1][1];
-            four[1][1] = four[1][0];
-            four[1][0] = tmp;
+            swap(four[1][0], four[1][1]);
+            swap(four[0][0], four[1][0]);
+            swap(four[0][1], four[0][0]);
         }
         else if (cmd == 5) {
-            int tmp = four[0][0];
-            four[0][0] = four[1][0];
-            four[1][0] = four[1][1];
-            four[1][1] = four[0][1];
-            four[0][1] = tmp;
+            // 사분면의 위치를 시계 방향으로 이동
+            swap(four[0][1], four[0][0]);
+            swap(four[0][0], four[1][0]);
+            swap(four[1][0], four[1][1]);
         }
         else {
-            int tmp = four[0][0];
-            four[0][0] = four[0][1];
-            four[0][1] = four[1][1];
-            four[1][1] = four[1][0];
-            four[1][0] = tmp;
+            // 사분면의 위치를 반시계 방향으로 이동
+            swap(four[1][0], four[1][1]);
+            swap(four[0][0], four[1][0]);
+            swap(four[0][1], four[0][0]);
         }
     }
 
-    int n2 = n / 2;
-    int m2 = m / 2;
-
-    if (left_right) {
-        for (int x = 0; x < n; x++) {
-            reverse(board[x], board[x] + m2);
-            reverse(board[x] + m2, board[x] + m);
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 2; j++) {
+            if (four[i][j] == 0) {
+                swap(new_board[i][j], board[0][0]);
+            }
+            else if (four[i][j] == 1) {
+                swap(new_board[i][j], board[0][1]);
+            }
+            else if (four[i][j] == 2) {
+                swap(new_board[i][j], board[1][0]);
+            }
+            else {
+                swap(new_board[i][j], board[1][1]);
+            }
         }
     }
 
-    if (top_bottom) {
-        reverse(board, board + n2);
-        reverse(board + n2, board + n);
-    }
+    // 사분면의 위치 이동은 이미 위에서 모두 처리했다.
+    // 이제 사분면의 위치 이동 없이, 각각의 사분면 내부에서 상하 반전, 좌우 반전, 회전을 처리한다.
 
-    int board1[4][50][50];
+    // 각각의 사분면 내부에서 상하 반전
 
-    for (int x = 0; x < n2; x++) {
-        for (int y = 0; y < m2; y++) {
-            board1[0][x][y] = board[x][y];
-            board1[1][x][y] = board[x][y + m2];
-            board1[2][x][y] = board[x + n2][y];
-            board1[3][x][y] = board[x + n2][y + m2];
+    if (vertical_reverse) {
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 2; j++) {
+                reverse(new_board[i][j], new_board[i][j] + n2);
+            }
         }
     }
 
-    int board2[4][50][50];
+    // 각각의 사분면 내부에서 좌우 반전
 
-    if (rotate == 1) {
-        for (int x = 0; x < n2; x++) {
-            for (int y = 0; y < m2; y++) {
-                board2[0][y][n2 - 1 - x] = board1[0][x][y];
-                board2[1][y][n2 - 1 - x] = board1[1][x][y];
-                board2[2][y][n2 - 1 - x] = board1[2][x][y];
-                board2[3][y][n2 - 1 - x] = board1[3][x][y];
+    if (horizontal_reverse) {
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 2; j++) {
+                for (int x = 0; x < n2; x++) {
+                    reverse(new_board[i][j][x], new_board[i][j][x] + m2);
+                }
+            }
+        }
+    }
+
+    // 각각의 사분면 내부에서 회전
+
+    if (rotate_cnt == 1) {
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 2; j++) {
+                for (int x = 0; x < n2; x++) {
+                    for (int y = 0; y < m2; y++) {
+                        board[i][j][y][n2 - 1 - x] = new_board[i][j][x][y];
+                    }
+                }
             }
         }
 
         swap(n, m);
         swap(n2, m2);
     }
-    else if (rotate == 2) {
-        for (int x = 0; x < n2; x++) {
-            for (int y = 0; y < m2; y++) {
-                board2[0][n2 - 1 - x][m2 - 1 - y] = board1[0][x][y];
-                board2[1][n2 - 1 - x][m2 - 1 - y] = board1[1][x][y];
-                board2[2][n2 - 1 - x][m2 - 1 - y] = board1[2][x][y];
-                board2[3][n2 - 1 - x][m2 - 1 - y] = board1[3][x][y];
+    else if (rotate_cnt == 2) {
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 2; j++) {
+                for (int x = 0; x < n2; x++) {
+                    for (int y = 0; y < m2; y++) {
+                        board[i][j][n2 - 1 - x][m2 - 1 - y] = new_board[i][j][x][y];
+                    }
+                }
             }
         }
     }
-    else if (rotate == 3) {
-        for (int x = 0; x < n2; x++) {
-            for (int y = 0; y < m2; y++) {
-                board2[0][m2 - 1 - y][x] = board1[0][x][y];
-                board2[1][m2 - 1 - y][x] = board1[1][x][y];
-                board2[2][m2 - 1 - y][x] = board1[2][x][y];
-                board2[3][m2 - 1 - y][x] = board1[3][x][y];
+    else if (rotate_cnt == 3) {
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 2; j++) {
+                for (int x = 0; x < n2; x++) {
+                    for (int y = 0; y < m2; y++) {
+                        board[i][j][m2 - 1 - y][x] = new_board[i][j][x][y];
+                    }
+                }
             }
         }
 
@@ -157,23 +192,18 @@ int main() {
         swap(n2, m2);
     }
     else {
-        for (int x = 0; x < n2; x++) {
-            for (int y = 0; y < m2; y++) {
-                board2[0][x][y] = board1[0][x][y];
-                board2[1][x][y] = board1[1][x][y];
-                board2[2][x][y] = board1[2][x][y];
-                board2[3][x][y] = board1[3][x][y];
-            }
-        }
+        swap(board, new_board);
     }
+
+    // 배열 출력
 
     for (int x = 0; x < n2; x++) {
         for (int y = 0; y < m2; y++) {
-            cout << board2[four[0][0]][x][y] << ' ';
+            cout << board[0][0][x][y] << ' ';
         }
 
         for (int y = 0; y < m2; y++) {
-            cout << board2[four[0][1]][x][y] << ' ';
+            cout << board[0][1][x][y] << ' ';
         }
 
         cout << '\n';
@@ -181,11 +211,11 @@ int main() {
 
     for (int x = 0; x < n2; x++) {
         for (int y = 0; y < m2; y++) {
-            cout << board2[four[1][0]][x][y] << ' ';
+            cout << board[1][0][x][y] << ' ';
         }
 
         for (int y = 0; y < m2; y++) {
-            cout << board2[four[1][1]][x][y] << ' ';
+            cout << board[1][1][x][y] << ' ';
         }
 
         cout << '\n';

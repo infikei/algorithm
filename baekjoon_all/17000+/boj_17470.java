@@ -1,4 +1,5 @@
 // Solve 2024-02-07
+// Update 2024-02-08
 
 // 백준에 제출할 때는 class 이름을 Main으로 설정해야 한다.
 
@@ -126,7 +127,7 @@ public class boj_17470 {
             }
         }
 
-        rotateByPart(rotateCnt); // 각각의 사분면 내부에서 회전
+        rotateBoardByPart(rotateCnt); // 각각의 사분면 내부에서 회전
         printBoard(); // 배열 출력
         br.close();
     }
@@ -150,7 +151,7 @@ public class boj_17470 {
     }
 
     /** 각각의 사분면 내부에서 회전 */
-    static void rotateByPart(int rotateCnt) {
+    static void rotateBoardByPart(int rotateCnt) {
         if (rotateCnt == 0) return;
 
         for (int i = 0; i < 2; i++) {
