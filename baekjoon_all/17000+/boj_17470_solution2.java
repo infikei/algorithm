@@ -8,12 +8,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class boj_16935 {
+public class boj_17470_solution2 {
 
     static BufferedReader br;
     static StringTokenizer st;
     static int n, m, r, n2, m2;
-    static int[][][][] board;
+    static int[][][] board;
 
     public static void main(String[] args) throws IOException {
         br = new BufferedReader(new InputStreamReader(System.in));
@@ -43,13 +43,13 @@ public class boj_16935 {
                     horizontalReverse = !horizontalReverse;
                 }
 
-                tmp = board[0][0];
-                board[0][0] = board[1][0];
-                board[1][0] = tmp;
+                tmp = board[0];
+                board[0] = board[2];
+                board[2] = tmp;
 
-                tmp = board[0][1];
-                board[0][1] = board[1][1];
-                board[1][1] = tmp;
+                tmp = board[1];
+                board[1] = board[3];
+                board[3] = tmp;
             } else if (cmd.equals("2")) {
                 // 좌우 반전
                 if ((rotateCnt & 1) == 0) {
@@ -58,49 +58,49 @@ public class boj_16935 {
                     verticalReverse = !verticalReverse;
                 }
 
-                tmp = board[0][0];
-                board[0][0] = board[0][1];
-                board[0][1] = tmp;
+                tmp = board[0];
+                board[0] = board[1];
+                board[1] = tmp;
 
-                tmp = board[1][0];
-                board[1][0] = board[1][1];
-                board[1][1] = tmp;
+                tmp = board[2];
+                board[2] = board[3];
+                board[3] = tmp;
             } else if (cmd.equals("3")) {
                 // 오른쪽으로 90도 회전
                 if (++rotateCnt == 4) {
                     rotateCnt = 0;
                 }
 
-                tmp = board[0][0];
-                board[0][0] = board[1][0];
-                board[1][0] = board[1][1];
-                board[1][1] = board[0][1];
-                board[0][1] = tmp;
+                tmp = board[0];
+                board[0] = board[2];
+                board[2] = board[3];
+                board[3] = board[1];
+                board[1] = tmp;
             } else if (cmd.equals("4")) {
                 // 왼쪽으로 90도 회전
                 if (--rotateCnt == -1) {
                     rotateCnt = 3;
                 }
 
-                tmp = board[0][0];
-                board[0][0] = board[0][1];
-                board[0][1] = board[1][1];
-                board[1][1] = board[1][0];
-                board[1][0] = tmp;
+                tmp = board[0];
+                board[0] = board[1];
+                board[1] = board[3];
+                board[3] = board[2];
+                board[2] = tmp;
             } else if (cmd.equals("5")) {
                 // 사분면의 위치를 시계 방향으로 이동
-                tmp = board[0][0];
-                board[0][0] = board[1][0];
-                board[1][0] = board[1][1];
-                board[1][1] = board[0][1];
-                board[0][1] = tmp;
+                tmp = board[0];
+                board[0] = board[2];
+                board[2] = board[3];
+                board[3] = board[1];
+                board[1] = tmp;
             } else {
                 // 사분면의 위치를 반시계 방향으로 이동
-                tmp = board[0][0];
-                board[0][0] = board[0][1];
-                board[0][1] = board[1][1];
-                board[1][1] = board[1][0];
-                board[1][0] = tmp;
+                tmp = board[0];
+                board[0] = board[1];
+                board[1] = board[3];
+                board[3] = board[2];
+                board[2] = tmp;
             }
         }
 
@@ -108,21 +108,17 @@ public class boj_16935 {
         // 이제 사분면의 위치 이동 없이, 각각의 사분면 내부에서 상하 반전, 좌우 반전, 회전을 처리한다.
 
         if (verticalReverse) {
-            for (int i = 0; i < 2; i++) {
-                for (int j = 0; j < 2; j++) {
-                    // 각각의 사분면 내부에서 상하 반전
-                    reverse(board[i][j], n2);
-                }
+            for (int i = 0; i < 4; i++) {
+                // 각각의 사분면 내부에서 상하 반전
+                reverse(board[i], n2);
             }
         }
 
         if (horizontalReverse) {
-            for (int i = 0; i < 2; i++) {
-                for (int j = 0; j < 2; j++) {
-                    // 각각의 사분면 내부에서 좌우 반전
-                    for (int x = 0; x < n2; x++) {
-                        reverse(board[i][j][x], m2);
-                    }
+            for (int i = 0; i < 4; i++) {
+                // 각각의 사분면 내부에서 좌우 반전
+                for (int x = 0; x < n2; x++) {
+                    reverse(board[i][x], m2);
                 }
             }
         }
@@ -154,32 +150,30 @@ public class boj_16935 {
     static void rotateBoardByPart(int rotateCnt) {
         if (rotateCnt == 0) return;
 
-        for (int i = 0; i < 2; i++) {
-            for (int j = 0; j < 2; j++) {
-                int[][] newArr = new int[50][50];
+        for (int i = 0; i < 4; i++) {
+            int[][] newArr = new int[50][50];
 
-                if (rotateCnt == 1) {
-                    for (int x = 0; x < n2; x++) {
-                        for (int y = 0; y < m2; y++) {
-                            newArr[y][n2 - 1 - x] = board[i][j][x][y];
-                        }
-                    }
-                } else if (rotateCnt == 2) {
-                    for (int x = 0; x < n2; x++) {
-                        for (int y = 0; y < m2; y++) {
-                            newArr[n2 - 1 - x][m2 - 1 - y] = board[i][j][x][y];
-                        }
-                    }
-                } else if (rotateCnt == 3) {
-                    for (int x = 0; x < n2; x++) {
-                        for (int y = 0; y < m2; y++) {
-                            newArr[m2 - 1 - y][x] = board[i][j][x][y];
-                        }
+            if (rotateCnt == 1) {
+                for (int x = 0; x < n2; x++) {
+                    for (int y = 0; y < m2; y++) {
+                        newArr[y][n2 - 1 - x] = board[i][x][y];
                     }
                 }
-
-                board[i][j] = newArr;
+            } else if (rotateCnt == 2) {
+                for (int x = 0; x < n2; x++) {
+                    for (int y = 0; y < m2; y++) {
+                        newArr[n2 - 1 - x][m2 - 1 - y] = board[i][x][y];
+                    }
+                }
+            } else if (rotateCnt == 3) {
+                for (int x = 0; x < n2; x++) {
+                    for (int y = 0; y < m2; y++) {
+                        newArr[m2 - 1 - y][x] = board[i][x][y];
+                    }
+                }
             }
+
+            board[i] = newArr;
         }
 
         if ((rotateCnt & 1) == 1) {
@@ -193,19 +187,19 @@ public class boj_16935 {
         }
     }
 
-    /** 2차원 배열을 입력받고 각각의 사분면으로 나눠서 4차원 배열로 저장 */
+    /** 2차원 배열을 입력받고 각각의 사분면으로 나눠서 3차원 배열로 저장 */
     static void inputBoardByPart() throws IOException {
-        board = new int[2][2][50][50];
+        board = new int[4][50][50];
 
         for (int x = 0; x < n2; x++) {
             st = new StringTokenizer(br.readLine(), " ");
 
             for (int y = 0; y < m2; y++) {
-                board[0][0][x][y] = Integer.parseInt(st.nextToken());
+                board[0][x][y] = Integer.parseInt(st.nextToken());
             }
 
             for (int y = 0; y < m2; y++) {
-                board[0][1][x][y] = Integer.parseInt(st.nextToken());
+                board[1][x][y] = Integer.parseInt(st.nextToken());
             }
         }
 
@@ -213,11 +207,11 @@ public class boj_16935 {
             st = new StringTokenizer(br.readLine(), " ");
 
             for (int y = 0; y < m2; y++) {
-                board[1][0][x][y] = Integer.parseInt(st.nextToken());
+                board[2][x][y] = Integer.parseInt(st.nextToken());
             }
 
             for (int y = 0; y < m2; y++) {
-                board[1][1][x][y] = Integer.parseInt(st.nextToken());
+                board[3][x][y] = Integer.parseInt(st.nextToken());
             }
         }
     }
@@ -228,11 +222,11 @@ public class boj_16935 {
 
         for (int x = 0; x < n2; x++) {
             for (int y = 0; y < m2; y++) {
-                sb.append(board[0][0][x][y]).append(" ");
+                sb.append(board[0][x][y]).append(" ");
             }
 
             for (int y = 0; y < m2; y++) {
-                sb.append(board[0][1][x][y]).append(" ");
+                sb.append(board[1][x][y]).append(" ");
             }
 
             sb.append("\n");
@@ -240,11 +234,11 @@ public class boj_16935 {
 
         for (int x = 0; x < n2; x++) {
             for (int y = 0; y < m2; y++) {
-                sb.append(board[1][0][x][y]).append(" ");
+                sb.append(board[2][x][y]).append(" ");
             }
 
             for (int y = 0; y < m2; y++) {
-                sb.append(board[1][1][x][y]).append(" ");
+                sb.append(board[3][x][y]).append(" ");
             }
 
             sb.append("\n");

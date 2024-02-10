@@ -1,4 +1,5 @@
 // Solve 2024-02-07
+// Update 2024-02-10
 
 // 백준에 제출할 때는 class 이름을 Main으로 설정해야 한다.
 
@@ -14,7 +15,6 @@ public class boj_11286 {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
         int n = Integer.parseInt(br.readLine());
-
         PriorityQueue<Integer> pq = new PriorityQueue<Integer>(new Comparator<Integer>() {
 
             @Override
