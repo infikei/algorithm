@@ -1,5 +1,5 @@
 // Solve 2022-06-08
-// Update 2024-01-31
+// Update 2024-02-11
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -16,21 +16,23 @@ int main() {
     int n, m;
     cin >> n >> m;
 
-    int two_power_n = (1 << n);
-
-    for (int i = 0; i < two_power_n; i++) {
+    for (int selected = 0; selected < (1 << n); selected++) {
         int cnt = 0;
 
-        for (int bit = 1; bit != two_power_n; bit <<= 1) {
-            if ((i & bit) == 0) {
+        for (int bit = 1 << (n - 1); bit != 0; bit >>= 1) {
+            if ((selected & bit) == 0) {
                 cnt++;
             }
         }
 
         if (cnt == m) {
-            for (int j = 1, bit = (two_power_n >> 1); bit != 0; j++, bit >>= 1) {
-                if ((i & bit) == 0) {
-                    cout << j << ' ';
+            int i = 0;
+
+            for (int bit = 1 << (n - 1); bit != 0; bit >>= 1) {
+                i++;
+
+                if ((selected & bit) == 0) {
+                    cout << i << ' ';
                 }
             }
 

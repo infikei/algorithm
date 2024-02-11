@@ -1,5 +1,5 @@
 // Solve 2022-07-27
-// Update 2023-09-03
+// Update 2024-02-11
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -10,46 +10,44 @@ using namespace std;
 #define ALL(v) v.begin(),v.end()
 using ll = long long;
 
-int heap[100010], heap_end;
+int heap[100001];
+int heap_end = 1;
 
-void heap_push(int x) {
-    heap[heap_end] = x;
-    heap_end++;
+void push(int x) {
+    int cur_node = heap_end++;
+    int cur_parent = cur_node / 2;
 
-    int child = heap_end - 1;
-    int parent = child / 2;
-
-    while (child > 1 && heap[parent] > heap[child]) {
-        swap(heap[parent], heap[child]);
-        child = parent;
-        parent = child / 2;
+    while (cur_parent >= 1 && heap[cur_parent] > x) {
+        heap[cur_node] = heap[cur_parent];
+        cur_node = cur_parent;
+        cur_parent /= 2;
     }
+
+    heap[cur_node] = x;
 }
 
-int heap_pop() {
+int pop() {
     if (heap_end == 1) return 0;
 
-    int res = heap[1];
-    heap_end--;
-    swap(heap[1], heap[heap_end]);
+    int value_return = heap[1];
+    int value_move = heap[--heap_end];
+    int cur_node = 1;
+    int cur_child = 2;
 
-    int parent = 1;
-    int child = parent * 2;
-
-    while (true) {
-        if (child + 1 < heap_end && heap[child] > heap[child + 1]) {
-            child++;
-        }
-        if (child >= heap_end || heap[child] >= heap[parent]) {
-            break;
+    while (cur_child < heap_end) {
+        if (cur_child + 1 < heap_end && heap[cur_child] > heap[cur_child + 1]) {
+            cur_child++;
         }
 
-        swap(heap[parent], heap[child]);
-        parent = child;
-        child = parent * 2;
+        if (value_move <= heap[cur_child]) break;
+
+        heap[cur_node] = heap[cur_child];
+        cur_node = cur_child;
+        cur_child *= 2;
     }
 
-    return res;
+    heap[cur_node] = value_move;
+    return value_return;
 }
 
 int main() {
@@ -58,14 +56,12 @@ int main() {
     int n;
     cin >> n;
 
-    heap_end = 1;
-
-    for (int i = 0; i < n; i++) {
+    while (n-- > 0) {
         int x;
         cin >> x;
 
-        if (x == 0) cout << heap_pop() << '\n';
-        else heap_push(x);
+        if (x == 0) cout << pop() << '\n';
+        else push(x);
     }
 
     return 0;

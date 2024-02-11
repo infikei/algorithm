@@ -1,5 +1,5 @@
 // Solve 2024-01-31
-// Update 2024-02-01
+// Update 2024-02-11
 
 // 백준에 제출할 때는 class 이름을 Main으로 설정해야 한다.
 
@@ -21,14 +21,13 @@ public class boj_15650 {
         n = Integer.parseInt(st.nextToken());
         m = Integer.parseInt(st.nextToken());
         seq = new int[m];
+        dfs(0, 1);
 
-        dfs(0, 0);
-
-        System.out.println(sb);
+        System.out.print(sb);
         br.close();
     }
 
-    static void dfs(int depth, int prev) {
+    static void dfs(int depth, int beginNum) {
         if (depth == m) {
             for (int x : seq) {
                 sb.append(x).append(" ");
@@ -38,9 +37,9 @@ public class boj_15650 {
             return;
         }
 
-        for (int i = prev + 1; i <= n; i++) {
+        for (int i = beginNum; i <= n; i++) {
             seq[depth] = i;
-            dfs(depth + 1, i);
+            dfs(depth + 1, i + 1);
         }
     }
 

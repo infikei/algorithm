@@ -1,5 +1,5 @@
 // Solve 2022-06-08
-// Update 2024-01-30
+// Update 2024-02-11
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -10,10 +10,10 @@ using namespace std;
 #define ALL(v) v.begin(),v.end()
 using ll = long long;
 
-int n, m, seq[8];
-bool selected[9];
+int n, m;
+int seq[8];
 
-void dfs(int depth = 0) {
+void dfs(int depth = 0, int selected = 0) {
     if (depth == m) {
         for (int i = 0; i < m; i++) {
             cout << seq[i] << ' ';
@@ -24,11 +24,9 @@ void dfs(int depth = 0) {
     }
 
     for (int i = 1; i <= n; i++) {
-        if (!selected[i]) {
-            selected[i] = true;
+        if ((selected & 1 << i) == 0) {
             seq[depth] = i;
-            dfs(depth + 1);
-            selected[i] = false;
+            dfs(depth + 1, selected | 1 << i);
         }
     }
 }

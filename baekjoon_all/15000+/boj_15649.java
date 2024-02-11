@@ -1,5 +1,5 @@
 // Solve 2024-01-30
-// Update 2024-01-31
+// Update 2024-02-11
 
 // 백준에 제출할 때는 class 이름을 Main으로 설정해야 한다.
 
@@ -13,7 +13,6 @@ public class boj_15649 {
     static StringBuilder sb;
     static int n, m;
     static int[] seq;
-    static boolean[] selected;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -22,15 +21,13 @@ public class boj_15649 {
         n = Integer.parseInt(st.nextToken());
         m = Integer.parseInt(st.nextToken());
         seq = new int[m];
-        selected = new boolean[n + 1];
+        dfs(0, 0);
 
-        dfs(0);
-
-        System.out.println(sb);
+        System.out.print(sb);
         br.close();
     }
 
-    static void dfs(int depth) {
+    static void dfs(int depth, int selected) {
         if (depth == m) {
             for (int x : seq) {
                 sb.append(x).append(" ");
@@ -41,11 +38,9 @@ public class boj_15649 {
         }
 
         for (int i = 1; i <= n; i++) {
-            if (!selected[i]) {
-                selected[i] = true;
+            if ((selected & 1 << i) == 0) {
                 seq[depth] = i;
-                dfs(depth + 1);
-                selected[i] = false;
+                dfs(depth + 1, selected | 1 << i);
             }
         }
     }

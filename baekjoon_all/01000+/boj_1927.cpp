@@ -1,5 +1,5 @@
 // Solve 2022-07-27
-// Update 2023-09-03
+// Update 2024-02-11
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -16,9 +16,9 @@ int main() {
     int n;
     cin >> n;
 
-    priority_queue<int, vector<int>, greater<int> > pq_mintop;
+    priority_queue<int, vector<int>, greater<int>> pq_mintop;
 
-    for (int i = 0; i < n; i++) {
+    while (n-- > 0) {
         int x;
         cin >> x;
 
