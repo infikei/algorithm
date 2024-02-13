@@ -16,20 +16,19 @@ int main() {
     int n, l;
     cin >> n >> l;
 
-    vector<int> heights(n);
+    priority_queue<int, vector<int>, greater<int>> pq_mintop;
 
-    for (int &h : heights) {
-        cin >> h;
+    for (int i = 0; i < n; i++) {
+        int x;
+        cin >> x;
+        pq_mintop.push(x);
     }
 
-    sort(heights.begin(), heights.end());
+    for (int i = 0; i < n; i++) {
+        if (pq_mintop.top() > l) break;
 
-    for (int &h : heights) {
-        if (h <= l) {
-            l++;
-        } else {
-            break;
-        }
+        pq_mintop.pop();
+        l++;
     }
 
     cout << l << '\n';

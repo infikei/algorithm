@@ -1,5 +1,5 @@
 // Solve 2022-07-16
-// Update 2023-07-22
+// Update 2024-02-13
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -10,16 +10,18 @@ using namespace std;
 #define ALL(v) v.begin(),v.end()
 using ll = long long;
 
-struct Meet{
-    int s, e;
-    Meet(int ns = 0, int ne = 0) : s(ns), e(ne) {}
-    bool operator<(const Meet &rhs) const {
-        if (e != rhs.e) return e < rhs.e;
-        return s < rhs.s;
+struct Meeting{
+    int begin, end;
+
+    Meeting(int begin = 0, int end = 0) : begin(begin), end(end) {}
+
+    bool operator<(const Meeting &rhs) const {
+        if (end != rhs.end) return end < rhs.end;
+        return begin < rhs.begin;
     }
 };
 
-Meet meet[100000];
+Meeting meetings[100000];
 
 int main() {
     FASTIO;
@@ -28,21 +30,24 @@ int main() {
     cin >> n;
 
     for (int i = 0; i < n; i++) {
-        int s, e;
-        cin >> s >> e;
-        meet[i] = { s, e };
+        int begin, end;
+        cin >> begin >> end;
+        meetings[i] = { begin, end };
     }
 
-    sort(meet, meet + n);
+    sort(meetings, meetings + n);
 
-    int ans = 0, t = 0;
+    int max_count_of_meetings = 0;
+    int end_of_last_meeting = 0;
+
     for (int i = 0; i < n; i++) {
-        if (meet[i].s < t) continue;
-        ans++;
-        t = meet[i].e;
+        if (end_of_last_meeting <= meetings[i].begin) {
+            max_count_of_meetings++;
+            end_of_last_meeting = meetings[i].end;
+        }
     }
 
-    cout << ans << '\n';
+    cout << max_count_of_meetings << '\n';
 
     return 0;
 }
