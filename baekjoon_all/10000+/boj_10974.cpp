@@ -1,35 +1,42 @@
-#include <iostream>
-#include <vector>
-#define fastio ios_base::sync_with_stdio(false);cout.tie(NULL);cin.tie(NULL); // boj_15552.cpp
+// Solve 2023-01-15
+// Update 2024-02-12
+
+#include <bits/stdc++.h>
 using namespace std;
 
-int n;
-bool visited[9];
-vector<int> buffer;
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
 
-void dfs(int depth = 0) {
+int n;
+int seq[8];
+
+void recur(int depth = 0, int selected = 0) {
     if (depth == n) {
-        for (auto a : buffer) cout << a << ' ';
+        for (int i = 0; i < n; i++) {
+            cout << seq[i] << ' ';
+        }
+
         cout << '\n';
         return;
     }
 
     for (int i = 1; i <= n; i++) {
-        if (visited[i]) continue;
-        visited[i] = true;
-        buffer.push_back(i);
-        dfs(depth + 1);
-        buffer.pop_back();
-        visited[i] = false;
+        if ((selected & 1 << i) == 0) {
+            seq[depth] = i;
+            recur(depth + 1, selected | 1 << i);
+        }
     }
 }
 
 int main() {
-    fastio;
+    FASTIO;
 
     cin >> n;
 
-    dfs();
+    recur();
 
     return 0;
 }
