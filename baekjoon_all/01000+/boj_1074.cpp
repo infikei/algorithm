@@ -1,42 +1,39 @@
-#include <iostream>
+// Solve 2022-07-30
+// Update 2024-02-14
+
+#include <bits/stdc++.h>
 using namespace std;
 
-int N, r, c, ans;
-
-int z_func(int N, int r, int c) {
-    if (N == 0) {
-        return 0;
-    }
-
-    int NN = 1 << (N - 1);
-    if (r < NN) {
-        if (c < NN) {
-            return 0 + z_func(N - 1, r, c);
-        }
-        else {
-            return NN * NN + z_func(N - 1, r, c - NN);
-        }
-    }
-    else {
-        if (c < NN) {
-            return NN * NN * 2 + z_func(N - 1, r - NN, c);
-        }
-        else {
-            return NN * NN * 3 + z_func(N - 1, r - NN, c - NN);
-        }
-    }
-}
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    cin >> N >> r >> c;
+    int n, r, c;
+    cin >> n >> r >> c;
 
-    ans = z_func(N, r, c);
+    int cur_depth = n;
+    int cur_num = 0;
 
-    cout << ans << '\n';
+    while (--cur_depth >= 0) {
+        int sub_area = 1 << (cur_depth * 2);
+
+        if (r >= (1 << cur_depth)) {
+            cur_num += sub_area * 2;
+            r -= 1 << cur_depth;
+        }
+
+        if (c >= (1 << cur_depth)) {
+            cur_num += sub_area;
+            c -= 1 << cur_depth;
+        }
+    }
+
+    cout << cur_num << '\n';
 
     return 0;
 }
