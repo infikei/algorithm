@@ -1,8 +1,13 @@
-n = int(input()) * int(input()) * int(input())
+# Solve 2022-05-19
+# Update 2024-02-15
 
-arr = []
-while n > 0:
-    arr.append(n % 10)
-    n = n//10
-for i in range(10):
-    print(arr.count(i))
+abc = int(input()) * int(input()) * int(input())
+
+digits = []
+
+while abc > 0:
+    digits.append(abc % 10)
+    abc //= 10
+
+for d in range(10):
+    print(digits.count(d))

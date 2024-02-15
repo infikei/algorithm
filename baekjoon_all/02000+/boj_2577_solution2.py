@@ -1,5 +1,8 @@
-n = int(input()) * int(input()) * int(input())
-arr = list(str(n))
+# Solve 2022-05-19
+# Update 2024-02-15
 
-for i in range(10):
-    print(arr.count(str(i)))
+abc = int(input()) * int(input()) * int(input())
+abc = list(str(abc))
+
+for d in range(10):
+    print(abc.count(str(d)))
