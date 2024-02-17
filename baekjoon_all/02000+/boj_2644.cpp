@@ -1,53 +1,62 @@
-#include <iostream>
-#include <vector>
-#include <queue>
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+// Solve 2023-02-02
+// Update 2024-02-16
+
+#include <bits/stdc++.h>
 using namespace std;
 
-const int N_MAX = 100;
-int n, target0, target1, ans;
-vector<int> graph[N_MAX + 1];
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
 
-void bfs() {
-    queue<int> q;
-    q.push(target0);
-    bool visited[N_MAX + 1] = {false};
-    visited[target0] = true;
+int n, u1, u2;
+vector<int> adj[101];
 
-    while (!q.empty()) {
-        int i_end = (int)q.size();
-        for (int i = 0; i < i_end; i++) {
-            int now = q.front();
-            q.pop();
-            for (auto next : graph[now]) {
-                if (visited[next]) continue;
-                visited[next] = true;
-                if (next == target1) {
-                    ans++;
-                    return;
+int bfs() {
+    bool visited[101] = { false };
+    queue<int> bfs_que;
+    visited[u1] = true;
+    bfs_que.push(u1);
+    int depth = 0;
+
+    while (!bfs_que.empty()) {
+        depth++;
+        int iter = SIZE(bfs_que);
+
+        while (iter-- > 0) {
+            int cur = bfs_que.front();
+            bfs_que.pop();
+
+            for (int next : adj[cur]) {
+                if (next == u2) return depth;
+
+                if (!visited[next]) {
+                    visited[next] = true;
+                    bfs_que.push(next);
                 }
-                q.push(next);
             }
         }
-        ans++;
     }
-    ans = -1;
+
+    return -1;
 }
 
 int main() {
     FASTIO;
 
     int m;
-    cin >> n >> target0 >> target1 >> m;
+    cin >> n >> u1 >> u2 >> m;
+
     for (int i = 0; i < m; i++) {
-        int u, v;
-        cin >> u >> v;
-        graph[u].push_back(v);
-        graph[v].push_back(u);
+        int from, to;
+        cin >> from >> to;
+
+        adj[from].push_back(to);
+        adj[to].push_back(from);
     }
 
-    bfs();
-    cout << ans << '\n';
+    cout << bfs() << '\n';
 
     return 0;
 }

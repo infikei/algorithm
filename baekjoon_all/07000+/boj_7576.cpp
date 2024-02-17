@@ -1,5 +1,5 @@
 // Solve 2022-12-07
-// Update 2023-10-25
+// Update 2024-02-16
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -12,68 +12,60 @@ using ll = long long;
 
 struct Point{
     int x, y;
+
     Point(int x, int y) : x(x), y(y) {}
 };
 
 int main() {
     FASTIO;
 
-    int dx[4] = { 1, -1, 0, 0 };
-    int dy[4] = { 0, 0, 1, -1 };
+    int dx[4] = { 0, 0, -1, 1 };
+    int dy[4] = { -1, 1, 0, 0 };
 
     int n, m;
     cin >> m >> n;
 
     int board[1000][1000];
-    queue<Point> que;
-    int ripe_cnt = 0, empty_cnt = 0;
+    queue<Point> bfs_que;
+    int not_ripe = 0;
 
-    for (int row = 0; row < n; row++) {
-        for (int col = 0; col < m; col++) {
-            cin >> board[row][col];
+    for (int x = 0; x < n; x++) {
+        for (int y = 0; y < m; y++) {
+            cin >> board[x][y];
 
-            if (board[row][col] == 1) {
-                ripe_cnt++;
-                que.emplace(row, col);
+            if (board[x][y] == 0) {
+                not_ripe++;
             }
-            else if (board[row][col] == -1) {
-                empty_cnt++;
+            else if (board[x][y] == 1) {
+                bfs_que.emplace(x, y);
             }
         }
     }
 
-    int ans = 0;
+    int cur_day = 0;
 
-    while (true) {
-        for (int i = 0, i_end = SIZE(que); i < i_end; i++) {
-            Point now = que.front();
-            que.pop();
+    while (not_ripe > 0 && !bfs_que.empty()) {
+        cur_day++;
+        int cur_iter = SIZE(bfs_que);
+
+        while (cur_iter-- > 0) {
+            Point cur_pos = bfs_que.front();
+            bfs_que.pop();
 
             for (int d = 0; d < 4; d++) {
-                int nx = now.x + dx[d];
-                int ny = now.y + dy[d];
+                int nx = cur_pos.x + dx[d];
+                int ny = cur_pos.y + dy[d];
 
-                if (nx < 0 || nx >= n || ny < 0 || ny >= m) continue;
-
-                if (board[nx][ny] == 0) {
+                if (nx >= 0 && nx < n && ny >= 0 && ny < m && board[nx][ny] == 0) {
                     board[nx][ny] = 1;
-                    ripe_cnt++;
-                    que.emplace(nx, ny);
+                    bfs_que.emplace(nx, ny);
+                    not_ripe--;
                 }
             }
         }
-
-        if (que.empty()) break;
-
-        ans++;
     }
 
-    if (n * m == ripe_cnt + empty_cnt) {
-        cout << ans << '\n';
-    }
-    else {
-        cout << -1 << '\n';
-    }
+    cout << (not_ripe > 0 ? -1 : cur_day) << '\n';
 
     return 0;
 }
