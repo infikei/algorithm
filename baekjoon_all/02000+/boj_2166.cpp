@@ -1,61 +1,57 @@
 // Solve 2023-03-13
-// Update 2023-05-20
+// Update 2024-02-18
 
 #include <bits/stdc++.h>
 using namespace std;
 
-#ifdef BOJ
-#define BOJTEST(x) ((void)0)
-#else
-#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
-#endif
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
 #define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
 #define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
 using ll = long long;
-using uint = unsigned int;
-using ull = unsigned long long;
-using pll = pair<ll, ll>;
 
 struct Point{
     ll x, y;
-    Point(ll nx = 0, ll ny = 0) : x(nx), y(ny) {}
-    Point operator-(const Point &rhs) const {
-        return { x - rhs.x, y - rhs.y };
+
+    Point(ll x = 0, ll y = 0) : x(x), y(y) {}
+
+    Point operator-(const Point &p) const {
+        return { x - p.x, y - p.y };
+    }
+
+    ll get_cross(const Point &p) {
+        return x * p.y - p.x * y;
+    }
+
+    ll get_ccw(const Point &p1, const Point &p2) {
+        Point v1 = p1 - *this;
+        Point v2 = p2 - *this;
+        return v1.get_cross(v2);
     }
 };
 
-ll calc_cross(const Point &a, const Point &b) {
-    return a.x * b.y - b.x * a.y;
-}
-
-ll calc_ccw(const Point &a, const Point &b, const Point &c) {
-    return calc_cross(b - a, c - a);
-}
-
 int main() {
     FASTIO;
+    SETPRECISION(1);
 
     int n;
     cin >> n;
 
-    ll ans2 = 0;
+    Point polygon[3];
+    ll two_times_area = 0;
 
-    Point points[3];
-    cin >> points[0].x >> points[0].y;
-    cin >> points[1].x >> points[1].y;
+    cin >> polygon[0].x >> polygon[0].y;
+    cin >> polygon[1].x >> polygon[1].y;
 
     for (int i = 2; i < n; i++) {
-        cin >> points[2].x >> points[2].y;
-        ans2 += calc_ccw(points[0], points[1], points[2]);
+        cin >> polygon[2].x >> polygon[2].y;
 
-        points[1] = points[2];
+        two_times_area += polygon[0].get_ccw(polygon[1], polygon[2]);
+        polygon[1] = polygon[2];
     }
 
-    double ans = abs(ans2) * 0.5;
-    SETPRECISION(1);
-    cout << ans << '\n';
+    double area = abs(two_times_area) * 0.5;
+    cout << area << '\n';
 
     return 0;
 }

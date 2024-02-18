@@ -1,92 +1,79 @@
 // Solve 2022-07-24
-// Update 2023-03-20
+// Update 2024-02-18
 
 #include <bits/stdc++.h>
 using namespace std;
 
-#ifdef BOJ
-#define BOJTEST(x) ((void)0)
-#else
-#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
-#endif
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
 #define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
 #define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
 using ll = long long;
-using uint = unsigned int;
-using ull = unsigned long long;
-
-bool graph[1001][1001] = { false };
-bool visited[1001] = { false };
-int n, v;
-
-void dfs() {
-    stack<int> stck;
-    stck.push(v);
-
-    while (!stck.empty()) {
-        int now = stck.top();
-        stck.pop();
-        if (!visited[now]) {
-            visited[now] = true;
-            cout << now << ' ';
-
-            // n부터 1까지 검사하며 추가
-            for (int next = n; next >= 1; next--) {
-                if (!visited[next] && graph[now][next]) {
-                    stck.push(next);
-                }
-            }
-        }
-    }
-
-    cout << '\n';
-}
-
-void bfs() {
-    queue<int> q;
-    q.push(v);
-
-    while (!q.empty()) {
-        int now = q.front();
-        q.pop();
-        if (!visited[now]) {
-            visited[now] = true;
-            cout << now << ' ';
-
-            // 1부터 n까지 검사하며 추가
-            for (int next = 1; next <= n; next++) {
-                if (!visited[next] && graph[now][next]) {
-                    q.push(next);
-                }
-            }
-        }
-    }
-
-    cout << '\n';
-}
 
 int main() {
     FASTIO;
 
-    int m;
-    cin >> n >> m >> v;
+    int n, m, start_node;
+    cin >> n >> m >> start_node;
+
+    vector<int> adj[1001];
 
     for (int i = 0; i < m; i++) {
         int from, to;
         cin >> from >> to;
-        graph[from][to] = true;
-        graph[to][from] = true;
+        adj[from].push_back(to);
+        adj[to].push_back(from);
     }
 
-    dfs();
-
-    for (int i = 1; i <= n; i++) {
-        visited[i] = false;
+    for (int u = 1; u <= n; u++) {
+        sort(adj[u].begin(), adj[u].end());
     }
 
-    bfs();
+    bool visited[1001] = { false };
+    vector<int> dfs_stack;
+    visited[start_node] = true;
+    dfs_stack.push_back(start_node);
+    cout << start_node << ' ';
+
+    while (!dfs_stack.empty()) {
+        int cur = dfs_stack.back();
+        dfs_stack.pop_back();
+
+        for (int next : adj[cur]) {
+            if (!visited[next]) {
+                visited[next] = true;
+                dfs_stack.push_back(cur);
+                dfs_stack.push_back(next);
+                cout << next << ' ';
+                break;
+            }
+        }
+    }
+
+    cout << '\n';
+
+    for (int u = 1; u <= n; u++) {
+        visited[u] = false;
+    }
+
+    queue<int> bfs_que;
+    visited[start_node] = true;
+    bfs_que.push(start_node);
+
+    while (!bfs_que.empty()) {
+        int cur = bfs_que.front();
+        bfs_que.pop();
+        cout << cur << ' ';
+
+        for (int next : adj[cur]) {
+            if (!visited[next]) {
+                visited[next] = true;
+                bfs_que.push(next);
+            }
+        }
+    }
+
+    cout << '\n';
 
     return 0;
 }
