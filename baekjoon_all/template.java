@@ -3,6 +3,7 @@
 // 백준에 제출할 때는 class 이름을 Main으로 설정해야 한다.
 // SWEA에 제출할 때는 class 이름을 Solution으로 설정해야 한다.
 // 코드트리에 제출할 때는 class 이름을 Main으로 설정해야 한다.
+// 정올에 제출할 때는 class 이름을 Main으로 설정해야 한다.
 
 import java.io.BufferedReader;
 import java.io.IOException;
