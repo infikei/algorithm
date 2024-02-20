@@ -1,55 +1,45 @@
 // Solve 2023-02-19
+// Update 2024-02-20
 
 #include <bits/stdc++.h>
 using namespace std;
 
-#ifdef BOJ
-#define BOJTEST(x) ((void)0)
-#else
-#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
-#endif
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
 #define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
-#define INF (int)1e9
-#define LLINF (ll)4e18
 using ll = long long;
-using uint = unsigned int;
-using ull = unsigned long long;
-using pii = pair<int, int>;
 
-int r, c, ans;
-string graph[20];
-int visited[26];
-int drow[4] = { 0, 0, 1, -1 };
-int dcol[4] = { 1, -1, 0, 0 };
+int dx[4] = { -1, 0, 1, 0 };
+int dy[4] = { 0, 1, 0, -1 };
+int n, m;
+string board[20];
+int max_depth;
 
-void dfs(int nrow, int ncol, int depth) {
-    ans = max(ans, depth);
+void dfs(int x, int y, int depth, int selected) {
+    max_depth = max(max_depth, depth);
 
-    for (int i = 0; i < 4; i++) {
-        int nxrow = nrow + drow[i];
-        int nxcol = ncol + dcol[i];
+    for (int d = 0; d < 4; d++) {
+        int nx = x + dx[d];
+        int ny = y + dy[d];
 
-        if (nxrow < 0 || nxrow >= r || nxcol < 0 || nxcol >= c || visited[graph[nxrow][nxcol] - 'A']) continue;
-        visited[graph[nxrow][nxcol] - 'A'] = true;
-        dfs(nxrow, nxcol, depth + 1);
-        visited[graph[nxrow][nxcol] - 'A'] = false;
+        if (nx >= 0 && nx < n && ny >= 0 && ny < m && (selected & 1 << (board[nx][ny] - 'A')) == 0) {
+            dfs(nx, ny, depth + 1, selected | 1 << (board[nx][ny] - 'A'));
+        }
     }
 }
 
 int main() {
     FASTIO;
 
-    cin >> r >> c;
-    for (int i = 0; i < r; i++) {
-        cin >> graph[i];
+    cin >> n >> m;
+
+    for (int x = 0; x < n; x++) {
+        cin >> board[x];
     }
 
-    visited[graph[0][0] - 'A'] = true;
-    dfs(0, 0, 1);
-
-    cout << ans << '\n';
+    dfs(0, 0, 1, 1 << (board[0][0] - 'A'));
+    cout << max_depth << '\n';
 
     return 0;
 }

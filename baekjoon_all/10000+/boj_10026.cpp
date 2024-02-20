@@ -1,5 +1,5 @@
 // Solve 2023-04-11
-// Update 2023-12-17
+// Update 2024-02-20
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -11,15 +11,16 @@ using namespace std;
 using ll = long long;
 
 struct Point{
-    int r, c;
-    Point(int r, int c) : r(r), c(c) {}
+    int x, y;
+
+    Point(int x, int y) : x(x), y(y) {}
 };
+
+int dx[4] = { 0, 0, 1, -1 };
+int dy[4] = { 1, -1, 0, 0 };
 
 int main() {
     FASTIO;
-
-    int dr[4] = { 0, 0, 1, -1 };
-    int dc[4] = { 1, -1, 0, 0 };
 
     int n;
     cin >> n;
@@ -32,73 +33,66 @@ int main() {
 
     vector<vector<bool>> visited(n, vector<bool>(n, false));
     queue<Point> bfs_que;
-    int ans = 0;
+    int area_count = 0;
 
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            if (visited[i][j]) continue;
+    for (int x = 0; x < n; x++) {
+        for (int y = 0; y < n; y++) {
+            if (visited[x][y]) continue;
 
-            visited[i][j] = true;
-            bfs_que.emplace(i, j);
-            ans++;
-            char color = board[i][j];
+            area_count++;
+            visited[x][y] = true;
+            bfs_que.emplace(x, y);
+            char color = board[x][y];
 
             while (!bfs_que.empty()) {
-                Point now = bfs_que.front();
+                Point cur = bfs_que.front();
                 bfs_que.pop();
 
                 for (int d = 0; d < 4; d++) {
-                    int nr = now.r + dr[d];
-                    int nc = now.c + dc[d];
+                    int nx = cur.x + dx[d];
+                    int ny = cur.y + dy[d];
 
-                    if (nr < 0 || nr >= n || nc < 0 || nc >= n) continue;
-                    if (visited[nr][nc] || board[nr][nc] != color) continue;
+                    if (nx < 0 || nx >= n || ny < 0 || ny >= n) continue;
+                    if (visited[nx][ny] || board[nx][ny] != color) continue;
 
-                    visited[nr][nc] = true;
-                    bfs_que.emplace(nr, nc);
+                    visited[nx][ny] = true;
+                    bfs_que.emplace(nx, ny);
                 }
             }
         }
     }
 
     visited.assign(n, vector<bool>(n, false));
-    int ans2 = 0;
+    int area_count2 = 0;
 
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            if (visited[i][j]) continue;
+    for (int x = 0; x < n; x++) {
+        for (int y = 0; y < n; y++) {
+            if (visited[x][y]) continue;
 
-            visited[i][j] = true;
-            bfs_que.emplace(i, j);
-            ans2++;
-            char color = board[i][j];
-
-            if (color == 'G') color = 'R';
+            area_count2++;
+            visited[x][y] = true;
+            bfs_que.emplace(x, y);
+            char color = (board[x][y] == 'G' ? 'R' : board[x][y]);
 
             while (!bfs_que.empty()) {
-                Point now = bfs_que.front();
+                Point cur = bfs_que.front();
                 bfs_que.pop();
 
                 for (int d = 0; d < 4; d++) {
-                    int nr = now.r + dr[d];
-                    int nc = now.c + dc[d];
+                    int nx = cur.x + dx[d];
+                    int ny = cur.y + dy[d];
 
-                    if (nr < 0 || nr >= n || nc < 0 || nc >= n) continue;
+                    if (nx < 0 || nx >= n || ny < 0 || ny >= n) continue;
+                    if (visited[nx][ny] || (board[nx][ny] == 'G' ? 'R' : board[nx][ny]) != color) continue;
 
-                    char color2 = board[nr][nc];
-
-                    if (color2 == 'G') color2 = 'R';
-
-                    if (visited[nr][nc] || color2 != color) continue;
-
-                    visited[nr][nc] = true;
-                    bfs_que.emplace(nr, nc);
+                    visited[nx][ny] = true;
+                    bfs_que.emplace(nx, ny);
                 }
             }
         }
     }
 
-    cout << ans << ' ' << ans2 << '\n';
+    cout << area_count << ' ' << area_count2 << '\n';
 
     return 0;
 }
