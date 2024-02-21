@@ -1,45 +1,67 @@
-#include <iostream>
-#include <algorithm>
+// Solve 2022-07-12
+// Update 2024-02-21
+
+#include <bits/stdc++.h>
 using namespace std;
 
-int L, C;
-char arr[15], ans[15];
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
 
-void dfs(int depth, int start = 0, int ae = 1, int not_ae = 2) {
-    if (depth == 0) {
-        if (ae <= 0 && not_ae <= 0) {
-            for (int i = 0; i < L; i++) {
-                cout << ans[i];
+string vowels = "aeiou";
+int l, c;
+char chars[15];
+bool chars_checked_vowels[15];
+char selected[15];
+
+void dfs(int depth = 0, int begin_idx = 0, int vowel_need = 1, int not_vowel_need = 2) {
+    if (depth == l) {
+        if (vowel_need <= 0 && not_vowel_need <= 0) {
+            for (int i = 0; i < l; i++) {
+                cout << selected[i];
             }
+
             cout << '\n';
         }
+
+        return;
     }
-    else {
-        for (int i = start; i < C; i++) {
-            ans[L - depth] = arr[i];
-            if (arr[i] == 'a' || arr[i] == 'e' || arr[i] == 'i' || arr[i] == 'o' || arr[i] == 'u') {
-                dfs(depth - 1, i + 1, ae - 1, not_ae);
-            }
-            else {
-                dfs(depth - 1, i + 1, ae, not_ae - 1);
-            }
+
+    for (int i = begin_idx; i < c; i++) {
+        selected[depth] = chars[i];
+
+        if (chars_checked_vowels[i]) {
+            dfs(depth + 1, i + 1, vowel_need - 1, not_vowel_need);
+        }
+        else {
+            dfs(depth + 1, i + 1, vowel_need, not_vowel_need - 1);
         }
     }
 }
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    cin >> L >> C;
+    cin >> l >> c;
 
-    for (int i = 0; i < C; i++) {
-        cin >> arr[i];
+    for (int i = 0; i < c; i++) {
+        cin >> chars[i];
     }
-    sort(arr, arr + C);
 
-    dfs(L);
+    sort(chars, chars + c);
+
+    for (int i = 0; i < c; i++) {
+        for (char v : vowels) {
+            if (chars[i] == v) {
+                chars_checked_vowels[i] = true;
+                break;
+            }
+        }
+    }
+
+    dfs();
 
     return 0;
 }

@@ -1,22 +1,25 @@
-x = input()
-n = len(x)
-ans = 0
+# Solve 2022-05-25
+# Update 2024-02-21
 
-for i in x:
-    n -= 1
-    if i == "A":
-        ans += 10*16**n
-    elif i == "B":
-        ans += 11*16**n
-    elif i == "C":
-        ans += 12*16**n
-    elif i == "D":
-        ans += 13*16**n
-    elif i == "E":
-        ans += 14*16**n
-    elif i == "F":
-        ans += 15*16**n
+s = input()
+n = 0
+
+for ch in s:
+    n *= 16
+
+    if ch == "A":
+        n += 10
+    elif ch == "B":
+        n += 11
+    elif ch == "C":
+        n += 12
+    elif ch == "D":
+        n += 13
+    elif ch == "E":
+        n += 14
+    elif ch == "F":
+        n += 15
     else:
-        ans += int(i)*16**n
+        n += int(ch)
 
-print(ans)
+print(n)
