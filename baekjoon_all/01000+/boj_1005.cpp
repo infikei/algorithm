@@ -1,5 +1,5 @@
 // Solve 2023-06-07
-// Update 2023-08-27
+// Update 2024-02-27
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -10,33 +10,33 @@ using namespace std;
 #define ALL(v) v.begin(),v.end()
 using ll = long long;
 
-int build_time[1001], result_time[1001], in_degree[1001];
-
 int main() {
     FASTIO;
 
     int t;
     cin >> t;
 
+    int d[1001];
+    int ans[1001];
+    int in_degree[1001];
+
     for (int ti = 0; ti < t; ti++) {
         int n, k;
         cin >> n >> k;
 
         for (int u = 1; u <= n; u++) {
-            cin >> build_time[u];
-
+            cin >> d[u];
             in_degree[u] = 0;
-            result_time[u] = 0;
+            ans[u] = 0;
         }
 
-        vector<vector<int> > adj(n + 1, vector<int>());
+        vector<vector<int>> adj(n + 1, vector<int>());
 
         for (int i = 0; i < k; i++) {
-            int u, v;
-            cin >> u >> v;
-
-            adj[u].push_back(v);
-            in_degree[v]++;
+            int from, to;
+            cin >> from >> to;
+            adj[from].push_back(to);
+            in_degree[to]++;
         }
 
         int w;
@@ -47,27 +47,24 @@ int main() {
         for (int u = 1; u <= n; u++) {
             if (in_degree[u] == 0) {
                 que.push(u);
-                result_time[u] = build_time[u];
+                ans[u] = d[u];
             }
         }
 
         for (int i = 0; i < n; i++) {
-            int u = que.front();
+            int cur = que.front();
             que.pop();
 
-            for (int v : adj[u]) {
-                if (in_degree[v] == 0) continue;
+            for (int next : adj[cur]) {
+                ans[next] = max(ans[next], ans[cur] + d[next]);
 
-                in_degree[v]--;
-                if (in_degree[v] == 0) {
-                    que.push(v);
+                if (--in_degree[next] == 0) {
+                    que.push(next);
                 }
-
-                result_time[v] = max(result_time[v], result_time[u] + build_time[v]);
             }
         }
 
-        cout << result_time[w] << '\n';
+        cout << ans[w] << '\n';
     }
 
     return 0;

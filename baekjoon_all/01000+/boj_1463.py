@@ -1,17 +1,18 @@
+# Solve 2022-05-26
+# Update 2024-02-27
+
 n = int(input())
+memo = [0, 0]
 
-# n = 0부터 n = 3까지의 결과값 미리 세팅
-dp = [0, 0, 1, 1]
+for i in range(2, n + 1):
+    memo.append(memo[i - 1])
 
-# n = 4부터 결과값을 차례로 구한다.
-for i in range(4, n+1):
-    # n = i일 때 결과값에 (n = i-1일 때 결과값)+1을 일단 저장한다.
-    dp.append(dp[i-1]+1)
-    # 만약 i가 2의 배수이면, (n = i/2에 대한 결과값)+1과 비교해서 그 중 작은 값을 저장한다.
     if i % 2 == 0:
-        dp[i] = min(dp[i//2]+1, dp[i])
-    # 만약 i가 3의 배수이면, (n = i/3에 대한 결과값)+1과 비교해서 그 중 작은 값을 저장한다.
-    if i % 3 == 0:
-        dp[i] = min(dp[i//3]+1, dp[i])
+        memo[i] = min(memo[i], memo[i // 2])
 
-print(dp[n])
+    if i % 3 == 0:
+        memo[i] = min(memo[i], memo[i // 3])
+
+    memo[i] += 1
+
+print(memo[n])

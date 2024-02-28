@@ -1,5 +1,5 @@
 // Solve 2022-06-03
-// Update 2023-07-20
+// Update 2024-02-27
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -10,37 +10,30 @@ using namespace std;
 #define ALL(v) v.begin(),v.end()
 using ll = long long;
 
-const int MAX_N = 1e6;
-int dp[MAX_N + 1];
-
 int main() {
     FASTIO;
 
     int n;
     cin >> n;
 
-    dp[1] = 0;
-    for (int i = 2; i <= n; i++) {
-        dp[i] = dp[i - 1];
+    int memo[1000001];
+    memo[1] = 0;
 
-        if (i % 2 == 0) {
-            int ni = i / 2;
-            if (dp[ni] < dp[i]) {
-                dp[i] = dp[ni];
-            }
-        }
+    for (int i = 2; i <= n; i++) {
+        memo[i] = memo[i - 1];
 
         if (i % 3 == 0) {
-            int ni = i / 3;
-            if (dp[ni] < dp[i]) {
-                dp[i] = dp[ni];
-            }
+            memo[i] = min(memo[i], memo[i / 3]);
         }
 
-        dp[i]++;
+        if (i % 2 == 0) {
+            memo[i] = min(memo[i], memo[i / 2]);
+        }
+
+        memo[i]++;
     }
 
-    cout << dp[n] << '\n';
+    cout << memo[n] << '\n';
 
     return 0;
 }
