@@ -1,123 +1,116 @@
 // Solve 2023-02-03
-// Update 2023-03-23
+// Update 2024-03-02
 
 #include <bits/stdc++.h>
 using namespace std;
 
-#ifdef BOJ
-#define BOJTEST(x) ((void)0)
-#else
-#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
-#endif
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
 #define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
 #define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
 using ll = long long;
-using uint = unsigned int;
-using ull = unsigned long long;
-using pii = pair<int, int>;
 
-int n, m, graph[8][8];
-int dx[4] = { 1, -1, 0, 0 }, dy[4] = { 0, 0, 1, -1 };
+struct Point{
+    int x, y;
 
-int dfs(const vector<pii> &v) {
-    int res = 0;
-    int dfs_graph[8][8];
-    bool dfs_visited[8][8] = { false };
+    Point(int x, int y) : x(x), y(y) {}
+};
 
-    for (int row = 0; row < n; row++) {
-        for (int col = 0; col < m; col++) {
-            dfs_graph[row][col] = graph[row][col];
+int dx[4] = { 0, 0, -1, 1 };
+int dy[4] = { -1, 1, 0, 0 };
+int n, m, nm;
+int board[8][8];
+bool visited[8][8];
+vector<Point> viruses;
+int wall_count;
+int max_safe_count, cur_safe_count;
+
+void dfs(int x, int y) {
+    for (int d = 0; d < 4; d++) {
+        int nx = x + dx[d];
+        int ny = y + dy[d];
+
+        if (nx >= 0 && nx < n && ny >= 0 && ny < m && board[nx][ny] != 1 && !visited[nx][ny]) {
+            visited[nx][ny] = true;
+            cur_safe_count--;
+            dfs(nx, ny);
         }
     }
-    for (auto a : v) {
-        dfs_graph[a.first][a.second] = 1;
-    }
+}
 
-    for (int row = 0; row < n; row++) {
-        for (int col = 0; col < m; col++) {
-            if (dfs_visited[row][col]) {
-                continue;
-            }
-            dfs_visited[row][col] = true;
-            if (dfs_graph[row][col] == 1) {
-                continue;
-            }
+void update_max_safe_count() {
+    cur_safe_count = nm - (wall_count + 3);
 
-            stack<pii> stck;
-            stck.push({ row, col });
-            bool detect_virus = (dfs_graph[row][col] == 2 ? true : false);
-            int area = 1;
-
-            while (!stck.empty()) {
-                pii now = stck.top();
-                stck.pop();
-                for (int i = 0; i < 4; i++) {
-                    pii next = { now.first + dx[i], now.second + dy[i] };
-                    if (next.first < 0 || next.first >= n || next.second < 0 || next.second >= m) {
-                        continue;
-                    }
-                    if (dfs_visited[next.first][next.second]) {
-                        continue;
-                    }
-                    dfs_visited[next.first][next.second] = true;
-                    if (dfs_graph[next.first][next.second] == 1) {
-                        continue;
-                    }
-                    if (dfs_graph[next.first][next.second] == 2) {
-                        detect_virus = true;
-                    }
-                    area++;
-                    stck.push(next);
-                }
-            }
-
-            if (!detect_virus) {
-                res += area;
-            }
+    for (int x = 0; x < n; x++) {
+        for (int y = 0; y < m; y++) {
+            visited[x][y] = false;
         }
     }
 
-    return res;
+    for (Point &virus : viruses) {
+        if (!visited[virus.x][virus.y]) {
+            visited[virus.x][virus.y] = true;
+            cur_safe_count--;
+            dfs(virus.x, virus.y);
+        }
+    }
+
+    max_safe_count = max(max_safe_count, cur_safe_count);
 }
 
 int main() {
     FASTIO;
 
     cin >> n >> m;
-    for (int row = 0; row < n; row++) {
-        for (int col = 0; col < m; col++) {
-            cin >> graph[row][col];
+    nm = n * m;
+
+    for (int x = 0; x < n; x++) {
+        for (int y = 0; y < m; y++) {
+            cin >> board[x][y];
+
+            if (board[x][y] == 2) {
+                viruses.emplace_back(x, y);
+            }
+            else if (board[x][y] == 1) {
+                wall_count++;
+            }
         }
     }
 
-    int ans = 0;
-    int nm = n * m;
-    vector<pii> vec;
     for (int i = 0; i < nm; i++) {
-        if (graph[i / m][i % m] != 0) {
-            continue;
-        }
-        vec.push_back({ i / m, i % m });
+        int ix = i / m;
+        int iy = i % m;
+
+        if (board[ix][iy] != 0) continue;
+
+        board[ix][iy] = 1;
+
         for (int j = i + 1; j < nm; j++) {
-            if (graph[j / m][j % m] != 0) {
-                continue;
-            }
-            vec.push_back({ j / m, j % m });
+            int jx = j / m;
+            int jy = j % m;
+
+            if (board[jx][jy] != 0) continue;
+
+            board[jx][jy] = 1;
+
             for (int k = j + 1; k < nm; k++) {
-                if (graph[k / m][k % m] != 0) {
-                    continue;
-                }
-                vec.push_back({ k / m, k % m });
-                ans = max(ans, dfs(vec));
-                vec.pop_back();
+                int kx = k / m;
+                int ky = k % m;
+
+                if (board[kx][ky] != 0) continue;
+
+                board[kx][ky] = 1;
+                update_max_safe_count();
+                board[kx][ky] = 0;
             }
-            vec.pop_back();
+
+            board[jx][jy] = 0;
         }
-        vec.pop_back();
+
+        board[ix][iy] = 0;
     }
-    cout << ans << '\n';
+
+    cout << max_safe_count << '\n';
 
     return 0;
 }

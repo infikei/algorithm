@@ -1,4 +1,5 @@
 // Solve 2024-02-26
+// Update 2024-03-02
 
 // 백준에 제출할 때는 class 이름을 Main으로 설정해야 한다.
 
@@ -19,7 +20,7 @@ public class boj_2457 {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st;
         int n = Integer.parseInt(br.readLine());
-        int[] memo = new int[366];
+        int[] memoNext = new int[366];
 
         for (int i = 1; i <= n; i++) {
             st = new StringTokenizer(br.readLine(), " ");
@@ -32,7 +33,7 @@ public class boj_2457 {
             int end = days[monthEnd - 1] + dayEnd;
 
             for (int d = begin; d < end; d++) {
-                memo[d] = Math.max(memo[d], end);
+                memoNext[d] = Math.max(memoNext[d], end);
             }
         }
 
@@ -40,7 +41,7 @@ public class boj_2457 {
         int curCount = 0;
 
         while (curDay < 335) {
-            curDay = memo[curDay];
+            curDay = memoNext[curDay];
             curCount++;
 
             if (curDay == 0) {
