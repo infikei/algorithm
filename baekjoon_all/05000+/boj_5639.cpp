@@ -1,5 +1,5 @@
 // Solve 2023-02-14
-// Update 2023-07-04
+// Update 2024-03-03
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -10,27 +10,28 @@ using namespace std;
 #define ALL(v) v.begin(),v.end()
 using ll = long long;
 
-int arr[10000];
+int pre_order[10000];
 
-void print(int s, int e) {
-    if (s > e) return;
+void print_post_order(int i_begin, int i_end) {
+    if (i_begin > i_end) return;
 
-    int mid = upper_bound(arr + (s + 1), arr + (e + 1), arr[s]) - arr;
-    print(s + 1, mid - 1);
-    print(mid, e);
-    cout << arr[s] << '\n';
+    int i_mid = upper_bound(pre_order + (i_begin + 1), pre_order + (i_end + 1), pre_order[i_begin]) - pre_order;
+    print_post_order(i_begin + 1, i_mid - 1);
+    print_post_order(i_mid, i_end);
+    cout << pre_order[i_begin] << '\n';
 }
 
 int main() {
     FASTIO;
 
-    int n = 0, x;
+    int n = 0;
+    int x;
+
     while (cin >> x) {
-        arr[n] = x;
-        n++;
+        pre_order[n++] = x;
     }
 
-    print(0, n - 1);
+    print_post_order(0, n - 1);
 
     return 0;
 }
