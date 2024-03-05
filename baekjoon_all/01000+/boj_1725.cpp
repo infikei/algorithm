@@ -1,35 +1,46 @@
-// 6549번과 동일한 문제
-// 스택을 이용한 풀이법
+// Solve 2022-12-06
+// Update 2024-03-04
 
-#include <iostream>
-#include <stack>
-#define fastio ios_base::sync_with_stdio(false);cout.tie(NULL);cin.tie(NULL); // boj_15552.cpp
+// 6549번과 동일한 문제
+// 스택을 이용한 풀이
+
+#include <bits/stdc++.h>
 using namespace std;
 
-int N, ans, histogram[100002];
-stack<int> stck;
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
+
+int h[100002];
+
 
 int main() {
-    fastio;
+    FASTIO;
 
-    cin >> N;
+    int n;
+    cin >> n;
 
-    for (int i = 1; i <= N; i++) {
-        cin >> histogram[i];
+    for (int x = 1; x <= n; x++) {
+        cin >> h[x];
     }
 
+    stack<int> stck;
     stck.push(0);
-    for (int i = 1; i <= N + 1; i++) {
-        while (!stck.empty() && histogram[stck.top()] > histogram[i]) {
-            int k = stck.top();
+    ll max_area = 0;
+
+    for (int x = 1; x <= n + 1; x++) {
+        while (!stck.empty() && h[stck.top()] > h[x]) {
+            int px = stck.top();
             stck.pop();
-            ans = max(ans, (i - 1 - stck.top()) * histogram[k]);
+            max_area = max(max_area, (ll)(x - 1 - stck.top()) * h[px]);
         }
 
-        stck.push(i);
+        stck.push(x);
     }
 
-    cout << ans << '\n';
+    cout << max_area << '\n';
 
     return 0;
 }
