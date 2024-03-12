@@ -1,25 +1,33 @@
-#include <iostream>
-using namespace std;
-#define fastio ios_base::sync_with_stdio(false);cout.tie(NULL);cin.tie(NULL); // boj_15552.cpp
+// Solve 2022-11-13
+// Update 2024-03-11
 
-int N, ans = 7654321;
+#include <bits/stdc++.h>
+using namespace std;
+
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
 
 int main() {
-    fastio;
+    FASTIO;
 
-    cin >> N;
-    for (int n = 0; n < N; n++) {
-        int A, B;
-        cin >> A >> B;
-        if (A <= B) {
-            ans = min(ans, B);
+    int n;
+    cin >> n;
+
+    int ans = 1001;
+
+    for (int i = 0; i < n; i++) {
+        int a, b;
+        cin >> a >> b;
+
+        if (a <= b) {
+            ans = min(ans, b);
         }
     }
 
-    if (ans == 7654321) {
-        ans = -1;
-    }
-    cout << ans << '\n';
+    cout << (ans == 1001 ? -1 : ans) << '\n';
 
     return 0;
 }

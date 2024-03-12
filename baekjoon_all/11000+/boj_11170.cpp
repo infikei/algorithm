@@ -1,5 +1,5 @@
 // Solve 2023-01-09
-// Update 2023-09-03
+// Update 2024-03-11
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -11,6 +11,8 @@ using namespace std;
 using ll = long long;
 
 int count_zero(int k) {
+    if (k < 0) return 0;
+
     int res = 0;
 
     res += k / 10 + 1;
@@ -33,8 +35,7 @@ int main() {
         int n, m;
         cin >> n >> m;
 
-        int ans = count_zero(m);
-        if (n > 0) ans -= count_zero(n - 1);
+        int ans = count_zero(m) - count_zero(n - 1);
 
         cout << ans << '\n';
     }

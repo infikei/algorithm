@@ -1,4 +1,5 @@
 // Solve 2023-09-28
+// Update 2024-03-11
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -11,7 +12,6 @@ using ll = long long;
 
 int main() {
     FASTIO;
-
     SETPRECISION(2);
 
     int t;

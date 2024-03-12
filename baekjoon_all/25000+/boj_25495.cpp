@@ -1,34 +1,47 @@
-#include <iostream>
-using namespace std;
-#define fastio ios_base::sync_with_stdio(false);cout.tie(NULL);cin.tie(NULL); // boj_15552.cpp
+// Solve 2022-11-25
+// Update 2024-03-11
 
-int N, airpods_used_battery;
+#include <bits/stdc++.h>
+using namespace std;
+
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
 
 int main() {
-    fastio;
+    FASTIO;
 
-    cin >> N;
+    int n;
+    cin >> n;
 
-    int prev_phone = 0, now_phone, reconnected = 0;
+    int battery_used = 0;
+    int prev_phone = 0;
+    int reconnected = 0;
 
-    for (int n = 0; n < N; n++) {
+    while (n-- > 0) {
+        int now_phone;
         cin >> now_phone;
+
         if (now_phone == prev_phone) {
             reconnected++;
         }
         else {
             reconnected = 0;
         }
-        airpods_used_battery += (2 << reconnected);
+
+        battery_used += (2 << reconnected);
         prev_phone = now_phone;
-        if (airpods_used_battery >= 100) {
-            airpods_used_battery = 0;
+
+        if (battery_used >= 100) {
+            battery_used = 0;
             prev_phone = 0;
             reconnected = 0;
         }
     }
 
-    cout << airpods_used_battery << '\n';
+    cout << battery_used << '\n';
 
     return 0;
 }

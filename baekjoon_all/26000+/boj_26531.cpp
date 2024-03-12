@@ -1,4 +1,5 @@
 // Solve 2023-09-28
+// Update 2024-03-11
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -16,8 +17,7 @@ int main() {
     char op, eq;
     cin >> a >> op >> b >> eq >> c;
 
-    if (a + b == c) cout << "YES\n";
-    else cout << "NO\n";
+    cout << (a + b == c ? "YES\n" : "NO\n");
 
     return 0;
 }

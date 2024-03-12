@@ -1,4 +1,5 @@
 // Solve 2023-09-29
+// Update 2024-03-11
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -16,7 +17,9 @@ int main() {
     cin >> t;
 
     for (int ti = 0; ti < t; ti++) {
-        if (ti >= 1) cout << '\n';
+        if (ti >= 1) {
+            cout << '\n';
+        }
 
         int n;
         cin >> n;
@@ -42,8 +45,7 @@ int main() {
             cout << ' ' << coin;
         }
 
-        if (ans) cout << "\nGood coin denominations!\n";
-        else cout << "\nBad coin denominations!\n";
+        cout << (ans ? "\nGood coin denominations!\n" : "\nBad coin denominations!\n");
     }
 
     return 0;

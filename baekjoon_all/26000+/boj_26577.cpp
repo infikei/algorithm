@@ -1,4 +1,5 @@
 // Solve 2023-08-22
+// Update 2024-03-11
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -18,6 +19,7 @@ int main() {
     for (int ti = 0; ti < t; ti++) {
         string line;
         getline(cin, line);
+
         if (line == "") getline(cin, line);
 
         stringstream ss(line);
@@ -50,9 +52,13 @@ int main() {
 
         int ans = num[0];
 
-        for (int i = 1, ie = SIZE(num); i < ie; i++) {
-            if (op[i - 1] == '+') ans += num[i];
-            else ans -= num[i];
+        for (int i = 1; i < SIZE(num); i++) {
+            if (op[i - 1] == '+') {
+                ans += num[i];
+            }
+            else {
+                ans -= num[i];
+            }
         }
 
         cout << ans << '\n';

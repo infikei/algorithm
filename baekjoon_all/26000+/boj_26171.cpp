@@ -1,4 +1,5 @@
 // Solve 2023-08-22
+// Update 2024-03-11
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -12,13 +13,12 @@ using ll = long long;
 int main() {
     FASTIO;
 
-    int n = 0, v, ans = 0;
+    int n = 0;
+    int ans = 0;
     string s;
 
     while (true) {
-        n++;
-
-        cout << "? 1 " << n << endl;
+        cout << "? 1 " << ++n << endl;
         cin >> s;
 
         if (s == "ArrayIndexOutOfBoundsException") {
@@ -28,6 +28,8 @@ int main() {
 
         ans = max(ans, stoi(s));
     }
+
+    int v;
 
     for (int i = 2; i <= n; i++) {
         for (int j = 1; j <= n; j++) {
