@@ -1,16 +1,17 @@
 // Solve 2022-12-09
-// Update 2023-06-12
+// Update 2024-03-13
 
 #include <bits/stdc++.h>
 using namespace std;
 
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
 #define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
 #define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
 using ll = long long;
 
-ll arr[1000001], seg[4000001];
+ll arr[1000001];
+ll seg[4000001];
 
 ll seg_init(int node, int s, int e) {
     if (s == e) return seg[node] = arr[s];
@@ -55,8 +56,8 @@ int main() {
     }
 
     seg_init(1, 1, n);
-
     m += k;
+
     for (int i = 0; i < m; i++) {
         int cmd, b;
         ll c;
