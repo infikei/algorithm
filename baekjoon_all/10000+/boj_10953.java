@@ -1,25 +1,30 @@
 // Solve 2023-10-18
-// Update 2023-10-23
+// Update 2024-03-16
 
-// 백준에 제출할 때는 class 이름을 Main으로 설정해야 함.
+// 백준에 제출할 때는 class 이름을 Main으로 설정해야 한다.
 
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class boj_10953 {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int testNum = sc.nextInt();
 
-        for (int testIdx = 0; testIdx < testNum; testIdx++) {
-            String input = sc.next();
-            StringTokenizer st = new StringTokenizer(input, ",");
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
+        StringBuilder sb = new StringBuilder();
+        int t = Integer.parseInt(br.readLine());
+
+        for (int ti = 0; ti < t; ti++) {
+            st = new StringTokenizer(br.readLine(), ",");
             int a = Integer.parseInt(st.nextToken());
             int b = Integer.parseInt(st.nextToken());
-
-            System.out.println(a + b);
+            sb.append(a + b).append("\n");
         }
 
-        sc.close();
+        System.out.print(sb);
+        br.close();
     }
+
 }

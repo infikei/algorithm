@@ -1,29 +1,36 @@
 // Solve 2023-11-17
+// Update 2024-03-16
 
-// 백준에 제출할 때는 class 이름을 Main으로 설정해야 함.
+// 백준에 제출할 때는 class 이름을 Main으로 설정해야 한다.
 
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class boj_14681 {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int x = sc.nextInt();
-        int y = sc.nextInt();
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int x = Integer.parseInt(br.readLine());
+        int y = Integer.parseInt(br.readLine());
+        int quad = 0;
 
         if (x > 0) {
             if (y > 0) {
-                System.out.println(1);
+                quad = 1;
             } else {
-                System.out.println(4);
+                quad = 4;
             }
         } else {
             if (y > 0) {
-                System.out.println(2);
+                quad = 2;
             } else {
-                System.out.println(3);
+                quad = 3;
             }
         }
 
-        sc.close();
+        System.out.println(quad);
+        br.close();
     }
+
 }
