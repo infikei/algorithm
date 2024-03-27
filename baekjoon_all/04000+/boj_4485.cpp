@@ -1,4 +1,5 @@
 // Solve 2023-11-24
+// Update 2024-03-26
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -12,18 +13,18 @@ using pii = pair<int, int>;
 
 const int INF = 1e9;
 
-struct Node{
+struct Point{
     int x, y, cost;
 
-    Node(int x, int y, int cost) : x(x), y(y), cost(cost) {}
+    Point(int x, int y, int cost) : x(x), y(y), cost(cost) {}
 
-    bool operator<(const Node &rhs) const {
+    bool operator<(const Point &rhs) const {
         if (cost != rhs.cost) cost < rhs.cost;
         if (x != rhs.x) return x < rhs.x;
         return y < rhs.y;
     }
 
-    bool operator>(const Node &rhs) const {
+    bool operator>(const Point &rhs) const {
         return !(*this < rhs);
     }
 };
@@ -33,52 +34,50 @@ int main() {
 
     int dx[4] = { 0, 0, 1, -1 };
     int dy[4] = { 1, -1, 0, 0 };
-
     int ti = 0;
 
     while (true) {
-        ti++;
         int n;
         cin >> n;
 
         if (n == 0) break;
 
-        vector<vector<int> > board(n, vector<int>(n, 0));
+        vector<vector<int>> board(n, vector<int>(n, 0));
 
         for (vector<int> &row : board) {
-            for (int &x : row) {
-                cin >> x;
+            for (int &col : row) {
+                cin >> col;
             }
         }
 
-        vector<vector<int> > costs(n, vector<int>(n, INF));
-        priority_queue<Node, vector<Node>, greater<Node> > pq_mintop;
-        costs[0][0] = board[0][0];
+        vector<vector<int>> min_dist(n, vector<int>(n, INF));
+        priority_queue<Point, vector<Point>, greater<Point> > pq_mintop;
+        min_dist[0][0] = board[0][0];
         pq_mintop.emplace(0, 0, board[0][0]);
 
         while (!pq_mintop.empty()) {
-            Node now = pq_mintop.top();
+            Point cur = pq_mintop.top();
             pq_mintop.pop();
 
-            if (now.x == n - 1 && now.y == n - 1) break;
-            if (costs[now.x][now.y] < now.cost) continue;
+            if (min_dist[cur.x][cur.y] < cur.cost) continue;
+            if (cur.x == n - 1 && cur.y == n - 1) break;
 
             for (int d = 0; d < 4; d++) {
-                int nx = now.x + dx[d];
-                int ny = now.y + dy[d];
+                int nx = cur.x + dx[d];
+                int ny = cur.y + dy[d];
 
                 if (nx < 0 || nx >= n || ny < 0 || ny >= n) continue;
 
-                int ncost = now.cost + board[nx][ny];
+                int ncost = cur.cost + board[nx][ny];
 
-                if (costs[nx][ny] > ncost) {
-                    costs[nx][ny] = ncost;
+                if (min_dist[nx][ny] > ncost) {
+                    min_dist[nx][ny] = ncost;
                     pq_mintop.emplace(nx, ny, ncost);
                 }
             }
         }
 
-        cout << "Problem " << ti << ": " << costs[n - 1][n - 1] << '\n';
+        cout << "Problem " << ++ti << ": " << min_dist[n - 1][n - 1] << '\n';
     }
 
     return 0;
