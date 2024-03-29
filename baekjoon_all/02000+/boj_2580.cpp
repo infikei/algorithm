@@ -1,83 +1,82 @@
-#include <iostream>
-#include <vector>
+// Solve 2022-08-01
+// Update 2024-03-28
+
+#include <bits/stdc++.h>
 using namespace std;
-typedef pair<int, int> pii;
 
-const int SIZE = 9;
-int board[SIZE][SIZE];
-vector<pii> board_blank;
-bool solved = false;
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
 
-void sudoku_input() {
-    for (int row = 0; row < SIZE; row++) {
-        for (int col = 0; col < SIZE; col++) {
-            cin >> board[row][col];
-            if (board[row][col] == 0) {
-                board_blank.push_back(make_pair(row, col));
-            }
-        }
-    }
-}
+int board[9][9];
+bool board_fixed[9][9];
+bool row_check[9][10];
+bool col_check[9][10];
+bool square_check[3][3][10];
 
-bool sudoku_check(int x, int y, int val) {
-    for (int col = 0; col < SIZE; col++) {
-        if (board[x][col] == val) {
-            return false;
-        }
-    }
-    for (int row = 0; row < SIZE; row++) {
-        if (board[row][y] == val) {
-            return false;
-        }
-    }
-    for (int row = x / 3 * 3; row < x / 3 * 3 + 3; row++) {
-        for (int col = y / 3 * 3; col < y / 3 * 3 + 3; col++) {
-            if (board[row][col] == val) {
-                return false;
-            }
-        }
-    }
-    return true;
-}
+bool recur(int depth = 0) {
+    if (depth == 81) return true;
 
-void sudoku_solve(int depth = 0) {
-    if (depth == board_blank.size()) {
-        solved = true;
-        return;
+    int x = depth / 9;
+    int y = depth % 9;
+
+    if (board_fixed[x][y]) {
+        if (recur(depth + 1)) {
+            return true;
+        }
+
+        return false;
     }
 
-    int x = board_blank[depth].first;
-    int y = board_blank[depth].second;
-    for (int val = 1; val <= 9; val++) {
-        if (sudoku_check(x, y, val)) {
-            board[x][y] = val;
-            sudoku_solve(depth + 1);
-            if (!solved) {
-                board[x][y] = 0;
-            }
+    for (int cur_num = 1; cur_num <= 9; cur_num++) {
+        if (row_check[x][cur_num] || col_check[y][cur_num] || square_check[x / 3][y / 3][cur_num]) {
+            continue;
         }
-    }
-}
 
-void sudoku_print() {
-    for (int row = 0; row < SIZE; row++) {
-        for (int col = 0; col < SIZE; col++) {
-            cout << board[row][col] << ' ';
+        row_check[x][cur_num] = true;
+        col_check[y][cur_num] = true;
+        square_check[x / 3][y / 3][cur_num] = true;
+        board[x][y] = cur_num;
+
+        if (recur(depth + 1)) {
+            return true;
         }
-        cout << '\n';
+
+        row_check[x][cur_num] = false;
+        col_check[y][cur_num] = false;
+        square_check[x / 3][y / 3][cur_num] = false;
     }
+
+    return false;
 }
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    sudoku_input();
+    for (int x = 0; x < 9; x++) {
+        for (int y = 0; y < 9; y++) {
+            cin >> board[x][y];
 
-    sudoku_solve();
+            if (board[x][y] > 0) {
+                board_fixed[x][y] = true;
+                row_check[x][board[x][y]] = true;
+                col_check[y][board[x][y]] = true;
+                square_check[x / 3][y / 3][board[x][y]] = true;
+            }
+        }
+    }
 
-    sudoku_print();
+    recur();
+
+    for (int x = 0; x < 9; x++) {
+        for (int y = 0; y < 9; y++) {
+            cout << board[x][y] << ' ';
+        }
+
+        cout << '\n';
+    }
 
     return 0;
 }
