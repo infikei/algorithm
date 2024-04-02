@@ -1,5 +1,5 @@
 // Solve 2022-07-09
-// Update 2023-07-24
+// Update 2024-04-02
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -16,12 +16,13 @@ int main() {
     int n;
     cin >> n;
 
-    ll dp[91] = { 0, 1 };
+    ll fibonacci[91] = { 0, 1 };
+
     for (int i = 2; i <= n; i++) {
-        dp[i] = dp[i - 2] + dp[i - 1];
+        fibonacci[i] = fibonacci[i - 2] + fibonacci[i - 1];
     }
 
-    cout << dp[n] << '\n';
+    cout << fibonacci[n] << '\n';
 
     return 0;
 }

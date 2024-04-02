@@ -1,106 +1,124 @@
 // Solve 2023-02-20
+// Update 2024-04-02
 
 #include <bits/stdc++.h>
 using namespace std;
 
-#ifdef BOJ
-#define BOJTEST(x) ((void)0)
-#else
-#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
-#endif
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
 #define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
 #define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
-#define INF (int)1e9
-#define LLINF (ll)4e18
 using ll = long long;
-using uint = unsigned int;
-using ull = unsigned long long;
-using pii = pair<int, int>;
-using pi3 = pair<int, pii>;
-using pi4 = pair<pii, pii>;
-using pi5 = pair<int, pi4>;
 
-int n, m, ones;
-int graph[10][10];
-pii parent[10][10];
-priority_queue<pi5, vector<pi5>, greater<pi5> > edges;
+struct Point{
+    int x, y;
 
-pii get_parent(pii k) {
-    if (parent[k.first][k.second].first < 0) {
-        return k;
+    Point() {}
+
+    Point(int x, int y) : x(x), y(y) {}
+};
+
+struct Bridge{
+    int dist;
+    Point from, to;
+
+    Bridge(int dist, int x1, int y1, int x2, int y2) : dist(dist), from(x1, y1), to(x2, y2) {}
+
+    bool operator<(const Bridge &rhs) const {
+        return dist > rhs.dist;
+    }
+};
+
+Point parent[10][10];
+int max_children = 1;
+
+Point get_parent_of(Point p) {
+    if (parent[p.x][p.y].x < 0) return p;
+
+    return parent[p.x][p.y] = get_parent_of(parent[p.x][p.y]);
+}
+
+bool union_parents(Point p1, Point p2) {
+    p1 = get_parent_of(p1);
+    p2 = get_parent_of(p2);
+
+    if (p1.x != p2.x || p1.y != p2.y) {
+        if (parent[p1.x][p1.y].x < parent[p2.x][p2.y].x) {
+            parent[p1.x][p1.y].x += parent[p2.x][p2.y].x;
+            parent[p2.x][p2.y] = { p1.x, p1.y };
+            max_children = max(max_children, -parent[p1.x][p1.y].x);
+        }
+        else {
+            parent[p2.x][p2.y].x += parent[p1.x][p1.y].x;
+            parent[p1.x][p1.y] = { p2.x, p2.y };
+            max_children = max(max_children, -parent[p2.x][p2.y].x);
+        }
+
+        return true;
     }
 
-    parent[k.first][k.second] = get_parent(parent[k.first][k.second]);
-    return parent[k.first][k.second];
+    return false;
 }
 
 int main() {
     FASTIO;
 
+    int n, m;
     cin >> n >> m;
-    for (int row = 0; row < n; row++) {
-        for (int col = 0; col < m; col++) {
-            cin >> graph[row][col];
-            if (graph[row][col] == 1) {
-                ones++;
-            }
-            parent[row][col] = { -1, 0 };
+
+    int board[10][10];
+    int area_sum = 0;
+
+    for (int x = 0; x < n; x++) {
+        for (int y = 0; y < m; y++) {
+            cin >> board[x][y];
+            area_sum += board[x][y];
+            parent[x][y] = { -1, 0 };
         }
     }
 
-    for (int row = 0; row < n; row++) {
-        int prev_col = -1;
-        for (int col = 0; col < m; col++) {
-            if (graph[row][col] == 0) continue;
-            if (prev_col != -1 && col - prev_col != 2) {
-                edges.push({ col - prev_col - 1, { { row, prev_col }, { row, col } } });
-            }
-            prev_col = col;
-        }
-    }
+    priority_queue<Bridge> bridges;
 
-    for (int col = 0; col < m; col++) {
-        int prev_row = -1;
-        for (int row = 0; row < n; row++) {
-            if (graph[row][col] == 0) continue;
-            if (prev_row != -1 && row - prev_row != 2) {
-                edges.push({ row - prev_row - 1, { { prev_row, col }, { row, col } } });
-            }
-            prev_row = row;
-        }
-    }
+    for (int x = 0; x < n; x++) {
+        int py = -1;
 
-    int ans = 0, connected_ones = 0;
-    while (!edges.empty()) {
-        pi5 edge = edges.top();
-        edges.pop();
+        for (int y = 0; y < m; y++) {
+            if (board[x][y] == 1) {
+                if (py != -1 && y - py != 2) {
+                    bridges.emplace(y - py - 1, x, py, x, y);
+                }
 
-        pii pu = get_parent(edge.second.first);
-        pii pv = get_parent(edge.second.second);
-
-        if (pu != pv) {
-            ans += edge.first;
-            if (parent[pu.first][pu.second] < parent[pv.first][pv.second]) {
-                parent[pu.first][pu.second].first += parent[pv.first][pv.second].first;
-                parent[pv.first][pv.second] = pu;
-                connected_ones = min(connected_ones, parent[pu.first][pu.second].first);
-            }
-            else {
-                parent[pv.first][pv.second].first += parent[pu.first][pu.second].first;
-                parent[pu.first][pu.second] = pv;
-                connected_ones = min(connected_ones, parent[pv.first][pv.second].first);
+                py = y;
             }
         }
     }
 
-    if (ones != -connected_ones) {
-        cout << -1 << '\n';
+    for (int y = 0; y < m; y++) {
+        int px = -1;
+
+        for (int x = 0; x < n; x++) {
+            if (board[x][y] == 1) {
+                if (px != -1 && x - px != 2) {
+                    bridges.emplace(x - px - 1, px, y, x, y);
+                }
+
+                px = x;
+            }
+        }
     }
-    else {
-        cout << ans << '\n';
+
+    int bridge_dist_sum = 0;
+
+    while (!bridges.empty()) {
+        Bridge cur_bridge = bridges.top();
+        bridges.pop();
+
+        if (union_parents(cur_bridge.from, cur_bridge.to)) {
+            bridge_dist_sum += cur_bridge.dist;
+        }
     }
+
+    cout << (area_sum == max_children ? bridge_dist_sum : -1) << '\n';
 
     return 0;
 }

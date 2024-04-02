@@ -1,5 +1,5 @@
 // Solve 2022-06-03
-// Update 2023-12-13
+// Update 2024-04-02
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -13,10 +13,10 @@ using ll = long long;
 int main() {
     FASTIO;
 
-    ll dp[101] = { 0, 1, 1, 1, 2, 2 };
+    ll padovan[101] = { 0, 1, 1, 1, 2, 2 };
 
     for (int i = 6; i <= 100; i++) {
-        dp[i] = dp[i - 5] + dp[i - 1];
+        padovan[i] = padovan[i - 5] + padovan[i - 1];
     }
 
     int t;
@@ -26,7 +26,7 @@ int main() {
         int n;
         cin >> n;
 
-        cout << dp[n] << '\n';
+        cout << padovan[n] << '\n';
     }
 
     return 0;
