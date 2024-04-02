@@ -1,56 +1,48 @@
-#include <iostream>
-#include <string>
+// Solve 2022-11-08
+// Update 2024-04-01
+
+#include <bits/stdc++.h>
 using namespace std;
-#define fastio ios_base::sync_with_stdio(false);cout.tie(NULL);cin.tie(NULL); // boj_15552.cpp
 
-string X;
-int cnt, ans;
-
-void solve() {
-    if ((int)X.length() == 1) {
-        ans = stoi(X);
-        return;
-    }
-
-    cnt++;
-    int K = 0;
-    for (auto a : X) {
-        K += a - '0';
-    }
-    if (K < 10) {
-        ans = K;
-        return;
-    }
-
-    while (K > 0) {
-        cnt++;
-        int K_sum = 0;
-        while (K > 0) {
-            K_sum += K % 10;
-            K /= 10;
-        }
-        if (K_sum < 10) {
-            ans = K_sum;
-            return;
-        }
-        K = K_sum;
-    }
-}
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
 
 int main() {
-    fastio;
+    FASTIO;
 
-    cin >> X;
+    string s;
+    cin >> s;
 
-    solve();
+    int n = 0;
+    int cnt = 0;
 
-    cout << cnt << '\n';
-    if (ans % 3 == 0) {
-        cout << "YES\n";
+    if (SIZE(s) <= 1) {
+        n = stoi(s);
     }
     else {
-        cout << "NO\n";
+        for (char c : s) {
+            n += c - '0';
+        }
+
+        cnt++;
+
+        while (n >= 10) {
+            int nn = 0;
+
+            while (n > 0) {
+                nn += n % 10;
+                n /= 10;
+            }
+
+            n = nn;
+            cnt++;
+        }
     }
+
+    cout << cnt << '\n' << (n % 3 == 0 ? "YES\n" : "NO\n");
 
     return 0;
 }
