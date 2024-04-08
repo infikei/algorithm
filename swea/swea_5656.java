@@ -1,4 +1,5 @@
 // Solve 2024-03-29
+// Update 2024-04-07
 
 // SWEA에 제출할 때는 class 이름을 Solution으로 설정해야 한다.
 
@@ -19,7 +20,7 @@ public class swea_5656 {
             this.dist = dist;
         }
     }
-    
+
     static int[] dx = { 0, 0, -1, 1 };
     static int[] dy = { -1, 1, 0, 0 };
     static int n, h, w;
