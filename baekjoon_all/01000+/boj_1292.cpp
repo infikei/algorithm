@@ -1,19 +1,28 @@
-#include <iostream>
+// Solve 2022-11-06
+// Update 2024-04-11
+
+#include <bits/stdc++.h>
 using namespace std;
-#define fastio ios_base::sync_with_stdio(false);cout.tie(NULL);cin.tie(NULL); // boj_15552.cpp
 
-int calc_1292(int x) {
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
+#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+using ll = long long;
+
+int calc(int x) {
     int res = 0;
+    int cnt = 0;
+    int i = 1;
 
-    int now = 0, i = 1;
     while (true) {
-        if (now + i <= x) {
+        if (cnt + i <= x) {
             res += i * i;
-            now += i;
+            cnt += i;
             i++;
         }
         else {
-            res += i * (x - now);
+            res += i * (x - cnt);
             break;
         }
     }
@@ -22,12 +31,12 @@ int calc_1292(int x) {
 }
 
 int main() {
-    fastio;
+    FASTIO;
 
-    int A, B;
-    cin >> A >> B;
+    int a, b;
+    cin >> a >> b;
 
-    cout << calc_1292(B) - calc_1292(A - 1) << '\n';
+    cout << calc(b) - calc(a - 1) << '\n';
 
     return 0;
 }
