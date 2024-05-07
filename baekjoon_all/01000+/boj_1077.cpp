@@ -1,4 +1,5 @@
 // Solve 2024-05-03
+// Update 2024-05-06
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -24,17 +25,17 @@ struct Point{
     }
 };
 
-Point point_zero(0, 0);
+Point zero_point(0, 0);
 
-double get_cross(Point p1, Point p2) {
+double get_ccw(const Point &p1, const Point &p2) {
     return p1.x * p2.y - p2.x * p1.y;
 }
 
-double get_ccw(Point p1, Point p2, Point p3) {
-    return get_cross(p2 - p1, p3 - p1);
+double get_ccw(const Point &p1, const Point &p2, const Point &p3) {
+    return get_ccw(p2 - p1, p3 - p1);
 }
 
-int get_ccw_sign(Point p1, Point p2, Point p3) {
+int get_ccw_sign(const Point &p1, const Point &p2, const Point &p3) {
     double ccw = get_ccw(p1, p2, p3);
 
     if (ccw > 0) return 1;
@@ -42,17 +43,19 @@ int get_ccw_sign(Point p1, Point p2, Point p3) {
     return 0;
 }
 
-bool cmp_ccw_x_y(Point p1, Point p2) {
-    double ccw = get_ccw(point_zero, p1, p2);
+struct PointCmpCcwXY{
+    bool operator()(Point &p1, Point &p2) {
+        double ccw = get_ccw(zero_point, p1, p2);
 
-    if (ccw != 0) return ccw > 0;
-    return p1 < p2;
-}
+        if (ccw != 0) return ccw > 0;
+        return p1 < p2;
+    }
+};
 
 vector<Point> make_convex_hull(vector<Point> &points) {
     swap(points[0], *min_element(points.begin(), points.end()));
-    point_zero = points[0];
-    sort(points.begin() + 1, points.end(), cmp_ccw_x_y);
+    zero_point = points[0];
+    sort(points.begin() + 1, points.end(), PointCmpCcwXY());
     vector<Point> convex_hull;
 
     for (int i = 0; i < SIZE(points); i++) {
@@ -153,9 +156,9 @@ int main() {
             if (abc * abd == -1 && cda * cdb == -1) {
                 Point v1 = ch1[i] - ch1[ni];
                 Point v2 = ch2[j] - ch2[nj];
-                double c1 = get_cross(ch1[i], ch1[ni]);
-                double c2 = get_cross(ch2[j], ch2[nj]);
-                double k = get_cross(v1, v2);
+                double c1 = get_ccw(ch1[i], ch1[ni]);
+                double c2 = get_ccw(ch2[j], ch2[nj]);
+                double k = get_ccw(v1, v2);
                 double x = (c1 * v2.x - c2 * v1.x) / k;
                 double y = (c1 * v2.y - c2 * v1.y) / k;
 

@@ -1,4 +1,5 @@
 // Solve 2024-05-02
+// Update 2024-05-06
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -26,22 +27,24 @@ struct Point{
 
 Point points[1000];
 
-int get_cross(Point p1, Point p2) {
+int get_ccw(const Point &p1, const Point &p2) {
     return p1.x * p2.y - p2.x * p1.y;
 }
 
-int get_ccw(Point p1, Point p2, Point p3) {
-    return get_cross(p2 - p1, p3 - p1);
+int get_ccw(const Point &p1, const Point &p2, const Point &p3) {
+    return get_ccw(p2 - p1, p3 - p1);
 }
 
-bool cmp_ccw_x_y(Point p1, Point p2) {
-    int ccw = get_ccw(points[0], p1, p2);
+struct PointCmpCcwXY{
+    bool operator()(Point &p1, Point &p2) {
+        int ccw = get_ccw(points[0], p1, p2);
 
-    if (ccw != 0) return ccw > 0;
-    return p1 < p2;
-}
+        if (ccw != 0) return ccw > 0;
+        return p1 < p2;
+    }
+};
 
-double get_dist(Point p1, Point p2) {
+double get_dist(const Point &p1, const Point &p2) {
     int dx = p1.x - p2.x;
     int dy = p1.y - p2.y;
     return sqrt(dx * dx + dy * dy);
@@ -58,7 +61,7 @@ int main() {
     }
 
     swap(points[0], *min_element(points, points + n));
-    sort(points + 1, points + n, cmp_ccw_x_y);
+    sort(points + 1, points + n, PointCmpCcwXY());
     vector<Point> convex_hull;
 
     for (int i = 0; i < n; i++) {

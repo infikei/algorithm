@@ -1,4 +1,5 @@
 // Solve 2024-05-01
+// Update 2024-05-06
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -14,19 +15,19 @@ struct Point{
 
     Point(int x, int y) : x(x), y(y) {}
 
-    int get_dist_square(Point &rhs) {
-        int dx = x - rhs.x;
-        int dy = y - rhs.y;
-        return dx * dx + dy * dy;
-    }
-
     bool operator<(const Point &rhs) const {
         if (x != rhs.x) return x < rhs.x;
         return y < rhs.y;
     }
+
+    int get_dist2(const Point &rhs) {
+        int dx = x - rhs.x;
+        int dy = y - rhs.y;
+        return dx * dx + dy * dy;
+    }
 };
 
-struct CmpPoint{
+struct PointCmpY{
     bool operator()(Point &p1, Point &p2) {
         return p1.y < p2.y;
     }
@@ -40,7 +41,7 @@ int recur(int low, int high) {
 
         for (int i = low; i < high; i++) {
             for (int j = i + 1; j < high; j++) {
-                res = min(res, points[i].get_dist_square(points[j]));
+                res = min(res, points[i].get_dist2(points[j]));
             }
         }
 
@@ -60,7 +61,7 @@ int recur(int low, int high) {
         nbd_points.push_back(points[i]);
     }
 
-    sort(nbd_points.begin(), nbd_points.end(), CmpPoint());
+    sort(nbd_points.begin(), nbd_points.end(), PointCmpY());
 
     for (int i = 0; i < SIZE(nbd_points); i++) {
         for (int j = i + 1; j < SIZE(nbd_points); j++) {
@@ -68,7 +69,7 @@ int recur(int low, int high) {
 
             if (dy * dy >= res) break;
 
-            res = min(res, nbd_points[i].get_dist_square(nbd_points[j]));
+            res = min(res, nbd_points[i].get_dist2(nbd_points[j]));
         }
     }
 

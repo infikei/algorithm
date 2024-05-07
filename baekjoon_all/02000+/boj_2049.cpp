@@ -1,9 +1,10 @@
 // Solve 2023-05-29
+// Update 2024-05-06
 
 #include <bits/stdc++.h>
 using namespace std;
 
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
 #define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
 #define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
@@ -11,14 +12,15 @@ using ll = long long;
 
 struct Point{
     int x, y;
-    Point(int nx = 0, int ny = 0) : x(nx), y(ny) {}
+
+    Point(int x = 0, int y = 0) : x(x), y(y) {}
+
     Point operator-(const Point &rhs) const {
         return { x - rhs.x, y - rhs.y };
     }
+
     bool operator<(const Point &rhs) const {
-        if (x != rhs.x) {
-            return x < rhs.x;
-        }
+        if (x != rhs.x) return x < rhs.x;
         return y < rhs.y;
     }
 };
@@ -26,28 +28,26 @@ struct Point{
 int n;
 Point points[100000];
 
-int calc_cross(const Point &a, const Point &b) {
-    return a.x * b.y - b.x * a.y;
+int get_ccw(const Point &p1, const Point &p2) {
+    return p1.x * p2.y - p2.x * p1.y;
 }
 
-int calc_ccw(const Point &a, const Point &b, const Point &c) {
-    int ccw = calc_cross(b - a, c - a);
-    if (ccw > 0) return 1;
-    if (ccw < 0) return -1;
-    return 0;
+int get_ccw(const Point &p1, const Point &p2, const Point &p3) {
+    return get_ccw(p2 - p1, p3 - p1);
 }
 
-bool cmp_ccw_x_y(const Point &a, const Point &b) {
-    int ccw = calc_ccw(points[0], a, b);
-    if (ccw != 0) {
-        return ccw > 0;
+struct PointCmpXY{
+    bool operator()(Point &p1, Point &p2) {
+        int ccw = get_ccw(points[0], p1, p2);
+
+        if (ccw != 0) return ccw > 0;
+        return p1 < p2;
     }
-    return a < b;
-}
+};
 
-int calc_dist2(const Point &a, const Point &b) {
-    int dx = b.x - a.x;
-    int dy = b.y - a.y;
+int get_dist2(const Point &p1, const Point &p2) {
+    int dx = p1.x - p2.x;
+    int dy = p1.y - p2.y;
     return dx * dx + dy * dy;
 }
 
@@ -55,45 +55,47 @@ int main() {
     FASTIO;
 
     cin >> n;
+
     for (int i = 0; i < n; i++) {
         cin >> points[i].x >> points[i].y;
     }
 
     swap(points[0], *min_element(points, points + n));
-    sort(points + 1, points + n, cmp_ccw_x_y);
-
+    sort(points + 1, points + n, PointCmpXY());
     vector<Point> convex_hull;
+
     for (int i = 0; i < n; i++) {
         while (SIZE(convex_hull) >= 2) {
-            Point back2 = convex_hull.back();
+            Point back = convex_hull.back();
             convex_hull.pop_back();
-            Point back1 = convex_hull.back();
 
-            if (calc_ccw(back1, back2, points[i]) > 0) {
-                convex_hull.push_back(back2);
+            if (get_ccw(convex_hull.back(), back, points[i]) > 0) {
+                convex_hull.push_back(back);
                 break;
             }
         }
+
         convex_hull.push_back(points[i]);
     }
 
     int max_dist2 = 0;
+
     for (int i = 0, j = 1; i < SIZE(convex_hull); i++) {
         int ni = i + 1;
         if (ni == SIZE(convex_hull)) ni = 0;
         Point vi = convex_hull[ni] - convex_hull[i];
 
-        for (;;) {
+        while (true) {
             int nj = j + 1;
             if (nj == SIZE(convex_hull)) nj = 0;
             Point vj = convex_hull[nj] - convex_hull[j];
 
-            if (calc_ccw(Point(0, 0), vi, vj) <= 0) break;
+            if (get_ccw(Point(0, 0), vi, vj) <= 0) break;
             j = nj;
         }
 
-        int now_dist2 = calc_dist2(convex_hull[i], convex_hull[j]);
-        max_dist2 = max(max_dist2, now_dist2);
+        int cur_dist2 = get_dist2(convex_hull[i], convex_hull[j]);
+        max_dist2 = cur_dist2 > max_dist2 ? cur_dist2 : max_dist2;
     }
 
     cout << max_dist2 << '\n';
