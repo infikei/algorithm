@@ -1,4 +1,5 @@
 // Solve 2024-05-19
+// Update 2024-05-20
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -15,21 +16,20 @@ int main() {
     int n, m;
     cin >> n >> m;
 
-    priority_queue<int> pq_maxtop;
+    int cards[1000];
 
     for (int i = 0; i < n; i++) {
-        int x;
-        cin >> x;
-        pq_maxtop.push(x);
+        cin >> cards[i];
     }
+
+    sort(cards, cards + n, greater<int>());
 
     int ans = 0;
 
     for (int i = 0; i < min(m, (n + 1) / 2); i++) {
-        if (pq_maxtop.top() <= 0) break;
+        if (cards[i] <= 0) break;
 
-        ans += pq_maxtop.top();
-        pq_maxtop.pop();
+        ans += cards[i];
     }
 
     cout << ans << '\n';
