@@ -1,4 +1,5 @@
 // Solve 2024-02-20
+// Update 2024-06-09
 
 // 백준에 제출할 때는 class 이름을 Main으로 설정해야 한다.
 
@@ -32,10 +33,10 @@ public class boj_2636 {
         int cheeseCount = 0;
 
         for (int x = 0; x < n; x++) {
-            st = new StringTokenizer(br.readLine(), " ");
+            String line = br.readLine();
 
             for (int y = 0; y < m; y++) {
-                board[x][y] = Integer.parseInt(st.nextToken());
+                board[x][y] = line.charAt(y * 2) - '0';
 
                 if (board[x][y] == 1) {
                     cheeseCount++;
@@ -53,25 +54,27 @@ public class boj_2636 {
             bfsQue.offer(new Point(0, 0));
 
             while (!bfsQue.isEmpty()) {
-                Point cur = bfsQue.poll();
+                Point curPoint = bfsQue.poll();
 
                 for (int d = 0; d < 4; d++) {
-                    int nx = cur.x + dx[d];
-                    int ny = cur.y + dy[d];
+                    int nx = curPoint.x + dx[d];
+                    int ny = curPoint.y + dy[d];
 
-                    if (nx < 0 || nx >= n || ny < 0 || ny >= m || visited[nx][ny]) continue;
+                    if (nx < 0 || nx >= n || ny < 0 || ny >= m || visited[nx][ny]) {
+                        continue;
+                    }
+
+                    visited[nx][ny] = true;
 
                     if (board[nx][ny] == 1) {
-                        visited[nx][ny] = true;
                         cheeseNearAir.add(new Point(nx, ny));
                     } else {
-                        visited[nx][ny] = true;
                         bfsQue.offer(new Point(nx, ny));
                     }
                 }
             }
 
-            if (cheeseNearAir.size() == 0) {
+            if (cheeseNearAir.isEmpty()) {
                 break;
             }
 
@@ -83,9 +86,8 @@ public class boj_2636 {
             }
         }
 
-        StringBuilder sb = new StringBuilder();
-        sb.append(curTime).append("\n").append(cheeseCount);
-        System.out.println(sb);
+        System.out.println(curTime);
+        System.out.println(cheeseCount);
         br.close();
     }
 
