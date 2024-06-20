@@ -1,9 +1,13 @@
 // Solve 2024-06-08
+// Update 2024-06-20
+
+// 프로그래머스에 제출할 때는 class 이름을 Solution으로 설정해야 한다.
 
 import java.io.*;
 import java.util.*;
 
-class Solution {
+class PG_12969_직사각형_별찍기 {
+
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
@@ -21,4 +25,5 @@ class Solution {
         
         System.out.print(sb);
     }
+
 }
