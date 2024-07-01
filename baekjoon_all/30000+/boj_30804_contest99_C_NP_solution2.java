@@ -7,7 +7,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class boj_30804_contest99_C_NP {
+public class boj_30804_contest99_C_NP_solution2 {
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -19,23 +19,32 @@ public class boj_30804_contest99_C_NP {
             fruits[i] = line.charAt(i * 2) - '0';
         }
 
+        int left = 0;
+        int right = 0;
+        int[] cnt = new int[10];
+        int kindOfFruits = 0;
         int maxLen = 0;
 
-        for (int i = 1; i <= 9; i++) {
-            for (int j = i + 1; j <= 9; j++) {
-                int curLen = 0;
+        while (right < n) {
+            cnt[fruits[right]]++;
 
-                for (int k = 0; k < n; k++) {
-                    if (fruits[k] == i || fruits[k] == j) {
-                        curLen++;
-                    } else {
-                        maxLen = Math.max(maxLen, curLen);
-                        curLen = 0;
+            if (cnt[fruits[right]] == 1) {
+                kindOfFruits++;
+
+                while (kindOfFruits == 3) {
+                    cnt[fruits[left]]--;
+
+                    if (cnt[fruits[left]] == 0) {
+                        kindOfFruits--;
                     }
-                }
 
-                maxLen = Math.max(maxLen, curLen);
+                    left++;
+                }
             }
+
+            right++;
+            int curLen = right - left;
+            maxLen = curLen > maxLen ? curLen : maxLen;
         }
 
         System.out.println(maxLen);
