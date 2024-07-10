@@ -1,0 +1,52 @@
+// Solve 2024-07-10
+
+// 백준에 제출할 때는 class 이름을 Main으로 설정해야 한다.
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class boj_27973 {
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb = new StringBuilder();
+        int q = Integer.parseInt(br.readLine());
+
+        // y = as + b form
+        long s = 1;
+        long a = 1;
+        long b = 0;
+
+        while (q-- > 0) {
+            String line = br.readLine();
+            long x;
+
+            switch (line.charAt(0)) {
+                case '0':
+                    x = Long.parseLong(line.substring(2));
+                    b += x;
+                    break;
+
+                case '1':
+                    x = Long.parseLong(line.substring(2));
+                    a *= x;
+                    b *= x;
+                    break;
+
+                case '2':
+                    x = Long.parseLong(line.substring(2));
+                    s += x;
+                    break;
+
+                case '3':
+                    sb.append(a * s + b).append("\n");
+                    break;
+            }
+        }
+
+        System.out.print(sb);
+        br.close();
+    }
+
+}
