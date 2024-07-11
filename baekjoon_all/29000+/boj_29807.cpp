@@ -1,39 +1,44 @@
 // Solve 2023-09-16
+// Update 2024-07-11
 
-#include <bits/stdc++.h>
+#include <iostream>
+#include <cmath>
+#include <algorithm>
 using namespace std;
 
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
-#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
-#define SIZE(v) (int)v.size()
-#define ALL(v) v.begin(),v.end()
-using ll = long long;
-
 int main() {
-    FASTIO;
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
 
     int t;
     cin >> t;
 
-    int score[5] = { 0 };
+    int scores[5] = { 0 };
 
     for (int i = 0; i < t; i++) {
-        cin >> score[i];
+        cin >> scores[i];
     }
 
-    int ans = 0;
+    int student_num = 0;
 
-    if (score[0] > score[2]) ans += (score[0] - score[2]) * 508;
-    else ans += (score[2] - score[0]) * 108;
+    if (scores[0] > scores[2]) {
+        student_num += (scores[0] - scores[2]) * 508;
+    }
+    else {
+        student_num += (scores[2] - scores[0]) * 108;
+    }
 
-    if (score[1] > score[3]) ans += (score[1] - score[3]) * 212;
-    else ans += (score[3] - score[1]) * 305;
+    if (scores[1] > scores[3]) {
+        student_num += (scores[1] - scores[3]) * 212;
+    }
+    else {
+        student_num += (scores[3] - scores[1]) * 305;
+    }
 
-    ans += score[4] * 707;
+    student_num += scores[4] * 707;
+    student_num *= 4763;
 
-    ans *= 4763;
-
-    cout << ans << '\n';
+    cout << student_num << '\n';
 
     return 0;
 }
