@@ -1,54 +1,56 @@
 // Solve 2023-09-20
+// Update 2024-07-12
 
-#include <bits/stdc++.h>
+#include <iostream>
+#include <cmath>
+#include <algorithm>
+#include <vector>
 using namespace std;
 
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
-#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
-#define SIZE(v) (int)v.size()
-#define ALL(v) v.begin(),v.end()
-using ll = long long;
-
 struct Pair{
-    int a = 0, b = 0;
+    int a = 0;
+    int b = 0;
+
     Pair(int a = 0, int b = 0) : a(a), b(b) {}
+
     bool operator<(const Pair &rhs) const {
         if (a != rhs.a) return a < rhs.a;
         return b < rhs.b;
     }
+
     bool operator==(const Pair &rhs) const {
         return a == rhs.a && b == rhs.b;
     }
 };
 
 int main() {
-    FASTIO;
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
 
-    int s;
-    cin >> s;
+    int student_num;
+    cin >> student_num;
 
-    if (s % 4763 != 0) {
-        cout << 0 << '\n';
-    }
-    else {
-        s /= 4763;
+    vector<Pair> answers;
 
-        vector<Pair> ans_vec;
+    if (student_num % 4763 == 0) {
+        student_num /= 4763;
 
-        int a = 0, bb = s;
+        int a = 0, bb = student_num;
 
         while (a <= 200 && bb >= 0) {
             if (bb % 212 == 0) {
                 int b = bb / 212;
+
                 if (b >= 0 && b <= 200) {
-                    ans_vec.push_back({ a, b });
+                    answers.emplace_back(a, b);
                 }
             }
 
             if (bb % 305 == 0) {
                 int b = bb / 305;
+
                 if (b >= 0 && b <= 200) {
-                    ans_vec.push_back({ a, b });
+                    answers.emplace_back(a, b);
                 }
             }
 
@@ -56,20 +58,22 @@ int main() {
             bb -= 508;
         }
 
-        a = 0, bb = s;
+        a = 0, bb = student_num;
 
         while (a <= 200 && bb >= 0) {
             if (bb % 212 == 0) {
                 int b = bb / 212;
+
                 if (b >= 0 && b <= 200) {
-                    ans_vec.push_back({ a, b });
+                    answers.emplace_back(a, b);
                 }
             }
 
             if (bb % 305 == 0) {
                 int b = bb / 305;
+
                 if (b >= 0 && b <= 200) {
-                    ans_vec.push_back({ a, b });
+                    answers.emplace_back(a, b);
                 }
             }
 
@@ -77,15 +81,15 @@ int main() {
             bb -= 108;
         }
 
-        sort(ans_vec.begin(), ans_vec.end());
+        sort(answers.begin(), answers.end());
 
-        ans_vec.erase(unique(ans_vec.begin(), ans_vec.end()), ans_vec.end());
+        answers.erase(unique(answers.begin(), answers.end()), answers.end());
+    }
 
-        cout << SIZE(ans_vec) << '\n';
+    cout << answers.size() << '\n';
 
-        for (Pair &ans : ans_vec) {
-            cout << ans.a << ' ' << ans.b << '\n';
-        }
+    for (Pair &ans : answers) {
+        cout << ans.a << ' ' << ans.b << '\n';
     }
 
     return 0;
