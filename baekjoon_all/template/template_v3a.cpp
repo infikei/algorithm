@@ -1,5 +1,7 @@
 // Solve 2024-
 
+// template_v5d.cpp로 대체됨
+
 #include <bits/stdc++.h>
 using namespace std;
 

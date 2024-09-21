@@ -1,5 +1,7 @@
 // Solve 2024-
 
+// template_v5d.cpp로 대체됨
+
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -21,8 +23,24 @@ using ll = long long;
 using uint = unsigned int;
 using ull = unsigned long long;
 using ld = long double;
+// using cpx = complex<double>;
+// using pii = pair<int, int>;
+// using pi3 = pair<int, pii>;
+// using pi4 = pair<pii, pii>;
+// using pll = pair<ll, ll>;
+// using pl3 = pair<ll, pll>;
+// using pl4 = pair<pll, pll>;
+// using pdd = pair<double, double>;
+// using matrix = vector<vector<int> >;
+// using matrixll = vector<vector<ll> >;
 
 const double PI = M_PI;
+// const int INF = 1e9;
+// const ll LLINF = 4e18;
+// const ll MOD = 1000000007;
+// const int MAX_SIZE = 1000;
+// const int MATRIX_SIZE = 2;
+// const int FFT_SIZE = 1 << 21;
 
 int main() {
     FASTIO;

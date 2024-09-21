@@ -1,5 +1,7 @@
 // Solve 2024-
 
+// template_v4.cpp로 대체됨
+
 #include <iostream>
 // #include <string>
 // #include <vector>
