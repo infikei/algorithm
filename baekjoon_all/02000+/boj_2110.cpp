@@ -1,54 +1,50 @@
+// Solve 2022-10-30
+// Update 2024-09-15
+
 #include <iostream>
+#include <cmath>
 #include <algorithm>
 using namespace std;
 
-int N, C, houses[200000], ans = 1;
-
-void input() {
-    cin >> N >> C;
-    for (int i = 0; i < N; i++) {
-        cin >> houses[i];
-    }
-
-    sort(houses, houses + N);
-}
-
-void solve() {
-    int low = 1, high = houses[N - 1] - houses[0], mid;
-
-    while (low <= high) {
-        mid = (low + high) / 2;
-
-        int cnt = 1, prev_house = houses[0];
-        for (int i = 1; i < N; i++) {
-            if (houses[i] - prev_house >= mid) {
-                cnt++;
-                prev_house = houses[i];
-            }
-        }
-
-        if (cnt >= C) {
-            low = mid + 1;
-            if (ans < mid) {
-                ans = mid;
-            }
-        }
-        else {
-            high = mid - 1;
-        }
-    }
-}
+int arr[200000];
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
 
-    input();
+    int n, c;
+    cin >> n >> c;
 
-    solve();
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
 
-    cout << ans << '\n';
+    sort(arr, arr + n);
+
+    int dist_low = 0;
+    int dist_high = 1000000001;
+
+    while (dist_low + 1 < dist_high) {
+        int dist_mid = (dist_low + dist_high) / 2;
+        int cnt = 0;
+        int nxt_pos = arr[0];
+
+        for (int i = 0; i < n; i++) {
+            if (arr[i] >= nxt_pos) {
+                nxt_pos = arr[i] + dist_mid;
+                cnt++;
+            }
+        }
+
+        if (cnt >= c) {
+            dist_low = dist_mid;
+        }
+        else {
+            dist_high = dist_mid;
+        }
+    }
+
+    cout << dist_low << '\n';
 
     return 0;
 }
