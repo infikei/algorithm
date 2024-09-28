@@ -3,15 +3,17 @@
 #include <bits/stdc++.h>
 
 #define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
-#define SETW(n, c) cout << setw(n) << setfill(c);
-#define SETPRECISION(n) cout << fixed << setprecision(n);
-#define SIZE(v) (int)v.size()
-#define ALL(v) v.begin(),v.end()
+#define size(v) (int)v.size()
+#define all(v) v.begin(),v.end()
+#define setw(n, c) cout << setw(n) << setfill(c);
+#define setp(n) cout << fixed << setprecision(n);
+#define printw(x) cout << (x) << ' ';
+#define println(x) cout << (x) << '\n';
 
 #ifdef BOJ
-#define BOJTEST(x) ((void)0)
+#define testPrint(x) ((void)0)
 #else
-#define BOJTEST(x) cout << "[D] " << #x << ':' << x << '\n'
+#define testPrint(x) cout << "[D] " << #x << ':' << x << '\n'
 #endif
 
 using namespace std;
