@@ -3,14 +3,14 @@
 #include <cstdio>
 
 int main() {
-  int A, B;
-  assert(2 == scanf("%d%d", &A, &B));
-  fclose(stdin);
+    int A, B;
+    assert(2 == scanf("%d%d", &A, &B));
+    fclose(stdin);
 
-  int R = sum(A, B);
+    int R = sum(A, B);
 
-  printf("%d\n", R);
-  fclose(stdout);
+    printf("%d\n", R);
+    fclose(stdout);
 
-  return 0;
+    return 0;
 }
