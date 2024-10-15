@@ -1,4 +1,5 @@
 // Solve 2024-02-20
+// Update 2024-10-14
 
 // 백준에 제출할 때는 class 이름을 Main으로 설정해야 한다.
 
@@ -7,7 +8,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class boj_20055 {
+public class boj_20055_solution1 {
 
     static class Position {
         int durability;
