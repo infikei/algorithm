@@ -1,40 +1,59 @@
 // Solve 2023-05-06
-// Update 2023-08-09
+// Update 2024-10-23
 
 #include <bits/stdc++.h>
-using namespace std;
 
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
-#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
-#define SIZE(v) (int)v.size()
-#define ALL(v) v.begin(),v.end()
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
+#define size(v) (int)v.size()
+#define all(v) v.begin(),v.end()
+#define setw(n, c) cout << setw(n) << setfill(c);
+#define setp(n) cout << fixed << setprecision(n);
+#define printw(x) cout << (x) << ' ';
+#define println(x) cout << (x) << '\n';
+
+#ifdef BOJ
+#define testPrint(x) ((void)0)
+#else
+#define testPrint(x) cout << "[D] " << #x << ':' << x << '\n'
+#endif
+
+using namespace std;
 using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
+
+const double PI = M_PI;
 
 ll t[100000];
 
 int main() {
     FASTIO;
 
-    int n;
-    ll m;
+    int n, m;
     cin >> n >> m;
 
     for (int i = 0; i < n; i++) {
         cin >> t[i];
     }
 
-    ll low = 0, high = 1e18;
+    ll low = 0;
+    ll high = 1e18;
 
     while (low + 1 < high) {
-        ll mid = (low + high) >> 1;
-        ll val = 0;
+        ll mid = (low + high) / 2;
+        ll res = 0;
 
         for (int i = 0; i < n; i++) {
-            val += mid / t[i];
-            if (val >= m) break;
+            res += mid / t[i];
+
+            if (res >= m) {
+                break;
+            }
         }
 
-        if (val >= m) {
+        if (res >= m) {
             high = mid;
         }
         else {
@@ -42,7 +61,7 @@ int main() {
         }
     }
 
-    cout << high << '\n';
+    println(high);
 
     return 0;
 }
