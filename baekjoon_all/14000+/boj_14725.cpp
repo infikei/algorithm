@@ -1,46 +1,59 @@
 // Solve 2023-07-03
+// Update 2024-10-21
 
 #include <bits/stdc++.h>
+
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
+#define size(v) (int)v.size()
+#define all(v) v.begin(),v.end()
+#define setw(n, c) cout << setw(n) << setfill(c);
+#define setp(n) cout << fixed << setprecision(n);
+#define printw(x) cout << (x) << ' ';
+#define println(x) cout << (x) << '\n';
+
+#ifdef BOJ
+#define testPrint(x) ((void)0)
+#else
+#define testPrint(x) cout << "[D] " << #x << ':' << x << '\n'
+#endif
+
 using namespace std;
-
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
-#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
-#define SIZE(v) (int)v.size()
-#define ALL(v) v.begin(),v.end()
 using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
 
-struct Node{
-    map<string, Node*> child;
-    map<string, Node*>::iterator it;
+const double PI = M_PI;
 
-    ~Node() {
-        for (it = child.begin(); it != child.end(); it++) {
-            delete it->second;
+struct Trie{
+    map<string, Trie*> children;
+
+    void insert(vector<string> &rooms, int idx) {
+        if (idx == size(rooms)) return;
+
+        if (children.find(rooms[idx]) == children.end()) {
+            Trie* trie = new Trie;
+            children[rooms[idx]] = trie;
         }
+
+        children[rooms[idx]]->insert(rooms, idx + 1);
     }
 
-    void insert(vector<string> vec, int idx = 0) {
-        if (idx == SIZE(vec)) return;
-
-        it = child.find(vec[idx]);
-
-        if (it == child.end()) {
-            Node* n = new Node;
-            child.insert({ vec[idx], n });
-            n->insert(vec, idx + 1);
-        }
-        else {
-            it->second->insert(vec, idx + 1);
-        }
-    }
-
-    void print(int depth = 0) {
-        for (it = child.begin(); it != child.end(); it++) {
+    void dfs(int depth) {
+        for (auto it = children.begin(); it != children.end(); it++) {
             for (int i = 0; i < depth; i++) {
                 cout << "--";
             }
+
             cout << it->first << '\n';
-            it->second->print(depth + 1);
+            it->second->dfs(depth + 1);
+        }
+    }
+
+    ~Trie() {
+        for (auto it = children.begin(); it != children.end(); it++) {
+            delete it->second;
         }
     }
 };
@@ -51,21 +64,22 @@ int main() {
     int n;
     cin >> n;
 
-    Node* root = new Node;
+    Trie* root = new Trie;
 
-    for (int ni = 0; ni < n; ni++) {
+    for (int i = 0; i < n; i++) {
         int k;
         cin >> k;
 
-        vector<string> vec(k);
-        for (int ki = 0; ki < k; ki++) {
-            cin >> vec[ki];
+        vector<string> rooms(k);
+
+        for (string &room : rooms) {
+            cin >> room;
         }
 
-        root->insert(vec);
+        root->insert(rooms, 0);
     }
 
-    root->print();
+    root->dfs(0);
 
     delete root;
 
