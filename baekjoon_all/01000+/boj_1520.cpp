@@ -1,36 +1,62 @@
 // Solve 2023-01-04
-// Update 2023-07-28
+// Update 2024-11-03
 
 #include <bits/stdc++.h>
-using namespace std;
 
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
-#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
-#define SIZE(v) (int)v.size()
-#define ALL(v) v.begin(),v.end()
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
+#define size(v) (int)v.size()
+#define all(v) v.begin(),v.end()
+#define setw(n, c) cout << setw(n) << setfill(c);
+#define setp(n) cout << fixed << setprecision(n);
+#define printw(x) cout << (x) << ' ';
+#define println(x) cout << (x) << '\n';
+
+#ifdef BOJ
+#define testPrint(x) ((void)0)
+#else
+#define testPrint(x) cout << "[D] " << #x << ':' << x << '\n'
+#endif
+
+using namespace std;
 using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
+
+const double PI = M_PI;
 
 int m, n;
-int graph[500][500], dp[500][500];
+int board[500][500];
+int memo[500][500];
 int dx[4] = { 1, -1, 0, 0 };
 int dy[4] = { 0, 0, 1, -1 };
 
 int dfs(int x, int y) {
-    if (x == m - 1 && y == n - 1) return 1;
+    if (x == m - 1 && y == n - 1) {
+        return 1;
+    }
 
-    if (dp[x][y] == -1) {
-        dp[x][y] = 0;
+    if (memo[x][y] != -1) {
+        return memo[x][y];
+    }
 
-        for (int i = 0; i < 4; i++) {
-            int nx = x + dx[i];
-            int ny = y + dy[i];
-            if (nx < 0 || nx >= m || ny < 0 || ny >= n) continue;
-            if (graph[x][y] <= graph[nx][ny]) continue;
-            dp[x][y] += dfs(nx, ny);
+    memo[x][y] = 0;
+
+    for (int d = 0; d < 4; d++) {
+        int nx = x + dx[d];
+        int ny = y + dy[d];
+
+        if (nx < 0 || nx >= m || ny < 0 || ny >= n) {
+            continue;
+        }
+
+        if (board[x][y] > board[nx][ny]) {
+            memo[x][y] += dfs(nx, ny);
         }
     }
 
-    return dp[x][y];
+    return memo[x][y];
 }
 
 int main() {
@@ -38,14 +64,14 @@ int main() {
 
     cin >> m >> n;
 
-    for (int i = 0; i < m; i++) {
-        for (int j = 0; j < n; j++) {
-            cin >> graph[i][j];
-            dp[i][j] = -1;
+    for (int x = 0; x < m; x++) {
+        for (int y = 0; y < n; y++) {
+            cin >> board[x][y];
+            memo[x][y] = -1;
         }
     }
 
-    cout << dfs(0, 0) << '\n';
+    println(dfs(0, 0));
 
     return 0;
 }
