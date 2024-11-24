@@ -1,99 +1,86 @@
-#include <iostream>
+// Solve 2022-07-23
+// Update 2024-11-24
+
+#include <bits/stdc++.h>
+
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
+#define size(v) (int)v.size()
+#define all(v) v.begin(),v.end()
+#define setw(n, c) cout << setw(n) << setfill(c);
+#define setp(n) cout << fixed << setprecision(n);
+#define printw(x) cout << (x) << ' ';
+#define println(x) cout << (x) << '\n';
+
+#ifdef BOJ
+#define testPrint(x) ((void)0)
+#else
+#define testPrint(x) cout << "[D] " << #x << ':' << x << '\n'
+#endif
+
 using namespace std;
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
 
-int numbers[11];
-int operators[4];
-int used_operators[4];
-int N, max_result, min_result;
+const double PI = M_PI;
 
-void initialize() {
-    int current_operator = 0;
-    int current_value = numbers[0];
+int n;
+int a[11];
+int op[4];
+int max_val = -1000000001;
+int min_val = 1000000001;
 
-    for (int i = 1; i < N; i++) {
-        while (used_operators[current_operator] >= operators[current_operator]) {
-            current_operator++;
-        }
-        if (current_operator == 0) {
-            current_value += numbers[i];
-        }
-        else if (current_operator == 1) {
-            current_value -= numbers[i];
-        }
-        else if (current_operator == 2) {
-            current_value *= numbers[i];
-        }
-        else {
-            current_value /= numbers[i];
-        }
-        used_operators[current_operator]++;
+void recur(int depth, int val) {
+    if (depth >= n) {
+        max_val = max(max_val, val);
+        min_val = min(min_val, val);
+        return;
     }
 
-    max_result = min_result = current_value;
-}
-
-void dfs(int current_value = numbers[0], int depth = 1) {
-    if (depth >= N) {
-        if (current_value > max_result) {
-            max_result = current_value;
-        }
-        if (current_value < min_result) {
-            min_result = current_value;
-        }
+    if (op[0] > 0) {
+        op[0]--;
+        recur(depth + 1, val + a[depth]);
+        op[0]++;
     }
-    else {
-        if (operators[0] > 0) {
-            operators[0]--;
-            dfs(current_value + numbers[depth], depth + 1);
-            operators[0]++;
-        }
-        if (operators[1] > 0) {
-            operators[1]--;
-            dfs(current_value - numbers[depth], depth + 1);
-            operators[1]++;
-        }
-        if (operators[2] > 0) {
-            operators[2]--;
-            dfs(current_value * numbers[depth], depth + 1);
-            operators[2]++;
-        }
-        if (operators[3] > 0) {
-            operators[3]--;
-            dfs(current_value / numbers[depth], depth + 1);
-            operators[3]++;
-        }
+
+    if (op[1] > 0) {
+        op[1]--;
+        recur(depth + 1, val - a[depth]);
+        op[1]++;
+    }
+
+    if (op[2] > 0) {
+        op[2]--;
+        recur(depth + 1, val * a[depth]);
+        op[2]++;
+    }
+
+    if (op[3] > 0) {
+        op[3]--;
+        recur(depth + 1, val / a[depth]);
+        op[3]++;
     }
 }
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    // 입력
-    cin >> N;
-    for (int i = 0; i < N; i++) {
-        cin >> numbers[i];
+    cin >> n;
+
+    for (int i = 0; i < n; i++) {
+        cin >> a[i];
     }
+
     for (int i = 0; i < 4; i++) {
-        cin >> operators[i];
+        cin >> op[i];
     }
 
-    // 초기값 세팅
-    for (int i = 0; i < 4; i++) {
-        used_operators[i] = 0;
-    }
-    initialize();
+    recur(1, a[0]);
 
-    // 가능한 모든 경우에 대해 계산 실행
-    for (int i = 0; i < 4; i++) {
-        used_operators[i] = 0;
-    }
-    dfs();
-
-    // 결과 출력
-    cout << max_result << '\n';
-    cout << min_result << '\n';
+    println(max_val);
+    println(min_val);
 
     return 0;
 }

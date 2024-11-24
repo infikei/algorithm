@@ -1,48 +1,74 @@
 // Solve 2022-12-09
-// Update 2024-03-13
+// Update 2024-11-24
 
 #include <bits/stdc++.h>
-using namespace std;
 
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
-#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
-#define SIZE(v) (int)v.size()
-#define ALL(v) v.begin(),v.end()
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
+#define size(v) (int)v.size()
+#define all(v) v.begin(),v.end()
+#define setw(n, c) cout << setw(n) << setfill(c);
+#define setp(n) cout << fixed << setprecision(n);
+#define printw(x) cout << (x) << ' ';
+#define println(x) cout << (x) << '\n';
+
+#ifdef BOJ
+#define testPrint(x) ((void)0)
+#else
+#define testPrint(x) cout << "[D] " << #x << ':' << x << '\n'
+#endif
+
+using namespace std;
 using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
+
+const double PI = M_PI;
 
 ll arr[1000001];
 ll seg[4000001];
 
-ll seg_init(int node, int s, int e) {
-    if (s == e) return seg[node] = arr[s];
+ll init_seg(int node, int left, int right) {
+    if (left == right) {
+        return seg[node] = arr[left];
+    }
 
-    int mid = (s + e) >> 1;
-    ll left_val = seg_init(node * 2, s, mid);
-    ll right_val = seg_init(node * 2 + 1, mid + 1, e);
-    return seg[node] = left_val + right_val;
+    int mid = (left + right) >> 1;
+    ll lval = init_seg(node * 2, left, mid);
+    ll rval = init_seg(node * 2 + 1, mid + 1, right);
+    return seg[node] = lval + rval;
 }
 
-void seg_update(int node, int s, int e, int qidx) {
-    if (qidx < s || e < qidx) return;
-    if (s == e) {
-        seg[node] = arr[s];
+void update_seg(int node, int left, int right, int qidx) {
+    if (qidx < left || right < qidx) {
         return;
     }
 
-    int mid = (s + e) >> 1;
-    seg_update(node * 2, s, mid, qidx);
-    seg_update(node * 2 + 1, mid + 1, e, qidx);
+    if (left == right) {
+        seg[node] = arr[qidx];
+        return;
+    }
+
+    int mid = (left + right) >> 1;
+    update_seg(node * 2, left, mid, qidx);
+    update_seg(node * 2 + 1, mid + 1, right, qidx);
     seg[node] = seg[node * 2] + seg[node * 2 + 1];
 }
 
-ll seg_query(int node, int s, int e, int qs, int qe) {
-    if (qe < s || e < qs) return 0;
-    if (qs <= s && e <= qe) return seg[node];
+ll query_seg(int node, int left, int right, int qleft, int qright) {
+    if (qright < left || right < qleft) {
+        return 0;
+    }
 
-    int mid = (s + e) >> 1;
-    ll left_val = seg_query(node * 2, s, mid, qs, qe);
-    ll right_val = seg_query(node * 2 + 1, mid + 1, e, qs, qe);
-    return left_val + right_val;
+    if (qleft <= left && right <= qright) {
+        return seg[node];
+    }
+
+    int mid = (left + right) >> 1;
+    ll lval = query_seg(node * 2, left, mid, qleft, qright);
+    ll rval = query_seg(node * 2 + 1, mid + 1, right, qleft, qright);
+    return lval + rval;
 }
 
 int main() {
@@ -51,24 +77,24 @@ int main() {
     int n, m, k;
     cin >> n >> m >> k;
 
-    for (int i = 1; i <= n; i++) {
-        cin >> arr[i];
+    for (int u = 1; u <= n; u++) {
+        cin >> arr[u];
     }
 
-    seg_init(1, 1, n);
+    init_seg(1, 1, n);
     m += k;
 
     for (int i = 0; i < m; i++) {
-        int cmd, b;
+        int a, b;
         ll c;
-        cin >> cmd >> b >> c;
+        cin >> a >> b >> c;
 
-        if (cmd == 1) {
+        if (a == 1) {
             arr[b] = c;
-            seg_update(1, 1, n, b);
+            update_seg(1, 1, n, b);
         }
         else {
-            cout << seg_query(1, 1, n, b, c) << '\n';
+            println(query_seg(1, 1, n, b, c));
         }
     }
 
