@@ -1,51 +1,74 @@
-#include <iostream>
-#include <vector>
-#include <stack>
-#define fastio ios_base::sync_with_stdio(false);cout.tie(NULL);cin.tie(NULL); // boj_15552.cpp
+// Solve 2022-12-22
+// Update 2024-11-22
+
+#include <bits/stdc++.h>
+
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
+#define size(v) (int)v.size()
+#define all(v) v.begin(),v.end()
+#define setw(n, c) cout << setw(n) << setfill(c);
+#define setp(n) cout << fixed << setprecision(n);
+#define printw(x) cout << (x) << ' ';
+#define println(x) cout << (x) << '\n';
+
+#ifdef BOJ
+#define testPrint(x) ((void)0)
+#else
+#define testPrint(x) cout << "[D] " << #x << ':' << x << '\n'
+#endif
+
 using namespace std;
 using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+using ld = long double;
 using pii = pair<int, int>;
-using vint = vector<int>;
 
-int N;
-ll ans;
-vint vec;
-stack<pii> stck;
+const double PI = M_PI;
+
+int heights[500000];
 
 int main() {
-    fastio;
+    FASTIO;
 
-    cin >> N;
-    for (int i = 0; i < N; i++) {
-        int x;
-        cin >> x;
-        vec.push_back(x);
+    int n;
+    cin >> n;
+
+    for (int i = 0; i < n; i++) {
+        cin >> heights[i];
     }
 
-    for (int i = 0; i < N; i++) {
-        int now = vec[i];
-        while (!stck.empty() && stck.top().first < now) {
-            ans += (ll)(stck.top().second);
+    stack<pii> stck;
+    ll ans = 0;
+
+    for (int i = 0; i < n; i++) {
+        int cur = heights[i];
+
+        while (!stck.empty() && stck.top().first < cur) {
+            ans += stck.top().second;
             stck.pop();
         }
+
         if (stck.empty()) {
-            stck.push(make_pair(now, 1));
+            stck.emplace(cur, 1);
+            continue;
         }
-        else if (stck.top().first == now) {
-            pii now_pair = stck.top();
-            stck.pop();
-            if (!stck.empty()) ans++;
-            ans += (ll)(now_pair.second);
-            now_pair.second++;
-            stck.push(now_pair);
+
+        if (stck.top().first == cur) {
+            if (size(stck) >= 2) {
+                ans++;
+            }
+
+            ans += stck.top().second;
+            stck.top().second++;
+            continue;
         }
-        else {
-            if (!stck.empty()) ans++;
-            stck.push(make_pair(now, 1));
-        }
+
+        ans++;
+        stck.emplace(cur, 1);
     }
 
-    cout << ans << '\n';
+    println(ans);
 
     return 0;
 }
