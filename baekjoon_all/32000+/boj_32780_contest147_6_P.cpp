@@ -1,4 +1,5 @@
 // Solve 2024-11-30
+// Update 2024-12-01
 
 #include <bits/stdc++.h>
 
@@ -26,7 +27,7 @@ using pii = pair<int, int>;
 const double PI = M_PI;
 const ll MOD = 1000000007;
 
-ll get_pow_with_mod(ll a, ll p, ll mod) {
+ll get_mod_pow(ll a, ll p, ll mod) {
     ll res = 1;
     ll ap = a;
 
@@ -42,21 +43,24 @@ ll get_pow_with_mod(ll a, ll p, ll mod) {
     return res;
 }
 
-ll get_comb_with_mod(ll n, ll c, ll mod) {
+ll get_mod_inv(ll a, ll mod) {
+    return get_mod_pow(a, mod - 2, mod);
+}
+
+ll get_mod_comb(ll n, ll r, ll mod) {
     ll res = 1;
 
-    for (int i = 0; i < c; i++) {
+    for (int i = 0; i < r; i++) {
         res = res * (n - i) % mod;
     }
 
-    ll inv = 1;
+    ll divisor = 1;
 
-    for (int i = 1; i <= c; i++) {
-        inv = inv * i % mod;
+    for (int i = 1; i <= r; i++) {
+        divisor = divisor * i % mod;
     }
 
-    inv = get_pow_with_mod(inv, mod - 2, mod);
-    return res * inv % mod;
+    return res * get_mod_inv(divisor, mod) % mod;
 }
 
 int main() {
@@ -66,17 +70,22 @@ int main() {
     cin >> lv;
 
     if (lv <= 5) {
-        ll ans = get_pow_with_mod(4, lv, MOD);
+        // 4의 lv제곱을 계산한다.
+        int ans = (1 << (lv * 2));
         println(ans);
     }
     else {
-        ll ans = get_pow_with_mod(8, lv, MOD);
-        ll comb_sum = 1;
+        // 8의 lv제곱을 계산한다.
+        ll ans = get_mod_pow(8, lv, MOD);
 
-        for (int i = 1; i <= 6; i++) {
-            comb_sum = comb_sum + get_comb_with_mod(lv, i, MOD);
+        // lvC0 + lvC1 + ... + lvC6을 계산한다.
+        ll comb_sum = 1 + lv;
+
+        for (int i = 2; i <= 6; i++) {
+            comb_sum = comb_sum + get_mod_comb(lv, i, MOD);
         }
 
+        // 위에서 구한 두 값을 곱한다.
         ans = ans * comb_sum % MOD;
         println(ans);
     }
