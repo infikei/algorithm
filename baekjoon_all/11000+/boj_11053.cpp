@@ -1,16 +1,47 @@
 // Solve 2022-07-09
-// Update 2023-09-02
+// Update 2024-12-02
 
 #include <bits/stdc++.h>
+
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
+#define size(v) (int)v.size()
+#define all(v) v.begin(),v.end()
+#define setw(n, c) cout << setw(n) << setfill(c);
+#define setp(n) cout << fixed << setprecision(n);
+#define printw(x) cout << (x) << ' ';
+#define println(x) cout << (x) << '\n';
+
+#ifdef BOJ
+#define testPrint(x) ((void)0)
+#else
+#define testPrint(x) cout << "[D] " << #x << ':' << x << '\n'
+#endif
+
 using namespace std;
-
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
-#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
-#define SIZE(v) (int)v.size()
-#define ALL(v) v.begin(),v.end()
 using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
 
-int arr[1000], dp[1000];
+const double PI = M_PI;
+
+int arr[1000];
+int memo[1000];
+
+int get_lis(int n) {
+    for (int i = 0; i < n; i++) {
+        memo[i] = 1;
+
+        for (int j = 0; j < i; j++) {
+            if (arr[j] < arr[i]) {
+                memo[i] = max(memo[i], memo[j] + 1);
+            }
+        }
+    }
+
+    return *max_element(memo, memo + n);
+}
 
 int main() {
     FASTIO;
@@ -22,19 +53,7 @@ int main() {
         cin >> arr[i];
     }
 
-    dp[0] = 1;
-
-    for (int i = 1; i < n; i++) {
-        for (int j = 0; j < i; j++) {
-            if (arr[j] < arr[i]) {
-                dp[i] = max(dp[i], dp[j]);
-            }
-        }
-
-        dp[i]++;
-    }
-
-    cout << *max_element(dp, dp + n) << '\n';
+    println(get_lis(n));
 
     return 0;
 }

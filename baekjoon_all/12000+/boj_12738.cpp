@@ -1,16 +1,47 @@
 // Solve 2023-02-10
-// Update 2023-07-22
+// Update 2024-12-02
 
 #include <bits/stdc++.h>
+
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
+#define size(v) (int)v.size()
+#define all(v) v.begin(),v.end()
+#define setw(n, c) cout << setw(n) << setfill(c);
+#define setp(n) cout << fixed << setprecision(n);
+#define printw(x) cout << (x) << ' ';
+#define println(x) cout << (x) << '\n';
+
+#ifdef BOJ
+#define testPrint(x) ((void)0)
+#else
+#define testPrint(x) cout << "[D] " << #x << ':' << x << '\n'
+#endif
+
 using namespace std;
-
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
-#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
-#define SIZE(v) (int)v.size()
-#define ALL(v) v.begin(),v.end()
 using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
 
-int arr[1000000];
+const double PI = M_PI;
+
+int get_lis(int n, vector<int> &nums) {
+    vector<int> lis;
+
+    for (int i = 0; i < n; i++) {
+        int idx = lower_bound(all(lis), nums[i]) - lis.begin();
+
+        if (idx == size(lis)) {
+            lis.push_back(nums[i]);
+        }
+        else {
+            lis[idx] = nums[i];
+        }
+    }
+
+    return size(lis);
+}
 
 int main() {
     FASTIO;
@@ -18,24 +49,13 @@ int main() {
     int n;
     cin >> n;
 
+    vector<int> nums(n);
+
     for (int i = 0; i < n; i++) {
-        cin >> arr[i];
+        cin >> nums[i];
     }
 
-    vector<int> dp;
-    dp.push_back(arr[0]);
-    for (int i = 1; i < n; i++) {
-        int pos = lower_bound(ALL(dp), arr[i]) - dp.begin();
-
-        if (pos == SIZE(dp)) {
-            dp.push_back(arr[i]);
-        }
-        else if (arr[i] < dp[pos]) {
-            dp[pos] = arr[i];
-        }
-    }
-
-    cout << SIZE(dp) << '\n';
+    println(get_lis(n, nums));
 
     return 0;
 }
