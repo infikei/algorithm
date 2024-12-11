@@ -29,21 +29,14 @@ const double PI = M_PI;
 vector<int> get_kmp_failure(string &p) {
     int m = size(p);
     vector<int> f(m, 0);
-    int i = 1, j = 0;
 
-    while (i < m) {
-        if (p[i] == p[j]) {
-            i++;
-            j++;
-            f[i - 1] = j;
+    for (int i = 1, j = 0; i < m; i++) {
+        while (j > 0 && p[i] != p[j]) {
+            j = f[j - 1];
         }
-        else {
-            if (j == 0) {
-                i++;
-            }
-            else {
-                j = f[j - 1];
-            }
+
+        if (p[i] == p[j]) {
+            f[i] = ++j;
         }
     }
 
@@ -55,24 +48,19 @@ vector<int> kmp(string &s, string &p) {
     int m = size(p);
     vector<int> f = get_kmp_failure(p);
     vector<int> res;
-    int i = 0, j = 0;
 
-    while (i < n) {
-        if (s[i] == p[j]) {
-            i++;
-            j++;
-
-            if (j == m) {
-                res.push_back(i - m);
-                j = f[j - 1];
-            }
+    for (int i = 0, j = 0; i < n; i++) {
+        while (j > 0 && s[i] != p[j]) {
+            j = f[j - 1];
         }
-        else {
-            if (j == 0) {
-                i++;
+
+        if (s[i] == p[j]) {
+            if (j == m - 1) {
+                res.push_back(i - m + 1);
+                j = f[j];
             }
             else {
-                j = f[j - 1];
+                j++;
             }
         }
     }
