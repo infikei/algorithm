@@ -1,4 +1,4 @@
-// Solve 2024-
+// Solve 2025-
 
 // 백준에 제출할 때는 class 이름을 Main으로 설정해야 한다.
 // SWEA에 제출할 때는 class 이름을 Solution으로 설정해야 한다.
