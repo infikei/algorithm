@@ -1,0 +1,13 @@
+-- Solve 2024-12-30
+
+SELECT CAR_ID,
+    MAX(
+        CASE
+            WHEN START_DATE <= '2022-10-16' AND END_DATE >= '2022-10-16'
+            THEN '대여중'
+            ELSE '대여 가능'
+        END
+    ) AS AVAILABILITY
+FROM CAR_RENTAL_COMPANY_RENTAL_HISTORY
+GROUP BY 1
+ORDER BY 1 DESC;
