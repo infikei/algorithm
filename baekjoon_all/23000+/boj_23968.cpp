@@ -1,4 +1,5 @@
 // Solve 2025-01-01
+// Update 2025-01-02
 
 #include <bits/stdc++.h>
 
@@ -38,7 +39,6 @@ int main() {
     }
 
     int swapped_cnt = 0;
-    bool ans_found = false;
 
     for (int i = 0; i < n - 1; i++) {
         bool swapped = false;
@@ -51,16 +51,15 @@ int main() {
                 if (++swapped_cnt == k) {
                     printw(arr[j]);
                     println(arr[j + 1]);
-                    ans_found = true;
                     break;
                 }
             }
         }
 
-        if (!swapped || ans_found) break;
+        if (!swapped || swapped_cnt >= k) break;
     }
 
-    if (!ans_found) {
+    if (swapped_cnt < k) {
         println(-1);
     }
 
