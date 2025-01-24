@@ -37,7 +37,10 @@ const double PI = M_PI;
  * @param mod 모듈러 값 (양수여야 함)
  * @return ll (a * b) % mod의 결과
  */
-ll mod_mul(ll a, ll b, ll mod) {
+inline lll get_mod_mul(lll a, lll b, lll mod) {
+#ifdef BOJ
+    return a * b % mod;
+#else
     a %= mod;
     b %= mod;
     ull ua = a;
@@ -53,6 +56,7 @@ ll mod_mul(ll a, ll b, ll mod) {
     }
 
     return (ll) res;
+#endif
 }
 
 /**
@@ -65,16 +69,16 @@ ll mod_mul(ll a, ll b, ll mod) {
  * @param mod 모듈러 값 (양수여야 함)
  * @return ll (a^p) % mod의 결과
  */
-ll mod_pow(ll a, ll p, ll mod) {
+ll get_mod_pow(ll a, ll p, ll mod) {
     a %= mod;
     ll res = 1;
 
     while (p > 0) {
         if (p & 1) {
-            res = mod_mul(res, a, mod);
+            res = get_mod_mul(res, a, mod);
         }
 
-        a = mod_mul(a, a, mod);
+        a = get_mod_mul(a, a, mod);
         p >>= 1;
     }
 
@@ -117,31 +121,6 @@ ll get_lcm(ll a, ll b) {
     if (a == 0 || b == 0) return 0;
 
     return a / get_gcd(a, b) * b;
-}
-
-/**
- * @brief 주어진 정수가 소수인지 판별한다.
- * 
- * 이 함수는 주어진 정수가 소수인지 확인한다.
- * 소수는 1과 자기 자신으로만 나누어떨어지는 1보다 큰 자연수이다.
- * 
- * @param n 판별할 정수
- * @return true 주어진 정수가 양수이고 소수인 경우
- * @return false 주어진 정수가 양수가 아니거나 소수가 아닌 경우
- * @note 이 함수는 정수 k의 제곱근까지만 검사하여 최적화되었다.
- */
-bool is_prime(ll n) {
-    if (n <= 1) return false;
-
-    ll sqrt_n = sqrt(n);
-
-    for (ll i = 2; i <= sqrt_n; i++) {
-        if (n % i == 0) {
-            return false;
-        }
-    }
-
-    return true;
 }
 
 /**
@@ -289,19 +268,15 @@ bool is_probable_prime_with_miller_rabin(ll n, ll a) {
     }
 
     // a^d mod n이 1 또는 -1이면 소수일 가능성이 높다.
-    ll a_pow = mod_pow(a, d, n);
+    ll a_pow = get_mod_pow(a, d, n);
 
-    if (a_pow == 1 || a_pow == n - 1) {
-        return true;
-    }
+    if (a_pow == 1 || a_pow == n - 1) return true;
 
     // 0 <= r < s인 어떤 r에 대해 a^(2^r * d) mod n이 -1이면 소수일 가능성이 높다.
     for (int r = 1; r < s; r++) {
-        a_pow = mod_mul(a_pow, a_pow, n);
+        a_pow = get_mod_mul(a_pow, a_pow, n);
 
-        if (a_pow == n - 1) {
-            return true;
-        }
+        if (a_pow == n - 1) return true;
     }
 
     // 위의 조건이 모두 성립하지 않으면 합성수이다.
@@ -340,6 +315,49 @@ bool is_prime_with_miller_rabin(ll n) {
 }
 
 /**
+ * @brief 주어진 정수가 소수인지 판별한다.
+ * 
+ * 이 함수는 주어진 정수가 소수인지 확인한다.
+ * 소수는 1과 자기 자신으로만 나누어떨어지는 1보다 큰 자연수이다.
+ * 
+ * @param n 판별할 정수
+ * @return true 주어진 정수가 양수이고 소수인 경우
+ * @return false 주어진 정수가 양수가 아니거나 소수가 아닌 경우
+ * @note 이 함수는 정수 k의 제곱근까지만 검사하여 최적화되었다.
+ */
+bool is_prime_with_small_number(int n) {
+    if (n <= 1) return false;
+
+    int sqrt_n = sqrt(n);
+
+    for (int i = 2; i <= sqrt_n; i++) {
+        if (n % i == 0) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+/**
+ * @brief 주어진 정수가 소수인지 판별한다.
+ * 
+ * 이 함수는 주어진 정수가 소수인지 확인한다.
+ * 소수는 1과 자기 자신으로만 나누어떨어지는 1보다 큰 자연수이다.
+ * 
+ * @param n 판별할 정수
+ * @return true 주어진 정수가 양수이고 소수인 경우
+ * @return false 주어진 정수가 양수가 아니거나 소수가 아닌 경우
+ */
+bool is_prime(ll n) {
+    if (n <= 1) return false;
+    if (n <= 3) return true;
+    if (n % 2 == 0) return false;
+    if (n <= 10000) return is_prime_with_small_number(n);
+    return is_prime_with_miller_rabin(n);
+}
+
+/**
  * @brief 폴라드 로 알고리즘을 이용하여 주어진 정수의 소수인 약수를 찾는다.
  * 
  * 이 함수는 폺라드 로(Pollard's Rho) 알고리즘을 이용하여 매우 효율적으로 정수 n의 소수인 약수를 찾는다.
@@ -358,7 +376,7 @@ ll find_prime_divisor_with_pollard_rho(ll n) {
     // 수열 y는 y0 = x0, y1 = h(y0), y2 = h(y1), ...로 정의한다.
 
     // 다항식 계산에서 필요한 상수항 c는 1 이상 n-1 이하의 임의의 값으로 정한다.
-    ll c = rand() % (n - 2) + 1;
+    ll c = rand() % (n - 1) + 1;
     // 수열 x와 y의 첫째 항은 2 이상 n-1 이하의 임의의 값으로 정한다.
     ll x = rand() % (n - 2) + 2;
     ll y = x;
@@ -367,11 +385,11 @@ ll find_prime_divisor_with_pollard_rho(ll n) {
     // 1보다 크고 n보다 작은 n의 약수를 구할 때까지 반복한다.
     while (gcd == 1) {
         // x = g(x)를 계산한다.
-        x = (mod_mul(x, x, n) + c) % n;
+        x = (get_mod_mul(x, x, n) + c) % n;
 
         // y = h(y)를 계산한다.
-        y = (mod_mul(y, y, n) + c) % n;
-        y = (mod_mul(y, y, n) + c) % n;
+        y = (get_mod_mul(y, y, n) + c) % n;
+        y = (get_mod_mul(y, y, n) + c) % n;
 
         // 두 항의 차이와 n의 최대공약수 gcd를 구한다.
         gcd = get_gcd(abs(x - y), n);
@@ -388,6 +406,20 @@ ll find_prime_divisor_with_pollard_rho(ll n) {
 
     // gcd가 소수가 아닌 경우, gcd의 약수를 찾아서 반환한다.
     return find_prime_divisor_with_pollard_rho(gcd);
+}
+
+vector<ll> get_prime_divisors_with_pollard_rho(ll n) {
+    vector<ll> prime_divisors;
+
+    while (n > 1) {
+        ll p = find_prime_divisor_with_pollard_rho(n);
+        n /= p;
+        prime_divisors.push_back(p);
+    }
+
+    sort(all(prime_divisors));
+
+    return prime_divisors;
 }
 
 int main() {
