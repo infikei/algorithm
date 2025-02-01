@@ -33,15 +33,21 @@ int main() {
     cin >> n;
 
     int ans = 0;
+    int sqrt_n = sqrt(n);
 
-    for (int a = 1; a <= 500; a++) {
-        int a2 = a * a;
+    for (int i = 1; i <= sqrt_n; i++) {
+        if (n % i != 0) continue;
 
-        for (int b = 1; b <= a; b++) {
-            int b2 = b * b;
+        int j = n / i;
 
-            if (a2 == b2 + n) ans++;
-        }
+        if ((i + j) % 2 != 0) continue;
+
+        int a = (j + i) / 2;
+        int b = (j - i) / 2;
+
+        if (a > 500 || b < 1) continue;
+
+        ans++;
     }
 
     println(ans);
