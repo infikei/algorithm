@@ -1,39 +1,56 @@
-#include <iostream>
-#define fastio ios_base::sync_with_stdio(false);cout.tie(NULL);cin.tie(NULL); // boj_15552.cpp
+// Solve 2022-12-07
+// Update 2025-02-10
+
+#include <bits/stdc++.h>
+
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
+#define size(v) (int)v.size()
+#define all(v) v.begin(),v.end()
+#define setw(n, c) cout << setw(n) << setfill(c);
+#define setp(n) cout << fixed << setprecision(n);
+#define printw(x) cout << (x) << ' ';
+#define println(x) cout << (x) << '\n';
+
+#ifdef BOJ
+#define testPrint(x) ((void)0)
+#else
+#define testPrint(x) cout << "[D] " << #x << ':' << x << '\n'
+#endif
+
 using namespace std;
 using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
 
-ll less_than_or_equal_to_mid(ll mid, ll n) {
-    ll cnt = 0;
-
-    for (ll i = 1; i <= n; i++) {
-        cnt += min(mid / i, n);
-    }
-
-    return cnt;
-}
+const double PI = M_PI;
 
 int main() {
-    fastio;
+    FASTIO;
 
-    ll N, K;
-    cin >> N >> K;
+    ll n, k;
+    cin >> n >> k;
 
-    ll low = 1, high = N * N, mid;
+    ll low = 0, high = 10000000000LL;
 
-    while (low <= high) {
-        mid = (low + high) / 2;
-        ll cnt = less_than_or_equal_to_mid(mid, N);
+    while (low + 1 < high) {
+        ll mid = (low + high) / 2;
+        ll cnt = 0;
 
-        if (cnt < K) {
-            low = mid + 1;
+        for (ll i = 1; i <= n; i++) {
+            cnt += min(n, mid / i);
+        }
+
+        if (cnt < k) {
+            low = mid;
         }
         else {
-            high = mid - 1;
+            high = mid;
         }
     }
 
-    cout << low << '\n';
+    println(high);
 
     return 0;
 }
