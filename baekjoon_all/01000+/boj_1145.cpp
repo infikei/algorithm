@@ -1,5 +1,5 @@
 // Solve 2022-11-07
-// Update 2025-02-13
+// Update 2025-02-17
 
 #include <bits/stdc++.h>
 
@@ -27,9 +27,13 @@ using pii = pair<int, int>;
 const double PI = M_PI;
 
 int get_gcd(int a, int b) {
-    if (b == 0) return a;
+    while (b != 0) {
+        int r = a % b;
+        a = b;
+        b = r;
+    }
 
-    return get_gcd(b, a % b);
+    return a;
 }
 
 int get_lcm(int a, int b) {
@@ -45,7 +49,7 @@ int main() {
         cin >> nums[i];
     }
 
-    int ans = nums[0] * nums[1] * nums[2];
+    int ans = 1000000;
 
     for (int i = 0; i < 5; i++) {
         for (int j = i + 1; j < 5; j++) {

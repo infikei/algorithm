@@ -1,4 +1,5 @@
 // Solve 2025-02-13
+// Update 2025-02-17
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -8,9 +9,13 @@ import java.util.StringTokenizer;
 public class boj_1145 {
 
     static int getGCD(int a, int b) {
-        if (b == 0) return a;
+        while (b != 0) {
+            int r = a % b;
+            a = b;
+            b = r;
+        }
 
-        return getGCD(b, a % b);
+        return a;
     }
 
     static int getLCM(int a, int b) {
@@ -26,7 +31,7 @@ public class boj_1145 {
             nums[i] = Integer.parseInt(st.nextToken());
         }
 
-        int ans = nums[0] * nums[1] * nums[2];
+        int ans = Integer.MAX_VALUE;
 
         for (int i = 0; i < 5; i++) {
             for (int j = i + 1; j < 5; j++) {
