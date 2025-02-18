@@ -1,4 +1,5 @@
 // Solve 2024-12-02
+// Update 2025-02-18
 
 #include <bits/stdc++.h>
 
@@ -27,23 +28,6 @@ const double PI = M_PI;
 
 int ports[40000];
 
-int get_lis(int n) {
-    vector<int> lis;
-
-    for (int i = 0; i < n; i++) {
-        int idx = lower_bound(all(lis), ports[i]) - lis.begin();
-
-        if (idx == size(lis)) {
-            lis.push_back(ports[i]);
-        }
-        else {
-            lis[idx] = ports[i];
-        }
-    }
-
-    return size(lis);
-}
-
 int main() {
     FASTIO;
 
@@ -54,7 +38,20 @@ int main() {
         cin >> ports[i];
     }
 
-    println(get_lis(n));
+    vector<int> memo;
+
+    for (int i = 0; i < n; i++) {
+        auto it = lower_bound(memo.begin(), memo.end(), ports[i]);
+
+        if (it == memo.end()) {
+            memo.push_back(ports[i]);
+        }
+        else {
+            *it = ports[i];
+        }
+    }
+
+    cout << size(memo) << '\n';
 
     return 0;
 }
