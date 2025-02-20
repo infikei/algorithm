@@ -1,64 +1,81 @@
 // Solve 2023-02-10
+// Update 2025-02-19
 
 #include <bits/stdc++.h>
-using namespace std;
+
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
+#define size(v) (int)v.size()
+#define all(v) v.begin(),v.end()
+#define setw(n, c) cout << setw(n) << setfill(c);
+#define setp(n) cout << fixed << setprecision(n);
+#define printw(x) cout << (x) << ' ';
+#define println(x) cout << (x) << '\n';
 
 #ifdef BOJ
-#define BOJTEST(x) ((void)0)
+#define testPrint(x) ((void)0)
 #else
-#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
+#define testPrint(x) cout << "[D] " << #x << ':' << x << '\n'
 #endif
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
-#define SIZE(v) (int)v.size()
-#define ALL(v) v.begin(),v.end()
-#define INF (int)1e9
-#define LLINF (ll)4e18
+
+using namespace std;
 using ll = long long;
 using uint = unsigned int;
 using ull = unsigned long long;
+using ld = long double;
 using pii = pair<int, int>;
 
-int n, dp[100000], dp_size, a_to_b_cnt[100000];
+const double PI = M_PI;
+
 pii a_to_b[100000];
+int memo_par[100000];
+int memo[100000];
+int memo_idx[100000];
+int memo_size = 0;
+bool lis_included[100000];
 
 int main() {
     FASTIO;
 
+    int n;
     cin >> n;
+
     for (int i = 0; i < n; i++) {
-        int a, b;
-        cin >> a >> b;
-        a_to_b[i] = { a, b };
+        cin >> a_to_b[i].first >> a_to_b[i].second;
     }
+
     sort(a_to_b, a_to_b + n);
 
-    dp[dp_size] = a_to_b[0].second;
-    a_to_b_cnt[0] = dp_size;
-    dp_size++;
-    for (int i = 1; i < n; i++) {
-        int pos = lower_bound(dp, dp + dp_size, a_to_b[i].second) - dp;
-        if (pos == dp_size) {
-            dp_size++;
+    for (int i = 0; i < n; i++) {
+        int pos = lower_bound(memo, memo + memo_size, a_to_b[i].second) - memo;
+
+        if (pos == memo_size) {
+            memo_size++;
         }
-        dp[pos] = a_to_b[i].second;
-        a_to_b_cnt[i] = pos;
-    }
 
-    cout << n - dp_size << '\n';
+        memo[pos] = a_to_b[i].second;
+        memo_idx[pos] = i;
 
-    stack<int> numbers_to_exclude;
-    int pos = dp_size - 1;
-    for (int i = n - 1; i >= 0; i--) {
-        if (a_to_b_cnt[i] == pos) {
-            pos--;
+        if (pos == 0) {
+            memo_par[i] = -1;
         }
         else {
-            numbers_to_exclude.push(a_to_b[i].first);
+            memo_par[i] = memo_idx[pos - 1];
         }
     }
-    while (!numbers_to_exclude.empty()) {
-        cout << numbers_to_exclude.top() << '\n';
-        numbers_to_exclude.pop();
+
+    cout << n - memo_size << '\n';
+
+    int pos = memo_idx[memo_size - 1];
+
+    while (pos != -1) {
+        lis_included[pos] = true;
+        pos = memo_par[pos];
+    }
+
+    for (int i = 0; i < n; i++) {
+        if (!lis_included[i]) {
+            cout << a_to_b[i].first << '\n';
+        }
     }
 
     return 0;
