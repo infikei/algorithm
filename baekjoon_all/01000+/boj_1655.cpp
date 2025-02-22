@@ -1,34 +1,50 @@
-#include <iostream>
-#include <vector>
-#include <queue>
+// Solve 2022-07-28
+// Update 2025-02-21
+
+#include <bits/stdc++.h>
+
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
+
 using namespace std;
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
+
+    int n;
+    cin >> n;
 
     priority_queue<int> pq_less;
-    priority_queue<int, vector<int>, greater<int> > pq_greater;
-    int N, input;
+    priority_queue<int, vector<int>, greater<int>> pq_greater;
 
-    cin >> N;
+    for (int i = 0; i < n; i++) {
+        int x;
+        cin >> x;
 
-    for (int i = 0; i < N; i++) {
-        cin >> input;
+        pq_less.push(x);
 
-        pq_less.push(input);
-        if (pq_less.size() - pq_greater.size() >= 2) {
+        if (SIZE(pq_less) - SIZE(pq_greater) >= 2) {
             pq_greater.push(pq_less.top());
             pq_less.pop();
         }
+
         if (!pq_greater.empty() && pq_less.top() > pq_greater.top()) {
-            int pq_less_val = pq_less.top();
-            int pq_greater_val = pq_greater.top();
+            int x1 = pq_less.top();
             pq_less.pop();
+
+            int x2 = pq_greater.top();
             pq_greater.pop();
-            pq_less.push(pq_greater_val);
-            pq_greater.push(pq_less_val);
+
+            pq_greater.push(x1);
+            pq_less.push(x2);
         }
 
         cout << pq_less.top() << '\n';

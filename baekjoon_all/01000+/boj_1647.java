@@ -1,6 +1,5 @@
 // Solve 2024-08-19
-
-// 백준에 제출할 때는 class 이름을 Main으로 설정해야 한다.
+// Update 2025-02-21
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -89,7 +88,6 @@ public class boj_1647 {
         }
 
         System.out.println(weightSum);
-        br.close();
     }
 
 }
