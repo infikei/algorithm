@@ -1,4 +1,9 @@
 # Solve 2023-12-19
+# Update 2025-02-25
+
+import sys
+
+input = lambda : sys.stdin.readline().rstrip()
 
 mmdd = int(input()) * 100 + int(input())
 

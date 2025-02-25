@@ -1,14 +1,20 @@
 // Solve 2023-04-07
-// Update 2023-12-19
+// Update 2025-02-25
 
 #include <bits/stdc++.h>
-using namespace std;
 
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
-#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
 #define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
+
+using namespace std;
 using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
 
 int main() {
     FASTIO;
@@ -16,17 +22,17 @@ int main() {
     int h, w;
     cin >> h >> w;
 
-    for (int row = 0; row < h; row++) {
+    for (int x = 0; x < h; x++) {
         int cloud_time = -1;
 
-        for (int col = 0; col < w; col++) {
+        for (int y = 0; y < w; y++) {
             char cloud;
             cin >> cloud;
 
             if (cloud == 'c') {
                 cloud_time = 0;
             }
-            else if (cloud_time > -1) {
+            else if (cloud_time >= 0) {
                 cloud_time++;
             }
 

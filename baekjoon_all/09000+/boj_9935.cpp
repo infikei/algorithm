@@ -1,14 +1,20 @@
 // Solve 2022-12-17
-// Update 2023-12-14
+// Update 2025-02-25
 
 #include <bits/stdc++.h>
-using namespace std;
 
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
-#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
 #define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
+
+using namespace std;
 using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
 
 int main() {
     FASTIO;
@@ -18,12 +24,12 @@ int main() {
 
     string ans;
 
-    for (char ch : s) {
-        ans.push_back(ch);
+    for (char c : s) {
+        ans.push_back(c);
 
         if (SIZE(ans) < SIZE(bomb)) continue;
 
-        if (ch == bomb.back() && ans.substr(SIZE(ans) - SIZE(bomb), SIZE(bomb)) == bomb) {
+        if (c == bomb.back() && ans.substr(SIZE(ans) - SIZE(bomb), SIZE(bomb)) == bomb) {
             for (int i = 0; i < SIZE(bomb); i++) {
                 ans.pop_back();
             }
