@@ -1,20 +1,20 @@
 // Solve 2023-04-16
+// Update 2025-02-26
 
 #include <bits/stdc++.h>
-using namespace std;
 
-#ifdef BOJ
-#define BOJTEST(x) ((void)0)
-#else
-#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
-#endif
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
-#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
 #define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
+
+using namespace std;
 using ll = long long;
 using uint = unsigned int;
 using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
 
 int main() {
     FASTIO;
@@ -22,26 +22,23 @@ int main() {
     string line;
     getline(cin, line);
 
-    int ans = 0;
-
     stringstream ss(line);
     string w;
+    int ason_size = 0;
+
     while (getline(ss, w, ' ')) {
-        if (w == "[") {
-            ans += 8;
+        if (w[0] == '[' || isdigit(w[0])) {
+            ason_size += 8;
         }
-        else if (w == "]") {
+        else if (w[0] == ']') {
             continue;
         }
-        else if (isdigit(w[0])) {
-            ans += 8;
-        }
         else {
-            ans += SIZE(w) + 12;
+            ason_size += SIZE(w) + 12;
         }
     }
 
-    cout << ans << '\n';
+    cout << ason_size << '\n';
 
     return 0;
 }

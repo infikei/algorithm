@@ -1,56 +1,54 @@
 // Solve 2023-04-17
+// Update 2025-02-26
 
 #include <bits/stdc++.h>
-using namespace std;
 
-#ifdef BOJ
-#define BOJTEST(x) ((void)0)
-#else
-#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
-#endif
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
-#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
 #define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
+
+using namespace std;
 using ll = long long;
 using uint = unsigned int;
 using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
 
 int main() {
     FASTIO;
 
     int n;
-    cin >> n;
-
     string s;
-    cin >> s;
+    cin >> n >> s;
 
-    bool ans = false;
+    bool vitamin_str = false;
+
     for (int i = 1; i < n; i++) {
-        string s2 = s.substr(0, i);
-        string s3 = s.substr(n - i, i);
+        string left = s.substr(0, i);
+        string right = s.substr(n - i, i);
+        int different_cnt = 0;
 
-        int cnt = 0;
         for (int j = 0; j < i; j++) {
-            if (s2[j] != s3[j]) {
-                cnt++;
-                if (cnt > 1) {
-                    break;
-                }
+            if (left[j] != right[j]) {
+                different_cnt++;
+
+                if (different_cnt > 1) break;
             }
         }
 
-        if (cnt == 1) {
-            ans = true;
+        if (different_cnt == 1) {
+            vitamin_str = true;
             break;
         }
     }
 
-    if (ans) {
-        cout << "YES\n";
+    if (vitamin_str) {
+        cout << "YES" << '\n';
     }
     else {
-        cout << "NO\n";
+        cout << "NO" << '\n';
     }
 
     return 0;
