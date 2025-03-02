@@ -1,58 +1,66 @@
 // Solve 2023-02-16
+// Update 2025-03-02
 
 #include <bits/stdc++.h>
-using namespace std;
 
-#ifdef BOJ
-#define BOJTEST(x) ((void)0)
-#else
-#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
-#endif
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
 #define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
-#define INF (int)1e9
-#define LLINF (ll)4e18
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
+
+using namespace std;
 using ll = long long;
 using uint = unsigned int;
 using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
 
-const int MAX_N = 500000;
-int parent[MAX_N];
+int parents[500000];
 
-int get_parent(int k) {
-    if (parent[k] == k) {
-        return k;
+int get_parent_of(int u) {
+    if (parents[u] < 0) return u;
+
+    return parents[u] = get_parent_of(parents[u]);
+}
+
+bool union_parents(int u1, int u2) {
+    u1 = get_parent_of(u1);
+    u2 = get_parent_of(u2);
+
+    if (u1 == u2) return false;
+
+    if (parents[u1] < parents[u2]) {
+        parents[u1] += parents[u2];
+        parents[u2] = u1;
+    }
+    else {
+        parents[u2] += parents[u1];
+        parents[u1] = u2;
     }
 
-    parent[k] = get_parent(parent[k]);
-    return parent[k];
+    return true;
 }
 
 int main() {
     FASTIO;
 
-    int n, m, ans = 0;
+    int n, m;
     cin >> n >> m;
 
-    for (int i = 0; i < n; i++) {
-        parent[i] = i;
+    for (int u = 0; u < n; u++) {
+        parents[u] = -1;
     }
 
+    int ans = 0;
+
     for (int i = 1; i <= m; i++) {
-        int a, b;
-        cin >> a >> b;
+        int u1, u2;
+        cin >> u1 >> u2;
 
-        int pa = get_parent(a);
-        int pb = get_parent(b);
-
-        if (pa == pb) {
-            if (ans == 0) {
-                ans = i;
-            }
-        }
-        else {
-            parent[pb] = pa;
+        if (!union_parents(u1, u2)) {
+            ans = i;
+            break;
         }
     }
 

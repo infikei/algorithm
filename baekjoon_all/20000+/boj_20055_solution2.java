@@ -1,7 +1,5 @@
 // Solve 2024-02-20
-// Update 2024-10-14
-
-// 백준에 제출할 때는 class 이름을 Main으로 설정해야 한다.
+// Update 2025-03-02
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,6 +10,7 @@ public class boj_20055_solution2 {
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
         StringTokenizer st = new StringTokenizer(br.readLine(), " ");
         int n = Integer.parseInt(st.nextToken());
         int n2 = n * 2;
@@ -75,7 +74,6 @@ public class boj_20055_solution2 {
         }
 
         System.out.println(stage);
-        br.close();
     }
 
 }

@@ -1,14 +1,23 @@
 // Solve 2023-04-28
-// Update 2023-12-13
+// Update 2025-03-02
 
 #include <bits/stdc++.h>
-using namespace std;
 
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
-#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
 #define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
+
+using namespace std;
 using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
+
+int adj[100001];
+bool visited[100001];
 
 int main() {
     FASTIO;
@@ -16,35 +25,37 @@ int main() {
     int t;
     cin >> t;
 
-    for (int ti = 0; ti < t; ti++) {
+    while (t-- > 0) {
         int n;
         cin >> n;
 
-        vector<int> arr(n + 1, -1);
-
-        for (int i = 1; i <= n; i++) {
-            cin >> arr[i];
+        for (int u = 1; u <= n; u++) {
+            cin >> adj[u];
         }
 
-        vector<bool> visited(n + 1, false);
-        int ans = n;
+        for (int u = 1; u <= n; u++) {
+            visited[u] = false;
+        }
 
-        for (int i = 1; i <= n; i++) {
-            if (arr[i] == -1) continue;
+        int cnt_in_team = 0;
+
+        for (int u = 1; u <= n; u++) {
+            if (adj[u] == -1) continue;
 
             vector<int> vec;
-            int cur = i;
+            int cur = u;
 
             while (true) {
                 vec.push_back(cur);
                 visited[cur] = true;
-                cur = arr[cur];
+                cur = adj[cur];
 
                 if (cur == -1) {
                     while (!vec.empty()) {
-                        visited[vec.back()] = false;
-                        arr[vec.back()] = -1;
+                        int back = vec.back();
                         vec.pop_back();
+                        visited[back] = false;
+                        adj[back] = -1;
                     }
 
                     break;
@@ -56,23 +67,24 @@ int main() {
             }
 
             while (!vec.empty()) {
-                int cur2 = vec.back();
+                int back = vec.back();
                 vec.pop_back();
-                arr[cur2] = -1;
-                visited[cur2] = false;
-                ans--;
+                visited[back] = false;
+                adj[back] = -1;
+                cnt_in_team++;
 
-                if (cur2 == cur) {
+                if (back == cur) {
                     while (!vec.empty()) {
-                        visited[vec.back()] = false;
-                        arr[vec.back()] = -1;
+                        int back2 = vec.back();
                         vec.pop_back();
+                        visited[back2] = false;
+                        adj[back2] = -1;
                     }
                 }
             }
         }
 
-        cout << ans << '\n';
+        cout << (n - cnt_in_team) << '\n';
     }
 
     return 0;
