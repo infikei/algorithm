@@ -1,5 +1,5 @@
 # Solve 2022-06-01
-# Update 2023-12-14
+# Update 2025-03-03
 
 # Python 3 제출 : 시간 초과
 # PyPy3 제출 : 통과
@@ -23,7 +23,6 @@ def n_queens(n, row = 0):
 
 
 n = int(input())
-
 board = [0] * n
 
 print(n_queens(n))

@@ -1,6 +1,5 @@
 // Solve 2024-01-31
-
-// 백준에 제출할 때는 class 이름을 Main으로 설정해야 한다.
+// Update 2025-03-03
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,12 +13,17 @@ public class boj_3085 {
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
         n = Integer.parseInt(br.readLine());
-        board = new char[n][];
+        board = new char[n][n];
         maxLen = 1;
 
-        for (int i = 0; i < n; i++) {
-            board[i] = br.readLine().toCharArray();
+        for (int x = 0; x < n; x++) {
+            String row = br.readLine();
+
+            for (int y = 0; y < n; y++) {
+                board[x][y] = row.charAt(y);
+            }
         }
 
         updateMaxLen();
@@ -47,7 +51,6 @@ public class boj_3085 {
         }
 
         System.out.println(maxLen);
-        br.close();
     }
 
     static void swap(int x1, int y1, int x2, int y2) {

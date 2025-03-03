@@ -1,92 +1,93 @@
 // Solve 2023-09-14
+// Update 2025-03-03
 
 #include <bits/stdc++.h>
-using namespace std;
 
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
-#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
 #define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
+
+using namespace std;
 using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
+
+int dx[4] = { 0, 0, -1, 1 };
+int dy[4] = { -1, 1, 0, 0 };
+
+int dfs(string &board) {
+    string target_board = "123456780";
+
+    if (board == target_board) {
+        return 0;
+    }
+
+    unordered_set<string> hs;
+    hs.insert(board);
+
+    queue<string> que;
+    que.push(board);
+
+    int cnt = 0;
+
+    while (!que.empty()) {
+        cnt++;
+        int iter = SIZE(que);
+
+        while (iter-- > 0) {
+            string cur_board = que.front();
+            que.pop();
+
+            int z = 0;
+
+            for (int i = 0; i < 9; i++) {
+                if (cur_board[i] == '0') {
+                    z = i;
+                }
+            }
+
+            int x = z / 3;
+            int y = z % 3;
+
+            for (int d = 0; d < 4; d++) {
+                string nxt_board = cur_board;
+                int nx = x + dx[d];
+                int ny = y + dy[d];
+
+                if (nx < 0 || nx >= 3 || ny < 0 || ny >= 3) continue;
+
+                int nz = nx * 3 + ny;
+                swap(nxt_board[z], nxt_board[nz]);
+
+                if (nxt_board == target_board) {
+                    return cnt;
+                }
+
+                if (hs.find(nxt_board) == hs.end()) {
+                    hs.insert(nxt_board);
+                    que.push(nxt_board);
+                }
+            }
+        }
+    }
+
+    return -1;
+}
 
 int main() {
     FASTIO;
 
-    int dx[4] = { 0, 0, -1, 1 };
-    int dy[4] = { -1, 1, 0, 0 };
+    string board(9, '0');
 
-    vector<string> initial_graph(3, "000");
-
-    for (string &s : initial_graph) {
-        for (char &c : s) {
-            cin >> c;
-        }
+    for (char &c : board) {
+        cin >> c;
     }
 
-    string target_str = "123456780";
-    string initial_str = "";
-
-    for (string &s : initial_graph) initial_str += s;
-
-    unordered_set<string> hs;
-    hs.insert(initial_str);
-
-    queue<vector<string> > que;
-    que.push(initial_graph);
-
-    int ans = 0;
-
-    if (initial_str != target_str) {
-        int cnt = 0;
-
-        while (!que.empty()) {
-            cnt++;
-
-            for (int que_i = 0, que_ie = SIZE(que); que_i < que_ie; que_i++) {
-                vector<string> now_graph = que.front();
-                que.pop();
-
-                int x = 0, y = 0;
-
-                for (int i = 0; i < 3; i++) {
-                    for (int j = 0; j < 3; j++) {
-                        if (now_graph[i][j] == '0') {
-                            x = i; y = j;
-                        }
-                    }
-                }
-
-                for (int d = 0; d < 4; d++) {
-                    vector<string> next_graph = now_graph;
-
-                    int nx = x + dx[d], ny = y + dy[d];
-                    if (nx < 0 || nx >= 3 || ny < 0 || ny >= 3) continue;
-
-                    swap(next_graph[x][y], next_graph[nx][ny]);
-
-                    string next_str = "";
-
-                    for (string &s : next_graph) next_str += s;
-
-                    if (next_str == target_str) {
-                        ans = cnt;
-                        break;
-                    }
-
-                    if (hs.find(next_str) == hs.end()) {
-                        hs.insert(next_str);
-                        que.push(next_graph);
-                    }
-                }
-
-                if (ans != 0) break;
-            }
-
-            if (ans != 0) break;
-        }
-
-        if (ans == 0) ans = -1;
-    }
+    int ans = dfs(board);
 
     cout << ans << '\n';
 

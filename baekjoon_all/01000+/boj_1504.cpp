@@ -1,14 +1,19 @@
 // Solve 2023-01-06
-// Update 2023-11-23
+// Update 2025-03-03
 
 #include <bits/stdc++.h>
-using namespace std;
 
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
-#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
 #define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
+
+using namespace std;
 using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+using ld = long double;
 using pii = pair<int, int>;
 
 const int INF = 1e8;
@@ -19,7 +24,7 @@ int main() {
     int n, e;
     cin >> n >> e;
 
-    vector<vector<pii> > edges(n + 1, vector<pii>());
+    vector<vector<pii>> edges(n + 1, vector<pii>());
 
     for (int i = 0; i < e; i++) {
         int from, to, dist;
@@ -38,19 +43,19 @@ int main() {
     pq_mintop.emplace(0, v1);
 
     while (!pq_mintop.empty()) {
-        int now = pq_mintop.top().second;
-        int dist_to_now = pq_mintop.top().first;
+        int cur = pq_mintop.top().second;
+        int dist_to_cur = pq_mintop.top().first;
         pq_mintop.pop();
 
-        if (dists[now] < dist_to_now) continue;
+        if (dists[cur] < dist_to_cur) continue;
 
-        for (pii edge : edges[now]) {
-            int next = edge.first;
-            int dist_to_next = dist_to_now + edge.second;
+        for (pii &edge : edges[cur]) {
+            int nxt = edge.first;
+            int dist_to_nxt = dist_to_cur + edge.second;
 
-            if (dists[next] > dist_to_next) {
-                dists[next] = dist_to_next;
-                pq_mintop.emplace(dist_to_next, next);
+            if (dists[nxt] > dist_to_nxt) {
+                dists[nxt] = dist_to_nxt;
+                pq_mintop.emplace(dist_to_nxt, nxt);
             }
         }
     }
@@ -63,15 +68,15 @@ int main() {
     pq_mintop.emplace(0, v2);
 
     while (!pq_mintop.empty()) {
-        int now = pq_mintop.top().second;
-        int dist_to_now = pq_mintop.top().first;
+        int cur = pq_mintop.top().second;
+        int dist_to_cur = pq_mintop.top().first;
         pq_mintop.pop();
 
-        if (dists[now] < dist_to_now) continue;
+        if (dists[cur] < dist_to_cur) continue;
 
-        for (pii edge : edges[now]) {
+        for (pii &edge : edges[cur]) {
             int next = edge.first;
-            int dist_to_next = dist_to_now + edge.second;
+            int dist_to_next = dist_to_cur + edge.second;
 
             if (dists[next] > dist_to_next) {
                 dists[next] = dist_to_next;

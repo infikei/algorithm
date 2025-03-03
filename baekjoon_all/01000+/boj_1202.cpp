@@ -1,13 +1,20 @@
 // Solve 2024-03-25
+// Update 2025-03-03
 
 #include <bits/stdc++.h>
-using namespace std;
 
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
-#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
 #define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
+
+using namespace std;
 using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
 
 struct Jewelry{
     int weight, value;
@@ -39,7 +46,7 @@ int main() {
     sort(capacity, capacity + k);
 
     priority_queue<int> value_pq_maxtop;
-    ll value_sum = 0;
+    ll max_value_sum = 0;
     int ii = 0;
 
     for (int i = 0; i < k; i++) {
@@ -50,12 +57,12 @@ int main() {
         }
 
         if (!value_pq_maxtop.empty()) {
-            value_sum += value_pq_maxtop.top();
+            max_value_sum += value_pq_maxtop.top();
             value_pq_maxtop.pop();
         }
     }
 
-    cout << value_sum << '\n';
+    cout << max_value_sum << '\n';
 
     return 0;
 }

@@ -1,4 +1,5 @@
 # Solve 2023-03-13
+# Update 2025-03-03
 
 import sys
 
@@ -10,6 +11,8 @@ li = [int(input()) for _ in range(n)]
 li.sort(reverse=True)
 
 ans = 0
+
 for i in range(n):
     ans = max(ans, li[i] * (i + 1))
+
 print(ans)

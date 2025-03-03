@@ -1,21 +1,31 @@
 // Solve 2023-06-08
+// Update 2025-03-03
 
 #include <bits/stdc++.h>
-using namespace std;
 
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
-#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
 #define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
-using ll = long long;
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
 
-int arr[500001], tmp[500001];
+using namespace std;
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
+
+int arr[500001];
+int tmp[500001];
 ll ans;
 
 void merge(int s, int mid, int e) {
-    int i = s, j = mid + 1, k = s;
+    int i = s;
+    int j = mid + 1;
     int cnt = 0;
-    while (k <= e) {
+
+    for (int k = s; k <= e; k++) {
         if (j > e) {
             ans += cnt;
             tmp[k] = arr[i];
@@ -31,10 +41,9 @@ void merge(int s, int mid, int e) {
             tmp[k] = arr[i];
             i++;
         }
-        k++;
     }
 
-    for (k = s; k <= e; k++) {
+    for (int k = s; k <= e; k++) {
         arr[k] = tmp[k];
     }
 }

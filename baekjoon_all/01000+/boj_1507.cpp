@@ -1,54 +1,69 @@
-#include <iostream>
-#define fastio ios_base::sync_with_stdio(false);cout.tie(NULL);cin.tie(NULL); // boj_15552.cpp
+// Solve 2023-01-29
+// Update 2025-03-03
+
+#include <bits/stdc++.h>
+
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
+
 using namespace std;
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
 
-const int N_MAX = 20;
-int n, ans;
-int costs[N_MAX][N_MAX];
-bool removed_routes[N_MAX][N_MAX], is_possible;
+int costs[20][20];
+bool removed_routes[20][20];
 
-void floyd_warshall() {
-    is_possible = true;
-
+int floyd_warshall(int n) {
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
             if (j == i) continue;
+
             for (int k = 0; k < n; k++) {
                 if (k == i || k == j) continue;
+
                 if (costs[j][k] > costs[j][i] + costs[i][k]) {
-                    is_possible = false;
-                    return;
+                    return -1;
                 }
-                else if (costs[j][k] == costs[j][i] + costs[i][k]) {
+
+                if (costs[j][k] == costs[j][i] + costs[i][k]) {
                     removed_routes[j][k] = true;
                 }
             }
         }
     }
+
+    int res = 0;
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < i; j++) {
+            if (!removed_routes[i][j]) {
+                res += costs[i][j];
+            }
+        }
+    }
+
+    return res;
 }
 
 int main() {
-    fastio;
+    FASTIO;
 
+    int n;
     cin >> n;
+
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
             cin >> costs[i][j];
         }
     }
 
-    floyd_warshall();
-
-    if (is_possible) {
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < i; j++) {
-                if (!removed_routes[i][j]) {
-                    ans += costs[i][j];
-                }
-            }
-        }
-    }
-    else ans = -1;
+    int ans = floyd_warshall(n);
 
     cout << ans << '\n';
 

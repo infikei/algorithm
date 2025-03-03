@@ -1,7 +1,5 @@
 // Solve 2024-03-06
-// Update 2025-01-06
-
-// 백준에 제출할 때는 class 이름을 Main으로 설정해야 한다.
+// Update 2025-03-03
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

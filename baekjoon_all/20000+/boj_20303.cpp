@@ -1,20 +1,13 @@
 // Solve 2024-10-26
+// Update 2025-03-03
 
 #include <bits/stdc++.h>
 
 #define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
-#define size(v) (int)v.size()
-#define all(v) v.begin(),v.end()
-#define setw(n, c) cout << setw(n) << setfill(c);
-#define setp(n) cout << fixed << setprecision(n);
-#define printw(x) cout << (x) << ' ';
-#define println(x) cout << (x) << '\n';
-
-#ifdef BOJ
-#define testPrint(x) ((void)0)
-#else
-#define testPrint(x) cout << "[D] " << #x << ':' << x << '\n'
-#endif
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
 
 using namespace std;
 using ll = long long;
@@ -22,8 +15,6 @@ using uint = unsigned int;
 using ull = unsigned long long;
 using ld = long double;
 using pii = pair<int, int>;
-
-const double PI = M_PI;
 
 int c[30001];
 int parent[30001];
@@ -37,23 +28,24 @@ void init_parent(int n) {
 
 int get_parent_of(int u) {
     if (parent[u] < 0) return u;
+
     return parent[u] = get_parent_of(parent[u]);
 }
 
 void union_parents(int u1, int u2) {
-    int pu1 = get_parent_of(u1);
-    int pu2 = get_parent_of(u2);
+    u1 = get_parent_of(u1);
+    u2 = get_parent_of(u2);
 
-    if (pu1 != pu2) {
-        if (parent[pu1] < parent[pu2]) {
-            parent[pu1] += parent[pu2];
-            parent[pu2] = pu1;
-            c[pu1] += c[pu2];
+    if (u1 != u2) {
+        if (parent[u1] < parent[u2]) {
+            parent[u1] += parent[u2];
+            parent[u2] = u1;
+            c[u1] += c[u2];
         }
         else {
-            parent[pu2] += parent[pu1];
-            parent[pu1] = pu2;
-            c[pu2] += c[pu1];
+            parent[u2] += parent[u1];
+            parent[u1] = u2;
+            c[u2] += c[u1];
         }
     }
 }
@@ -103,7 +95,7 @@ int main() {
         max_bag = max(max_bag, bag[i]);
     }
 
-    println(max_bag);
+    cout << max_bag << '\n';
 
     return 0;
 }

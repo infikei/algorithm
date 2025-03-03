@@ -1,15 +1,24 @@
 // Solve 2023-06-07
+// Update 2025-03-03
 
 #include <bits/stdc++.h>
-using namespace std;
 
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
-#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
 #define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
-using ll = long long;
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
 
-int build_time[501], result_time[501], in_degree[501];
+using namespace std;
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
+
+int build_time[501];
+int result_time[501];
+int in_degree[501];
 
 int main() {
     FASTIO;
@@ -17,7 +26,7 @@ int main() {
     int n;
     cin >> n;
 
-    vector<vector<int> > adj(n + 1, vector<int>());
+    vector<vector<int>> adj(n + 1, vector<int>());
 
     for (int u = 1; u <= n; u++) {
         cin >> build_time[u];
@@ -25,6 +34,7 @@ int main() {
         while (true) {
             int v;
             cin >> v;
+
             if (v == -1) break;
 
             adj[v].push_back(u);
@@ -32,28 +42,29 @@ int main() {
         }
     }
 
-    queue<int> q;
+    queue<int> que;
 
     for (int u = 1; u <= n; u++) {
         if (in_degree[u] == 0) {
-            q.push(u);
+            que.push(u);
             result_time[u] = build_time[u];
         }
     }
 
     for (int i = 0; i < n; i++) {
-        int u = q.front();
-        q.pop();
+        int cur = que.front();
+        que.pop();
 
-        for (int v : adj[u]) {
-            if (in_degree[v] == 0) continue;
+        for (int nxt : adj[cur]) {
+            if (in_degree[nxt] == 0) continue;
 
-            in_degree[v]--;
-            if (in_degree[v] == 0) {
-                q.push(v);
+            in_degree[nxt]--;
+
+            if (in_degree[nxt] == 0) {
+                que.push(nxt);
             }
 
-            result_time[v] = max(result_time[v], result_time[u] + build_time[v]);
+            result_time[nxt] = max(result_time[nxt], result_time[cur] + build_time[nxt]);
         }
     }
 
