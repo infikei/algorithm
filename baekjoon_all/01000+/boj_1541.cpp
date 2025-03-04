@@ -1,14 +1,20 @@
 // Solve 2022-07-23
-// Update 2023-09-25
+// Update 2025-03-04
 
 #include <bits/stdc++.h>
-using namespace std;
 
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
-#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
 #define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
+
+using namespace std;
 using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
 
 int main() {
     FASTIO;
@@ -16,27 +22,36 @@ int main() {
     string line;
     cin >> line;
 
-    int ans = 0, tmp = 0, plus_minus = 0;
+    int ans = 0;
+    int tmp = 0;
+    bool minus = false;
 
-    for (int i = 0, ie = SIZE(line); i < ie; i++) {
-        char ch = line[i];
-
-        if (ch == '+' || ch == '-') {
-            if (plus_minus == 0) ans += tmp;
-            else ans -= tmp;
-
-            if (ch == '-') plus_minus = 1;
+    for (char &c : line) {
+        if (c == '+' || c == '-') {
+            if (minus) {
+                ans -= tmp;
+            }
+            else {
+                ans += tmp;
+            }
 
             tmp = 0;
+
+            if (c == '-') {
+                minus = true;
+            }
         }
         else {
-            tmp *= 10;
-            tmp += ch - '0';
+            tmp = tmp * 10 + (c - '0');
         }
     }
 
-    if (plus_minus == 0) ans += tmp;
-    else ans -= tmp;
+    if (minus) {
+        ans -= tmp;
+    }
+    else {
+        ans += tmp;
+    }
 
     cout << ans << '\n';
 

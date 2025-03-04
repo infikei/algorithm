@@ -1,44 +1,44 @@
 // Solve 2023-02-08
+// Update 2025-03-04
 
 #include <bits/stdc++.h>
-using namespace std;
 
-#ifdef BOJ
-#define BOJTEST(x) ((void)0)
-#else
-#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
-#endif
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
 #define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
-#define INF (int)1e9
-#define LLINF (ll)4e18
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
+
+using namespace std;
 using ll = long long;
 using uint = unsigned int;
 using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
 
 int main() {
     FASTIO;
 
-    const ll MOD = 1000000000000;
     ll n;
     cin >> n;
 
+    const ll MOD = 1e12;
     ll ans = 1;
+
     for (ll i = 2; i <= n; i++) {
         ans *= i;
+
         while (ans % 10 == 0) {
             ans /= 10;
         }
+
         ans %= MOD;
     }
 
     ans %= 100000;
-    string ans_str = to_string(ans);
-    while (SIZE(ans_str) < 5) {
-        ans_str = "0" + ans_str;
-    }
-    cout << ans_str << '\n';
+
+    SETW(5, '0');
+    cout << ans << '\n';
 
     // 기본 아이디어는 쉬워보이는 듯 했지만, 실제 코드를 짜보면 되게 빡빡한 문제이다.
     // MOD 값을 너무 높이면 오버플로우가 발생하여 정확한 답이 나오지 않으며,

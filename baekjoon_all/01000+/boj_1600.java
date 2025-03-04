@@ -1,6 +1,5 @@
 // Solve 2024-02-29
-
-// 백준에 제출할 때는 class 이름을 Main으로 설정해야 한다.
+// Update 2025-03-04
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,7 +14,9 @@ public class boj_1600 {
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
         int k = Integer.parseInt(br.readLine());
+
         StringTokenizer st = new StringTokenizer(br.readLine(), " ");
         int w = Integer.parseInt(st.nextToken());
         int h = Integer.parseInt(st.nextToken());
@@ -33,49 +34,48 @@ public class boj_1600 {
         ArrayDeque<int[]> bfsQue = new ArrayDeque<int[]>();
         visited[0][0][0] = true;
         bfsQue.offer(new int[] { 0, 0, 0 });
-        int ans = -1;
-        int curDist = 0;
+        int minMovedCnt = -1;
+        int movedCnt = 0;
 
-        while (ans == -1 && !bfsQue.isEmpty()) {
+        while (minMovedCnt == -1 && !bfsQue.isEmpty()) {
             int curIter = bfsQue.size();
 
             while (curIter-- > 0) {
-                int[] curPos = bfsQue.poll();
-                int curJump = curPos[0];
-                int curX = curPos[1];
-                int curY = curPos[2];
+                int[] pos = bfsQue.poll();
+                int jumpedCnt = pos[0];
+                int x = pos[1];
+                int y = pos[2];
 
-                if (curX == h - 1 && curY == w - 1) {
-                    ans = curDist;
+                if (x == h - 1 && y == w - 1) {
+                    minMovedCnt = movedCnt;
                     break;
                 }
 
                 for (int d = 0; d < 4; d++) {
-                    int nx = curX + dx[d];
-                    int ny = curY + dy[d];
+                    int nx = x + dx[d];
+                    int ny = y + dy[d];
 
-                    if (curJump <= k && nx >= 0 && nx < h && ny >= 0 && ny < w && board[nx][ny] == 0 && !visited[curJump][nx][ny]) {
-                        visited[curJump][nx][ny] = true;
-                        bfsQue.offer(new int[] { curJump, nx, ny });
+                    if (jumpedCnt <= k && nx >= 0 && nx < h && ny >= 0 && ny < w && board[nx][ny] == 0 && !visited[jumpedCnt][nx][ny]) {
+                        visited[jumpedCnt][nx][ny] = true;
+                        bfsQue.offer(new int[] { jumpedCnt, nx, ny });
                     }
                 }
 
                 for (int d = 4; d < 12; d++) {
-                    int nx = curX + dx[d];
-                    int ny = curY + dy[d];
+                    int nx = x + dx[d];
+                    int ny = y + dy[d];
 
-                    if (curJump < k && nx >= 0 && nx < h && ny >= 0 && ny < w && board[nx][ny] == 0 && !visited[curJump + 1][nx][ny]) {
-                        visited[curJump + 1][nx][ny] = true;
-                        bfsQue.offer(new int[] { curJump + 1, nx, ny });
+                    if (jumpedCnt < k && nx >= 0 && nx < h && ny >= 0 && ny < w && board[nx][ny] == 0 && !visited[jumpedCnt + 1][nx][ny]) {
+                        visited[jumpedCnt + 1][nx][ny] = true;
+                        bfsQue.offer(new int[] { jumpedCnt + 1, nx, ny });
                     }
                 }
             }
 
-            curDist++;
+            movedCnt++;
         }
 
-        System.out.println(ans);
-        br.close();
+        System.out.println(minMovedCnt);
     }
 
 }

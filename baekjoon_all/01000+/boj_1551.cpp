@@ -1,13 +1,20 @@
 // Solve 2024-02-21
+// Update 2025-03-04
 
 #include <bits/stdc++.h>
-using namespace std;
 
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
-#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
 #define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
+
+using namespace std;
 using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
 
 int main() {
     FASTIO;
@@ -18,25 +25,23 @@ int main() {
 
     vector<int> nums(n);
 
-    for (int &x : nums) {
+    for (int &num : nums) {
         string w;
         getline(cin, w, ',');
-        x = stoi(w);
+        num = stoi(w);
     }
 
-    for (int ki = 1; ki <= k; ki++) {
-        for (int i = n - 1; i >= ki; i--) {
-            nums[i] -= nums[i - 1];
+    for (int i = 1; i <= k; i++) {
+        for (int j = n - 1; j >= i; j--) {
+            nums[j] -= nums[j - 1];
         }
     }
 
-    cout << nums[k];
-
-    for (int i = k + 1; i < n; i++) {
-        cout << ',' << nums[i];
+    for (int i = k; i < n - 1; i++) {
+        cout << nums[i] << ',';
     }
 
-    cout << '\n';
+    cout << nums[n - 1] << '\n';
 
     return 0;
 }

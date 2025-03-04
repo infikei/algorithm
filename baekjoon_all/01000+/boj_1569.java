@@ -1,6 +1,5 @@
 // Solve 2024-02-02
-
-// 백준에 제출할 때는 class 이름을 Main으로 설정해야 한다.
+// Update 2025-03-04
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,8 +10,9 @@ public class boj_1569 {
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int n = Integer.parseInt(br.readLine());
         StringTokenizer st;
+
+        int n = Integer.parseInt(br.readLine());
         int[] x = new int[n];
         int[] y = new int[n];
 
@@ -34,25 +34,25 @@ public class boj_1569 {
 
         int lenX = maxX - minX;
         int lenY = maxY - minY;
-        int lenSquare = Math.max(lenX, lenY);
+        int squareLength = Math.max(lenX, lenY);
 
         if (lenX > lenY) {
-            int y1 = maxY - lenSquare;
+            int y1 = maxY - squareLength;
             int y2 = maxY;
-            boolean flagPossible = false;
+            boolean possible = false;
 
             while (y1 <= minY) {
-                boolean flag = true;
+                boolean allPointsOnSquare = true;
 
                 for (int i = 0; i < n; i++) {
                     if (x[i] != minX && x[i] != maxX && y[i] != y1 && y[i] != y2) {
-                        flag = false;
+                        allPointsOnSquare = false;
                         break;
                     }
                 }
 
-                if (flag) {
-                    flagPossible = true;
+                if (allPointsOnSquare) {
+                    possible = true;
                     break;
                 }
 
@@ -60,24 +60,26 @@ public class boj_1569 {
                 y2++;
             }
 
-            if (!flagPossible) lenSquare = -1;
+            if (!possible) {
+                squareLength = -1;
+            }
         } else if (lenX < lenY) {
-            int x1 = maxX - lenSquare;
+            int x1 = maxX - squareLength;
             int x2 = maxX;
-            boolean flagPossible = false;
+            boolean possible = false;
 
             while (x1 <= minX) {
-                boolean flag = true;
+                boolean allPointsOnSquare = true;
 
                 for (int i = 0; i < n; i++) {
                     if (x[i] != x1 && x[i] != x2 && y[i] != minY && y[i] != maxY) {
-                        flag = false;
+                        allPointsOnSquare = false;
                         break;
                     }
                 }
 
-                if (flag) {
-                    flagPossible = true;
+                if (allPointsOnSquare) {
+                    possible = true;
                     break;
                 }
 
@@ -85,18 +87,19 @@ public class boj_1569 {
                 x2++;
             }
 
-            if (!flagPossible) lenSquare = -1;
+            if (!possible) {
+                squareLength = -1;
+            }
         } else {
             for (int i = 0; i < n; i++) {
                 if (x[i] != minX && x[i] != maxX && y[i] != minY && y[i] != maxY) {
-                    lenSquare = -1;
+                    squareLength = -1;
                     break;
                 }
             }
         }
 
-        System.out.println(lenSquare);
-        br.close();
+        System.out.println(squareLength);
     }
 
 }

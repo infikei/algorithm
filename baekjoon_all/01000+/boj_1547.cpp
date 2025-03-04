@@ -1,28 +1,42 @@
-#include <iostream>
-using namespace std;
-#define fastio ios_base::sync_with_stdio(false);cout.tie(NULL);cin.tie(NULL); // boj_15552.cpp
+// Solve 2022-11-03
+// Update 2025-03-04
 
-int M, now;
+#include <bits/stdc++.h>
+
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
+
+using namespace std;
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
 
 int main() {
-    fastio;
+    FASTIO;
 
-    cin >> M;
-    now = 1;
+    int m;
+    cin >> m;
 
-    for (int m = 0; m < M; m++) {
+    int cur = 1;
+
+    while (m-- > 0) {
         int x, y;
         cin >> x >> y;
 
-        if (x == now) {
-            now = y;
+        if (x == cur) {
+            cur = y;
         }
-        else if (y == now) {
-            now = x;
+        else if (y == cur) {
+            cur = x;
         }
     }
 
-    cout << now << '\n';
+    cout << cur << '\n';
 
     return 0;
 }

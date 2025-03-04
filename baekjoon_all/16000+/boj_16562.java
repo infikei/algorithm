@@ -1,6 +1,5 @@
 // Solve 2024-02-22
-
-// 백준에 제출할 때는 class 이름을 Main으로 설정해야 한다.
+// Update 2025-03-04
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,53 +8,56 @@ import java.util.StringTokenizer;
 
 public class boj_16562 {
 
-    static int[] parent;
+    static int[] parents;
     static int[] minCost;
 
     static int getParentOf(int u) {
-        if (parent[u] < 0) return u;
-        return parent[u] = getParentOf(parent[u]);
+        if (parents[u] < 0) return u;
+
+        return parents[u] = getParentOf(parents[u]);
     }
 
     static void unionParents(int u1, int u2) {
-        int pu1 = getParentOf(u1);
-        int pu2 = getParentOf(u2);
+        u1 = getParentOf(u1);
+        u2 = getParentOf(u2);
 
-        if (pu1 != pu2) {
-            if (parent[pu1] <= parent[pu2]) {
-                parent[pu1] += parent[pu2];
-                parent[pu2] = pu1;
+        if (u1 != u2) {
+            if (parents[u1] <= parents[u2]) {
+                parents[u1] += parents[u2];
+                parents[u2] = u1;
 
-                if (minCost[pu1] > minCost[pu2]) {
-                    minCost[pu1] = minCost[pu2];
+                if (minCost[u1] > minCost[u2]) {
+                    minCost[u1] = minCost[u2];
                 }
 
-                minCost[pu2] = 0;
+                minCost[u2] = 0;
             } else {
-                parent[pu2] += parent[pu1];
-                parent[pu1] = pu2;
+                parents[u2] += parents[u1];
+                parents[u1] = u2;
 
-                if (minCost[pu2] > minCost[pu1]) {
-                    minCost[pu2] = minCost[pu1];
+                if (minCost[u2] > minCost[u1]) {
+                    minCost[u2] = minCost[u1];
                 }
 
-                minCost[pu1] = 0;
+                minCost[u1] = 0;
             }
         }
     }
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
         StringTokenizer st = new StringTokenizer(br.readLine(), " ");
         int n = Integer.parseInt(st.nextToken());
         int m = Integer.parseInt(st.nextToken());
         int k = Integer.parseInt(st.nextToken());
+
         st = new StringTokenizer(br.readLine(), " ");
-        parent = new int[n + 1];
+        parents = new int[n + 1];
         minCost = new int[n + 1];
 
         for (int u = 1; u <= n; u++) {
-            parent[u] = -1;
+            parents[u] = -1;
             minCost[u] = Integer.parseInt(st.nextToken());
         }
 
@@ -75,7 +77,6 @@ public class boj_16562 {
         }
 
         System.out.println(minSumCost > k ? "Oh no" : minSumCost);
-        br.close();
     }
 
 }

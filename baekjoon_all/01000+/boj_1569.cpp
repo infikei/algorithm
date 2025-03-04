@@ -1,13 +1,20 @@
 // Solve 2024-02-02
+// Update 2025-03-04
 
 #include <bits/stdc++.h>
-using namespace std;
 
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
-#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
 #define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
+
+using namespace std;
 using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
 
 int main() {
     FASTIO;
@@ -29,25 +36,25 @@ int main() {
 
     int len_x = max_x - min_x;
     int len_y = max_y - min_y;
-    int len_square = max(len_x, len_y);
+    int square_len = max(len_x, len_y);
 
     if (len_x > len_y) {
-        int y1 = max_y - len_square;
+        int y1 = max_y - square_len;
         int y2 = max_y;
-        bool flag_possible = false;
+        bool possible = false;
 
         while (y1 <= min_y) {
-            bool flag = true;
+            bool all_points_on_square = true;
 
             for (int i = 0; i < n; i++) {
                 if (x[i] != min_x && x[i] != max_x && y[i] != y1 && y[i] != y2) {
-                    flag = false;
+                    all_points_on_square = false;
                     break;
                 }
             }
 
-            if (flag) {
-                flag_possible = true;
+            if (all_points_on_square) {
+                possible = true;
                 break;
             }
 
@@ -55,25 +62,27 @@ int main() {
             y2++;
         }
 
-        if (!flag_possible) len_square = -1;
+        if (!possible) {
+            square_len = -1;
+        }
     }
     else if (len_x < len_y) {
-        int x1 = max_x - len_square;
+        int x1 = max_x - square_len;
         int x2 = max_x;
-        bool flag_possible = false;
+        bool possible = false;
 
         while (x1 <= min_x) {
-            bool flag = true;
+            bool all_points_on_square = true;
 
             for (int i = 0; i < n; i++) {
                 if (x[i] != x1 && x[i] != x2 && y[i] != min_y && y[i] != max_y) {
-                    flag = false;
+                    all_points_on_square = false;
                     break;
                 }
             }
 
-            if (flag) {
-                flag_possible = true;
+            if (all_points_on_square) {
+                possible = true;
                 break;
             }
 
@@ -81,18 +90,20 @@ int main() {
             x2++;
         }
 
-        if (!flag_possible) len_square = -1;
+        if (!possible) {
+            square_len = -1;
+        }
     }
     else {
         for (int i = 0; i < n; i++) {
             if (x[i] != min_x && x[i] != max_x && y[i] != min_y && y[i] != max_y) {
-                len_square = -1;
+                square_len = -1;
                 break;
             }
         }
     }
 
-    cout << len_square << '\n';
+    cout << square_len << '\n';
 
     return 0;
 }
