@@ -1,31 +1,44 @@
-#include <iostream>
-#include <string>
-using namespace std;
+// Solve 2022-07-29
+// Update 2025-03-09
 
-int S_arr[200001][26] = {0};
+#include <bits/stdc++.h>
+
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
+
+using namespace std;
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
+
+int prefix_sum[200001][26];
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    string S;
-    char ch;
-    int Q, left, right;
+    string s;
+    int q;
+    cin >> s >> q;
 
-    cin >> S;
-    cin >> Q;
-
-    for (int i = 0; i < S.length(); i++) {
+    for (int i = 0; i < s.size(); i++) {
         for (int j = 0; j < 26; j++) {
-            S_arr[i + 1][j] = S_arr[i][j];
+            prefix_sum[i + 1][j] = prefix_sum[i][j];
         }
-        S_arr[i + 1][S[i] - 'a']++;
+
+        prefix_sum[i + 1][s[i] - 'a']++;
     }
 
-    for (int q = 0; q < Q; q++) {
-        cin >> ch >> left >> right;
-        cout << S_arr[right + 1][ch - 'a'] - S_arr[left][ch - 'a'] << '\n';
+    while (q-- > 0) {
+        char alpha;
+        int left, right;
+        cin >> alpha >> left >> right;
+
+        cout << prefix_sum[right + 1][alpha - 'a'] - prefix_sum[left][alpha - 'a'] << '\n';
     }
 
     return 0;
