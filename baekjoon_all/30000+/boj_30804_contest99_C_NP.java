@@ -1,7 +1,5 @@
 // Solve 2024-01-29
-// Update 2024-07-01
-
-// 백준에 제출할 때는 class 이름을 Main으로 설정해야 한다.
+// Update 2025-03-11
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,6 +9,7 @@ public class boj_30804_contest99_C_NP {
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
         int n = Integer.parseInt(br.readLine());
         String line = br.readLine();
         int[] fruits = new int[n];
@@ -39,7 +38,6 @@ public class boj_30804_contest99_C_NP {
         }
 
         System.out.println(maxLen);
-        br.close();
     }
 
 }

@@ -28,24 +28,32 @@ int main() {
         cin >> fruits[i];
     }
 
+    int left = 0;
+    int right = 0;
+    int cnt[10] = { 0 };
+    int kind_of_fruits = 0;
     int max_len = 0;
 
-    for (int i = 1; i <= 9; i++) {
-        for (int j = i + 1; j <= 9; j++) {
-            int cur_len = 0;
+    while (right < n) {
+        cnt[fruits[right]]++;
 
-            for (int k = 0; k < n; k++) {
-                if (fruits[k] == i || fruits[k] == j) {
-                    cur_len++;
+        if (cnt[fruits[right]] == 1) {
+            kind_of_fruits++;
+
+            while (kind_of_fruits == 3) {
+                cnt[fruits[left]]--;
+
+                if (cnt[fruits[left]] == 0) {
+                    kind_of_fruits--;
                 }
-                else {
-                    max_len = max(max_len, cur_len);
-                    cur_len = 0;
-                }
+
+                left++;
             }
-
-            max_len = max(max_len, cur_len);
         }
+
+        right++;
+        int cur_len = right - left;
+        max_len = cur_len > max_len ? cur_len : max_len;
     }
 
     cout << max_len << '\n';
