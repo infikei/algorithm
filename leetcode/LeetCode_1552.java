@@ -1,6 +1,5 @@
 // Solve 2024-06-20
-
-// 리트코드에 제출할 때는 class 이름을 Solution으로 설정해야 한다.
+// Update 2025-03-18
 
 import java.util.*;
 
