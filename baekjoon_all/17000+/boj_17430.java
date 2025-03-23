@@ -1,6 +1,5 @@
 // Solve 2024-07-15
-
-// 백준에 제출할 때는 class 이름을 Main으로 설정해야 한다.
+// Update 2025-03-20
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -18,18 +17,18 @@ public class boj_17430 {
 
         while (t-- > 0) {
             int n = Integer.parseInt(br.readLine());
-            HashSet<Integer> xx = new HashSet<Integer>();
-            HashSet<Integer> yy = new HashSet<Integer>();
+            HashSet<Integer> xSet = new HashSet<Integer>();
+            HashSet<Integer> ySet = new HashSet<Integer>();
 
             for (int i = 0; i < n; i++) {
                 st = new StringTokenizer(br.readLine(), " ");
                 int x = Integer.parseInt(st.nextToken());
                 int y = Integer.parseInt(st.nextToken());
-                xx.add(x);
-                yy.add(y);
+                xSet.add(x);
+                ySet.add(y);
             }
 
-            if (n == (long) xx.size() * yy.size()) {
+            if (n == (long) xSet.size() * ySet.size()) {
                 sb.append("BALANCED\n");
             } else {
                 sb.append("NOT BALANCED\n");
@@ -37,7 +36,6 @@ public class boj_17430 {
         }
 
         System.out.print(sb);
-        br.close();
     }
 
 }
