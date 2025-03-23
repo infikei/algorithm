@@ -1,28 +1,42 @@
-#include <iostream>
-#include <string>
+// Solve 2022-09-04
+// Update 2025-03-22
+
+#include <bits/stdc++.h>
+
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
+
 using namespace std;
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    int K;
-    cin >> K;
-    K++;
+    int k;
+    cin >> k;
 
-    string ans = "";
+    k++;
+    string ans;
 
-    while (K > 1) {
-        if (K % 2 == 0) {
-            ans = '4' + ans;
+    while (k > 1) {
+        if (k % 2 == 0) {
+            ans.push_back('4');
         }
         else {
-            ans = '7' + ans;
+            ans.push_back('7');
         }
-        K /= 2;
+
+        k /= 2;
     }
 
+    reverse(ans.begin(), ans.end());
     cout << ans << '\n';
 
     return 0;
