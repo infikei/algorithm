@@ -17,8 +17,10 @@
 
 ## My Profile
 
-![hyp3rflow's solved.ac stats](https://github-readme-solvedac.hyp3rflow.vercel.app/api/?handle=infikei)
+[![hyp3rflow's solved.ac stats](https://github-readme-solvedac.hyp3rflow.vercel.app/api/?handle=infikei)](https://solved.ac/profile/infikei)
 
 [![mazassumnida profile](http://mazassumnida.wtf/api/v2/generate_badge?boj=infikei)](https://solved.ac/profile/infikei)
 
 [![mazandi profile](http://mazandi.herokuapp.com/api?handle=infikei&theme=dark)](https://solved.ac/profile/infikei)
+
+[![BOJ](https://bojstat.vulcan.site/user/infikei)](https://solved.ac/profile/infikei)
