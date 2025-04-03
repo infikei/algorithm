@@ -1,33 +1,44 @@
-#include <iostream>
-#include <string>
-using namespace std;
+// Solve 2022-11-01
+// Update 2025-04-03
 
-char aeiou[10] = {'a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'};
+#include <bits/stdc++.h>
+
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
+
+using namespace std;
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
+
+string vowels = "AEIOUaeiou";
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
     while (true) {
-        string input;
-        getline(cin, input);
-        if (input == "#") {
-            break;
-        }
+        string line;
+        getline(cin, line);
 
-        int input_sz = input.length();
-        int cnt = 0;
-        for (int i = 0; i < input_sz; i++) {
-            for (int j = 0; j < 10; j++) {
-                if (input[i] == aeiou[j]) {
-                    cnt++;
+        if (line == "#") break;
+
+        int vowel_cnt = 0;
+
+        for (char &c : line) {
+            for (char &v : vowels) {
+                if (c == v) {
+                    vowel_cnt++;
                     break;
                 }
             }
         }
 
-        cout << cnt << '\n';
+        cout << vowel_cnt << '\n';
     }
 
     return 0;
