@@ -23,4 +23,4 @@
 
 [![mazandi profile](http://mazandi.herokuapp.com/api?handle=infikei&theme=dark)](https://solved.ac/profile/infikei)
 
-[![BOJ](https://bojstat.vulcan.site/user/infikei)](https://solved.ac/profile/infikei)
+[![BOJ](https://bojstat.vulcan.site/infikei)](https://solved.ac/profile/infikei)
