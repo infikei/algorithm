@@ -1,20 +1,20 @@
 // Solve 2023-02-26
+// Update 2025-04-06
 
 #include <bits/stdc++.h>
-using namespace std;
 
-#ifdef BOJ
-#define BOJTEST(x) ((void)0)
-#else
-#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
-#endif
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
-#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
 #define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
+
+using namespace std;
 using ll = long long;
 using uint = unsigned int;
 using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
 
 int arr[500000];
 
@@ -24,59 +24,68 @@ int main() {
     int n;
     cin >> n;
 
-    int ans1_avr = 0;
     for (int i = 0; i < n; i++) {
         cin >> arr[i];
-        ans1_avr += arr[i];
     }
-    ans1_avr = round(ans1_avr * 1.0 / n);
+
+    int sum = 0;
+
+    for (int i = 0; i < n; i++) {
+        sum += arr[i];
+    }
+
+    int avg = round((double) sum / n);
 
     sort(arr, arr + n);
-    int ans2_center = arr[n / 2];
-    int ans4_range = arr[n - 1] - arr[0];
+    int median = arr[n / 2];
+    int range = arr[n - 1] - arr[0];
 
-    vector<int> ans3_most_vals;
-    int most_cnt = 0, now_val = -10000, now_cnt = 0;
-    for (int i = 0; i <= n; i++) {
-        if (i == n) {
-            if (now_cnt > most_cnt) {
-                most_cnt = now_cnt;
-                ans3_most_vals.clear();
-                ans3_most_vals.push_back(now_val);
-            }
-            else if (now_cnt == most_cnt) {
-                ans3_most_vals.push_back(now_val);
-            }
-            break;
-        }
+    vector<int> mode;
 
-        if (arr[i] == now_val) {
-            now_cnt++;
+    int mode_cnt = 0;
+    int cur = -10000;
+    int cur_cnt = 0;
+
+    for (int i = 0; i < n; i++) {
+        if (arr[i] == cur) {
+            cur_cnt++;
         }
         else {
-            if (now_cnt > most_cnt) {
-                most_cnt = now_cnt;
-                ans3_most_vals.clear();
-                ans3_most_vals.push_back(now_val);
+            if (cur_cnt > mode_cnt) {
+                mode_cnt = cur_cnt;
+                mode.clear();
+                mode.push_back(cur);
             }
-            else if (now_cnt == most_cnt) {
-                ans3_most_vals.push_back(now_val);
+            else if (cur_cnt == mode_cnt) {
+                mode.push_back(cur);
             }
-            now_val = arr[i];
-            now_cnt = 1;
+
+            cur = arr[i];
+            cur_cnt = 1;
         }
     }
 
-    cout << ans1_avr << '\n';
-    cout << ans2_center << '\n';
-    if (SIZE(ans3_most_vals) >= 2) {
-        sort(ALL(ans3_most_vals));
-        cout << ans3_most_vals[1] << '\n';
+    if (cur_cnt > mode_cnt) {
+        mode_cnt = cur_cnt;
+        mode.clear();
+        mode.push_back(cur);
+    }
+    else if (cur_cnt == mode_cnt) {
+        mode.push_back(cur);
+    }
+
+    cout << avg << '\n';
+    cout << median << '\n';
+
+    if (mode.size() >= 2) {
+        sort(mode.begin(), mode.end());
+        cout << mode[1] << '\n';
     }
     else {
-        cout << ans3_most_vals[0] << '\n';
+        cout << mode[0] << '\n';
     }
-    cout << ans4_range << '\n';
+
+    cout << range << '\n';
 
     return 0;
 }
