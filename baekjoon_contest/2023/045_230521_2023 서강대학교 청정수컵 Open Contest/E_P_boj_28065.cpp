@@ -1,20 +1,20 @@
 // Solve 2023-05-21
+// Update 2025-04-08
 
 #include <bits/stdc++.h>
-using namespace std;
 
-#ifdef BOJ
-#define BOJTEST(x) ((void)0)
-#else
-#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
-#endif
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
-#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
 #define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
+
+using namespace std;
 using ll = long long;
 using uint = unsigned int;
 using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
 
 int main() {
     FASTIO;
@@ -22,16 +22,21 @@ int main() {
     int n;
     cin >> n;
 
-    int x = 1, y = n;
-    while (true) {
-        cout << x << ' ';
-        x++;
-        if (x > y) break;
+    int a = 1;
+    int b = n;
 
-        cout << y << ' ';
-        y--;
-        if (x > y) break;
+    while (true) {
+        cout << a << ' ';
+        a++;
+
+        if (a > b) break;
+
+        cout << b << ' ';
+        b--;
+
+        if (a > b) break;
     }
+
     cout << '\n';
 
     return 0;
