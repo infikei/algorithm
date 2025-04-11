@@ -1,7 +1,7 @@
-// Solve 2022-12-07
+// Solve 2022-12-06
 // Update 2025-04-10
 
-// 1725번과 동일한 문제
+// 6549번과 동일한 문제
 // 분할정복 + 세그먼트 트리를 이용한 풀이
 
 #include <bits/stdc++.h>
@@ -67,19 +67,15 @@ ll get_largest_rectangle(int left, int right, int n) {
 int main() {
     FASTIO;
 
-    while (true) {
-        int n;
-        cin >> n;
+    int n;
+    cin >> n;
 
-        if (n == 0) break;
-
-        for (int i = 0; i < n; i++) {
-            cin >> histogram[i];
-        }
-
-        init_seg(1, 0, n - 1);
-        cout << get_largest_rectangle(0, n - 1, n) << '\n';
+    for (int i = 0; i < n; i++) {
+        cin >> histogram[i];
     }
+
+    init_seg(1, 0, n - 1);
+    cout << get_largest_rectangle(0, n - 1, n) << '\n';
 
     return 0;
 }
