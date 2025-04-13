@@ -1,55 +1,72 @@
 // Solve 2022-09-05
-// Update 2023-05-15
+// Update 2025-04-12
 
 #include <bits/stdc++.h>
-using namespace std;
 
-#ifdef BOJ
-#define BOJTEST(x) ((void)0)
-#else
-#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
-#endif
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
-#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
 #define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
+
+using namespace std;
 using ll = long long;
 using uint = unsigned int;
 using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
 
 struct Point{
     ll x, y;
-    Point(ll nx = 0, ll ny = 0) : x(nx), y(ny) {}
+
+    Point(ll x = 0, ll y = 0) : x(x), y(y) {
+    }
+
     Point operator-(const Point &rhs) const {
         return { x - rhs.x, y - rhs.y };
     }
 };
 
-ll calc_cross(const Point &a, const Point &b) {
+struct Line{
+    Point from;
+    Point to;
+};
+
+ll get_outer_product(const Point &a, const Point &b) {
     return a.x * b.y - b.x * a.y;
 }
 
-int calc_ccw(const Point &a, const Point &b, const Point &c) {
-    ll ccw = calc_cross(b - a, c - a);
+int get_ccw_sign(const Point &a, const Point &b, const Point &c) {
+    ll ccw = get_outer_product(b - a, c - a);
+
     if (ccw > 0) return 1;
-    else if (ccw < 0) return -1;
-    else return 0;
+    if (ccw < 0) return -1;
+    return 0;
+}
+
+bool intersects(const Line &a, const Line &b) {
+    int ccw012 = get_ccw_sign(a.from, a.to, b.from);
+    int ccw013 = get_ccw_sign(a.from, a.to, b.to);
+    int ccw230 = get_ccw_sign(b.from, b.to, a.from);
+    int ccw231 = get_ccw_sign(b.from, b.to, a.to);
+
+    if (ccw012 + ccw013 == 0 && ccw230 + ccw231 == 0) {
+        return true;
+    }
+
+    return false;
 }
 
 int main() {
     FASTIO;
 
-    Point pt[4];
-    for (int i = 0; i < 4; i++) {
-        cin >> pt[i].x >> pt[i].y;
+    Line lines[2];
+
+    for (int i = 0; i < 2; i++) {
+        cin >> lines[i].from.x >> lines[i].from.y >> lines[i].to.x >> lines[i].to.y;
     }
 
-    int ccw012 = calc_ccw(pt[0], pt[1], pt[2]);
-    int ccw013 = calc_ccw(pt[0], pt[1], pt[3]);
-    int ccw230 = calc_ccw(pt[2], pt[3], pt[0]);
-    int ccw231 = calc_ccw(pt[2], pt[3], pt[1]);
-
-    if (ccw012 + ccw013 == 0 && ccw230 + ccw231 == 0) {
+    if (intersects(lines[0], lines[1])) {
         cout << 1 << '\n';
     }
     else {
