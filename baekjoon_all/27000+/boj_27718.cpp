@@ -1,92 +1,109 @@
 // Solve 2023-05-15
+// Update 2025-04-16
 
 #include <bits/stdc++.h>
-using namespace std;
 
-#ifdef BOJ
-#define BOJTEST(x) ((void)0)
-#else
-#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
-#endif
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
-#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
 #define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
+
+using namespace std;
 using ll = long long;
 using uint = unsigned int;
 using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
 
 struct Point{
     ll x, y;
-    Point(ll nx = 0, ll ny = 0) : x(nx), y(ny) {}
+
+    Point(ll x = 0, ll y = 0) : x(x), y(y) {
+    }
+
     Point operator-(const Point &rhs) const {
         return { x - rhs.x, y - rhs.y };
     }
+
     bool operator<(const Point &rhs) const {
-        if (x != rhs.x) {
-            return x < rhs.x;
-        }
+        if (x != rhs.x) return x < rhs.x;
+
         return y < rhs.y;
     }
+
     bool operator>(const Point &rhs) const {
-        if (x != rhs.x) {
-            return x > rhs.x;
-        }
+        if (x != rhs.x) return x > rhs.x;
+
         return y > rhs.y;
     }
+
     bool operator==(const Point &rhs) const {
         return x == rhs.x && y == rhs.y;
     }
 };
 
-Point lines[2000][2];
+struct Line{
+    Point from;
+    Point to;
+};
+
+Line lines[2000];
 int ans[2000][2000];
 
-ll calc_cross(const Point &a, const Point &b) {
+ll get_outer_product(const Point &a, const Point &b) {
     return a.x * b.y - b.x * a.y;
 }
 
 int calc_ccw(const Point &a, const Point &b, const Point &c) {
-    ll ccw = calc_cross(b - a, c - a);
+    ll ccw = get_outer_product(b - a, c - a);
+
     if (ccw > 0) return 1;
-    else if (ccw < 0) return -1;
-    else return 0;
+    if (ccw < 0) return -1;
+    return 0;
 }
 
-int intersects(const Point &a, const Point &b, const Point &c, const Point &d) {
-    int ccw_abc = calc_ccw(a, b, c);
-    int ccw_abd = calc_ccw(a, b, d);
-    int ccw_cda = calc_ccw(c, d, a);
-    int ccw_cdb = calc_ccw(c, d, b);
+int intersects(Line &a, Line &b) {
+    int ccw012 = calc_ccw(a.from, a.to, b.from);
+    int ccw013 = calc_ccw(a.from, a.to, b.to);
+    int ccw230 = calc_ccw(b.from, b.to, a.from);
+    int ccw231 = calc_ccw(b.from, b.to, a.to);
 
-    if (ccw_abc == 0 && ccw_abd == 0) {
-        // 네 점이 한 직선 위에 있을 경우
-        if (b < c || d < a) {
-            return 0;
+    // 네 점이 한 직선 위에 있을 경우
+    if (ccw012 == 0 && ccw013 == 0) {
+        if (a.to < b.from || b.to < a.from) {
+            return 0; // 교점이 없는 경우
         }
-        if (b == c || d == a) {
-            return 1;
+        if (a.to == b.from || b.to == a.from) {
+            return 1; // 교점이 정확히 하나 있고, 그 교점이 적어도 한 선분의 끝점인 경우
         }
-        return 3;
+
+        return 3; // 교점이 무한히 많이 존재하는 경우
     }
-    if (ccw_abc == 0 || ccw_abd == 0) {
-        // 세 점이 한 직선 위에 있을 경우
-        if (ccw_cda == ccw_cdb) {
-            return 0;
+
+    // 세 점이 한 직선 위에 있을 경우
+    if (ccw012 == 0 || ccw013 == 0) {
+        if (ccw230 == ccw231) {
+            return 0; // 교점이 없는 경우
         }
-        return 1;
+
+        return 1; // 교점이 정확히 하나 있고, 그 교점이 적어도 한 선분의 끝점인 경우
     }
-    if (ccw_cda == 0 || ccw_cdb == 0) {
-        // 세 점이 한 직선 위에 있을 경우
-        if (ccw_abc == ccw_abd) {
-            return 0;
+
+    // 세 점이 한 직선 위에 있을 경우
+    if (ccw230 == 0 || ccw231 == 0) {
+        if (ccw012 == ccw013) {
+            return 0; // 교점이 없는 경우
         }
-        return 1;
+
+        return 1; // 교점이 정확히 하나 있고, 그 교점이 적어도 한 선분의 끝점인 경우
     }
-    if (ccw_abc + ccw_abd == 0 && ccw_cda + ccw_cdb == 0) {
-        return 2;
+
+    if (ccw012 + ccw013 == 0 && ccw230 + ccw231 == 0) {
+        return 2; // 교점이 정확히 하나 있고, 그 교점이 어느 선분의 끝점도 아닌 경우
     }
-    return 0;
+
+    return 0; // 교점이 없는 경우
 }
 
 int main() {
@@ -96,17 +113,18 @@ int main() {
     cin >> n;
 
     for (int i = 0; i < n; i++) {
-        cin >> lines[i][0].x >> lines[i][0].y >> lines[i][1].x >> lines[i][1].y;
-        if (lines[i][0] > lines[i][1]) {
-            swap(lines[i][0], lines[i][1]);
+        cin >> lines[i].from.x >> lines[i].from.y >> lines[i].to.x >> lines[i].to.y;
+
+        if (lines[i].from > lines[i].to) {
+            swap(lines[i].from, lines[i].to);
         }
     }
 
     for (int i = 0; i < n; i++) {
         ans[i][i] = 3;
+
         for (int j = 0; j < i; j++) {
-            int res = intersects(lines[j][0], lines[j][1], lines[i][0], lines[i][1]);
-            ans[j][i] = ans[i][j] = res;
+            ans[j][i] = ans[i][j] = intersects(lines[i], lines[j]);
         }
     }
 
@@ -114,6 +132,7 @@ int main() {
         for (int j = 0; j < n; j++) {
             cout << ans[i][j];
         }
+
         cout << '\n';
     }
 

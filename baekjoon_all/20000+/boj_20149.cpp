@@ -1,5 +1,5 @@
 // Solve 2023-03-16
-// Update 2025-04-12
+// Update 2025-04-16
 
 #include <bits/stdc++.h>
 
@@ -78,17 +78,14 @@ int intersects(Line &a, Line &b) {
 
     // 네 점이 한 직선 위에 있을 경우
     if (ccw012 == 0 && ccw013 == 0) {
-        if (a.from == b.to) {
-            return 2; // 선분의 양 끝 점끼리 교차하는 경우
+        if (a.to < b.from || b.to < a.from) {
+            return 0; // 두 선분이 교차하지 않는 경우
         }
-        if (b.from == a.to) {
+        if (a.to == b.from || b.to == a.from) {
             return 2; // 선분의 양 끝 점끼리 교차하는 경우
-        }
-        if (a.from < b.to && b.from < a.to) {
-            return 9; // 선분끼리 겹쳐서 무수히 많은 점에서 교차하는 경우
         }
 
-        return 0; // 두 선분이 교차하지 않는 경우
+        return 9; // 선분끼리 겹쳐서 무수히 많은 점에서 교차하는 경우
     }
 
     // 세 점이 한 직선 위에 있을 경우

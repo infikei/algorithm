@@ -1,37 +1,31 @@
 // Solve 2023-03-19
+// Update 2025-04-16
 
 #include <string>
 #include <vector>
 
 using namespace std;
 
-int remaining_days(int progress, int speed) {
-    int res = 0;
+int get_remaining_days(int progress, int speed) {
+    int remaining = 100 - progress;
 
-    progress = 100 - progress;
-    res = progress / speed;
-    if (progress % speed != 0) {
-        res++;
-    }
-
-    return res;
+    return (remaining - 1) / speed + 1;
 }
 
 vector<int> solution(vector<int> progresses, vector<int> speeds) {
-    vector<int> answer;
-
     int n = progresses.size();
-
-    int prev = remaining_days(progresses[0], speeds[0]);
+    vector<int> answer;
+    int prev_remaining_days = get_remaining_days(progresses[0], speeds[0]);
     answer.push_back(1);
+
     for (int i = 1; i < n; i++) {
-        int cur = remaining_days(progresses[i], speeds[i]);
-        if (prev < cur) {
-            prev = cur;
-            answer.push_back(1);
+        int remaining_days = get_remaining_days(progresses[i], speeds[i]);
+        if (prev_remaining_days >= remaining_days) {
+            answer.back()++;
         }
         else {
-            answer.back()++;
+            prev_remaining_days = remaining_days;
+            answer.push_back(1);
         }
     }
 
