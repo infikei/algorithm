@@ -1,6 +1,5 @@
 // Solve 2024-06-23
-
-// 백준에 제출할 때는 class 이름을 Main으로 설정해야 한다.
+// Update 2025-04-19
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,6 +10,7 @@ public class boj_1173 {
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
         StringTokenizer st = new StringTokenizer(br.readLine(), " ");
         int n = Integer.parseInt(st.nextToken());
         int minM = Integer.parseInt(st.nextToken());
@@ -42,7 +42,6 @@ public class boj_1173 {
         }
 
         System.out.println(cnt);
-        br.close();
     }
 
 }
