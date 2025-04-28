@@ -4,16 +4,16 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayDeque;
 
-public class boj_28278 {
+public class boj_28278_solution2 {
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
 
         int n = Integer.parseInt(br.readLine());
-        ArrayDeque<Integer> stack = new ArrayDeque<Integer>();
+        int[] stack = new int[1_000_000];
+        int stackSize = 0;
 
         while (n-- > 0) {
             String cmd = br.readLine();
@@ -21,23 +21,23 @@ public class boj_28278 {
             switch (cmd.charAt(0)) {
                 case '1':
                     int x = Integer.parseInt(cmd.substring(2));
-                    stack.addLast(x);
+                    stack[stackSize++] = x;
                     break;
 
                 case '2':
-                    sb.append(stack.isEmpty() ? -1 : stack.pollLast()).append('\n');
+                    sb.append(stackSize == 0 ? -1 : stack[--stackSize]).append('\n');
                     break;
 
                 case '3':
-                    sb.append(stack.size()).append('\n');
+                    sb.append(stackSize).append('\n');
                     break;
 
                 case '4':
-                    sb.append(stack.isEmpty() ? "1\n" : "0\n");
+                    sb.append(stackSize == 0 ? "1\n" : "0\n");
                     break;
 
                 case '5':
-                    sb.append(stack.isEmpty() ? -1 : stack.peekLast()).append('\n');
+                    sb.append(stackSize == 0 ? -1 : stack[stackSize - 1]).append('\n');
                     break;
             }
         }
