@@ -1,57 +1,55 @@
 // Solve 2024-01-21
-
-// 백준에 제출할 때는 class 이름을 Main으로 설정해야 함.
+// Update 2025-04-29
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class boj_4949 {
+
+    static boolean checkValidParentheses(String s) {
+        char[] stack = new char[s.length()];
+        int stackSize = 0;
+
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+
+            switch (c) {
+                case '(':
+                case '[':
+                    stack[stackSize++] = c;
+                    break;
+
+                case ')':
+                    if (stackSize == 0 || stack[stackSize - 1] != '(') return false;
+
+                    stackSize--;
+                    break;
+
+                case ']':
+                    if (stackSize == 0 || stack[stackSize - 1] != '[') return false;
+
+                    stackSize--;
+                    break;
+            }
+        }
+
+        return stackSize == 0;
+    }
+
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
 
         while (true) {
-            String str = br.readLine();
+            String sentence = br.readLine();
 
-            if (str.length() == 1 && str.charAt(0) == '.') {
-                break;
-            }
+            if (sentence.length() == 1 && sentence.charAt(0) == '.') break;
 
-            boolean isBalanced = true;
-            char[] stack = new char[str.length()];
-            int stackSize = 0;
-
-            for (int i = 0; i < str.length(); i++) {
-                char ch = str.charAt(i);
-
-                if (ch == '(' || ch == '[') {
-                    stack[stackSize++] = ch;
-                } else if (ch == ')') {
-                    if (stackSize == 0 || stack[stackSize - 1] != '(') {
-                        isBalanced = false;
-                        break;
-                    }
-
-                    stackSize--;
-                } else if (ch == ']') {
-                    if (stackSize == 0 || stack[stackSize - 1] != '[') {
-                        isBalanced = false;
-                        break;
-                    }
-
-                    stackSize--;
-                }
-            }
-
-            if (stackSize != 0) {
-                isBalanced = false;
-            }
-
-            sb.append(isBalanced ? "yes\n" : "no\n");
+            sb.append(checkValidParentheses(sentence) ? "yes\n" : "no\n");
         }
 
-        System.out.println(sb);
-        br.close();
+        System.out.print(sb);
     }
+
 }

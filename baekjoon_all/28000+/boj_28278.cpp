@@ -1,13 +1,20 @@
 // Solve 2023-06-26
+// Update 2025-04-29
 
 #include <bits/stdc++.h>
-using namespace std;
 
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
-#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
 #define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
+
+using namespace std;
 using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
 
 int main() {
     FASTIO;
@@ -21,33 +28,39 @@ int main() {
         int cmd;
         cin >> cmd;
 
-        if (cmd == 1) {
-            int x;
-            cin >> x;
-            stck.push(x);
-        }
-        else if (cmd == 2) {
-            if (stck.empty()) {
-                cout << -1 << '\n';
-            }
-            else {
+        switch (cmd) {
+            case 1:
+                int x;
+                cin >> x;
+                stck.push(x);
+                break;
+
+            case 2:
+                if (stck.empty()) {
+                    cout << -1 << '\n';
+                    break;
+                }
+
                 cout << stck.top() << '\n';
                 stck.pop();
-            }
-        }
-        else if (cmd == 3) {
-            cout << SIZE(stck) << '\n';
-        }
-        else if (cmd == 4) {
-            cout << stck.empty() << '\n';
-        }
-        else {
-            if (stck.empty()) {
-                cout << -1 << '\n';
-            }
-            else {
+                break;
+
+            case 3:
+                cout << stck.size() << '\n';
+                break;
+
+            case 4:
+                cout << stck.empty() << '\n';
+                break;
+
+            case 5:
+                if (stck.empty()) {
+                    cout << -1 << '\n';
+                    break;
+                }
+
                 cout << stck.top() << '\n';
-            }
+                break;
         }
     }
 
