@@ -1,30 +1,21 @@
 // Solve 2025-04-16
+// Update 2025-05-03
 
 import java.util.*;
 
 class LeetCode_0739 {
 
-    static class TemperatureInfo {
-        int temperature;
-        int idx;
-
-        TemperatureInfo(int temperature, int idx) {
-            this.temperature = temperature;
-            this.idx = idx;
-        }
-    }
-
     public int[] dailyTemperatures(int[] temperatures) {
         int[] answer = new int[temperatures.length];
-        ArrayDeque<TemperatureInfo> stack = new ArrayDeque<TemperatureInfo>();
+        ArrayDeque<Integer> stack = new ArrayDeque<Integer>();
 
         for (int i = 0; i < temperatures.length; i++) {
-            while (!stack.isEmpty() && stack.getLast().temperature < temperatures[i]) {
-                answer[stack.getLast().idx] = i - stack.getLast().idx;
+            while (!stack.isEmpty() && temperatures[stack.getLast()] < temperatures[i]) {
+                answer[stack.getLast()] = i - stack.getLast();
                 stack.pollLast();
             }
 
-            stack.addLast(new TemperatureInfo(temperatures[i], i));
+            stack.addLast(i);
         }
 
         return answer;

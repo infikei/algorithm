@@ -1,34 +1,25 @@
 // Solve 2025-04-16
+// Update 2025-05-03
 
 import java.util.*;
 
 class PG_42584_주식가격 {
 
-    static class PriceInfo {
-        int price;
-        int idx;
-
-        PriceInfo(int price, int idx) {
-            this.price = price;
-            this.idx = idx;
-        }
-    }
-
     public int[] solution(int[] prices) {
         int[] answer = new int[prices.length];
-        ArrayDeque<PriceInfo> stack = new ArrayDeque<PriceInfo>();
+        ArrayDeque<Integer> stack = new ArrayDeque<Integer>();
 
         for (int i = 0; i < prices.length; i++) {
-            while (!stack.isEmpty() && stack.getLast().price > prices[i]) {
-                answer[stack.getLast().idx] = i - stack.getLast().idx;
+            while (!stack.isEmpty() && prices[stack.getLast()] > prices[i]) {
+                answer[stack.getLast()] = i - stack.getLast();
                 stack.pollLast();
             }
 
-            stack.addLast(new PriceInfo(prices[i], i));
+            stack.addLast(i);
         }
 
         while (!stack.isEmpty()) {
-            answer[stack.getLast().idx] = prices.length - 1 - stack.getLast().idx;
+            answer[stack.getLast()] = prices.length - 1 - stack.getLast();
             stack.pollLast();
         }
 
