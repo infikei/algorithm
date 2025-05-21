@@ -1,4 +1,5 @@
 // Solve 2025-04-16
+// Update 2025-05-21
 
 class PG_60057_문자열_압축 {
 
@@ -35,7 +36,7 @@ class PG_60057_문자열_압축 {
     public int solution(String s) {
         int answer = s.length();
 
-        for (int i = 1; i < s.length(); i++) {
+        for (int i = 1; i <= s.length() / 2; i++) {
             answer = Math.min(answer, getSizeOfCompressedString(s, i));
         }
 

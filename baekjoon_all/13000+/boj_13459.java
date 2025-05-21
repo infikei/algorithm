@@ -1,4 +1,5 @@
 // Solve 2025-02-17
+// Update 2025-05-21
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -29,24 +30,6 @@ public class boj_13459 {
 
             return new Balls(rx, ry, bx, by);
         }
-    }
-
-    static int move(int x, int y, int d, char[][] board) {
-        int moved = 1;
-        int nx = x + dx[d];
-        int ny = y + dy[d];
-
-        while (board[nx][ny] == '.') {
-            moved++;
-            nx += dx[d];
-            ny += dy[d];
-        }
-
-        if (board[nx][ny] == 'O') {
-            return moved;
-        }
-
-        return moved - 1;
     }
 
     public static void main(String[] args) throws IOException {
@@ -134,6 +117,24 @@ public class boj_13459 {
         } else {
             System.out.println(1);
         }
+    }
+
+    static int move(int x, int y, int d, char[][] board) {
+        int moved = 1;
+        int nx = x + dx[d];
+        int ny = y + dy[d];
+
+        while (board[nx][ny] == '.') {
+            moved++;
+            nx += dx[d];
+            ny += dy[d];
+        }
+
+        if (board[nx][ny] == 'O') {
+            return moved;
+        }
+
+        return moved - 1;
     }
 
 }
