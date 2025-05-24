@@ -1,75 +1,72 @@
 // Solve 2022-10-01
-// Update 2023-02-10
+// Update 2025-05-23
 
 #include <bits/stdc++.h>
-using namespace std;
 
-#ifdef BOJ
-#define BOJTEST(x) ((void)0)
-#else
-#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
-#endif
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
-#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
 #define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
+
+using namespace std;
 using ll = long long;
 using uint = unsigned int;
 using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
 
-const int MAX_N = 100000;
-int n, k, ans;
-queue<int> q;
-bool visited[MAX_N + 1];
+bool visited[100001];
 
-void bfs() {
-    if (n == k) return;
+int bfs(int n, int k) {
+    if (n == k) return 0;
 
-    q.push(n);
+    queue<int> bfs_que;
+    bfs_que.push(n);
     visited[n] = true;
+    int dist = 0;
 
-    while (!q.empty()) {
-        ans++;
+    while (!bfs_que.empty()) {
+        dist++;
+        int iter = bfs_que.size();
 
-        int i_end = SIZE(q);
-        for (int i = 0; i < i_end; i++) {
-            int cur = q.front();
-            q.pop();
+        while (iter-- > 0) {
+            int cur = bfs_que.front();
+            bfs_que.pop();
 
-            int next;
+            if (cur * 2 <= 100000 && !visited[cur * 2]) {
+                if (cur * 2 == k) return dist;
 
-            next = cur * 2;
-            if (next == k) return;
-            if (next <= MAX_N && !visited[next]) {
-                visited[next] = true;
-                q.push(next);
+                visited[cur * 2] = true;
+                bfs_que.push(cur * 2);
             }
 
-            next = cur + 1;
-            if (next == k) return;
-            if (next <= MAX_N && !visited[next]) {
-                visited[next] = true;
-                q.push(next);
+            if (cur + 1 <= 100000 && !visited[cur + 1]) {
+                if (cur + 1 == k) return dist;
+
+                visited[cur + 1] = true;
+                bfs_que.push(cur + 1);
             }
 
-            next = cur - 1;
-            if (next == k) return;
-            if (next >= 0 && !visited[next]) {
-                visited[next] = true;
-                q.push(next);
+            if (cur >= 1 && !visited[cur - 1]) {
+                if (cur - 1 == k) return dist;
+
+                visited[cur - 1] = true;
+                bfs_que.push(cur - 1);
             }
         }
     }
+
+    return -1;
 }
 
 int main() {
     FASTIO;
 
+    int n, k;
     cin >> n >> k;
 
-    bfs();
-
-    cout << ans << '\n';
+    cout << bfs(n, k) << '\n';
 
     return 0;
 }
