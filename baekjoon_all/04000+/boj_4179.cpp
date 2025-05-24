@@ -1,20 +1,13 @@
 // Solve 2025-01-09
+// Update 2025-05-24
 
 #include <bits/stdc++.h>
 
 #define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
-#define size(v) (int)v.size()
-#define all(v) v.begin(),v.end()
-#define setw(n, c) cout << setw(n) << setfill(c);
-#define setp(n) cout << fixed << setprecision(n);
-#define printw(x) cout << (x) << ' ';
-#define println(x) cout << (x) << '\n';
-
-#ifdef BOJ
-#define testPrint(x) ((void)0)
-#else
-#define testPrint(x) cout << "[D] " << #x << ':' << x << '\n'
-#endif
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
 
 using namespace std;
 using ll = long long;
@@ -23,10 +16,76 @@ using ull = unsigned long long;
 using ld = long double;
 using pii = pair<int, int>;
 
-const double PI = M_PI;
+struct Point{
+    int x, y;
+
+    Point(int x, int y) : x(x), y(y) {
+    }
+};
 
 int dx[4] = { 0, 0, -1, 1 };
 int dy[4] = { -1, 1, 0, 0 };
+
+int bfs(int r, int c, vector<string>& board) {
+    queue<Point> jihoon_que;
+    queue<Point> fire_que;
+
+    for (int x = 0; x < r; x++) {
+        for (int y = 0; y < c; y++) {
+            if (board[x][y] == 'J') {
+                jihoon_que.emplace(x, y);
+            }
+            else if (board[x][y] == 'F') {
+                fire_que.emplace(x, y);
+            }
+        }
+    }
+
+    int dist = 0;
+
+    while (!jihoon_que.empty()) {
+        dist++;
+        int iter = fire_que.size();
+
+        while (iter-- > 0) {
+            Point cur = fire_que.front();
+            fire_que.pop();
+
+            for (int d = 0; d < 4; d++) {
+                int nx = cur.x + dx[d];
+                int ny = cur.y + dy[d];
+
+                if (nx < 0 || nx >= r || ny < 0 || ny >= c) continue;
+
+                if (board[nx][ny] != '.') continue;
+
+                board[nx][ny] = 'F';
+                fire_que.emplace(nx, ny);
+            }
+        }
+
+        iter = jihoon_que.size();
+
+        while (iter-- > 0) {
+            Point cur = jihoon_que.front();
+            jihoon_que.pop();
+
+            for (int d = 0; d < 4; d++) {
+                int nx = cur.x + dx[d];
+                int ny = cur.y + dy[d];
+
+                if (nx < 0 || nx >= r || ny < 0 || ny >= c) return dist;
+
+                if (board[nx][ny] != '.') continue;
+
+                board[nx][ny] = 'J';
+                jihoon_que.emplace(nx, ny);
+            }
+        }
+    }
+
+    return -1;
+}
 
 int main() {
     FASTIO;
@@ -36,77 +95,17 @@ int main() {
 
     vector<string> board(r);
 
-    for (string &row : board) {
+    for (string& row : board) {
         cin >> row;
     }
 
-    queue<pii> que_jihoon;
-    queue<pii> que_fire;
+    int res = bfs(r, c, board);
 
-    for (int x = 0; x < r; x++) {
-        for (int y = 0; y < c; y++) {
-            if (board[x][y] == 'J') {
-                que_jihoon.emplace(x, y);
-            }
-            else if (board[x][y] == 'F') {
-                que_fire.emplace(x, y);
-            }
-        }
-    }
-
-    bool escaped = false;
-    int moved_cnt = 0;
-
-    while (!que_jihoon.empty()) {
-        moved_cnt++;
-        int iter = size(que_fire);
-
-        while (iter-- > 0) {
-            pii cur = que_fire.front();
-            que_fire.pop();
-
-            for (int d = 0; d < 4; d++) {
-                int nx = cur.first + dx[d];
-                int ny = cur.second + dy[d];
-
-                if (nx < 0 || nx >= r || ny < 0 || ny >= c) continue;
-                if (board[nx][ny] == '#' || board[nx][ny] == 'F') continue;
-
-                board[nx][ny] = 'F';
-                que_fire.emplace(nx, ny);
-            }
-        }
-
-        iter = size(que_jihoon);
-
-        while (iter-- > 0) {
-            pii cur = que_jihoon.front();
-            que_jihoon.pop();
-
-            for (int d = 0; d < 4; d++) {
-                int nx = cur.first + dx[d];
-                int ny = cur.second + dy[d];
-
-                if (nx < 0 || nx >= r || ny < 0 || ny >= c) {
-                    escaped = true;
-                    continue;
-                }
-
-                if (board[nx][ny] != '.') continue;
-
-                board[nx][ny] = 'J';
-                que_jihoon.emplace(nx, ny);
-            }
-        }
-
-        if (escaped) break;
-    }
-
-    if (escaped) {
-        println(moved_cnt);
+    if (res == -1) {
+        cout << "IMPOSSIBLE" << '\n';
     }
     else {
-        println("IMPOSSIBLE");
+        cout << res << '\n';
     }
 
     return 0;
