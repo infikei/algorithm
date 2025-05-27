@@ -1,100 +1,79 @@
-#include <iostream>
-#include <string>
-#include <vector>
-#include <queue>
-#define fastio ios_base::sync_with_stdio(false);cout.tie(NULL);cin.tie(NULL); // boj_15552.cpp
+// Solve 2022-12-10
+// Update 2025-05-25
+
+#include <bits/stdc++.h>
+
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
+#define SIZE(v) (int)v.size()
+#define ALL(v) v.begin(),v.end()
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
+
 using namespace std;
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+using ld = long double;
 using pii = pair<int, int>;
 
-int N, M, ans;
-int dx[4] = {1, -1, 0, 0}, dy[4] = {0, 0, 1, -1};
+struct Point{
+    int x;
+    int y;
+    int wall_cnt;
+
+    Point(int x, int y, int wall_cnt) : x(x), y(y), wall_cnt(wall_cnt) {
+    }
+};
+
+int dx[4] = { -1, 0, 0, 1 };
+int dy[4] = { 0, -1, 1, 0 };
 string board[1000];
-bool visited[1000][1000][2];
-queue<pii> bfs_queue[2];
+bool visited[2][1000][1000];
 
-void bfs() {
-    ans++;
-    if (N == 1 && M == 1) {
-        return;
-    }
-    visited[0][0][0] = true;
-    bfs_queue[0].push(make_pair(0, 0));
+int bfs(int n, int m) {
+    queue<Point> bfs_que;
+    bfs_que.emplace(-1, 0, 0);
+    int dist = 0;
 
-    while (true) {
-        ans++;
+    while (!bfs_que.empty()) {
+        int iter = bfs_que.size();
+        dist++;
 
-        int i_end0 = bfs_queue[0].size();
-        int i_end1 = bfs_queue[1].size();
+        while (iter-- > 0) {
+            Point cur = bfs_que.front();
+            bfs_que.pop();
 
-        for (int i = 0; i < i_end0; i++) {
-            pii now = bfs_queue[0].front();
-            bfs_queue[0].pop();
+            for (int d = 0; d < 4; d++) {
+                int nx = cur.x + dx[d];
+                int ny = cur.y + dy[d];
 
-            for (int j = 0; j < 4; j++) {
-                int next_x = now.first + dx[j];
-                int next_y = now.second + dy[j];
-                if (next_x < 0 || next_x >= N || next_y < 0 || next_y >= M) {
-                    continue;
-                }
-                if (visited[next_x][next_y][0]) {
-                    continue;
-                }
-                if (next_x == N - 1 && next_y == M - 1) {
-                    return;
-                }
-                visited[next_x][next_y][0] = true;
-                if (board[next_x][next_y] == '0') {
-                    bfs_queue[0].push(make_pair(next_x, next_y));
-                }
-                else {
-                    bfs_queue[1].push(make_pair(next_x, next_y));
-                }
+                if (nx < 0 || nx >= n || ny < 0 || ny >= m) continue;
+
+                int nxt_wall_cnt = (board[nx][ny] == '1' ? cur.wall_cnt + 1 : cur.wall_cnt);
+
+                if (nxt_wall_cnt > 1 || visited[nxt_wall_cnt][nx][ny]) continue;
+                if (nx == n - 1 && ny == m - 1) return dist;
+
+                visited[nxt_wall_cnt][nx][ny] = true;
+                bfs_que.emplace(nx, ny, nxt_wall_cnt);
             }
         }
-
-        for (int i = 0; i < i_end1; i++) {
-            pii now = bfs_queue[1].front();
-            bfs_queue[1].pop();
-
-            for (int j = 0; j < 4; j++) {
-                int next_x = now.first + dx[j];
-                int next_y = now.second + dy[j];
-                if (next_x < 0 || next_x >= N || next_y < 0 || next_y >= M) {
-                    continue;
-                }
-                if (board[next_x][next_y] == '1') {
-                    continue;
-                }
-                if (visited[next_x][next_y][1]) {
-                    continue;
-                }
-                if (next_x == N - 1 && next_y == M - 1) {
-                    return;
-                }
-                visited[next_x][next_y][1] = true;
-                bfs_queue[1].push(make_pair(next_x, next_y));
-            }
-        }
-
-        if (bfs_queue[0].empty() && bfs_queue[1].empty()) {
-            ans = -1;
-            return;
-        }
     }
+
+    return -1;
 }
 
 int main() {
-    fastio;
+    FASTIO;
 
-    cin >> N >> M;
+    int n, m;
+    cin >> n >> m;
 
-    for (int row = 0; row < N; row++) {
-        cin >> board[row];
+    for (int x = 0; x < n; x++) {
+        cin >> board[x];
     }
 
-    bfs();
-
-    cout << ans << '\n';
+    cout << bfs(n, m) << '\n';
 
     return 0;
 }
