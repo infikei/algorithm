@@ -22,7 +22,20 @@ int main() {
     int n;
     cin >> n;
 
-    int ans = sqrt(n);
-    cout << ans << '\n';
+    int low = -1;
+    int high = 45826;
+
+    while (low + 1 < high) {
+        int mid = (low + high) / 2;
+
+        if (mid * mid <= n) {
+            low = mid;
+        }
+        else {
+            high = mid;
+        }
+    }
+
+    cout << low << '\n';
     return 0;
 }

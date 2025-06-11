@@ -22,7 +22,12 @@ int main() {
     int n;
     cin >> n;
 
-    int ans = sqrt(n);
-    cout << ans << '\n';
+    int ans = 0;
+
+    while (ans * ans <= n) {
+        ans++;
+    }
+
+    cout << ans - 1 << '\n';
     return 0;
 }

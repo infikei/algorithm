@@ -1,4 +1,4 @@
-// Solve 2023-03-24
+// Solve 2025-01-20
 // Update 2025-06-11
 
 #include <bits/stdc++.h>
@@ -19,10 +19,15 @@ using pii = pair<int, int>;
 int main() {
     FASTIO;
 
-    int n;
+    ll n;
     cin >> n;
 
-    int ans = sqrt(n);
-    cout << ans << '\n';
+    ll ans = 0;
+
+    while (ans * ans <= n) {
+        ans++;
+    }
+
+    cout << ans - 1 << '\n';
     return 0;
 }
