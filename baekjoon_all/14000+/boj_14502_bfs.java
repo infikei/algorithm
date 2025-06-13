@@ -1,6 +1,5 @@
 // Solve 2024-03-02
-
-// 백준에 제출할 때는 class 이름을 Main으로 설정해야 한다.
+// Update 2025-06-13
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,40 +10,50 @@ import java.util.StringTokenizer;
 
 public class boj_14502_bfs {
 
+    static class Point {
+        int x, y;
+
+        Point(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
+    }
+
     static int[] dx = { 0, 0, -1, 1 };
     static int[] dy = { -1, 1, 0, 0 };
     static int n, m, nm;
     static int[][] board;
     static boolean[][] visited;
-    static ArrayList<int[]> viruses;
+    static ArrayList<Point> viruses;
     static int wallCount;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
         StringTokenizer st = new StringTokenizer(br.readLine(), " ");
         n = Integer.parseInt(st.nextToken());
         m = Integer.parseInt(st.nextToken());
         nm = n * m;
         board = new int[n][m];
         visited = new boolean[n][m];
-        viruses = new ArrayList<int[]>();
+        viruses = new ArrayList<>();
         wallCount = 0;
 
         for (int x = 0; x < n; x++) {
-            st = new StringTokenizer(br.readLine(), " ");
+            String row = br.readLine();
 
             for (int y = 0; y < m; y++) {
-                board[x][y] = st.nextToken().charAt(0) - '0';
+                board[x][y] = row.charAt(y * 2) - '0';
 
                 if (board[x][y] == 2) {
-                    viruses.add(new int[] { x, y });
+                    viruses.add(new Point(x, y));
                 } else if (board[x][y] == 1) {
                     wallCount++;
                 }
             }
         }
 
-        int maxSafeCount = 0;
+        int maxSafeArea = 0;
 
         for (int i = 0; i < nm; i++) {
             int ix = i / m;
@@ -69,7 +78,7 @@ public class boj_14502_bfs {
                     if (board[kx][ky] != 0) continue;
 
                     board[kx][ky] = 1;
-                    maxSafeCount = Math.max(maxSafeCount, getSafeCount());
+                    maxSafeArea = Math.max(maxSafeArea, getSafeArea());
                     board[kx][ky] = 0;
                 }
 
@@ -79,13 +88,11 @@ public class boj_14502_bfs {
             board[ix][iy] = 0;
         }
 
-        System.out.println(maxSafeCount);
-        br.close();
+        System.out.println(maxSafeArea);
     }
 
-    static int getSafeCount() {
-        int curSafeCount = nm - (wallCount + 3);
-        ArrayDeque<int[]> bfsQue = new ArrayDeque<int[]>();
+    static int getSafeArea() {
+        int safeArea = nm - (wallCount + 3);
 
         for (int x = 0; x < n; x++) {
             for (int y = 0; y < m; y++) {
@@ -93,30 +100,39 @@ public class boj_14502_bfs {
             }
         }
 
-        for (int[] virus : viruses) {
-            if (visited[virus[0]][virus[1]]) continue;
+        for (Point virus : viruses) {
+            if (visited[virus.x][virus.y]) continue;
 
-            visited[virus[0]][virus[1]] = true;
-            bfsQue.add(virus);
-            curSafeCount--;
+            visited[virus.x][virus.y] = true;
+            safeArea -= bfs(virus.x, virus.y);
+        }
 
-            while (!bfsQue.isEmpty()) {
-                int[] curPos = bfsQue.poll();
+        return safeArea;
+    }
 
-                for (int d = 0; d < 4; d++) {
-                    int nx = curPos[0] + dx[d];
-                    int ny = curPos[1] + dy[d];
+    static int bfs(int x, int y) {
+        int res = 1;
+        visited[x][y] = true;
+        ArrayDeque<Point> bfsQue = new ArrayDeque<>();
+        bfsQue.addLast(new Point(x, y));
 
-                    if (nx < 0 || nx >= n || ny < 0 || ny >= m || board[nx][ny] == 1 || visited[nx][ny]) continue;
+        while (!bfsQue.isEmpty()) {
+            Point cur = bfsQue.pollFirst();
 
-                    visited[nx][ny] = true;
-                    bfsQue.add(new int[] { nx, ny });
-                    curSafeCount--;
-                }
+            for (int d = 0; d < 4; d++) {
+                int nx = cur.x + dx[d];
+                int ny = cur.y + dy[d];
+
+                if (nx < 0 || nx >= n || ny < 0 || ny >= m) continue;
+                if (board[nx][ny] == 1 || visited[nx][ny]) continue;
+
+                visited[nx][ny] = true;
+                bfsQue.addLast(new Point(nx, ny));
+                res++;
             }
         }
 
-        return curSafeCount;
+        return res;
     }
 
 }
