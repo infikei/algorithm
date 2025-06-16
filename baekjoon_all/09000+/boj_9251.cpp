@@ -1,16 +1,25 @@
 // Solve 2022-08-03
-// Update 2023-12-11
+// Update 2025-06-15
 
 #include <bits/stdc++.h>
-using namespace std;
 
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
-#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
-#define SIZE(v) (int)v.size()
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
 #define ALL(v) v.begin(),v.end()
-using ll = long long;
+#define UNIQUE(v) v.erase(unique(v.begin(),v.end()),v.end());
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
 
-int dp[1001][1001];
+using namespace std;
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+const int INF = 0x3f3f3f3f;
+const int MOD = 1000000007;
+
+int memo[1001][1001];
 
 int main() {
     FASTIO;
@@ -18,21 +27,20 @@ int main() {
     string s, s2;
     cin >> s >> s2;
 
-    int len_s = SIZE(s);
-    int len_s2 = SIZE(s2);
+    int n = size(s);
+    int m = size(s2);
 
-    for (int i = 1; i <= len_s; i++) {
-        for (int j = 1; j <= len_s2; j++) {
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= m; j++) {
             if (s[i - 1] == s2[j - 1]) {
-                dp[i][j] = dp[i - 1][j - 1] + 1;
+                memo[i][j] = memo[i - 1][j - 1] + 1;
             }
             else {
-                dp[i][j] = max(dp[i][j - 1], dp[i - 1][j]);
+                memo[i][j] = max(memo[i][j - 1], memo[i - 1][j]);
             }
         }
     }
 
-    cout << dp[len_s][len_s2] << '\n';
-
+    cout << memo[n][m] << '\n';
     return 0;
 }
