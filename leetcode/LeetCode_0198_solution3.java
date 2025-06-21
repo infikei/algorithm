@@ -1,16 +1,15 @@
 // Solve 2025-06-15
 // Update 2025-06-19
 
-class LeetCode_0198 {
+class LeetCode_0198_solution3 {
 
     int recur(int cur, int[] memo, int[] nums) {
         if (cur < 0) return 0;
-        if (cur <= 1) return nums[cur];
-        if (cur == 2) return nums[0] + nums[2];
+        if (cur == 0) return nums[0];
+        if (cur == 1) return Math.max(nums[0], nums[1]);
         if (memo[cur] != -1) return memo[cur];
 
-        int ret = Math.max(recur(cur - 3, memo, nums), recur(cur - 2, memo, nums));
-        ret += nums[cur];
+        int ret = Math.max(recur(cur - 1, memo, nums), recur(cur - 2, memo, nums) + nums[cur]);
         return memo[cur] = ret;
     }
 
@@ -22,7 +21,7 @@ class LeetCode_0198 {
             memo[i] = -1;
         }
 
-        return Math.max(recur(n - 2, memo, nums), recur(n - 1, memo, nums));
+        return recur(n - 1, memo, nums);
     }
 
 }
