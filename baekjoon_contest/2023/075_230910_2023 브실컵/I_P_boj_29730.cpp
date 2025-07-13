@@ -1,19 +1,28 @@
 // Solve 2023-09-10
-// Update 2023-12-26
+// Update 2025-07-13
 
 #include <bits/stdc++.h>
-using namespace std;
 
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
-#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
-#define SIZE(v) (int)v.size()
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
 #define ALL(v) v.begin(),v.end()
-using ll = long long;
+#define UNIQUE(v) v.erase(unique(v.begin(),v.end()),v.end());
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
 
-struct cmp_study{
-    bool operator()(string &a, string &b) {
-        if (SIZE(a) != SIZE(b)) return SIZE(a) < SIZE(b);
-        return a < b;
+using namespace std;
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+const int INF = 0x3f3f3f3f;
+const int MOD = 1000000007;
+
+struct CmpDone{
+    bool operator()(const string& s1, const string& s2) const {
+        if (size(s1) != size(s2)) return size(s1) < size(s2);
+        return s1 < s2;
     }
 };
 
@@ -24,31 +33,31 @@ int main() {
     cin >> n;
     cin.ignore();
 
-    vector<string> study;
-    vector<int> boj_study;
+    vector<int> boj;
+    vector<string> done;
     regex re("boj.kr/([0-9]+)");
     smatch match;
 
-    for (int i = 0; i < n; i++) {
+    while (n-- > 0) {
         string s;
         getline(cin, s);
 
         if (regex_match(s, match, re)) {
-            boj_study.push_back(stoi(match[1]));
+            boj.push_back(stoi(match[1]));
         }
         else {
-            study.push_back(s);
+            done.push_back(s);
         }
     }
 
-    sort(study.begin(), study.end(), cmp_study());
-    sort(boj_study.begin(), boj_study.end());
+    sort(done.begin(), done.end(), CmpDone());
+    sort(boj.begin(), boj.end());
 
-    for (string &s : study) {
+    for (string& s : done) {
         cout << s << '\n';
     }
 
-    for (int &x : boj_study) {
+    for (int& x : boj) {
         cout << "boj.kr/" << x << '\n';
     }
 

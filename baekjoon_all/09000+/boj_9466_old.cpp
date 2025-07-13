@@ -21,7 +21,6 @@ const int MOD = 1000000007;
 
 int adj[100001];
 bool visited[100001];
-bool selected[100001];
 
 int main() {
     FASTIO;
@@ -38,47 +37,50 @@ int main() {
         }
 
         memset(visited, 0, sizeof visited);
-        vector<int> path;
         int cnt_in_team = 0;
 
         for (int u = 1; u <= n; u++) {
+            if (adj[u] == -1) continue;
+
+            vector<int> path;
             int cur = u;
 
-            while (!selected[cur] && !visited[cur]) {
-                selected[cur] = true;
+            while (true) {
                 path.push_back(cur);
+                visited[cur] = true;
                 cur = adj[cur];
-            }
 
-            if (visited[cur]) {
-                while (!path.empty()) {
-                    int x = path.back();
-                    path.pop_back();
-                    selected[x] = false;
-                    visited[x] = true;
+                if (cur == -1) {
+                    while (!path.empty()) {
+                        int back = path.back();
+                        path.pop_back();
+                        visited[back] = false;
+                        adj[back] = -1;
+                    }
+
+                    break;
                 }
 
-                continue;
+                if (visited[cur]) {
+                    break;
+                }
             }
-
-            while (path.back() != cur) {
-                int x = path.back();
-                path.pop_back();
-                selected[x] = false;
-                visited[x] = true;
-                cnt_in_team++;
-            }
-
-            path.pop_back();
-            selected[cur] = false;
-            visited[cur] = true;
-            cnt_in_team++;
 
             while (!path.empty()) {
                 int x = path.back();
                 path.pop_back();
-                selected[x] = false;
-                visited[x] = true;
+                visited[x] = false;
+                adj[x] = -1;
+                cnt_in_team++;
+
+                if (x == cur) {
+                    while (!path.empty()) {
+                        int x2 = path.back();
+                        path.pop_back();
+                        visited[x2] = false;
+                        adj[x2] = -1;
+                    }
+                }
             }
         }
 

@@ -1,4 +1,5 @@
 // Solve 2025-03-02
+// Update 2025-07-13
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -22,17 +23,8 @@ public class P1_P_boj_33556 {
             b = null;
         }
 
-        if (a.equals(b)) {
-            System.out.println("true");
-        } else {
-            System.out.println("false");
-        }
-
-        if (a.equalsIgnoreCase(b)) {
-            System.out.println("true");
-        } else {
-            System.out.println("false");
-        }
+        System.out.println(a.equals(b) ? "true" : "false");
+        System.out.println(a.equalsIgnoreCase(b) ? "true" : "false");
     }
 
 }

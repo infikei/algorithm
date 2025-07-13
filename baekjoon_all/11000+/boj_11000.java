@@ -1,6 +1,5 @@
 // Solve 2024-05-17
-
-// 백준에 제출할 때는 class 이름을 Main으로 설정해야 한다.
+// Update 2025-07-13
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -27,32 +26,32 @@ public class boj_11000 {
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
         StringTokenizer st;
         int n = Integer.parseInt(br.readLine());
-        Pair[] pairs = new Pair[n];
+        Pair[] lectures = new Pair[n];
 
         for (int i = 0; i < n; i++) {
             st = new StringTokenizer(br.readLine(), " ");
             int s = Integer.parseInt(st.nextToken());
             int e = Integer.parseInt(st.nextToken());
-            pairs[i] = new Pair(s, e);
+            lectures[i] = new Pair(s, e);
         }
 
-        Arrays.sort(pairs);
+        Arrays.sort(lectures);
+        int ans = 0;
         PriorityQueue<Integer> pqMinTop = new PriorityQueue<Integer>();
-        int maxSize = 0;
 
-        for (int i = 0; i < n; i++) {
-            while (!pqMinTop.isEmpty() && pqMinTop.peek() <= pairs[i].s) {
+        for (Pair lecture : lectures) {
+            while (!pqMinTop.isEmpty() && pqMinTop.peek() <= lecture.s) {
                 pqMinTop.poll();
             }
 
-            pqMinTop.offer(pairs[i].e);
-            maxSize = Math.max(maxSize, pqMinTop.size());
+            pqMinTop.add(lecture.e);
+            ans = Math.max(ans, pqMinTop.size());
         }
 
-        System.out.println(maxSize);
-        br.close();
+        System.out.println(ans);
     }
 
 }

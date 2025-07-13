@@ -35,15 +35,13 @@ int main() {
 
     vector<int> boj;
     vector<string> done;
-    regex re("boj.kr/([0-9]+)");
-    smatch match;
 
     while (n-- > 0) {
         string s;
         getline(cin, s);
 
-        if (regex_match(s, match, re)) {
-            boj.push_back(stoi(match[1]));
+        if (s.substr(0, 7) == "boj.kr/") {
+            boj.push_back(stoi(s.substr(7)));
         }
         else {
             done.push_back(s);
