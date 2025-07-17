@@ -19,13 +19,24 @@ using pll = pair<ll, ll>;
 const int INF = 0x3f3f3f3f;
 const int MOD = 1000000007;
 
+int n;
 int board[100][100];
 ll memo[100][100];
+
+ll dfs(int x, int y) {
+    if (x >= n || y >= n) return 0;
+    if (memo[x][y] != -1) return memo[x][y];
+
+    int num = board[x][y];
+
+    if (num == 0) return 0;
+
+    return memo[x][y] = dfs(x, y + num) + dfs(x + num, y);
+}
 
 int main() {
     FASTIO;
 
-    int n;
     cin >> n;
 
     for (int x = 0; x < n; x++) {
@@ -34,24 +45,8 @@ int main() {
         }
     }
 
+    memset(memo, -1, sizeof memo);
     memo[n - 1][n - 1] = 1;
-
-    for (int x = n - 1; x >= 0; x--) {
-        for (int y = n - 1; y >= 0; y--) {
-            int num = board[x][y];
-
-            if (num == 0) continue;
-
-            if (x + num < n) {
-                memo[x][y] += memo[x + num][y];
-            }
-
-            if (y + num < n) {
-                memo[x][y] += memo[x][y + num];
-            }
-        }
-    }
-
-    cout << memo[0][0] << '\n';
+    cout << dfs(0, 0) << '\n';
     return 0;
 }
