@@ -1,4 +1,4 @@
-// Solve 2022-06-05
+// Solve 2022-06-06
 // Update 2025-07-19
 
 #include <bits/stdc++.h>
@@ -19,16 +19,28 @@ using pll = pair<ll, ll>;
 const int INF = 0x3f3f3f3f;
 const int MOD = 1000000007;
 
+set<int> st;
+
 int main() {
     FASTIO;
 
-    string s;
-    cin >> s;
+    int n;
+    cin >> n;
 
-    for (char c = 'a'; c <= 'z'; c++) {
-        cout << (int) s.find(c) << ' ';
+    while (n-- > 0) {
+        int x;
+        cin >> x;
+        st.insert(x);
     }
 
-    cout << '\n';
+    int m;
+    cin >> m;
+
+    while (m-- > 0) {
+        int x;
+        cin >> x;
+        cout << (st.find(x) == st.end() ? 0 : 1) << '\n';
+    }
+
     return 0;
 }

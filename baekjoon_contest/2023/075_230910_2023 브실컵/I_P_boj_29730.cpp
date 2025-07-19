@@ -1,5 +1,5 @@
 // Solve 2023-09-10
-// Update 2025-07-13
+// Update 2025-07-19
 
 #include <bits/stdc++.h>
 
@@ -19,7 +19,7 @@ using pll = pair<ll, ll>;
 const int INF = 0x3f3f3f3f;
 const int MOD = 1000000007;
 
-struct CmpDone{
+struct CmpLenAndDict{
     bool operator()(const string& s1, const string& s2) const {
         if (size(s1) != size(s2)) return size(s1) < size(s2);
         return s1 < s2;
@@ -33,8 +33,8 @@ int main() {
     cin >> n;
     cin.ignore();
 
-    vector<int> boj;
-    vector<string> done;
+    vector<int> boj_tasks;
+    vector<string> tasks;
     regex re("boj.kr/([0-9]+)");
     smatch match;
 
@@ -43,22 +43,22 @@ int main() {
         getline(cin, s);
 
         if (regex_match(s, match, re)) {
-            boj.push_back(stoi(match[1]));
+            boj_tasks.push_back(stoi(match[1]));
         }
         else {
-            done.push_back(s);
+            tasks.push_back(s);
         }
     }
 
-    sort(done.begin(), done.end(), CmpDone());
-    sort(boj.begin(), boj.end());
+    sort(tasks.begin(), tasks.end(), CmpLenAndDict());
+    sort(boj_tasks.begin(), boj_tasks.end());
 
-    for (string& s : done) {
+    for (string& s : tasks) {
         cout << s << '\n';
     }
 
-    for (int& x : boj) {
-        cout << "boj.kr/" << x << '\n';
+    for (int& d : boj_tasks) {
+        cout << "boj.kr/" << d << '\n';
     }
 
     return 0;
