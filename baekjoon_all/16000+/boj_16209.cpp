@@ -1,13 +1,42 @@
 // Solve 2023-09-25
+// Update 2025-07-20
 
 #include <bits/stdc++.h>
-using namespace std;
 
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
-#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
-#define SIZE(v) (int)v.size()
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
 #define ALL(v) v.begin(),v.end()
+#define UNIQUE(v) v.erase(unique(v.begin(),v.end()),v.end());
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
+
+using namespace std;
 using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+const int INF = 0x3f3f3f3f;
+const int MOD = 1000000007;
+
+void zigzag_nums(vector<int>& vec, deque<int>& dq) {
+    if (!vec.empty()) {
+        dq.push_back(vec[0]);
+    }
+
+    for (int i = 1; i < size(vec); i++) {
+        if (abs(dq.front()) <= abs(dq.back())) {
+            dq.push_back(vec[i]);
+        }
+        else {
+            dq.push_front(vec[i]);
+        }
+    }
+
+    if (!dq.empty() && dq.front() < dq.back()) {
+        reverse(dq.begin(), dq.end());
+    }
+}
 
 int main() {
     FASTIO;
@@ -15,68 +44,39 @@ int main() {
     int n;
     cin >> n;
 
-    vector<int> vec_p, vec_n;
-    int cnt_zeros = 0;
+    vector<int> vec_p;
+    vector<int> vec_n;
+    int zero_cnt = 0;
 
-    for (int i = 0; i < n; i++) {
+    while (n-- > 0) {
         int x;
         cin >> x;
 
         if (x > 0) vec_p.push_back(x);
         else if (x < 0) vec_n.push_back(x);
-        else cnt_zeros++;
+        else zero_cnt++;
     }
 
     sort(vec_p.begin(), vec_p.end(), greater<int>());
+    deque<int> dq_p;
+    zigzag_nums(vec_p, dq_p);
+
     sort(vec_n.begin(), vec_n.end());
+    deque<int> dq_n;
+    zigzag_nums(vec_n, dq_n);
 
-    deque<int> dque_p;
-
-    if (!vec_p.empty()) dque_p.push_back(vec_p[0]);
-
-    for (int i = 1, ie = SIZE(vec_p); i < ie; i++) {
-        if (dque_p.front() <= dque_p.back()) {
-            dque_p.push_back(vec_p[i]);
-        }
-        else {
-            dque_p.push_front(vec_p[i]);
-        }
+    for (int& d : dq_p) {
+        cout << d << ' ';
     }
 
-    if (!dque_p.empty() && dque_p.front() < dque_p.back()) {
-        reverse(dque_p.begin(), dque_p.end());
-    }
-
-    deque<int> dque_n;
-
-    if (!vec_n.empty()) dque_n.push_back(vec_n[0]);
-
-    for (int i = 1, ie = SIZE(vec_n); i < ie; i++) {
-        if (dque_n.front() > dque_n.back()) {
-            dque_n.push_back(vec_n[i]);
-        }
-        else {
-            dque_n.push_front(vec_n[i]);
-        }
-    }
-
-    if (!dque_n.empty() && dque_n.front() < dque_n.back()) {
-        reverse(dque_n.begin(), dque_n.end());
-    }
-
-    for (int &x : dque_p) {
-        cout << x << ' ';
-    }
-
-    for (int i = 0; i < cnt_zeros; i++) {
+    while (zero_cnt-- > 0) {
         cout << 0 << ' ';
     }
 
-    for (int &x : dque_n) {
-        cout << x << ' ';
+    for (int& d : dq_n) {
+        cout << d << ' ';
     }
 
     cout << '\n';
-
     return 0;
 }

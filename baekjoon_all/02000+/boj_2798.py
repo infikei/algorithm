@@ -1,21 +1,20 @@
-n, m = map(int, input().split())
-li = list(map(int, input().split()))
-ans = 0
-i, j, k = 0, 1, 2
+# Solve 2022-05-26
+# Update 2025-07-20
 
-while True:
-    temp_sum = li[i]+li[j]+li[k]
-    if ans < temp_sum <= m:
-        ans = temp_sum
-        if ans == m:
-            break
-    k += 1
-    if k == n:
-        j += 1
-        if j == n-1:
-            i += 1
-            if i >= n-2:
-                break
-            j = i+1
-        k = j+1
+import sys
+
+input = lambda: sys.stdin.readline().rstrip()
+
+n, m = map(int, input().split())
+nums = list(map(int, input().split()))
+ans = 0
+
+for i in range(n):
+    for j in range(i + 1, n):
+        for k in range(j + 1, n):
+            s3 = nums[i] + nums[j] + nums[k]
+
+            if s3 <= m:
+                ans = max(ans, s3)
+
 print(ans)

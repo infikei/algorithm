@@ -1,8 +1,7 @@
 # Solve 2022-05-19
-# Update 2024-02-15
+# Update 2025-07-20
 
 abc = int(input()) * int(input()) * int(input())
-
 digits = []
 
 while abc > 0:

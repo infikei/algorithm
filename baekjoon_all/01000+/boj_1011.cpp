@@ -1,21 +1,13 @@
 // Solve 2023-01-25
-// Update 2024-11-02
+// Update 2025-07-20
 
 #include <bits/stdc++.h>
 
 #define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
-#define size(v) (int)v.size()
-#define all(v) v.begin(),v.end()
-#define setw(n, c) cout << setw(n) << setfill(c);
-#define setp(n) cout << fixed << setprecision(n);
-#define printw(x) cout << (x) << ' ';
-#define println(x) cout << (x) << '\n';
-
-#ifdef BOJ
-#define testPrint(x) ((void)0)
-#else
-#define testPrint(x) cout << "[D] " << #x << ':' << x << '\n'
-#endif
+#define ALL(v) v.begin(),v.end()
+#define UNIQUE(v) v.erase(unique(v.begin(),v.end()),v.end());
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
 
 using namespace std;
 using ll = long long;
@@ -23,8 +15,9 @@ using uint = unsigned int;
 using ull = unsigned long long;
 using ld = long double;
 using pii = pair<int, int>;
-
-const double PI = M_PI;
+using pll = pair<ll, ll>;
+const int INF = 0x3f3f3f3f;
+const int MOD = 1000000007;
 
 int main() {
     FASTIO;
@@ -35,7 +28,6 @@ int main() {
     while (t-- > 0) {
         ll x, y;
         cin >> x >> y;
-
         y -= x;
 
         // 1 + 2 + ... + n + ... + 2 + 1 = n^2
@@ -47,10 +39,8 @@ int main() {
         while (n * n <= y) n++;
 
         n--;
-
         ll ans = 2 * n - 1 + (y - n * n + n - 1) / n;
-
-        println(ans);
+        cout << ans << '\n';
     }
 
     return 0;

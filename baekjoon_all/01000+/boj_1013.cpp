@@ -1,34 +1,36 @@
 // Solve 2023-04-25
-// Update 2023-10-14
+// Update 2025-07-20
 
 #include <bits/stdc++.h>
-using namespace std;
 
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
-#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
-#define SIZE(v) (int)v.size()
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
 #define ALL(v) v.begin(),v.end()
+#define UNIQUE(v) v.erase(unique(v.begin(),v.end()),v.end());
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
+
+using namespace std;
 using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+const int INF = 0x3f3f3f3f;
+const int MOD = 1000000007;
 
 int main() {
     FASTIO;
 
+    regex re("(100+1+|01)+");
+    smatch match;
     int t;
     cin >> t;
 
-    regex re("(100+1+|01)+");
-    smatch match;
-
-    for (int ti = 0; ti < t; ti++) {
+    while (t-- > 0) {
         string s;
         cin >> s;
-
-        if (regex_match(s, match, re)) {
-            cout << "YES\n";
-        }
-        else {
-            cout << "NO\n";
-        }
+        cout << (regex_match(s, match, re) ? "YES" : "NO") << '\n';
     }
 
     return 0;
