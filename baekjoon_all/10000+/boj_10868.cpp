@@ -1,49 +1,60 @@
-#include <iostream>
-#define fastio ios_base::sync_with_stdio(false);cout.tie(NULL);cin.tie(NULL); // boj_15552.cpp
+// Solve 2022-12-09
+// Update 2025-07-26
+
+#include <bits/stdc++.h>
+
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
+#define ALL(v) v.begin(),v.end()
+#define UNIQUE(v) v.erase(unique(v.begin(),v.end()),v.end());
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
+
 using namespace std;
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+const int INF = 0x3f3f3f3f;
+const int MOD = 1000000007;
 
-int N, M, arr[100001], seg[400001];
+int len = 1 << 17;
+int seg[1 << 18];
 
-int seg_init(int node, int s, int e) {
-    if (s == e) {
-        return seg[node] = arr[s];
+void make_seg() {
+    for (int i = len - 1; i >= 1; i--) {
+        seg[i] = min(seg[i * 2], seg[i * 2 + 1]);
     }
-
-    int mid = (s + e) / 2;
-    int left_val = seg_init(node * 2, s, mid);
-    int right_val = seg_init(node * 2 + 1, mid + 1, e);
-    return seg[node] = min(left_val, right_val);
 }
 
-int seg_query(int node, int s, int e, int l, int r) {
-    if (e < l || r < s) {
-        return 1000000001;
-    }
-    if (l <= s && e <= r) {
-        return seg[node];
-    }
+int get_from_seg(int idx, int l, int r, int tl, int tr) {
+    if (r < tl || tr < l) return INF;
+    if (tl <= l && r <= tr) return seg[idx];
 
-    int mid = (s + e) / 2;
-    int left_val = seg_query(node * 2, s, mid, l, r);
-    int right_val = seg_query(node * 2 + 1, mid + 1, e, l, r);
-    return min(left_val, right_val);
+    int mid = (l + r) / 2;
+    int l_ret = get_from_seg(idx * 2, l, mid, tl, tr);
+    int r_ret = get_from_seg(idx * 2 + 1, mid + 1, r, tl, tr);
+    return min(l_ret, r_ret);
 }
 
 int main() {
-    fastio;
+    FASTIO;
 
-    cin >> N >> M;
+    memset(seg, 0x3f, sizeof seg);
+    int n, m;
+    cin >> n >> m;
 
-    for (int i = 1; i <= N; i++) {
-        cin >> arr[i];
+    for (int i = 1; i <= n; i++) {
+        cin >> seg[i + len];
     }
 
-    seg_init(1, 1, N);
+    make_seg();
 
-    int a, b;
-    for (int i = 0; i < M; i++) {
+    while (m-- > 0) {
+        int a, b;
         cin >> a >> b;
-        cout << seg_query(1, 1, N, a, b) << '\n';
+        cout << get_from_seg(1, 0, len - 1, a, b) << '\n';
     }
 
     return 0;

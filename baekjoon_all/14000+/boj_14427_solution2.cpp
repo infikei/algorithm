@@ -19,49 +19,22 @@ using pll = pair<ll, ll>;
 const int INF = 0x3f3f3f3f;
 const int MOD = 1000000007;
 
-int len = 1 << 17;
-pii seg[1 << 18];
-
-void make_seg() {
-    for (int i = len - 1; i >= 1; i--) {
-        seg[i] = min(seg[i * 2], seg[i * 2 + 1]);
-    }
-}
-
-void update_seg(int idx, int val) {
-    idx += len;
-    seg[idx].first = val;
-    idx /= 2;
-
-    while (idx >= 1) {
-        seg[idx] = min(seg[idx * 2], seg[idx * 2 + 1]);
-        idx /= 2;
-    }
-}
-
-pii get_from_seg(int idx, int l, int r, int tl, int tr) {
-    if (r < tl || tr < l) return {INF, 0};
-    if (tl <= l && r <= tr) return seg[idx];
-
-    int mid = (l + r) / 2;
-    pii l_ret = get_from_seg(idx * 2, l, mid, tl, tr);
-    pii r_ret = get_from_seg(idx * 2 + 1, mid + 1, r, tl, tr);
-    return min(l_ret, r_ret);
-}
+int arr[100001];
 
 int main() {
     FASTIO;
 
     int n;
     cin >> n;
+    priority_queue<pii, vector<pii>, greater<pii>> pq;
 
     for (int i = 1; i <= n; i++) {
         int v;
         cin >> v;
-        seg[i + len] = {v, i};
+        arr[i] = v;
+        pq.emplace(v, i);
     }
 
-    make_seg();
     int m;
     cin >> m;
 
@@ -72,11 +45,15 @@ int main() {
         if (cmd == 1) {
             int i, v;
             cin >> i >> v;
-            update_seg(i, v);
+            arr[i] = v;
+            pq.emplace(v, i);
         }
         else {
-            pii res = get_from_seg(1, 0, len - 1, 1, n);
-            cout << res.second << '\n';
+            while (pq.top().first != arr[pq.top().second]) {
+                pq.pop();
+            }
+
+            cout << pq.top().second << '\n';
         }
     }
 

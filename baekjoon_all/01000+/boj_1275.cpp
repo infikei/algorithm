@@ -1,45 +1,52 @@
 // Solve 2023-07-12
+// Update 2025-07-26
 
 #include <bits/stdc++.h>
-using namespace std;
 
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
-#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
-#define SIZE(v) (int)v.size()
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
 #define ALL(v) v.begin(),v.end()
+#define UNIQUE(v) v.erase(unique(v.begin(),v.end()),v.end());
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
+
+using namespace std;
 using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+const int INF = 0x3f3f3f3f;
+const int MOD = 1000000007;
 
-ll arr[100001], seg[400001];
+int len = 1 << 17;
+ll seg[1 << 18];
 
-ll seg_init(int node, int s, int e) {
-    if (s == e) return seg[node] = arr[s];
-
-    int mid = (s + e) >> 1;
-    ll left_val = seg_init(node << 1, s, mid);
-    ll right_val = seg_init((node << 1) + 1, mid + 1, e);
-    return seg[node] = left_val + right_val;
-}
-
-void seg_update(int node, int s, int e, int qidx, ll qval) {
-    if (s == e) {
-        seg[node] = qval;
-        return;
+void make_seg() {
+    for (int i = len - 1; i >= 1; i--) {
+        seg[i] = seg[i * 2] + seg[i * 2 + 1];
     }
-
-    int mid = (s + e) >> 1;
-    if (qidx <= mid) seg_update(node << 1, s, mid, qidx, qval);
-    else seg_update((node << 1) + 1, mid + 1, e, qidx, qval);
-    seg[node] = seg[node << 1] + seg[(node << 1) + 1];
 }
 
-ll seg_query(int node, int s, int e, int qs, int qe) {
-    if (qe < s || e < qs) return 0;
-    if (qs <= s && e <= qe) return seg[node];
+void update_seg(int idx, ll val) {
+    idx += len;
+    seg[idx] = val;
+    idx /= 2;
 
-    int mid = (s + e) >> 1;
-    ll left_val = seg_query(node << 1, s, mid, qs, qe);
-    ll right_val = seg_query((node << 1) + 1, mid + 1, e, qs, qe);
-    return left_val + right_val;
+    while (idx >= 1) {
+        seg[idx] = seg[idx * 2] + seg[idx * 2 + 1];
+        idx /= 2;
+    }
+}
+
+ll get_from_seg(int idx, int l, int r, int tl, int tr) {
+    if (r < tl || tr < l) return 0;
+    if (tl <= l && r <= tr) return seg[idx];
+
+    int mid = (l + r) / 2;
+    ll l_ret = get_from_seg(idx * 2, l, mid, tl, tr);
+    ll r_ret = get_from_seg(idx * 2 + 1, mid + 1, r, tl, tr);
+    return l_ret + r_ret;
 }
 
 int main() {
@@ -49,18 +56,19 @@ int main() {
     cin >> n >> q;
 
     for (int i = 1; i <= n; i++) {
-        cin >> arr[i];
+        cin >> seg[i + len];
     }
 
-    seg_init(1, 1, n);
+    make_seg();
 
-    for (int i = 0; i < q; i++) {
+    while (q-- > 0) {
         int x, y, a, b;
         cin >> x >> y >> a >> b;
 
         if (x > y) swap(x, y);
-        cout << seg_query(1, 1, n, x, y) << '\n';
-        seg_update(1, 1, n, a, b);
+
+        cout << get_from_seg(1, 0, len - 1, x, y) << '\n';
+        update_seg(a, b);
     }
 
     return 0;
