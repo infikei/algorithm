@@ -1,4 +1,5 @@
 // Solve 2025-07-17
+// Update 2025-07-22
 
 #include <bits/stdc++.h>
 
@@ -23,23 +24,7 @@ int arr[500000];
 int len = 1 << 19;
 int tree[1 << 20];
 
-void make_tree() {
-    for (int i = len - 1; i >= 1; i--) {
-        tree[i] = tree[i * 2] + tree[i * 2 + 1];
-    }
-}
-
-int get(int idx, int s, int e, int ts, int te) {
-    if (e < ts || s > te) return 0;
-    if (ts <= s && e <= te) return tree[idx];
-
-    int mid = (s + e) / 2;
-    int l = get(idx * 2, s, mid, ts, te);
-    int r = get(idx * 2 + 1, mid + 1, e, ts, te);
-    return l + r;
-}
-
-void update(int idx, int val) {
+void update_seg(int idx, int val) {
     idx += len;
     tree[idx] = val;
     idx /= 2;
@@ -50,11 +35,20 @@ void update(int idx, int val) {
     }
 }
 
+int get_from_seg(int idx, int s, int e, int ts, int te) {
+    if (e < ts || s > te) return 0;
+    if (ts <= s && e <= te) return tree[idx];
+
+    int mid = (s + e) / 2;
+    int l = get_from_seg(idx * 2, s, mid, ts, te);
+    int r = get_from_seg(idx * 2 + 1, mid + 1, e, ts, te);
+    return l + r;
+}
+
 int main() {
     FASTIO;
 
     cin >> n;
-
     map<int, int> mp;
 
     for (int i = 0; i < n; i++) {
@@ -72,8 +66,8 @@ int main() {
     ll ans = 0;
 
     for (int i = 0; i < n; i++) {
-        ans += get(1, 0, len - 1, arr[i] + 1, n - 1);
-        update(arr[i], 1);
+        ans += get_from_seg(1, 0, len - 1, arr[i] + 1, n - 1);
+        update_seg(arr[i], 1);
     }
 
     cout << ans << '\n';

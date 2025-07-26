@@ -1,11 +1,11 @@
 // Solve 2022-12-09
-// Update 2025-04-08
+// Update 2025-07-22
 
 #include <bits/stdc++.h>
 
 #define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
-#define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
+#define UNIQUE(v) v.erase(unique(v.begin(),v.end()),v.end());
 #define SETW(n, c) cout << setw(n) << setfill(c);
 #define SETP(n) cout << fixed << setprecision(n);
 
@@ -15,50 +15,38 @@ using uint = unsigned int;
 using ull = unsigned long long;
 using ld = long double;
 using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+const int INF = 0x3f3f3f3f;
+const int MOD = 1000000007;
 
-ll arr[1000001];
-ll seg[2097152];
+int len = 1 << 20;
+ll tree[1 << 21];
 
-ll init_seg(int node, int left, int right) {
-    if (left == right) {
-        return seg[node] = arr[left];
+void make_seg() {
+    for (int i = len - 1; i >= 1; i--) {
+        tree[i] = tree[i * 2] + tree[i * 2 + 1];
     }
-
-    int mid = (left + right) / 2;
-    ll lval = init_seg(node * 2, left, mid);
-    ll rval = init_seg(node * 2 + 1, mid + 1, right);
-    return seg[node] = lval + rval;
 }
 
-void update_seg(int node, int left, int right, int qidx) {
-    if (qidx < left || right < qidx) return;
+void update_seg(int idx, ll val) {
+    idx += len;
+    tree[idx] = val;
+    idx /= 2;
 
-    if (left == right) {
-        seg[node] = arr[qidx];
-        return;
+    while (idx >= 1) {
+        tree[idx] = tree[idx * 2] + tree[idx * 2 + 1];
+        idx /= 2;
     }
-
-    int mid = (left + right) / 2;
-
-    if (qidx <= mid) {
-        update_seg(node * 2, left, mid, qidx);
-    }
-    else {
-        update_seg(node * 2 + 1, mid + 1, right, qidx);
-    }
-
-    seg[node] = seg[node * 2] + seg[node * 2 + 1];
 }
 
-ll query_seg(int node, int left, int right, int qleft, int qright) {
-    if (qright < left || right < qleft) return 0;
+ll get_from_seg(int idx, int l, int r, int tl, int tr) {
+    if (r < tl || tr < l) return 0;
+    if (tl <= l && r <= tr) return tree[idx];
 
-    if (qleft <= left && right <= qright) return seg[node];
-
-    int mid = (left + right) / 2;
-    ll lval = query_seg(node * 2, left, mid, qleft, qright);
-    ll rval = query_seg(node * 2 + 1, mid + 1, right, qleft, qright);
-    return lval + rval;
+    int mid = (l + r) / 2;
+    ll left_ret = get_from_seg(idx * 2, l, mid, tl, tr);
+    ll right_ret = get_from_seg(idx * 2 + 1, mid + 1, r, tl, tr);
+    return left_ret + right_ret;
 }
 
 int main() {
@@ -66,25 +54,28 @@ int main() {
 
     int n, m, k;
     cin >> n >> m >> k;
-
-    for (int i = 1; i <= n; i++) {
-        cin >> arr[i];
-    }
-
-    init_seg(1, 1, n);
     m += k;
 
+    for (int i = 1; i <= n; i++) {
+        cin >> tree[i + len];
+    }
+
+    make_seg();
+
     while (m-- > 0) {
-        int a, b;
-        ll c;
-        cin >> a >> b >> c;
+        int a;
+        cin >> a;
 
         if (a == 1) {
-            arr[b] = c;
-            update_seg(1, 1, n, b);
+            int b;
+            ll c;
+            cin >> b >> c;
+            update_seg(b, c);
         }
         else {
-            cout << query_seg(1, 1, n, b, c) << '\n';
+            int b, c;
+            cin >> b >> c;
+            cout << get_from_seg(1, 0, len - 1, b, c) << '\n';
         }
     }
 
