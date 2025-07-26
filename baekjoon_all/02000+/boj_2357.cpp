@@ -1,11 +1,11 @@
 // Solve 2022-12-09
-// Update 2025-04-08
+// Update 2025-07-25
 
 #include <bits/stdc++.h>
 
 #define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
-#define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
+#define UNIQUE(v) v.erase(unique(v.begin(),v.end()),v.end());
 #define SETW(n, c) cout << setw(n) << setfill(c);
 #define SETP(n) cout << fixed << setprecision(n);
 
@@ -15,57 +15,52 @@ using uint = unsigned int;
 using ull = unsigned long long;
 using ld = long double;
 using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+const int INF = 0x3f3f3f3f;
+const int MOD = 1000000007;
 
-int arr[100001];
-pii seg[262144];
+int len = 1 << 17;
+int seg_min[1 << 18];
+int seg_max[1 << 18];
 
-ostream& operator<<(ostream &os, const pii &rhs) {
-    return os << rhs.first << ' ' << rhs.second;
+void make_seg() {
+    for (int i = len - 1; i >= 1; i--) {
+        seg_min[i] = min(seg_min[i * 2], seg_min[i * 2 + 1]);
+        seg_max[i] = max(seg_max[i * 2], seg_max[i * 2 + 1]);
+    }
 }
 
-pii init_seg(int node, int left, int right) {
-    if (left == right) {
-        return seg[node] = { arr[left], arr[left] };
-    }
+pii get_from_seg(int idx, int l, int r, int tl, int tr) {
+    if (r < tl || tr < l) return {INF, 0};
+    if (tl <= l && r <= tr) return {seg_min[idx], seg_max[idx]};
 
-    int mid = (left + right) / 2;
-    pii lval = init_seg(node * 2, left, mid);
-    pii rval = init_seg(node * 2 + 1, mid + 1, right);
-    return seg[node] = { min(lval.first, rval.first), max(lval.second, rval.second) };
-}
-
-pii query_seg(int node, int left, int right, int qleft, int qright) {
-    if (qright < left || right < qleft) {
-        return { 1000000000, 1 };
-    }
-
-    if (qleft <= left && right <= qright) {
-        return seg[node];
-    }
-
-    int mid = (left + right) / 2;
-    pii lval = query_seg(node * 2, left, mid, qleft, qright);
-    pii rval = query_seg(node * 2 + 1, mid + 1, right, qleft, qright);
-    return { min(lval.first, rval.first), max(lval.second, rval.second) };
+    int mid = (l + r) / 2;
+    pii left_ret = get_from_seg(idx * 2, l, mid, tl, tr);
+    pii right_ret = get_from_seg(idx * 2 + 1, mid + 1, r, tl, tr);
+    return {min(left_ret.first, right_ret.first), max(left_ret.second, right_ret.second)};
 }
 
 int main() {
     FASTIO;
 
+    memset(seg_min, 0x3f, sizeof seg_min);
     int n, m;
     cin >> n >> m;
 
     for (int i = 1; i <= n; i++) {
-        cin >> arr[i];
+        int x;
+        cin >> x;
+        seg_min[i + len] = x;
+        seg_max[i + len] = x;
     }
 
-    init_seg(1, 1, n);
+    make_seg();
 
     while (m-- > 0) {
         int a, b;
         cin >> a >> b;
-
-        cout << query_seg(1, 1, n, a, b) << '\n';
+        pii res = get_from_seg(1, 0, len - 1, a, b);
+        cout << res.first << ' ' << res.second << '\n';
     }
 
     return 0;
