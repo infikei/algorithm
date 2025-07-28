@@ -1,22 +1,36 @@
-#include <iostream>
+// Solve 2022-10-25
+// Update 2025-07-27
+
+#include <bits/stdc++.h>
+
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
+#define ALL(v) v.begin(),v.end()
+#define UNIQUE(v) v.erase(unique(v.begin(),v.end()),v.end());
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
+
 using namespace std;
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+const int INF = 0x3f3f3f3f;
+const int MOD = 1000000007;
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    int N, M, K;
-    cin >> N >> M >> K;
+    int n, m, k;
+    cin >> n >> m >> k;
 
-    int teams = min(N / 2, M);
-    while (true) {
-        if (teams * 3 <= N + M - K) {
-            break;
-        }
-        teams--;
+    int max_team = min(n / 2, m);
+
+    while (max_team * 3 > n + m - k) {
+        max_team--;
     }
-    cout << teams << '\n';
 
+    cout << max_team << '\n';
     return 0;
 }

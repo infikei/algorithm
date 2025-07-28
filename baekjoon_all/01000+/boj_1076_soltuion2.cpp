@@ -1,4 +1,4 @@
-// Solve 2023-08-02
+// Solve 2022-06-17
 // Update 2025-07-27
 
 #include <bits/stdc++.h>
@@ -22,18 +22,34 @@ const int MOD = 1000000007;
 int main() {
     FASTIO;
 
-    int n;
-    cin >> n;
-    int ans = 0;
+    unordered_map<string, int> mp;
+    mp["black"] = 0;
+    mp["brown"] = 1;
+    mp["red"] = 2;
+    mp["orange"] = 3;
+    mp["yellow"] = 4;
+    mp["green"] = 5;
+    mp["blue"] = 6;
+    mp["violet"] = 7;
+    mp["grey"] = 8;
+    mp["white"] = 9;
 
-    for (int a = 2; a <= n; a += 2) {
-        int r = n - a;
+    string color;
+    cin >> color;
+    int a = mp[color];
+    cin >> color;
+    int b = mp[color];
+    cin >> color;
+    int c = mp[color];
 
-        if (r >= 4) {
-            ans += r / 2 - 1;
-        }
+    string val;
+    val.push_back('0' + a);
+    val.push_back('0' + b);
+
+    while (c-- > 0) {
+        val.push_back('0');
     }
 
-    cout << ans << '\n';
+    cout << stoll(val) << '\n';
     return 0;
 }

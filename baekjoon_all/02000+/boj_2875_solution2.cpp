@@ -1,4 +1,4 @@
-// Solve 2023-08-02
+// Solve 2022-10-25
 // Update 2025-07-27
 
 #include <bits/stdc++.h>
@@ -22,18 +22,13 @@ const int MOD = 1000000007;
 int main() {
     FASTIO;
 
-    int n;
-    cin >> n;
-    int ans = 0;
+    int n, m, k;
+    cin >> n >> m >> k;
 
-    for (int a = 2; a <= n; a += 2) {
-        int r = n - a;
-
-        if (r >= 4) {
-            ans += r / 2 - 1;
-        }
-    }
-
-    cout << ans << '\n';
+    int max_team = min(n / 2, m);
+    int r = n + m - max_team * 3;
+    k = max(0, k - r);
+    max_team -= (k + 2) / 3;
+    cout << max_team << '\n';
     return 0;
 }

@@ -1,89 +1,87 @@
-#include <iostream>
-#include <string>
-#include <stack>
+// Solve 2022-08-10
+// Update 2025-07-27
+
+#include <bits/stdc++.h>
+
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
+#define ALL(v) v.begin(),v.end()
+#define UNIQUE(v) v.erase(unique(v.begin(),v.end()),v.end());
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
+
 using namespace std;
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
+using pci = pair<char, int>;
+using pll = pair<ll, ll>;
+const int INF = 0x3f3f3f3f;
+const int MOD = 1000000007;
 
-string input;
-bool input_check = true;
-int ans;
-stack<char> st;
-stack<int> st2;
+int get_val_of_parentheses(string& par) {
+    stack<pci> stck;
 
-int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
-
-    cin >> input;
-
-    for (int i = 0; i < input.length(); i++) {
-        if (input[i] == ')') {
-            if (!st.empty() && st.top() == '(') {
-                st.pop();
-                st.push('*');
-                st2.push(2);
+    for (char c : par) {
+        if (c == ')') {
+            if (!stck.empty() && stck.top().first == '(') {
+                stck.top() = {'*', 2};
                 continue;
             }
 
-            int inner_value = 0;
-            while (!st.empty() && st.top() == '*') {
-                inner_value += st2.top();
-                st.pop();
-                st2.pop();
+            int inner_val = 0;
+
+            while (!stck.empty() && stck.top().first == '*') {
+                inner_val += stck.top().second;
+                stck.pop();
             }
-            if (st.empty() || st.top() != '(') {
-                input_check = false;
-                break;
+
+            if (stck.empty() || stck.top().first != '(') {
+                return 0;
             }
-            st.pop();
-            st.push('*');
-            st2.push(inner_value * 2);
+
+            stck.top() = {'*', inner_val * 2};
         }
-        else if (input[i] == ']') {
-            if (!st.empty() && st.top() == '[') {
-                st.pop();
-                st.push('*');
-                st2.push(3);
+        else if (c == ']') {
+            if (!stck.empty() && stck.top().first == '[') {
+                stck.top() = {'*', 3};
                 continue;
             }
 
-            int inner_value = 0;
-            while (!st.empty() && st.top() == '*') {
-                inner_value += st2.top();
-                st.pop();
-                st2.pop();
+            int inner_val = 0;
+
+            while (!stck.empty() && stck.top().first == '*') {
+                inner_val += stck.top().second;
+                stck.pop();
             }
-            if (st.empty() || st.top() != '[') {
-                input_check = false;
-                break;
+
+            if (stck.empty() || stck.top().first != '[') {
+                return 0;
             }
-            st.pop();
-            st.push('*');
-            st2.push(inner_value * 3);
+
+            stck.top() = {'*', inner_val * 3};
         }
         else {
-            st.push(input[i]);
+            stck.emplace(c, 0);
         }
     }
 
-    ans = 0;
+    int ret = 0;
 
-    if (input_check) {
-        while (!st.empty()) {
-            if (st.top() == '*') {
-                ans += st2.top();
-                st.pop();
-                st2.pop();
-            }
-            else {
-                input_check = false;
-                ans = 0;
-                break;
-            }
-        }
+    while (!stck.empty() && stck.top().first == '*') {
+        ret += stck.top().second;
+        stck.pop();
     }
 
-    cout << ans << '\n';
+    return stck.empty() ? ret : 0;
+}
 
+int main() {
+    FASTIO;
+
+    string par;
+    cin >> par;
+    cout << get_val_of_parentheses(par) << '\n';
     return 0;
 }

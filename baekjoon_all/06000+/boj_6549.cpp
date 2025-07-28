@@ -1,5 +1,5 @@
 // Solve 2022-12-07
-// Update 2025-04-10
+// Update 2025-07-27
 
 // 1725번과 동일한 문제
 // 분할정복 + 세그먼트 트리를 이용한 풀이
@@ -7,8 +7,8 @@
 #include <bits/stdc++.h>
 
 #define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
-#define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
+#define UNIQUE(v) v.erase(unique(v.begin(),v.end()),v.end());
 #define SETW(n, c) cout << setw(n) << setfill(c);
 #define SETP(n) cout << fixed << setprecision(n);
 
@@ -18,67 +18,64 @@ using uint = unsigned int;
 using ull = unsigned long long;
 using ld = long double;
 using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+const int INF = 0x3f3f3f3f;
+const int MOD = 1000000007;
 
-const int INF = 1000000001;
+int n;
+int hist[100000];
+int len = 1 << 17;
+int seg[1 << 18];
 
-int histogram[100000];
-int seg[262144];
-
-int init_seg(int node, int left, int right) {
-    if (left == right) {
-        return seg[node] = left;
+void make_seg() {
+    for (int i = 0; i < n; i++) {
+        seg[i + len] = i;
     }
 
-    int mid = (left + right) / 2;
-    int lval = init_seg(node * 2, left, mid);
-    int rval = init_seg(node * 2 + 1, mid + 1, right);
-    return seg[node] = (histogram[lval] < histogram[rval] ? lval : rval);
+    for (int i = len - 1; i >= 1; i--) {
+        int l_val = seg[i * 2];
+        int r_val = seg[i * 2 + 1];
+        seg[i] = (hist[l_val] <= hist[r_val] ? l_val : r_val);
+    }
 }
 
-int query_seg(int node, int left, int right, int qleft, int qright) {
-    if (qright < left || right < qleft) return -1;
+int get_from_seg(int idx, int l, int r, int tl, int tr) {
+    if (r < tl || tr < l) return -1;
+    if (tl <= l && r <= tr) return seg[idx];
 
-    if (qleft <= left && right <= qright) return seg[node];
+    int mid = (l + r) / 2;
+    int l_ret = get_from_seg(idx * 2, l, mid, tl, tr);
+    int r_ret = get_from_seg(idx * 2 + 1, mid + 1, r, tl, tr);
 
-    int mid = (left + right) / 2;
-    int lval = query_seg(node * 2, left, mid, qleft, qright);
-    int rval = query_seg(node * 2 + 1, mid + 1, right, qleft, qright);
-
-    if (lval == -1) return rval;
-    if (rval == -1) return lval;
-    return (histogram[lval] < histogram[rval] ? lval : rval);
+    if (l_ret == -1) return r_ret;
+    if (r_ret == -1) return l_ret;
+    return hist[l_ret] <= hist[r_ret] ? l_ret : r_ret;
 }
 
-ll get_largest_rectangle(int left, int right, int n) {
-    int idx = query_seg(1, 0, n - 1, left, right);
-    ll area = (ll) (right - left + 1) * histogram[idx];
+ll get_largest_rectangle_area(int l, int r) {
+    if (l > r) return 0;
 
-    if (left < idx) {
-        area = max(area, get_largest_rectangle(left, idx - 1, n));
-    }
-
-    if (idx < right) {
-        area = max(area, get_largest_rectangle(idx + 1, right, n));
-    }
-
-    return area;
+    int lowest_i = get_from_seg(1, 0, len - 1, l, r);
+    ll ret = (ll) hist[lowest_i] * (r - l + 1);
+    ll l_ret = get_largest_rectangle_area(l, lowest_i - 1);
+    ll r_ret = get_largest_rectangle_area(lowest_i + 1, r);
+    return max(ret, max(l_ret, r_ret));
 }
 
 int main() {
     FASTIO;
 
     while (true) {
-        int n;
         cin >> n;
 
         if (n == 0) break;
 
         for (int i = 0; i < n; i++) {
-            cin >> histogram[i];
+            cin >> hist[i];
         }
 
-        init_seg(1, 0, n - 1);
-        cout << get_largest_rectangle(0, n - 1, n) << '\n';
+        make_seg();
+        cout << get_largest_rectangle_area(0, n - 1) << '\n';
     }
 
     return 0;

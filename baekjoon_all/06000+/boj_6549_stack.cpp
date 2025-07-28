@@ -1,5 +1,5 @@
 // Solve 2022-12-07
-// Update 2025-04-10
+// Update 2025-07-27
 
 // 1725번과 동일한 문제
 // 스택을 이용한 풀이
@@ -7,8 +7,8 @@
 #include <bits/stdc++.h>
 
 #define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
-#define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
+#define UNIQUE(v) v.erase(unique(v.begin(),v.end()),v.end());
 #define SETW(n, c) cout << setw(n) << setfill(c);
 #define SETP(n) cout << fixed << setprecision(n);
 
@@ -18,6 +18,9 @@ using uint = unsigned int;
 using ull = unsigned long long;
 using ld = long double;
 using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+const int INF = 0x3f3f3f3f;
+const int MOD = 1000000007;
 
 int h[100002];
 

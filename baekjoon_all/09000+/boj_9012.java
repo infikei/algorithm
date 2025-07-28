@@ -1,5 +1,5 @@
 // Solve 2024-01-21
-// Update 2025-05-03
+// Update 2025-07-27
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,13 +15,13 @@ public class boj_9012 {
 
         while (t-- > 0) {
             String parentheses = br.readLine();
-            sb.append(isValidParentheses(parentheses) ? "YES\n" : "NO\n");
+            sb.append(isParenthesesValid(parentheses) ? "YES\n" : "NO\n");
         }
 
         System.out.print(sb);
     }
 
-    static boolean isValidParentheses(String parentheses) {
+    static boolean isParenthesesValid(String parentheses) {
         int depth = 0;
 
         for (int i = 0; i < parentheses.length(); i++) {

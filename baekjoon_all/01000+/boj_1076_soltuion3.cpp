@@ -42,7 +42,18 @@ int main() {
     cin >> color;
     int c = mp[color];
 
-    ll val = (a * 10 + b) * (ll) pow(10LL, c);
+    string val;
+    val.push_back('0' + a);
+    val.push_back('0' + b);
+
+    while (c-- > 0) {
+        val.push_back('0');
+    }
+
+    while (size(val) >= 2 && val[0] == '0') {
+        val = val.substr(1);
+    }
+
     cout << val << '\n';
     return 0;
 }
