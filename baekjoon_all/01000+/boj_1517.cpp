@@ -1,11 +1,11 @@
 // Solve 2023-06-08
-// Update 2025-03-03
+// Update 2025-08-03
 
 #include <bits/stdc++.h>
 
 #define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
-#define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
+#define UNIQUE(v) v.erase(unique(v.begin(),v.end()),v.end());
 #define SETW(n, c) cout << setw(n) << setfill(c);
 #define SETP(n) cout << fixed << setprecision(n);
 
@@ -15,15 +15,18 @@ using uint = unsigned int;
 using ull = unsigned long long;
 using ld = long double;
 using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+const int INF = 0x3f3f3f3f;
+const int MOD = 1000000007;
 
 int arr[500001];
 int tmp[500001];
 ll ans;
 
 void merge(int s, int mid, int e) {
+    int cnt = 0;
     int i = s;
     int j = mid + 1;
-    int cnt = 0;
 
     for (int k = s; k <= e; k++) {
         if (j > e) {
@@ -68,8 +71,6 @@ int main() {
     }
 
     merge_sort(1, n);
-
     cout << ans << '\n';
-
     return 0;
 }
