@@ -1,68 +1,103 @@
-#include <iostream>
-#include <vector>
-#define fastio ios_base::sync_with_stdio(false);cout.tie(NULL);cin.tie(NULL); // boj_15552.cpp
+// Solve 2023-01-28
+// Update 2025-08-11
+
+#include <bits/stdc++.h>
+
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
+#define ALL(v) v.begin(),v.end()
+#define UNIQUE(v) v.erase(unique(v.begin(),v.end()),v.end());
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
+
 using namespace std;
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+const int INF = 0x3f3f3f3f;
+const int MOD = 1000000007;
 
 int k;
-vector<char> ineq;
-vector<bool> visited;
-vector<int> max_ans, min_ans;
+char par[9];
+int selected[10];
+bool visited[10];
 
-bool cmp_ineq(int a, int b, char c) {
-    if (c == '<') return a < b;
-    else return a > b;
-}
-
-bool find_max_ans(int depth = 0) {
-    if (depth == k + 1) return true;
-
-    for (int i = 9; i >= 0; i--) {
-        if (visited[i]) continue;
-        if (depth > 0 && !cmp_ineq(max_ans.back(), i, ineq[depth - 1])) continue;
-
-        visited[i] = true;
-        max_ans.push_back(i);
-        if (find_max_ans(depth + 1)) return true;
-        max_ans.pop_back();
-        visited[i] = false;
+bool recur(int depth) {
+    if (depth == k + 1) {
+        return true;
     }
+
+    int range_max = 9;
+    int range_min = 0;
+
+    if (depth >= 1) {
+        if (par[depth - 1] == '>') {
+            range_max = selected[depth - 1] - 1;
+        }
+        else {
+            range_min = selected[depth - 1] + 1;
+        }
+    }
+
+    for (int d = range_max; d >= range_min; d--) {
+        if (visited[d]) continue;
+
+        visited[d] = true;
+        selected[depth] = d;
+        if (recur(depth + 1)) return true;
+        visited[d] = false;
+    }
+
     return false;
 }
 
-bool find_min_ans(int depth = 0) {
-    if (depth == k + 1) return true;
-
-    for (int i = 0; i < 10; i++) {
-        if (visited[i]) continue;
-        if (depth > 0 && !cmp_ineq(min_ans.back(), i, ineq[depth - 1])) continue;
-
-        visited[i] = true;
-        min_ans.push_back(i);
-        if (find_min_ans(depth + 1)) return true;
-        min_ans.pop_back();
-        visited[i] = false;
+bool recur2(int depth) {
+    if (depth == k + 1) {
+        return true;
     }
+
+    int range_min = 0;
+    int range_max = 9;
+
+    if (depth >= 1) {
+        if (par[depth - 1] == '>') {
+            range_max = selected[depth - 1] - 1;
+        }
+        else {
+            range_min = selected[depth - 1] + 1;
+        }
+    }
+
+    for (int d = range_min; d <= range_max; d++) {
+        if (visited[d]) continue;
+
+        visited[d] = true;
+        selected[depth] = d;
+        if (recur2(depth + 1)) return true;
+        visited[d] = false;
+    }
+
     return false;
 }
 
 int main() {
-    fastio;
+    FASTIO;
 
     cin >> k;
-    ineq.assign(k, '>');
+
     for (int i = 0; i < k; i++) {
-        cin >> ineq[i];
+        cin >> par[i];
     }
 
-    visited.assign(10, false);
-    find_max_ans();
-    visited.assign(10, false);
-    find_min_ans();
-
-    for (auto a : max_ans) cout << a;
-    cout << '\n';
-    for (auto a : min_ans) cout << a;
+    recur(0);
+    for (int i = 0; i <= k; i++) cout << selected[i];
     cout << '\n';
 
+    memset(visited, false, sizeof visited);
+    recur2(0);
+    for (int i = 0; i <= k; i++) cout << selected[i];
+    cout << '\n';
     return 0;
 }
