@@ -1,31 +1,31 @@
 # Solve 2022-05-31
-# Update 2023-03-17
+# Update 2025-08-16
 
 import sys
 
 input = lambda : sys.stdin.readline().rstrip()
 
 n = int(input())
-stck = []
-check = True
+stack = []
 ans = []
-stck_in_max = 0
+valid_seq = True
+max_stack_num = 0
 
 for _ in range(n):
-    now = int(input())
-    while now > stck_in_max:
-        stck_in_max += 1
-        stck.append(stck_in_max)
+    x = int(input())
+    while x > max_stack_num:
+        max_stack_num += 1
+        stack.append(max_stack_num)
         ans.append("+")
 
-    if stck[-1] == now:
-        stck.pop()
+    if stack[-1] == x:
+        stack.pop()
         ans.append("-")
     else:
-        check = False
+        valid_seq = False
         break
 
-if check:
-    print(*ans, sep="\n")
+if valid_seq:
+    print("\n".join(ans))
 else:
     print("NO")
