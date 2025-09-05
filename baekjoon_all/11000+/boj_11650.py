@@ -1,12 +1,12 @@
 # Solve 2022-05-30
-# Update 2023-03-03
+# Update 2025-09-04
 
 import sys
 
-input = lambda : sys.stdin.readline().rstrip()
+input = lambda: sys.stdin.readline().rstrip()
 
-n = int(input())
-li = [tuple(map(int, input().split())) for _ in range(n)]
+points = [tuple(map(int, input().split())) for _ in range(int(input()))]
+points.sort()
 
-for i in sorted(li):
-    print(*i)
+for p in points:
+    print(*p)
