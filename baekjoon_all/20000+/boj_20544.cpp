@@ -1,4 +1,5 @@
 // Solve 2025-07-27
+// Update 2025-09-05
 
 #include <bits/stdc++.h>
 
@@ -21,23 +22,29 @@ const int MOD = 1000000007;
 ll memo2[1001];
 ll memo[1001];
 
-ll count_if_max_height_2(int x) {
+ll count_for_max_height_2(int x) {
     if (x < 0) return 0;
     if (x == 0) return 1;
     if (memo2[x] != -1) return memo2[x];
 
     ll& ret = memo2[x];
-    ret = (count_if_max_height_2(x - 1) + count_if_max_height_2(x - 2) * 2 + count_if_max_height_2(x - 3) * 3) % MOD;
+    ret = count_for_max_height_2(x - 1);
+    ret += count_for_max_height_2(x - 2) * 2;
+    ret += count_for_max_height_2(x - 3) * 3;
+    ret %= MOD;
     return ret;
 }
 
-ll count_if_max_height_1(int x) {
+ll count_for_max_height_1(int x) {
     if (x < 0) return 0;
     if (x == 0) return 1;
     if (memo[x] != -1) return memo[x];
 
     ll& ret = memo[x];
-    ret = (count_if_max_height_1(x - 1) + count_if_max_height_1(x - 2) + count_if_max_height_1(x - 3)) % MOD;
+    ret = count_for_max_height_1(x - 1);
+    ret += count_for_max_height_1(x - 2);
+    ret += count_for_max_height_1(x - 3);
+    ret %= MOD;
     return ret;
 }
 
@@ -46,9 +53,10 @@ int main() {
 
     memset(memo2, -1, sizeof memo2);
     memset(memo, -1, sizeof memo);
+
     int n;
     cin >> n;
-    ll ans = (count_if_max_height_2(n) - count_if_max_height_1(n) + MOD) % MOD;
+    ll ans = (count_for_max_height_2(n) - count_for_max_height_1(n) + MOD) % MOD;
     cout << ans << '\n';
     return 0;
 }

@@ -1,27 +1,23 @@
 # Solve 2022-05-26
-# Update 2023-10-14
+# Update 2025-09-05
+
+import sys
+
+input = lambda: sys.stdin.readline().rstrip()
 
 n, m = map(int, input().split())
-
 board = [input() for _ in range(n)]
+ans = 64
 
-ans = 32
+for i in range(n - 7):
+    for j in range(m - 7):
+        cnt = 0
 
-for i in range(0, n - 7):
-    for j in range(0, m - 7):
-        change_cnt = 0
+        for x in range(i, i + 8):
+            for y in range(j, j + 8):
+                if board[x][y] == "BW"[(x + y) % 2]:
+                    cnt += 1
 
-        for row in range(i, i + 8):
-            for col in range(j, j + 8):
-                if (row + col) % 2 == 0:
-                    if board[row][col] == "B":
-                        change_cnt += 1
-                else:
-                    if board[row][col] == "W":
-                        change_cnt += 1
-
-        change_cnt = min(change_cnt, 64 - change_cnt)
-
-        ans = min(ans, change_cnt)
+        ans = min(ans, cnt, 64 - cnt)
 
 print(ans)

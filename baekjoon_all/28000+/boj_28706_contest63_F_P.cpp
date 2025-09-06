@@ -1,13 +1,25 @@
 // Solve 2023-08-13
+// Update 2025-09-05
 
 #include <bits/stdc++.h>
-using namespace std;
 
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
-#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
-#define SIZE(v) (int)v.size()
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
 #define ALL(v) v.begin(),v.end()
+#define UNIQUE(v) v.erase(unique(v.begin(),v.end()),v.end());
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
+
+using namespace std;
 using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+const int INF = 0x3f3f3f3f;
+const int MOD = 1000000007;
+
+bool state[2][7];
 
 int main() {
     FASTIO;
@@ -15,48 +27,32 @@ int main() {
     int t;
     cin >> t;
 
-    for (int ti = 0; ti < t; ti++) {
+    while (t-- > 0) {
         int n;
         cin >> n;
 
-        vector<vector<int> > vec(2, vector<int>(7));
-        vec[0][1] = 1;
+        memset(state, false, sizeof state);
+        state[0][1] = true;
 
         for (int ni = 0; ni < n; ni++) {
-            char op, op2;
-            int x, x2;
-            cin >> op >> x >> op2 >> x2;
+            char op1, op2;
+            int v1, v2;
+            cin >> op1 >> v1 >> op2 >> v2;
 
-            for (int i = 0; i < 7; i++) {
-                if (vec[0][i] == 0) continue;
+            for (int d = 0; d < 7; d++) {
+                if (!state[0][d]) continue;
 
-                if (op == '+') {
-                    vec[1][(i + x) % 7] = 1;
-                }
-                else {
-                    vec[1][(i * x) % 7] = 1;
-                }
-
-                if (op2 == '+') {
-                    vec[1][(i + x2) % 7] = 1;
-                }
-                else {
-                    vec[1][(i * x2) % 7] = 1;
-                }
+                int d1 = (op1 == '+' ? d + v1 : d * v1) % 7;
+                state[1][d1] = true;
+                int d2 = (op2 == '+' ? d + v2 : d * v2) % 7;
+                state[1][d2] = true;
             }
 
-            for (int i = 0; i < 7; i++) {
-                vec[0][i] = vec[1][i];
-                vec[1][i] = 0;
-            }
+            swap(state[0], state[1]);
+            memset(state[1], false, sizeof state[1]);
         }
 
-        if (vec[0][0] != 0) {
-            cout << "LUCKY\n";
-        }
-        else {
-            cout << "UNLUCKY\n";
-        }
+        cout << (state[0][0] ? "LUCKY" : "UNLUCKY") << '\n';
     }
 
     return 0;

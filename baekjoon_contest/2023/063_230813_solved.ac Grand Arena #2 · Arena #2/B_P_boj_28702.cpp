@@ -1,42 +1,52 @@
 // Solve 2023-08-13
+// Update 2025-09-05
 
 #include <bits/stdc++.h>
-using namespace std;
 
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
-#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
-#define SIZE(v) (int)v.size()
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
 #define ALL(v) v.begin(),v.end()
+#define UNIQUE(v) v.erase(unique(v.begin(),v.end()),v.end());
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
+
+using namespace std;
 using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+const int INF = 0x3f3f3f3f;
+const int MOD = 1000000007;
 
 int main() {
     FASTIO;
 
     string s;
-    int ans = 0;
+    int nxt_num = 0;
 
     for (int i = 0; i < 3; i++) {
         cin >> s;
 
-        if (s[0] < 'A') {
-            ans = stoi(s) + 3 - i;
+        if (isdigit(s[0])) {
+            nxt_num = stoi(s) + 3 - i;
         }
     }
 
-    if (ans % 3 == 0) {
-        if (ans % 5 == 0) {
-            cout << "FizzBuzz\n";
+    if (nxt_num % 3 == 0) {
+        if (nxt_num % 5 == 0) {
+            cout << "FizzBuzz" << '\n';
         }
         else {
-            cout << "Fizz\n";
+            cout << "Fizz" << '\n';
         }
     }
     else {
-        if (ans % 5 == 0) {
-            cout << "Buzz\n";
+        if (nxt_num % 5 == 0) {
+            cout << "Buzz" << '\n';
         }
         else {
-            cout << ans << '\n';
+            cout << nxt_num << '\n';
         }
     }
 

@@ -1,13 +1,23 @@
 // Solve 2023-10-14
+// Update 2025-09-05
 
 #include <bits/stdc++.h>
-using namespace std;
 
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
-#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
-#define SIZE(v) (int)v.size()
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
 #define ALL(v) v.begin(),v.end()
+#define UNIQUE(v) v.erase(unique(v.begin(),v.end()),v.end());
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
+
+using namespace std;
 using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+const int INF = 0x3f3f3f3f;
+const int MOD = 1000000007;
 
 int main() {
     FASTIO;
@@ -23,32 +33,29 @@ int main() {
 
     int ans = 32;
 
-    for (int i = 0, ie = n - 7; i < ie; i++) {
-        for (int j = 0, je = m - 7; j < je; j++) {
-            int change_cnt = 0;
+    for (int i = 7; i < n; i++) {
+        for (int j = 7; j < m; j++) {
+            int cnt = 0;
 
-            for (int row = i, row_end = i + 8; row < row_end; row++) {
-                for (int col = j, col_end = j + 8; col < col_end; col++) {
-                    if ((row + col) % 2 == 0) {
-                        if (board[row][col] == 'B') {
-                            change_cnt++;
+            for (int x = i - 7; x <= i; x++) {
+                for (int y = j - 7; y <= j; y++) {
+                    if ((x + y) % 2 == 0) {
+                        if (board[x][y] == 'B')  {
+                            cnt++;
                         }
                     }
                     else {
-                        if (board[row][col] == 'W') {
-                            change_cnt++;
+                        if (board[x][y] == 'W')  {
+                            cnt++;
                         }
                     }
                 }
             }
 
-            change_cnt = min(change_cnt, 64 - change_cnt);
-
-            ans = min(ans, change_cnt);
+            ans = min(ans, min(cnt, 64 - cnt));
         }
     }
 
     cout << ans << '\n';
-
     return 0;
 }

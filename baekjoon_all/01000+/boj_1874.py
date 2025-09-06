@@ -1,31 +1,29 @@
 # Solve 2022-05-31
-# Update 2025-08-16
+# Update 2025-09-05
 
 import sys
 
-input = lambda : sys.stdin.readline().rstrip()
+input = lambda: sys.stdin.readline().rstrip()
 
-n = int(input())
-stack = []
-ans = []
-valid_seq = True
-max_stack_num = 0
+def solution(li):
+    last_num = 0
+    stack = []
+    operations = []
 
-for _ in range(n):
-    x = int(input())
-    while x > max_stack_num:
-        max_stack_num += 1
-        stack.append(max_stack_num)
-        ans.append("+")
+    for x in li:
+        while last_num < x:
+            last_num += 1
+            stack.append(last_num)
+            operations.append("+")
 
-    if stack[-1] == x:
+        if stack[-1] != x:
+            return "NO"
+
         stack.pop()
-        ans.append("-")
-    else:
-        valid_seq = False
-        break
+        operations.append("-")
 
-if valid_seq:
-    print("\n".join(ans))
-else:
-    print("NO")
+    return "\n".join(operations)
+
+
+li = [int(input()) for _ in range(int(input()))]
+print(solution(li))

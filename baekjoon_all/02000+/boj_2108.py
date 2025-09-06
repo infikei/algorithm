@@ -1,30 +1,43 @@
 # Solve 2022-05-28
-# Update 2025-04-06
+# Update 2025-09-05
 
 import sys
-import collections
+from collections import Counter
 
-# 0. 입력을 받아서 저장한다.
-n = int(sys.stdin.readline().rstrip())
-nums = list(map(lambda x: int(x.rstrip()), sys.stdin.readlines()))
+input = lambda: sys.stdin.readline().rstrip()
 
-# 1. 산술평균을 출력한다.
-print(round(sum(nums) / n))
+def round(x):
+    sign = -1 if x < 0 else 1
+    x = abs(x)
 
-# 2. 중앙값을 출력한다.
+    if x - int(x) >= 0.5:
+        return sign * (int(x) + 1)
+    else:
+        return sign * int(x)
+
+
+def avg(nums):
+    return sum(nums) / len(nums)
+
+
+def median(nums):
+    return nums[len(nums) // 2]
+
+
+def mode(nums):
+    counter = Counter(nums)
+    res = counter.most_common(2)
+
+    if len(res) >= 2 and res[0][1] == res[1][1]:
+        return res[1][0]
+    else:
+        return res[0][0]
+
+
+nums = [int(input()) for _ in range(int(input()))]
 nums.sort()
-print(nums[n // 2])
 
-# 3. 최빈값을 출력한다.
-counter = collections.Counter(nums).most_common()
-mode_cnt = counter[0][1]
-mode = list(filter(lambda x: x[1] == mode_cnt, counter))
-mode = list(sorted(map(lambda x: x[0], mode)))
-
-if len(mode) > 1:
-    print(mode[1])
-else:
-    print(mode[0])
-
-# 4. 범위를 출력한다.
+print(round(avg(nums)))
+print(median(nums))
+print(mode(nums))
 print(nums[-1] - nums[0])

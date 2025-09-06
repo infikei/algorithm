@@ -1,16 +1,15 @@
 # Solve 2022-05-28
-# Update 2025-07-27
+# Update 2025-09-05
 
 import sys
 
 input = lambda: sys.stdin.readline().rstrip()
 
-
-def is_parentheses_valid(parentheses: str) -> bool:
+def validate_parentheses(ps: str) -> bool:
     depth = 0
 
-    for par in parentheses:
-        if par == '(':
+    for par in ps:
+        if par == "(":
             depth += 1
         else:
             depth -= 1
@@ -22,4 +21,5 @@ def is_parentheses_valid(parentheses: str) -> bool:
 
 
 for _ in range(int(input())):
-    print("YES" if is_parentheses_valid(input()) else "NO")
+    ps = input()
+    print("YES" if validate_parentheses(ps) else "NO")

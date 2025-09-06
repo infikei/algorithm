@@ -1,11 +1,10 @@
 # Solve 2022-05-29
-# Update 2024-01-28
+# Update 2025-09-05
 
 import sys
 
-input = lambda : sys.stdin.readline().rstrip()
+input = lambda: sys.stdin.readline().rstrip()
 
-n = int(input())
-li = sorted([int(input()) for _ in range(n)])
-
-print(*li, sep="\n")
+nums = [int(input()) for _ in range(int(input()))]
+nums.sort()
+print(*nums, sep="\n")

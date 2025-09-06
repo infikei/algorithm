@@ -19,22 +19,12 @@ using pll = pair<ll, ll>;
 const int INF = 0x3f3f3f3f;
 const int MOD = 1000000007;
 
-int solution(int n) {
-    for (int sugar5 = n / 5; sugar5 >= 0; sugar5--) {
-        if ((n - sugar5 * 5) % 3 == 0) {
-            int sugar3 = (n - sugar5 * 5) / 3;
-            return sugar3 + sugar5;
-        }
-    }
-
-    return -1;
-}
-
 int main() {
     FASTIO;
 
+    int memo[15] = {0, 1, 2, 1, 2, 1, 2, 3, 2, 3, 2, 3, 4, 3, 4};
     int n;
     cin >> n;
-    cout << solution(n) << '\n';
+    cout << ((n == 4 || n == 7) ? -1 : (n / 15 * 3 + memo[n % 15])) << '\n';
     return 0;
 }

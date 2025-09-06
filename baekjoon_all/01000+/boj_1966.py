@@ -1,36 +1,35 @@
 # Solve 2023-03-01
+# Update 2025-09-05
 
 import sys
 from collections import deque, Counter
 
-input = lambda : sys.stdin.readline().rstrip()
+input = lambda: sys.stdin.readline().rstrip()
 
-t = int(input())
+def solution(m, documents):
+    counter = Counter(documents)
+    deq = deque()
 
-for _ in range(t):
-    n, m = map(int, input().split())
-    q_val = deque(map(int, input().split()))
-    q_idx = deque([i for i in range(n)])
-    cnt = Counter(q_val)
+    for i in range(len(documents)):
+        deq.append((documents[i], i))
 
     ans = 0
-    cur_val = 9
-    while cnt[cur_val] == 0:
-        cur_val -= 1
 
-    while True:
-        now_val = q_val.popleft()
-        now_idx = q_idx.popleft()
+    for v in range(9, 0, -1):
+        while counter[v] > 0:
+            cur_doc = deq.popleft()
 
-        if now_val == cur_val:
-            ans += 1
-            if now_idx == m:
-                break
-            cnt[cur_val] -= 1
-            while cnt[cur_val] == 0:
-                cur_val -= 1
-        else:
-            q_val.append(now_val)
-            q_idx.append(now_idx)
+            if cur_doc[0] == v:
+                counter[v] -= 1
+                ans += 1
 
-    print(ans)
+                if cur_doc[1] == m:
+                    return ans
+            else:
+                deq.append(cur_doc)
+
+
+for _ in range(int(input())):
+    _, m = map(int, input().split())
+    documents = list(map(int, input().split()))
+    print(solution(m, documents))
