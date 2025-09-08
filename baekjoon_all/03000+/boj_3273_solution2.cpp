@@ -31,27 +31,17 @@ int main() {
         cin >> arr[i];
     }
 
-    sort(arr, arr + n);
     int x;
     cin >> x;
     int cnt = 0;
-    int left = 0;
-    int right = n - 1;
+    unordered_set<int> hs;
 
-    while (left < right) {
-        int sum = arr[left] + arr[right];
-
-        if (sum < x) {
-            left++;
-        }
-        else if (sum > x) {
-            right--;
-        }
-        else {
+    for (int i = 0; i < n; i++) {
+        if (hs.find(x - arr[i]) != hs.end()) {
             cnt++;
-            left++;
-            right--;
         }
+
+        hs.insert(arr[i]);
     }
 
     cout << cnt << '\n';
