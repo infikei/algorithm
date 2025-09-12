@@ -25,9 +25,22 @@ int main() {
     int a, b;
     cin >> a >> b;
 
-    for (int x = -2000; x <= 2000; x++) {
-        if (x * x + 2 * a * x + b == 0) {
-            cout << x << ' ';
+    int d = a * a - b;
+
+    if (d >= 0) {
+        int sqrt_d = sqrt(d);
+
+        if (sqrt_d * sqrt_d == d) {
+            int x1 = -a - sqrt_d;
+            int x2 = -a + sqrt_d;
+
+            if (x1 > x2) swap(x1, x2);
+
+            cout << x1 << ' ';
+
+            if (x1 != x2) {
+                cout << x2 << ' ';
+            }
         }
     }
 

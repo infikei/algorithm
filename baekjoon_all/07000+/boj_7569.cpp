@@ -1,83 +1,84 @@
 // Solve 2022-12-10
-// Update 2023-10-25
+// Update 2025-09-10
 
 #include <bits/stdc++.h>
-using namespace std;
 
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
-#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
-#define SIZE(v) (int)v.size()
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
 #define ALL(v) v.begin(),v.end()
+#define UNIQUE(v) v.erase(unique(v.begin(),v.end()),v.end());
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
+
+using namespace std;
 using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+const int INF = 0x3f3f3f3f;
+const int MOD = 1000000007;
 
 struct Point{
     int z, x, y;
+
     Point(int z, int x, int y) : z(z), x(x), y(y) {}
 };
+
+int board[100][100][100];
+int dz[6] = {0, 0, 0, 0, 1, -1};
+int dx[6] = {0, 0, 1, -1, 0, 0};
+int dy[6] = {1, -1, 0, 0, 0, 0};
 
 int main() {
     FASTIO;
 
-    int dz[6] = { 1, -1, 0, 0, 0, 0 };
-    int dx[6] = { 0, 0, 1, -1, 0, 0 };
-    int dy[6] = { 0, 0, 0, 0, 1, -1 };
-
-    int n, m, h;
+    int h, n, m;
     cin >> m >> n >> h;
+    queue<Point> bfs_que;
+    int not_ripe_cnt = 0;
 
-    int board[100][100][100];
-    queue<Point> que;
-    int ripe_cnt = 0, empty_cnt = 0;
+    for (int z = 0; z < h; z++) {
+        for (int x = 0; x < n; x++) {
+            for (int y = 0; y < m; y++) {
+                cin >> board[z][x][y];
 
-    for (int hei = 0; hei < h; hei++) {
-        for (int row = 0; row < n; row++) {
-            for (int col = 0; col < m; col++) {
-                cin >> board[hei][row][col];
-
-                if (board[hei][row][col] == 1) {
-                    ripe_cnt++;
-                    que.emplace(hei, row, col);
+                if (board[z][x][y] == 0) {
+                    not_ripe_cnt++;
                 }
-                else if (board[hei][row][col] == -1) {
-                    empty_cnt++;
+                else if (board[z][x][y] == 1) {
+                    bfs_que.emplace(z, x, y);
                 }
             }
         }
     }
 
-    int ans = 0;
+    int cur_day = 0;
 
-    while (true) {
-        for (int i = 0, i_end = SIZE(que); i < i_end; i++) {
-            Point now = que.front();
-            que.pop();
+    while (not_ripe_cnt > 0 && !bfs_que.empty()) {
+        cur_day++;
+        int iter = size(bfs_que);
+
+        while (iter-- > 0) {
+            Point cur = bfs_que.front();
+            bfs_que.pop();
 
             for (int d = 0; d < 6; d++) {
-                int nz = now.z + dz[d];
-                int nx = now.x + dx[d];
-                int ny = now.y + dy[d];
+                int nz = cur.z + dz[d];
+                int nx = cur.x + dx[d];
+                int ny = cur.y + dy[d];
 
                 if (nz < 0 || nz >= h || nx < 0 || nx >= n || ny < 0 || ny >= m) continue;
 
                 if (board[nz][nx][ny] == 0) {
                     board[nz][nx][ny] = 1;
-                    ripe_cnt++;
-                    que.emplace(nz, nx, ny);
+                    bfs_que.emplace(nz, nx, ny);
+                    not_ripe_cnt--;
                 }
             }
         }
-
-        if (que.empty()) break;
-
-        ans++;
     }
 
-    if (h * n * m == ripe_cnt + empty_cnt) {
-        cout << ans << '\n';
-    }
-    else {
-        cout << -1 << '\n';
-    }
-
+    cout << (not_ripe_cnt > 0 ? -1 : cur_day) << '\n';
     return 0;
 }
