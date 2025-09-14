@@ -1,10 +1,11 @@
 // Solve 2025-03-30
+// Update 2025-09-13
 
 #include <bits/stdc++.h>
 
 #define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
-#define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
+#define UNIQUE(v) v.erase(unique(v.begin(),v.end()),v.end());
 #define SETW(n, c) cout << setw(n) << setfill(c);
 #define SETP(n) cout << fixed << setprecision(n);
 
@@ -14,11 +15,18 @@ using uint = unsigned int;
 using ull = unsigned long long;
 using ld = long double;
 using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+const int INF = 0x3f3f3f3f;
+const int MOD = 1000000007;
+
+bool is_real_purple(vector<int>& purple, double h, double s, int v) {
+    return purple[0] <= h && h <= purple[1] && purple[2] <= s && s <= purple[3] && purple[4] <= v && v <= purple[5];
+}
 
 int main() {
     FASTIO;
 
-    int purple[6];
+    vector<int> purple(6);
 
     for (int i = 0; i < 6; i++) {
         cin >> purple[i];
@@ -26,7 +34,6 @@ int main() {
 
     int r, g, b;
     cin >> r >> g >> b;
-
     int max_rgb = max(r, max(g, b));
     int min_rgb = min(r, min(g, b));
     int v = max_rgb;
@@ -47,7 +54,7 @@ int main() {
         h += 360;
     }
 
-    if (purple[0] <= h && h <= purple[1] && purple[2] <= s && s <= purple[3] && purple[4] <= v && v <= purple[5]) {
+    if (is_real_purple(purple, h, s, v)) {
         cout << "Lumi will like it." << '\n';
     }
     else {

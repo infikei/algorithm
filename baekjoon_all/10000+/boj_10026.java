@@ -1,11 +1,12 @@
 // Solve 2024-02-20
-
-// 백준에 제출할 때는 class 이름을 Main으로 설정해야 한다.
+// Update 2025-09-13
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayDeque;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class boj_10026 {
 
@@ -18,8 +19,41 @@ public class boj_10026 {
         }
     }
 
-    static int[] dx = { 0, 0, -1, 1 };
-    static int[] dy = { -1, 1, 0, 0 };
+    static int[] dx = {0, 0, -1, 1};
+    static int[] dy = {-1, 1, 0, 0};
+
+    static int countArea(char[][] board, boolean[][] visited, int n, Map<Character, Character> color_map) {
+        ArrayDeque<Point> bfsQue = new ArrayDeque<>();
+        int areaCount = 0;
+
+        for (int x = 0; x < n; x++) {
+            for (int y = 0; y < n; y++) {
+                if (visited[x][y]) continue;
+
+                areaCount++;
+                char color = color_map.get(board[x][y]);
+                visited[x][y] = true;
+                bfsQue.offer(new Point(x, y));
+
+                while (!bfsQue.isEmpty()) {
+                    Point cur = bfsQue.poll();
+
+                    for (int d = 0; d < 4; d++) {
+                        int nx = cur.x + dx[d];
+                        int ny = cur.y + dy[d];
+
+                        if (nx < 0 || nx >= n || ny < 0 || ny >= n) continue;
+                        if (visited[nx][ny] || color_map.get(board[nx][ny]) != color) continue;
+
+                        visited[nx][ny] = true;
+                        bfsQue.offer(new Point(nx, ny));
+                    }
+                }
+            }
+        }
+
+        return areaCount;
+    }
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -31,73 +65,22 @@ public class boj_10026 {
         }
 
         boolean[][] visited = new boolean[n][n];
-        ArrayDeque<Point> bfsQue = new ArrayDeque<Point>();
-        int r = 0, g = 0, b = 0;
+        Map<Character, Character> color_map = new TreeMap<>();
+        color_map.put('R', 'R');
+        color_map.put('G', 'G');
+        color_map.put('B', 'B');
+        int areaCount = countArea(board, visited, n, color_map);
 
         for (int x = 0; x < n; x++) {
             for (int y = 0; y < n; y++) {
-                if (visited[x][y]) continue;
-
-                visited[x][y] = true;
-                bfsQue.offer(new Point(x, y));
-                char color = board[x][y];
-
-                while (!bfsQue.isEmpty()) {
-                    Point cur = bfsQue.poll();
-
-                    for (int d = 0; d < 4; d++) {
-                        int nx = cur.x + dx[d];
-                        int ny = cur.y + dy[d];
-
-                        if (nx < 0 || nx >= n || ny < 0 || ny >= n || visited[nx][ny] || board[nx][ny] != color) continue;
-
-                        visited[nx][ny] = true;
-                        bfsQue.offer(new Point(nx, ny));
-                    }
-                }
-
-                if (color == 'R') {
-                    r++;
-                } else if (color == 'G') {
-                    g++;
-                } else {
-                    b++;
-                }
+                visited[x][y] = false;
             }
         }
 
-        visited = new boolean[n][n];
-        int rg = 0;
+        color_map.put('G', 'R');
+        int areaCount2 = countArea(board, visited, n, color_map);
 
-        for (int x = 0; x < n; x++) {
-            for (int y = 0; y < n; y++) {
-                if (visited[x][y] || board[x][y] == 'B') continue;
-
-                visited[x][y] = true;
-                bfsQue.offer(new Point(x, y));
-
-                while (!bfsQue.isEmpty()) {
-                    Point cur = bfsQue.poll();
-
-                    for (int d = 0; d < 4; d++) {
-                        int nx = cur.x + dx[d];
-                        int ny = cur.y + dy[d];
-
-                        if (nx < 0 || nx >= n || ny < 0 || ny >= n || visited[nx][ny] || board[nx][ny] == 'B') continue;
-
-                        visited[nx][ny] = true;
-                        bfsQue.offer(new Point(nx, ny));
-                    }
-                }
-
-                rg++;
-            }
-        }
-
-        StringBuilder sb = new StringBuilder();
-        sb.append(r + g + b).append(" ").append(rg + b);
-        System.out.println(sb);
-        br.close();
+        System.out.println(areaCount + " " + areaCount2);
     }
 
 }
