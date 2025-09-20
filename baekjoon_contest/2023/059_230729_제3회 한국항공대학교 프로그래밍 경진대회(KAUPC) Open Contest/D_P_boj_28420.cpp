@@ -1,65 +1,78 @@
 // Solve 2023-07-29
+// Update 2025-09-20
 
 #include <bits/stdc++.h>
-using namespace std;
 
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
-#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
-#define SIZE(v) (int)v.size()
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
 #define ALL(v) v.begin(),v.end()
+#define UNIQUE(v) v.erase(unique(v.begin(),v.end()),v.end());
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
+
+using namespace std;
 using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+const int INF = 0x3f3f3f3f;
+const int MOD = 1000000007;
 
 int cloud[301][301];
+
+int get_area(int x1, int y1, int x2, int y2) {
+    return cloud[x2][y2] - cloud[x2][y1 - 1] + cloud[x1 - 1][y1 - 1] - cloud[x1 - 1][y2];
+}
 
 int main() {
     FASTIO;
 
-    int n, m;
-    cin >> n >> m;
+    int n, m, a, b, c;
+    cin >> n >> m >> a >> b >> c;
 
-    int a, b, c;
-    cin >> a >> b >> c;
-
-    for (int i = 1; i <= n; i++) {
-        for (int j = 1; j <= m; j++) {
-            int x;
-            cin >> x;
-
-            cloud[i][j] = -cloud[i - 1][j - 1] + cloud[i - 1][j] + cloud[i][j - 1] + x;
+    for (int x = 1; x <= n; x++) {
+        for (int y = 1; y <= m; y++) {
+            int val;
+            cin >> val;
+            cloud[x][y] = cloud[x - 1][y] - cloud[x - 1][y - 1] + cloud[x][y - 1] + val;
         }
     }
 
-    int ans = 1e9;
+    int ans = INF;
 
-    int ab = a + b;
-    int ac = a + c;
-    int bc = b + c;
+    for (int x = 1; x <= n; x++) {
+        for (int y = 1; y <= m; y++) {
+            // 1번째 모양
+            int x_end = x + a;
+            int y_end = y + b + c;
 
-    for (int i = a; i <= n; i++) {
-        int ia = i - a;
-        for (int j = bc; j <= m; j++) {
-            int jbc = j - bc;
-            ans = min(ans, cloud[ia][jbc] - cloud[ia][j] - cloud[i][jbc] + cloud[i][j]);
-        }
-    }
+            if (x_end - 1 <= n && y_end - 1 <= m) {
+                ans = min(ans, get_area(x, y, x_end - 1, y_end - 1));
+            }
 
-    for (int i = ab; i <= n; i++) {
-        int iab = i - ab, ib = i - b;
-        for (int j = ac; j <= m; j++) {
-            int jac = j - ac, ja = j - a;
-            ans = min(ans, cloud[iab][jac] - cloud[iab][ja] - cloud[ib][jac] + cloud[ib][ja] + cloud[ib][ja] - cloud[ib][j] - cloud[i][ja] + cloud[i][j]);
-        }
-    }
+            // 2번째 모양
+            int x_mid = x + a;
+            int y_mid = y + c;
+            x_end = x + a + b;
+            y_end = y + a + c;
 
-    for (int i = ac; i <= n; i++) {
-        int iac = i - ac, ic = i - c;
-        for (int j = ab; j <= m; j++) {
-            int jab = j - ab, ja = j - a;
-            ans = min(ans, cloud[iac][jab] - cloud[iac][ja] - cloud[ic][jab] + cloud[ic][ja] + cloud[ic][ja] - cloud[ic][j] - cloud[i][ja] + cloud[i][j]);
+            if (x_end - 1 <= n && y_end - 1 <= m) {
+                ans = min(ans, get_area(x, y, x_mid - 1, y_mid - 1) + get_area(x_mid, y_mid, x_end - 1, y_end - 1));
+            }
+
+            // 3번째 모양
+            x_mid = x + a;
+            y_mid = y + b;
+            x_end = x + a + c;
+            y_end = y + a + b;
+
+            if (x_end - 1 <= n && y_end - 1 <= m) {
+                ans = min(ans, get_area(x, y, x_mid - 1, y_mid - 1) + get_area(x_mid, y_mid, x_end - 1, y_end - 1));
+            }
         }
     }
 
     cout << ans << '\n';
-
     return 0;
 }
