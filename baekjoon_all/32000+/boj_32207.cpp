@@ -1,20 +1,13 @@
 // Solve 2025-01-12
+// Update 2025-09-21
 
 #include <bits/stdc++.h>
 
 #define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
-#define size(v) (int)v.size()
-#define all(v) v.begin(),v.end()
-#define setw(n, c) cout << setw(n) << setfill(c);
-#define setp(n) cout << fixed << setprecision(n);
-#define printw(x) cout << (x) << ' ';
-#define println(x) cout << (x) << '\n';
-
-#ifdef BOJ
-#define testPrint(x) ((void)0)
-#else
-#define testPrint(x) cout << "[D] " << #x << ':' << x << '\n'
-#endif
+#define ALL(v) v.begin(),v.end()
+#define UNIQUE(v) v.erase(unique(v.begin(),v.end()),v.end());
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
 
 using namespace std;
 using ll = long long;
@@ -22,77 +15,84 @@ using uint = unsigned int;
 using ull = unsigned long long;
 using ld = long double;
 using pii = pair<int, int>;
-
-const double PI = M_PI;
+using pll = pair<ll, ll>;
+const int INF = 0x3f3f3f3f;
+const int MOD = 1000000007;
 
 struct Ruby{
-    int x, y, val;
+    int x, y, value;
 
-    Ruby(int x, int y, int val) : x(x), y(y), val(val) {}
+    Ruby(int x, int y, int value) : x(x), y(y), value(value) {
+    }
 
-    bool operator<(const Ruby &rhs) const {
-        return val > rhs.val;
+    bool operator<(const Ruby& rhs) const {
+        return value < rhs.value;
+    }
+
+    bool operator>(const Ruby& rhs) const {
+        return rhs < *this;
     }
 };
 
-int k;
-int board[1000][1000];
-vector<Ruby> vec;
-int selected[5];
+int recur(int depth, int start_idx, int value_sum, int k, vector<Ruby>& rubies, vector<int>& selected) {
+    if (depth == k) {
+        return value_sum;
+    }
 
-int recur(int depth, int begin_idx, int cur_sum) {
-    if (depth == k) return cur_sum;
+    int ret = value_sum;
 
-    int res = cur_sum;
-
-    for (int i = begin_idx; i < size(vec); i++) {
+    for (int i = start_idx; i < size(rubies); i++) {
+        Ruby& cur_ruby = rubies[i];
         bool adjacent = false;
 
         for (int j = 0; j < depth; j++) {
-            if (abs(vec[i].x - vec[selected[j]].x) + abs(vec[i].y - vec[selected[j]].y) == 1) {
+            Ruby& prev_ruby = rubies[selected[j]];
+
+            if (abs(cur_ruby.x - prev_ruby.x) + abs(cur_ruby.y - prev_ruby.y) <= 1) {
                 adjacent = true;
                 break;
             }
         }
 
-        if (adjacent) continue;
-
-        selected[depth] = i;
-        int nxt_sum = recur(depth + 1, i + 1, cur_sum + vec[i].val);
-        res = max(res, nxt_sum);
+        if (!adjacent) {
+            selected[depth] = i;
+            int nxt_ret = recur(depth + 1, i + 1, value_sum + cur_ruby.value, k, rubies, selected);
+            ret = max(ret, nxt_ret);
+        }
     }
 
-    return res;
+    return ret;
 }
 
 int main() {
     FASTIO;
 
-    int n, m;
+    int n, m, k;
     cin >> n >> m >> k;
-
-    int kk = k * 5 - 4;
-
-    priority_queue<Ruby> pq;
+    int n_rubies = 5 * k - 4;
+    priority_queue<Ruby, vector<Ruby>, greater<Ruby>> pq_mintop;
 
     for (int x = 0; x < n; x++) {
         for (int y = 0; y < m; y++) {
-            cin >> board[x][y];
-            pq.emplace(x, y, board[x][y]);
+            int v;
+            cin >> v;
+            pq_mintop.emplace(x, y, v);
         }
 
-        while (size(pq) > kk) {
-            pq.pop();
+        while (size(pq_mintop) > n_rubies) {
+            pq_mintop.pop();
         }
     }
 
-    while (!pq.empty()) {
-        vec.push_back(pq.top());
-        pq.pop();
+    vector<Ruby> high_value_rubies;
+
+    while (!pq_mintop.empty()) {
+        high_value_rubies.push_back(pq_mintop.top());
+        pq_mintop.pop();
     }
 
-    int ans = recur(0, 0, 0);
-    println(ans);
-
+    vector<int> selected(k);
+    int ans = recur(0, 0, 0, k, high_value_rubies, selected);
+    cout << ans << '\n';
     return 0;
 }
