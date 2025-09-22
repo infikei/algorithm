@@ -1,4 +1,5 @@
 # Solve 2025-09-16
+# Update 2025-09-22
 
 import sys
 
@@ -38,4 +39,4 @@ mat = [list(map(int, input().split())) for _ in range(n)]
 result = mat_pow(mat, b)
 
 for row in result:
-    print(*row, sep=" ")
+    print(*row)

@@ -1,4 +1,5 @@
 # Solve 2025-09-07
+# Update 2025-09-22
 
 import sys
 from collections import deque
@@ -44,9 +45,9 @@ for li in adj:
 visited = [False] * (n + 1)
 dfs_output = []
 dfs(v, adj, visited, dfs_output)
-print(*dfs_output, sep=" ")
+print(*dfs_output)
 
 visited = [False] * (n + 1)
 bfs_output = []
 bfs(v, adj, visited, bfs_output)
-print(*bfs_output, sep=" ")
+print(*bfs_output)
