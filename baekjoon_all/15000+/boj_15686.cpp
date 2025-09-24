@@ -1,44 +1,63 @@
 // Solve 2022-09-12
-// Update 2024-02-20
+// Update 2025-09-23
 
 #include <bits/stdc++.h>
-using namespace std;
 
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
-#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
-#define SIZE(v) (int)v.size()
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
 #define ALL(v) v.begin(),v.end()
+#define UNIQUE(v) v.erase(unique(v.begin(),v.end()),v.end());
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
+
+using namespace std;
 using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+using ld = long double;
 using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+const int INF = 0x3f3f3f3f;
+const int MOD = 1000000007;
+
+struct Point{
+    int x, y;
+
+    Point(int x, int y) : x(x), y(y) {
+    }
+
+    int get_dist(Point& rhs) {
+        return abs(x - rhs.x) + abs(y - rhs.y);
+    }
+};
 
 int n, m;
 int min_sum_dist;
-vector<pii> houses;
-vector<pii> chickens;
-vector<int> chicken_selected;
+vector<Point> houses;
+vector<Point> chickens;
+vector<int> selected_chickens;
 
-void dfs(int depth = 0, int begin_idx = 0) {
+void recur(int depth = 0, int begin_idx = 0) {
     if (depth == m) {
-        int cur_sum_dist = 0;
+        int city_chicken_dist = 0;
 
-        for (pii house : houses) {
+        for (Point& house : houses) {
             int chicken_dist = 100;
 
-            for (int chicken_idx : chicken_selected) {
-                chicken_dist = min(chicken_dist, abs(house.first - chickens[chicken_idx].first) + abs(house.second - chickens[chicken_idx].second));
+            for (int c_idx : selected_chickens) {
+                chicken_dist = min(chicken_dist, house.get_dist(chickens[c_idx]));
             }
 
-            cur_sum_dist += chicken_dist;
+            city_chicken_dist += chicken_dist;
         }
 
-        min_sum_dist = min(min_sum_dist, cur_sum_dist);
+        min_sum_dist = min(min_sum_dist, city_chicken_dist);
         return;
     }
 
-    for (int i = begin_idx; i < SIZE(chickens); i++) {
-        chicken_selected.push_back(i);
-        dfs(depth + 1, i + 1);
-        chicken_selected.pop_back();
+    for (int i = begin_idx; i < size(chickens); i++) {
+        selected_chickens.push_back(i);
+        recur(depth + 1, i + 1);
+        selected_chickens.pop_back();
     }
 }
 
@@ -61,9 +80,8 @@ int main() {
         }
     }
 
-    min_sum_dist = 10000;
-    dfs();
+    min_sum_dist = INF;
+    recur();
     cout << min_sum_dist << '\n';
-
     return 0;
 }
