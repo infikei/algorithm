@@ -19,24 +19,40 @@ using pll = pair<ll, ll>;
 const int INF = 0x3f3f3f3f;
 const int MOD = 1000000007;
 
-int solution(int a, int b) {
-    int ret = 1;
+int bfs(int a, int b) {
+    queue<int> que;
+    que.push(a);
+    int depth = 1;
 
-    while (b > a) {
-        if (b % 10 == 1) {
-            b /= 10;
-            ret++;
-        }
-        else if (b % 2 == 0) {
-            b /= 2;
-            ret++;
-        }
-        else {
-            return -1;
+    while (!que.empty()) {
+        depth++;
+        int iter = size(que);
+
+        while (iter-- > 0) {
+            ll cur = que.front();
+            que.pop();
+
+            ll nxt = cur * 2;
+
+            if (nxt < b) {
+                que.push(nxt);
+            }
+            else if (nxt == b) {
+                return depth;
+            }
+
+            nxt = cur * 10 + 1;
+
+            if (nxt < b) {
+                que.push(nxt);
+            }
+            else if (nxt == b) {
+                return depth;
+            }
         }
     }
 
-    return (a == b ? ret : -1);
+    return -1;
 }
 
 int main() {
@@ -44,6 +60,6 @@ int main() {
 
     int a, b;
     cin >> a >> b;
-    cout << solution(a, b) << '\n';
+    cout << bfs(a, b) << '\n';
     return 0;
 }
