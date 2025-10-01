@@ -1,55 +1,73 @@
-#include <iostream>
-#include <vector>
-#define fastio ios_base::sync_with_stdio(false);cout.tie(NULL);cin.tie(NULL); // boj_15552.cpp
+// Solve 2023-01-11
+// Update 2025-09-30
+
+#include <bits/stdc++.h>
+
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
+#define ALL(v) v.begin(),v.end()
+#define UNIQUE(v) v.erase(unique(v.begin(),v.end()),v.end());
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
+
 using namespace std;
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+const int INF = 0x3f3f3f3f;
+const int MOD = 1000000007;
 
-const int INF = 987654321;
-int n, m, r, ans;
-vector<vector<int> > dist_dp;
-vector<int> items;
-
-void floyd_warshall() {
+void floyd_warshall(int n, vector<vector<int>>& dist) {
     for (int i = 1; i <= n; i++) {
         for (int j = 1; j <= n; j++) {
             for (int k = 1; k <= n; k++) {
-                if (dist_dp[j][i] == INF || dist_dp[i][k] == INF) continue;
-                dist_dp[j][k] = min(dist_dp[j][k], dist_dp[j][i] + dist_dp[i][k]);
+                dist[j][k] = min(dist[j][k], dist[j][i] + dist[i][k]);
             }
         }
     }
 }
 
 int main() {
-    fastio;
+    FASTIO;
 
+    int n, m, r;
     cin >> n >> m >> r;
-    items.assign(n + 1, 0);
+    vector<int> item(n + 1);
+
     for (int i = 1; i <= n; i++) {
-        cin >> items[i];
+        cin >> item[i];
     }
-    dist_dp.assign(n + 1, vector<int>(n + 1, INF));
+
+    vector<vector<int>> dist(n + 1, vector<int>(n + 1, INF));
+
     for (int i = 1; i <= n; i++) {
-        dist_dp[i][i] = 0;
+        dist[i][i] = 0;
     }
+
     for (int i = 0; i < r; i++) {
-        int a, b, dist;
-        cin >> a >> b >> dist;
-        dist_dp[a][b] = min(dist_dp[a][b], dist);
-        dist_dp[b][a] = min(dist_dp[b][a], dist);
+        int u, v, w;
+        cin >> u >> v >> w;
+        dist[u][v] = min(dist[u][v], w);
+        dist[v][u] = min(dist[v][u], w);
     }
 
-    floyd_warshall();
+    floyd_warshall(n, dist);
+    int max_item = 0;
 
     for (int i = 1; i <= n; i++) {
-        int cnt = 0;
+        int cur_item = 0;
+
         for (int j = 1; j <= n; j++) {
-            if (dist_dp[i][j] <= m) {
-                cnt += items[j];
+            if (dist[i][j] <= m) {
+                cur_item += item[j];
             }
         }
-        ans = max(ans, cnt);
-    }
-    cout << ans << '\n';
 
+        max_item = max(max_item, cur_item);
+    }
+
+    cout << max_item << '\n';
     return 0;
 }

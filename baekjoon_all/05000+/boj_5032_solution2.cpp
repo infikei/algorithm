@@ -24,14 +24,8 @@ int main() {
 
     int e, f, c;
     cin >> e >> f >> c;
-    int bottle = e + f;
-    int cnt = 0;
-
-    while (bottle >= c) {
-        cnt += bottle / c;
-        bottle = bottle / c + bottle % c;
-    }
-
+    int cnt = (e + f - 1) / (c - 1);
+    cnt = max(0, cnt);
     cout << cnt << '\n';
     return 0;
 }
