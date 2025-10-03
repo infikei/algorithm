@@ -19,9 +19,11 @@ using pll = pair<ll, ll>;
 const int INF = 0x3f3f3f3f;
 const int MOD = 1000000007;
 
-pii dfs(int cur, int par, vector<vector<pii>>& adj) {
-    vector<int> max_depth_list = {0, 0};
-    int max_len = 0;
+void dfs(int cur, int par, int cur_dist, vector<vector<pii>>& adj, int& max_dist, int& max_node) {
+    if (cur_dist > max_dist) {
+        max_dist = cur_dist;
+        max_node = cur;
+    }
 
     for (pii& p : adj[cur]) {
         int nxt = p.first;
@@ -29,13 +31,8 @@ pii dfs(int cur, int par, vector<vector<pii>>& adj) {
 
         if (nxt == par) continue;
 
-        pii nxt_res = dfs(nxt, cur, adj);
-        max_depth_list.push_back(nxt_res.first + w);
-        max_len = max(max_len, nxt_res.second);
+        dfs(nxt, cur, cur_dist + w, adj, max_dist, max_node);
     }
-
-    sort(max_depth_list.begin(), max_depth_list.end(), greater<int>());
-    return {max_depth_list[0], max(max_depth_list[0] + max_depth_list[1], max_len)};
 }
 
 int main() {
@@ -59,7 +56,13 @@ int main() {
         }
     }
 
-    pii res = dfs(1, -1, adj);
-    cout << res.second << '\n';
+    int max_dist = -1;
+    int max_node1 = -1;
+    dfs(1, -1, 0, adj, max_dist, max_node1);
+
+    max_dist = -1;
+    int max_node2 = -1;
+    dfs(max_node1, -1, 0, adj, max_dist, max_node2);
+    cout << max_dist << '\n';
     return 0;
 }

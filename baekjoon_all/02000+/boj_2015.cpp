@@ -1,4 +1,5 @@
 // Solve 2025-06-23
+// Update 2025-10-03
 
 #include <bits/stdc++.h>
 
@@ -25,20 +26,19 @@ int main() {
     ll k;
     cin >> n >> k;
 
-    ll ans = 0;
+    ll cnt = 0;
     ll prefix_sum = 0;
-    unordered_map<ll, ll> hs;
-    hs[0]++;
+    map<ll, int> mp;
+    mp[0]++;
 
     for (int i = 0; i < n; i++) {
-        ll x;
-        cin >> x;
-
-        prefix_sum += x;
-        ans += hs[prefix_sum - k];
-        hs[prefix_sum]++;
+        ll v;
+        cin >> v;
+        prefix_sum += v;
+        cnt += mp[prefix_sum - k];
+        mp[prefix_sum]++;
     }
 
-    cout << ans << '\n';
+    cout << cnt << '\n';
     return 0;
 }

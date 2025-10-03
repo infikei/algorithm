@@ -1,12 +1,12 @@
 # Solve 2023-03-04
-# Update 2025-10-02
+# Update 2025-10-03
 
 import sys
 
 input = lambda: sys.stdin.readline().rstrip()
 
 n, m = map(int, input().split())
-board = [[0] * (n + 1)] + [list(map(int, ("0 " + input()).split())) for _ in range(n)]
+board = [[0] * (n + 1)] + [[0] + list(map(int, input().split())) for _ in range(n)]
 
 for x in range(1, n + 1):
     for y in range(1, n + 1):
