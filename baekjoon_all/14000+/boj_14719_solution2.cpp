@@ -1,4 +1,4 @@
-// Solve 2022-06-03
+// Solve 2024-11-02
 // Update 2025-10-04
 
 #include <bits/stdc++.h>
@@ -19,31 +19,40 @@ using pll = pair<ll, ll>;
 const int INF = 0x3f3f3f3f;
 const int MOD = 1000000007;
 
-bool hansu[1001];
+int heights[500];
+int left_max[500];
+int right_max[500];
 
 int main() {
     FASTIO;
 
-    for (int d = 1; d <= 99; d++) {
-        hansu[d] = true;
+    int h, w;
+    cin >> h >> w;
+
+    for (int x = 0; x < w; x++) {
+        cin >> heights[x];
     }
 
-    for (int d = 100; d <= 999; d++) {
-        if (d / 10 % 10 * 2 == d / 100 + d % 10) {
-            hansu[d] = true;
-        }
+    int max_h = 0;
+
+    for (int x = 0; x < w; x++) {
+        max_h = max(max_h, heights[x]);
+        left_max[x] = max_h;
     }
 
-    int n;
-    cin >> n;
-    int cnt = 0;
+    max_h = 0;
 
-    for (int i = 1; i <= n; i++) {
-        if (hansu[i]) {
-            cnt++;
-        }
+    for (int x = w - 1; x >= 0; x--) {
+        max_h = max(max_h, heights[x]);
+        right_max[x] = max_h;
     }
 
-    cout << cnt << '\n';
+    int ans = 0;
+
+    for (int x = 0; x < w; x++) {
+        ans += min(left_max[x], right_max[x]) - heights[x];
+    }
+
+    cout << ans << '\n';
     return 0;
 }

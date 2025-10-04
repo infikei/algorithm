@@ -1,67 +1,61 @@
 // Solve 2023-02-13
+// Update 2025-10-04
 
 #include <bits/stdc++.h>
-using namespace std;
 
-#ifdef BOJ
-#define BOJTEST(x) ((void)0)
-#else
-#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
-#endif
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
-#define SIZE(v) (int)v.size()
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
 #define ALL(v) v.begin(),v.end()
-#define INF (int)1e9
-#define LLINF (ll)4e18
+#define UNIQUE(v) v.erase(unique(v.begin(),v.end()),v.end());
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
+
+using namespace std;
 using ll = long long;
 using uint = unsigned int;
 using ull = unsigned long long;
+using ld = long double;
 using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+const int INF = 0x3f3f3f3f;
+const int MOD = 1000000007;
 
-const int MAX_N = 10000;
-int n, ans;
-vector<pii> tree[MAX_N + 1];
-
-int dfs(int now = 1) {
-    if (tree[now].empty()) {
-        return 0;
+void dfs(int cur, int par, int cur_dist, vector<vector<pii>>& adj, int& max_dist, int& max_node) {
+    if (cur_dist > max_dist) {
+        max_dist = cur_dist;
+        max_node = cur;
     }
 
-    priority_queue<pii, vector<pii>, greater<pii> > pq_mintop;
-    for (auto next : tree[now]) {
-        int next_node = next.first;
-        int next_dist = dfs(next_node) + next.second;
-        pq_mintop.push({ next_dist, next_node });
-        if (SIZE(pq_mintop) > 2) {
-            pq_mintop.pop();
-        }
-    }
+    for (pii& p : adj[cur]) {
+        int nxt = p.first;
+        int w = p.second;
 
-    auto b = pq_mintop.top();
-    pq_mintop.pop();
-    if (pq_mintop.empty()) {
-        ans = max(ans, b.first);
-        return b.first;
-    }
+        if (nxt == par) continue;
 
-    auto a = pq_mintop.top();
-    ans = max(ans, a.first + b.first);
-    return a.first;
+        dfs(nxt, cur, cur_dist + w, adj, max_dist, max_node);
+    }
 }
 
 int main() {
     FASTIO;
 
+    int n;
     cin >> n;
+    vector<vector<pii>> adj(n + 1);
+
     for (int i = 1; i < n; i++) {
-        int a, b, d;
-        cin >> a >> b >> d;
-        tree[a].push_back({ b, d });
+        int par, child, w;
+        cin >> par >> child >> w;
+        adj[par].emplace_back(child, w);
+        adj[child].emplace_back(par, w);
     }
 
-    dfs();
+    int max_dist = -1;
+    int max_node1 = -1;
+    dfs(1, -1, 0, adj, max_dist, max_node1);
 
-    cout << ans << '\n';
-
+    max_dist = -1;
+    int max_node2 = -1;
+    dfs(max_node1, -1, 0, adj, max_dist, max_node2);
+    cout << max_dist << '\n';
     return 0;
 }

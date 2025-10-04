@@ -1,4 +1,5 @@
 // Solve 2025-10-02
+// Update 2025-10-04
 
 #include <bits/stdc++.h>
 
@@ -20,7 +21,6 @@ const int MOD = 1000000007;
 
 int arr[5001];
 int memo[5001];
-int nmemo[5001];
 
 int main() {
     FASTIO;
@@ -33,7 +33,6 @@ int main() {
     }
 
     int max_v = 0;
-    int prev_max_v = 0;
     int last[2] = {0, 0};
     int cnt[2] = {0, 0};
     memo[0] = 1;
@@ -55,21 +54,13 @@ int main() {
         }
 
         if (max_v == i) {
-            memset(nmemo, 0, sizeof nmemo);
-
-            for (int v = 0; v <= prev_max_v; v++) {
-                for (int j = 0; j < 2; j++) {
-                    int nv = v + cnt[j];
-
-                    if (nv <= max_v) {
-                        nmemo[nv] = (nmemo[nv] + memo[v]) % MOD;
-                    }
-                }
+            for (int v = max_v; v >= 0; v--) {
+                int m0 = v >= cnt[0] ? memo[v - cnt[0]] : 0;
+                int m1 = v >= cnt[1] ? memo[v - cnt[1]] : 0;
+                memo[v] = (m0 + m1) % MOD;
             }
 
-            swap(memo, nmemo);
             cnt[0] = cnt[1] = 0;
-            prev_max_v = max_v;
         }
     }
 

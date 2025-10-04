@@ -1,7 +1,7 @@
 # Solve 2025-10-02
+# Update 2025-10-04
 
 import sys
-from collections import Counter
 
 input = lambda: sys.stdin.readline().rstrip()
 
@@ -11,7 +11,8 @@ def solution(n: int, m: int, nums: list[int]) -> int:
     max_v = 0
     last = [0, 0]
     cnt = [0, 0]
-    counter = {0: 1}
+    memo = [0] * (n + 1)
+    memo[0] = 1
 
     for i in range(1, n + 1):
         max_v = max(max_v, nums[i])
@@ -26,17 +27,14 @@ def solution(n: int, m: int, nums: list[int]) -> int:
             return 0
 
         if max_v == i:
-            new_counter = {}
+            for v in range(max_v, -1, -1):
+                m0 = memo[v - cnt[0]] if v >= cnt[0] else 0
+                m1 = memo[v - cnt[1]] if v >= cnt[1] else 0
+                memo[v] = m0 + m1
 
-            for k, v in counter.items():
-                new_counter[k + cnt[0]] = new_counter.get(k + cnt[0], 0) + v
-                new_counter[k + cnt[1]] = new_counter.get(k + cnt[1], 0) + v
-
-            counter = new_counter
             cnt = [0, 0]
 
-    ans = sum([v if k >= n - m and k <= m else 0 for k, v in counter.items()])
-    return ans % MOD
+    return sum(memo[n - m : m + 1]) % MOD
 
 
 n, m = map(int, input().split())

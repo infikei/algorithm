@@ -1,72 +1,55 @@
 // Solve 2023-02-13
+// Update 2025-10-04
 
 #include <bits/stdc++.h>
-using namespace std;
 
-#ifdef BOJ
-#define BOJTEST(x) ((void)0)
-#else
-#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
-#endif
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
-#define SIZE(v) (int)v.size()
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
 #define ALL(v) v.begin(),v.end()
-#define INF (int)1e9
-#define LLINF (ll)4e18
+#define UNIQUE(v) v.erase(unique(v.begin(),v.end()),v.end());
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
+
+using namespace std;
 using ll = long long;
 using uint = unsigned int;
 using ull = unsigned long long;
+using ld = long double;
 using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+const int INF = 0x3f3f3f3f;
+const int MOD = 1000000007;
 
-const int MAX_N = 10000;
-int n, max_node, max_dist;
-vector<pii> tree[MAX_N + 1];
-bool visited[MAX_N + 1];
+pii dfs(int cur, vector<vector<pii>>& tree) {
+    vector<int> max_depth_list = {0, 0};
+    int max_len = 0;
 
-void bfs(int s, bool initialize) {
-    if (initialize) {
-        for (int i = 1; i <= n; i++) {
-            visited[i] = false;
-        }
+    for (pii& p : tree[cur]) {
+        int nxt = p.first;
+        int w = p.second;
+
+        pii nxt_res = dfs(nxt, tree);
+        max_depth_list.push_back(nxt_res.first + w);
+        max_len = max(max_len, nxt_res.second);
     }
 
-    visited[s] = true;
-    queue<pii> q;
-    q.push({ s, 0 });
-
-    while (!q.empty()) {
-        pii now = q.front();
-        q.pop();
-
-        for (auto next : tree[now.first]) {
-            int next_node = next.first;
-            if (visited[next_node]) continue;
-            visited[next_node] = true;
-            int next_dist = next.second + now.second;
-            if (next_dist > max_dist) {
-                max_dist = next_dist;
-                max_node = next_node;
-            }
-            q.push({ next_node, next_dist });
-        }
-    }
+    sort(max_depth_list.begin(), max_depth_list.end(), greater<int>());
+    return {max_depth_list[0], max(max_depth_list[0] + max_depth_list[1], max_len)};
 }
 
 int main() {
     FASTIO;
 
+    int n;
     cin >> n;
+    vector<vector<pii>> tree(n + 1);
+
     for (int i = 1; i < n; i++) {
-        int a, b, d;
-        cin >> a >> b >> d;
-        tree[a].push_back({ b, d });
-        tree[b].push_back({ a, d });
+        int par, child, w;
+        cin >> par >> child >> w;
+        tree[par].emplace_back(child, w);
     }
 
-    bfs(1, false);
-    max_dist = 0;
-    bfs(max_node, true);
-    cout << max_dist << '\n';
-
+    pii res = dfs(1, tree);
+    cout << res.second << '\n';
     return 0;
 }

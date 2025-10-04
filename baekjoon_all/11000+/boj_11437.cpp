@@ -1,10 +1,11 @@
 // Solve 2025-05-18
+// Update 2025-10-04
 
 #include <bits/stdc++.h>
 
 #define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
-#define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
+#define UNIQUE(v) v.erase(unique(v.begin(),v.end()),v.end());
 #define SETW(n, c) cout << setw(n) << setfill(c);
 #define SETP(n) cout << fixed << setprecision(n);
 
@@ -14,45 +15,47 @@ using uint = unsigned int;
 using ull = unsigned long long;
 using ld = long double;
 using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+const int INF = 0x3f3f3f3f;
+const int MOD = 1000000007;
 
-vector<int> adj[100001];
-int depth[100001];
-int parent[17][100001];
+vector<int> adj[50001];
+int depth[50001];
+int parent[16][50001];
 
-void dfs(int dep, int cur, int par) {
-    depth[cur] = dep;
-
+void dfs(int cur, int par) {
     for (int nxt : adj[cur]) {
         if (nxt == par) continue;
 
+        depth[nxt] = depth[cur] + 1;
         parent[0][nxt] = cur;
-        dfs(dep + 1, nxt, cur);
+        dfs(nxt, cur);
     }
 }
 
-int find_LCA(int u1, int u2) {
-    if (depth[u1] < depth[u2]) {
-        swap(u1, u2);
+int get_LCA(int u, int v) {
+    if (depth[u] < depth[v]) {
+        swap(u, v);
     }
 
-    int diff = depth[u1] - depth[u2];
+    int diff = depth[u] - depth[v];
 
-    for (int i = 0; i < 17; i++) {
+    for (int i = 0; i < 16; i++) {
         if (diff & (1 << i)) {
-            u1 = parent[i][u1];
+            u = parent[i][u];
         }
     }
 
-    if (u1 == u2) return u1;
+    if (u == v) return u;
 
     for (int i = 16; i >= 0; i--) {
-        if (parent[i][u1] != parent[i][u2]) {
-            u1 = parent[i][u1];
-            u2 = parent[i][u2];
+        if (parent[i][u] != parent[i][v]) {
+            u = parent[i][u];
+            v = parent[i][v];
         }
     }
 
-    return parent[0][u1];
+    return parent[0][u];
 }
 
 int main() {
@@ -62,18 +65,17 @@ int main() {
     cin >> n;
 
     for (int i = 1; i < n; i++) {
-        int a, b;
-        cin >> a >> b;
-
-        adj[a].push_back(b);
-        adj[b].push_back(a);
+        int u, v;
+        cin >> u >> v;
+        adj[u].push_back(v);
+        adj[v].push_back(u);
     }
 
-    dfs(1, 1, 0);
+    dfs(1, 0);
 
-    for (int i = 1; i < 17; i++) {
-        for (int j = 1; j <= n; j++) {
-            parent[i][j] = parent[i - 1][parent[i - 1][j]];
+    for (int i = 1; i < 16; i++) {
+        for (int u = 1; u <= n; u++) {
+            parent[i][u] = parent[i - 1][parent[i - 1][u]];
         }
     }
 
@@ -81,10 +83,9 @@ int main() {
     cin >> m;
 
     while (m-- > 0) {
-        int u1, u2;
-        cin >> u1 >> u2;
-
-        cout << find_LCA(u1, u2) << '\n';
+        int u, v;
+        cin >> u >> v;
+        cout << get_LCA(u, v) << '\n';
     }
 
     return 0;
