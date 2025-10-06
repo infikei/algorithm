@@ -1,4 +1,5 @@
 // Solve 2025-10-03
+// Update 2025-10-05
 
 #include <bits/stdc++.h>
 
@@ -36,6 +37,7 @@ int main() {
             cin >> v >> x;
             amount_sum += v * x;
 
+            // 예를 들어, 10원 9개가 있으면, (10원, 20원, 40원, 나머지의 합)으로 분할
             int r = 1;
 
             while (true) {
@@ -50,6 +52,7 @@ int main() {
             }
         }
 
+        // 총 금액의 합이 홀수라면 불가능
         if (amount_sum % 2 != 0) {
             cout << 0 << '\n';
             continue;

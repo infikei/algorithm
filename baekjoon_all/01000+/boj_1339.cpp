@@ -1,44 +1,49 @@
 // Solve 2024-03-24
+// Update 2025-10-05
 
 #include <bits/stdc++.h>
-using namespace std;
 
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
-#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
-#define SIZE(v) (int)v.size()
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
 #define ALL(v) v.begin(),v.end()
+#define UNIQUE(v) v.erase(unique(v.begin(),v.end()),v.end());
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
+
+using namespace std;
 using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+const int INF = 0x3f3f3f3f;
+const int MOD = 1000000007;
 
 int main() {
     FASTIO;
 
     int n;
     cin >> n;
-
-    int alpha_coefficient[26] = { 0 };
+    int coefficient[26] = {0};
 
     for (int i = 0; i < n; i++) {
-        string alpha_num;
-        cin >> alpha_num;
+        string s;
+        cin >> s;
+        int p = 1;
 
-        int val = 1;
-
-        for (int i = 1; i <= SIZE(alpha_num); i++) {
-            char alpha = alpha_num[SIZE(alpha_num) - i];
-            alpha_coefficient[alpha - 'A'] += val;
-            val *= 10;
+        for (int i = 0; i < size(s); i++, p *= 10) {
+            char ch = s[size(s) - 1 - i];
+            coefficient[ch - 'A'] += p;
         }
     }
 
-    sort(alpha_coefficient, alpha_coefficient + 26, greater<int>());
-
+    sort(coefficient, coefficient + 26, greater<int>());
     int ans = 0;
 
     for (int i = 0; i < 9; i++) {
-        ans += (9 - i) * alpha_coefficient[i];
+        ans += (9 - i) * coefficient[i];
     }
 
     cout << ans << '\n';
-
     return 0;
 }
