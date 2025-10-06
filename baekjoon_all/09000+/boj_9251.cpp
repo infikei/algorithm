@@ -1,5 +1,5 @@
 // Solve 2022-08-03
-// Update 2025-06-15
+// Update 2025-10-06
 
 #include <bits/stdc++.h>
 
@@ -24,15 +24,14 @@ int memo[1001][1001];
 int main() {
     FASTIO;
 
-    string s, s2;
-    cin >> s >> s2;
-
+    string s, t;
+    cin >> s >> t;
     int n = size(s);
-    int m = size(s2);
+    int m = size(t);
 
     for (int i = 1; i <= n; i++) {
         for (int j = 1; j <= m; j++) {
-            if (s[i - 1] == s2[j - 1]) {
+            if (s[i - 1] == t[j - 1]) {
                 memo[i][j] = memo[i - 1][j - 1] + 1;
             }
             else {

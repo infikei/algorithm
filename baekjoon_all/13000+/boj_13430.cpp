@@ -1,52 +1,60 @@
 // Solve 2023-03-12
+// Update 2025-10-06
 
 #include <bits/stdc++.h>
-using namespace std;
 
-#ifdef BOJ
-#define BOJTEST(x) ((void)0)
-#else
-#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
-#endif
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
-#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
-#define SIZE(v) (int)v.size()
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
 #define ALL(v) v.begin(),v.end()
+#define UNIQUE(v) v.erase(unique(v.begin(),v.end()),v.end());
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
+
+using namespace std;
 using ll = long long;
 using uint = unsigned int;
 using ull = unsigned long long;
-using matrixll = vector<vector<ll> >;
-
+using ld = long double;
+using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+using matrixll = vector<vector<ll>>;
+const int INF = 0x3f3f3f3f;
 const ll MOD = 1000000007;
-ll mat_sz;
 
-matrixll calc_mat_mul(const matrixll &a, const matrixll &b) {
-    matrixll res(mat_sz, vector<ll>(mat_sz, 0));
-    for (int row = 0; row < mat_sz; row++) {
-        for (int col = 0; col < mat_sz; col++) {
-            for (int idx = 0; idx < mat_sz; idx++) {
-                res[row][col] += a[row][idx] * b[idx][col] % MOD;
+ll mat_size;
+
+matrixll mat_mul(const matrixll &a, const matrixll &b) {
+    matrixll ret(mat_size, vector<ll>(mat_size, 0));
+
+    for (int r = 0; r < mat_size; r++) {
+        for (int c = 0; c < mat_size; c++) {
+            for (int i = 0; i < mat_size; i++) {
+                ret[r][c] += a[r][i] * b[i][c] % MOD;
             }
-            res[row][col] %= MOD;
+
+            ret[r][c] %= MOD;
         }
     }
-    return res;
+
+    return ret;
 }
 
-matrixll calc_mat_power(matrixll a, ll b) {
-    matrixll res(mat_sz, vector<ll>(mat_sz, 0));
-    for (int i = 0; i < mat_sz; i++) {
-        res[i][i] = 1;
+matrixll mat_pow(matrixll a, ll b) {
+    matrixll ret(mat_size, vector<ll>(mat_size, 0));
+
+    for (int i = 0; i < mat_size; i++) {
+        ret[i][i] = 1;
     }
 
     while (b > 0) {
         if (b & 1) {
-            res = calc_mat_mul(res, a);
+            ret = mat_mul(ret, a);
         }
-        a = calc_mat_mul(a, a);
+
+        a = mat_mul(a, a);
         b >>= 1;
     }
-    return res;
+
+    return ret;
 }
 
 int main() {
@@ -54,17 +62,16 @@ int main() {
 
     ll k, n;
     cin >> k >> n;
-    mat_sz = k + 2;
+    mat_size = k + 2;
+    matrixll mat(mat_size, vector<ll>(mat_size, 0));
 
-    matrixll mat(mat_sz, vector<ll>(mat_sz, 0));
-    for (int row = 0; row < mat_sz; row++) {
-        for (int col = 0; col <= row; col++) {
-            mat[row][col] = 1;
+    for (int r = 0; r < mat_size; r++) {
+        for (int c = 0; c <= r; c++) {
+            mat[r][c] = 1;
         }
     }
 
-    mat = calc_mat_power(mat, n);
-    cout << mat[mat_sz - 1][0] << '\n';
-
+    mat = mat_pow(mat, n);
+    cout << mat[mat_size - 1][0] << '\n';
     return 0;
 }
