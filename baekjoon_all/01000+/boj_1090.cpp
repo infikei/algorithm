@@ -1,10 +1,11 @@
 // Solve 2025-04-15
+// Update 2025-10-08
 
 #include <bits/stdc++.h>
 
 #define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
-#define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
+#define UNIQUE(v) v.erase(unique(v.begin(),v.end()),v.end());
 #define SETW(n, c) cout << setw(n) << setfill(c);
 #define SETP(n) cout << fixed << setprecision(n);
 
@@ -14,8 +15,9 @@ using uint = unsigned int;
 using ull = unsigned long long;
 using ld = long double;
 using pii = pair<int, int>;
-
-const int INF = 1000000000;
+using pll = pair<ll, ll>;
+const int INF = 0x3f3f3f3f;
+const int MOD = 1000000007;
 
 struct Point{
     int x, y;
@@ -45,31 +47,30 @@ int main() {
 
     sort(x_list.begin(), x_list.end());
     sort(y_list.begin(), y_list.end());
-    vector<int> min_dist_sum_list(n, INF);
+    vector<int> dist_sum_min(n, INF);
 
     for (int x : x_list) {
         for (int y : y_list) {
-            vector<int> dists;
+            vector<int> dist;
 
-            for (Point &p : points) {
-                dists.push_back(abs(x - p.x) + abs(y - p.y));
+            for (Point& p : points) {
+                dist.push_back(abs(x - p.x) + abs(y - p.y));
             }
 
-            sort(dists.begin(), dists.end());
+            sort(dist.begin(), dist.end());
             int dist_sum = 0;
 
             for (int i = 0; i < n; i++) {
-                dist_sum += dists[i];
-                min_dist_sum_list[i] = min(min_dist_sum_list[i], dist_sum);
+                dist_sum += dist[i];
+                dist_sum_min[i] = min(dist_sum_min[i], dist_sum);
             }
         }
     }
 
-    for (int &min_dist_sum : min_dist_sum_list) {
-        cout << min_dist_sum << ' ';
+    for (int& v : dist_sum_min) {
+        cout << v << ' ';
     }
 
     cout << '\n';
-
     return 0;
 }

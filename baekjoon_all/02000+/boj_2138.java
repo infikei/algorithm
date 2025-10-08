@@ -1,6 +1,5 @@
 // Solve 2024-06-23
-
-// 백준에 제출할 때는 class 이름을 Main으로 설정해야 한다.
+// Update 2025-10-08
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -8,66 +7,49 @@ import java.io.InputStreamReader;
 
 public class boj_2138 {
 
+    static final int INF = 1000000000;
+
+    static int getClickCnt(int n, int[] board, int[] target) {
+        int ret = 0;
+
+        for (int i = 1; i < n; i++) {
+            if (board[i - 1] != target[i - 1]) {
+                ret++;
+                board[i - 1] ^= 1;
+                board[i] ^= 1;
+                board[i + 1] ^= 1;
+            }
+        }
+
+        return board[n - 1] != target[n - 1] ? INF : ret;
+    }
+
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int n = Integer.parseInt(br.readLine());
-        String line = br.readLine();
-        int[] board = new int[n];
-        int[] board2 = new int[n];
+        int[] board1 = new int[n + 1];
+        int[] board2 = new int[n + 1];
+        int[] target = new int[n + 1];
+        String s = br.readLine();
 
         for (int i = 0; i < n; i++) {
-            board[i] = line.charAt(i) - '0';
-            board2[i] = board[i];
+            board2[i] = board1[i] = s.charAt(i) - '0';
         }
 
-        line = br.readLine();
-        int[] targetBoard = new int[n];
+        s = br.readLine();
 
         for (int i = 0; i < n; i++) {
-            targetBoard[i] = line.charAt(i) - '0';
+            target[i] = s.charAt(i) - '0';
         }
 
-        int minCnt = 1000000;
-        int curCnt = 0;
+        int res1 = getClickCnt(n, board1, target);
 
-        for (int i = 1; i < n; i++) {
-            if (board[i - 1] != targetBoard[i - 1]) {
-                curCnt++;
-                board[i - 1] ^= 1;
-                board[i] ^= 1;
-
-                if (i + 1 < n) {
-                    board[i + 1] ^= 1;
-                }
-            }
-        }
-
-        if (board[n - 1] == targetBoard[n - 1]) {
-            minCnt = curCnt < minCnt ? curCnt : minCnt;
-        }
-
-        curCnt = 1;
         board2[0] ^= 1;
         board2[1] ^= 1;
+        int res2 = 1 + getClickCnt(n, board2, target);
 
-        for (int i = 1; i < n; i++) {
-            if (board2[i - 1] != targetBoard[i - 1]) {
-                curCnt++;
-                board2[i - 1] ^= 1;
-                board2[i] ^= 1;
-
-                if (i + 1 < n) {
-                    board2[i + 1] ^= 1;
-                }
-            }
-        }
-
-        if (board2[n - 1] == targetBoard[n - 1]) {
-            minCnt = curCnt < minCnt ? curCnt : minCnt;
-        }
-
-        System.out.println(minCnt == 1000000 ? -1 : minCnt);
-        br.close();
+        int ans = Math.min(res1, res2);
+        System.out.println(ans == INF ? -1 : ans);
     }
 
 }
