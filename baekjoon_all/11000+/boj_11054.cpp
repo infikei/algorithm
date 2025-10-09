@@ -1,16 +1,27 @@
 // Solve 2022-07-25
-// Update 2023-09-02
+// Update 2025-10-09
 
 #include <bits/stdc++.h>
-using namespace std;
 
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
-#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
-#define SIZE(v) (int)v.size()
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
 #define ALL(v) v.begin(),v.end()
-using ll = long long;
+#define UNIQUE(v) v.erase(unique(v.begin(),v.end()),v.end());
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
 
-int arr[1000], dp[1000], dp2[1000];
+using namespace std;
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+const int INF = 0x3f3f3f3f;
+const int MOD = 1000000007;
+
+int arr[1000];
+int lis[1000]; // Longest Increasing Subsequence
+int rlis[1000]; // Reversed LIS
 
 int main() {
     FASTIO;
@@ -22,42 +33,32 @@ int main() {
         cin >> arr[i];
     }
 
-    // 가장 긴 증가하는 부분 수열의 길이 구하기
-    dp[0] = 1;
-
-    for (int i = 1; i < n; i++) {
+    for (int i = 0; i < n; i++) {
         for (int j = 0; j < i; j++) {
             if (arr[j] < arr[i]) {
-                dp[i] = max(dp[i], dp[j]);
+                lis[i] = max(lis[i], lis[j]);
             }
         }
 
-        dp[i]++;
+        lis[i]++;
     }
 
-    // 가장 긴 감소하는 부분 수열의 길이 구하기
-    dp2[n - 1] = 1;
-
-    for (int i = n - 2; i >= 0; i--) {
+    for (int i = n - 1; i >= 0; i--) {
         for (int j = n - 1; j > i; j--) {
             if (arr[j] < arr[i]) {
-                dp2[i] = max(dp2[i], dp2[j]);
+                rlis[i] = max(rlis[i], rlis[j]);
             }
         }
 
-        dp2[i]++;
+        rlis[i]++;
     }
 
-    // 위에서 구한 길이의 합을 통해 답 구하기
-    int ans = 0;
+    int mx = 0;
 
     for (int i = 0; i < n; i++) {
-        ans = max(ans, dp[i] + dp2[i]);
+        mx = max(mx, lis[i] + rlis[i] - 1);
     }
 
-    ans--;
-
-    cout << ans << '\n';
-
+    cout << mx << '\n';
     return 0;
 }
