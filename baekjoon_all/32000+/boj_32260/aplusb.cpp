@@ -1,8 +1,8 @@
 // Solve 2024-09-30
-// Update 2024-10-06
+// Update 2025-10-10
 
 #include "aplusb.h"
 
-int sum(int A, int B) {
-    return A + B;
+int sum(int a, int b) {
+    return a + b;
 }
