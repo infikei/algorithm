@@ -1,11 +1,11 @@
 // Solve 2022-07-23
-// Update 2025-03-04
+// Update 2025-10-25
 
 #include <bits/stdc++.h>
 
 #define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
-#define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
+#define UNIQUE(v) v.erase(unique(v.begin(),v.end()),v.end());
 #define SETW(n, c) cout << setw(n) << setfill(c);
 #define SETP(n) cout << fixed << setprecision(n);
 
@@ -15,6 +15,9 @@ using uint = unsigned int;
 using ull = unsigned long long;
 using ld = long double;
 using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+const int INF = 0x3f3f3f3f;
+const int MOD = 1000000007;
 
 int main() {
     FASTIO;
@@ -26,34 +29,19 @@ int main() {
     int tmp = 0;
     bool minus = false;
 
-    for (char &c : line) {
-        if (c == '+' || c == '-') {
-            if (minus) {
-                ans -= tmp;
-            }
-            else {
-                ans += tmp;
-            }
-
-            tmp = 0;
-
-            if (c == '-') {
-                minus = true;
-            }
-        }
-        else {
+    for (char& c : line) {
+        if (isdigit(c)) {
             tmp = tmp * 10 + (c - '0');
         }
+        else {
+            ans += (minus ? -tmp : tmp);
+            tmp = 0;
+
+            if (c == '-') minus = true;
+        }
     }
 
-    if (minus) {
-        ans -= tmp;
-    }
-    else {
-        ans += tmp;
-    }
-
+    ans += (minus ? -tmp : tmp);
     cout << ans << '\n';
-
     return 0;
 }
