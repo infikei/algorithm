@@ -25,33 +25,39 @@ const int INF = 0x3f3f3f3f;
 const int MOD = 1000000007;
 
 int dist[100001];
+bool visited[100001];
 
-int dijkstra(int n, int k) {
+int bfs(int n, int k) {
     int a[3] = {2, 1, 1};
     int b[3] = {0, -1, 1};
     int v[3] = {0, 1, 1};
 
     memset(dist, 0x3f, sizeof dist);
-    priority_queue<pii, vector<pii>, greater<pii>> pq_mintop;
+    deque<int> dque;
+    dque.push_back(n);
     dist[n] = 0;
-    pq_mintop.emplace(0, n);
 
-    while (!pq_mintop.empty()) {
-        int cur = pq_mintop.top().second;
-        int cur_dist = pq_mintop.top().first;
-        pq_mintop.pop();
+    while (!dque.empty()) {
+        int cur = dque.front();
+        dque.pop_front();
 
-        if (cur == k) return cur_dist;
-        if (cur_dist > dist[cur]) continue;
+        if (cur == k) return dist[cur];
+        if (visited[cur]) continue;
+
+        visited[cur] = true;
 
         for (int d = 0; d < 3; d++) {
             int nxt = cur * a[d] + b[d];
-            int nxt_dist = cur_dist + v[d];
+            int nxt_dist = dist[cur] + v[d];
 
-            if (nxt < 0 || nxt > 100000 || nxt_dist >= dist[nxt]) continue;
+            if (nxt < 0 || nxt > 100000 || visited[nxt]) continue;
 
-            dist[nxt] = nxt_dist;
-            pq_mintop.emplace(nxt_dist, nxt);
+            if (dist[cur] + v[d] < dist[nxt]) {
+                dist[nxt] = dist[cur] + v[d];
+
+                if (v[d] == 0) dque.push_front(nxt);
+                else dque.push_back(nxt);
+            }
         }
     }
 
@@ -64,6 +70,6 @@ int main() {
     int n, k;
     cin >> n >> k;
 
-    cout << dijkstra(n, k) << '\n';
+    cout << bfs(n, k) << '\n';
     return 0;
 }

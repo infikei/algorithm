@@ -1,11 +1,11 @@
 // Solve 2022-10-01
-// Update 2025-05-23
+// Update 2025-10-26
 
 #include <bits/stdc++.h>
 
 #define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
-#define SIZE(v) (int)v.size()
 #define ALL(v) v.begin(),v.end()
+#define UNIQUE(v) v.erase(unique(v.begin(),v.end()),v.end());
 #define SETW(n, c) cout << setw(n) << setfill(c);
 #define SETP(n) cout << fixed << setprecision(n);
 
@@ -15,44 +15,39 @@ using uint = unsigned int;
 using ull = unsigned long long;
 using ld = long double;
 using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+const int INF = 0x3f3f3f3f;
+const int MOD = 1000000007;
 
 bool visited[100001];
 
 int bfs(int n, int k) {
     if (n == k) return 0;
 
-    queue<int> bfs_que;
-    bfs_que.push(n);
+    int a[3] = {1, 1, 2};
+    int b[3] = {-1, 1, 0};
+
+    queue<int> que;
+    que.push(n);
     visited[n] = true;
     int dist = 0;
 
-    while (!bfs_que.empty()) {
+    while (!que.empty()) {
         dist++;
-        int iter = bfs_que.size();
+        int iter = size(que);
 
         while (iter-- > 0) {
-            int cur = bfs_que.front();
-            bfs_que.pop();
+            int cur = que.front();
+            que.pop();
 
-            if (cur * 2 <= 100000 && !visited[cur * 2]) {
-                if (cur * 2 == k) return dist;
+            for (int d = 0; d < 3; d++) {
+                int nxt = cur * a[d] + b[d];
 
-                visited[cur * 2] = true;
-                bfs_que.push(cur * 2);
-            }
+                if (nxt < 0 || nxt > 100000 || visited[nxt]) continue;
+                if (nxt == k) return dist;
 
-            if (cur + 1 <= 100000 && !visited[cur + 1]) {
-                if (cur + 1 == k) return dist;
-
-                visited[cur + 1] = true;
-                bfs_que.push(cur + 1);
-            }
-
-            if (cur >= 1 && !visited[cur - 1]) {
-                if (cur - 1 == k) return dist;
-
-                visited[cur - 1] = true;
-                bfs_que.push(cur - 1);
+                visited[nxt] = true;
+                que.push(nxt);
             }
         }
     }
@@ -67,6 +62,5 @@ int main() {
     cin >> n >> k;
 
     cout << bfs(n, k) << '\n';
-
     return 0;
 }

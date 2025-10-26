@@ -1,93 +1,78 @@
 // Solve 2023-01-06
-// Update 2023-02-11
+// Update 2025-10-26
 
 #include <bits/stdc++.h>
-using namespace std;
 
-#ifdef BOJ
-#define BOJTEST(x) ((void)0)
-#else
-#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
-#endif
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
-#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
-#define SIZE(v) (int)v.size()
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
 #define ALL(v) v.begin(),v.end()
+#define UNIQUE(v) v.erase(unique(v.begin(),v.end()),v.end());
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
+
+using namespace std;
 using ll = long long;
 using uint = unsigned int;
 using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+const int INF = 0x3f3f3f3f;
+const int MOD = 1000000007;
 
-const int MAX_N = 100000;
-int n, k, ans1[MAX_N + 1], ans2[MAX_N + 1];
-queue<int> q;
+int dist[100001];
+int memo[100001];
 
-void bfs() {
-    ans2[n] = 1;
-    if (n == k) return;
+pii bfs(int n, int k) {
+    if (n == k) return {0, 1};
 
-    q.push(n);
-    int cur = 0;
+    int a[3] = {1, 1, 2};
+    int b[3] = {-1, 1, 0};
 
-    while (!q.empty()) {
-        cur++;
+    memset(dist, 0x3f, sizeof dist);
+    queue<int> que;
+    que.push(n);
+    dist[n] = 0;
+    memo[n] = 1;
 
-        int i_end = SIZE(q);
-        for (int i = 0; i < i_end; i++) {
-            int now = q.front();
-            q.pop();
+    while (!que.empty()) {
+        int iter = size(que);
 
-            int next;
+        while (iter-- > 0) {
+            int cur = que.front();
+            que.pop();
 
-            next = now * 2;
-            if (next <= MAX_N) {
-                if (ans2[next] == 0) {
-                    ans1[next] = cur;
-                    ans2[next] = ans2[now];
-                    q.push(next);
+            for (int d = 0; d < 3; d++) {
+                int nxt = cur * a[d] + b[d];
+
+                if (nxt < 0 || nxt > 100000) continue;
+                if (dist[cur] + 1 > dist[nxt]) continue;
+                if (dist[cur] + 1 == dist[nxt]) {
+                    memo[nxt] += memo[cur];
+                    continue;
                 }
-                else if (ans1[next] == cur) {
-                    ans2[next] += ans2[now];
-                }
-            }
 
-            next = now + 1;
-            if (next <= MAX_N) {
-                if (ans2[next] == 0) {
-                    ans1[next] = cur;
-                    ans2[next] = ans2[now];
-                    q.push(next);
-                }
-                else if (ans1[next] == cur) {
-                    ans2[next] += ans2[now];
-                }
-            }
-
-            next = now - 1;
-            if (next >= 0) {
-                if (ans2[next] == 0) {
-                    ans1[next] = cur;
-                    ans2[next] = ans2[now];
-                    q.push(next);
-                }
-                else if (ans1[next] == cur) {
-                    ans2[next] += ans2[now];
-                }
+                dist[nxt] = dist[cur] + 1;
+                memo[nxt] = memo[cur];
+                que.push(nxt);
             }
         }
 
-        if (ans2[k] > 0) return;
+        if (dist[k] != INF) {
+            return {dist[k], memo[k]};
+        }
     }
+
+    return {-1, 0};
 }
 
 int main() {
     FASTIO;
 
+    int n, k;
     cin >> n >> k;
 
-    bfs();
-
-    cout << ans1[k] << '\n';
-    cout << ans2[k] << '\n';
-
+    pii res = bfs(n, k);
+    cout << res.first << '\n';
+    cout << res.second << '\n';
     return 0;
 }
