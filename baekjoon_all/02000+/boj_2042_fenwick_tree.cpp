@@ -19,47 +19,39 @@ using pll = pair<ll, ll>;
 const int INF = 0x3f3f3f3f;
 const int MOD = 1000000007;
 
-int len = 1 << 20;
-ll tree[1 << 21];
+int n;
+ll arr[1000001];
+ll fenwick[1000001];
 
-void make_seg() {
-    for (int i = len - 1; i >= 1; i--) {
-        tree[i] = tree[i * 2] + tree[i * 2 + 1];
+void update_fenwick(int idx, ll diff) {
+    while (idx <= n) {
+        fenwick[idx] += diff;
+        idx += (idx & -idx);
     }
 }
 
-void update_seg(int idx, ll val) {
-    idx += len;
-    tree[idx] = val;
-    idx /= 2;
+ll get_from_fenwick(int idx) {
+    ll ret = 0;
 
     while (idx >= 1) {
-        tree[idx] = tree[idx * 2] + tree[idx * 2 + 1];
-        idx /= 2;
+        ret += fenwick[idx];
+        idx -= (idx & -idx);
     }
-}
 
-ll get_from_seg(int idx, int l, int r, int tl, int tr) {
-    if (r < tl || tr < l) return 0;
-    if (tl <= l && r <= tr) return tree[idx];
-
-    int mid = (l + r) / 2;
-    ll l_ret = get_from_seg(idx * 2, l, mid, tl, tr);
-    ll r_ret = get_from_seg(idx * 2 + 1, mid + 1, r, tl, tr);
-    return l_ret + r_ret;
+    return ret;
 }
 
 int main() {
     FASTIO;
 
-    int n, m, k;
+    int m, k;
     cin >> n >> m >> k;
 
     for (int i = 1; i <= n; i++) {
-        cin >> tree[i + len];
+        cin >> arr[i];
+        update_fenwick(i, arr[i]);
     }
 
-    make_seg();
     int q = m + k;
 
     while (q-- > 0) {
@@ -70,12 +62,13 @@ int main() {
             int b;
             ll c;
             cin >> b >> c;
-            update_seg(b, c);
+            update_fenwick(b, c - arr[b]);
+            arr[b] = c;
         }
         else {
             int b, c;
             cin >> b >> c;
-            cout << get_from_seg(1, 0, len - 1, b, c) << '\n';
+            cout << get_from_fenwick(c) - get_from_fenwick(b - 1) << '\n';
         }
     }
 
