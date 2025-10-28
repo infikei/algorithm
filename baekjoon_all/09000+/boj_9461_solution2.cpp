@@ -1,4 +1,4 @@
-// Solve 2022-06-23
+// Solve 2022-06-03
 // Update 2025-10-28
 
 #include <bits/stdc++.h>
@@ -19,24 +19,22 @@ using pll = pair<ll, ll>;
 const int INF = 0x3f3f3f3f;
 const int MOD = 1000000007;
 
-int prefix_sum[100001];
+ll padovan[101] = {0, 1, 1, 1};
 
 int main() {
     FASTIO;
 
-    int n, q;
-    cin >> n >> q;
-
-    for (int i = 1; i <= n; i++) {
-        int v;
-        cin >> v;
-        prefix_sum[i] = prefix_sum[i - 1] + v;
+    for (int i = 4; i <= 100; i++) {
+        padovan[i] = padovan[i - 3] + padovan[i - 2];
     }
 
-    while (q-- > 0) {
-        int s, e;
-        cin >> s >> e;
-        cout << prefix_sum[e] - prefix_sum[s - 1] << '\n';
+    int t;
+    cin >> t;
+
+    while (t-- > 0) {
+        int n;
+        cin >> n;
+        cout << padovan[n] << '\n';
     }
 
     return 0;
