@@ -1,6 +1,5 @@
 // Solve 2024-07-22
-
-// 백준에 제출할 때는 class 이름을 Main으로 설정해야 한다.
+// Update 2025-11-04
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,32 +12,29 @@ public class boj_4889 {
         StringBuilder sb = new StringBuilder();
 
         for (int ti = 1;; ti++) {
-            String pars = br.readLine();
+            String ps = br.readLine();
 
-            if (pars.charAt(0) == '-') {
-                break;
-            }
+            if (ps.charAt(0) == '-') break;
 
             int ans = 0;
-            int curDepth = 0;
+            int depth = 0;
 
-            for (int i = 0; i < pars.length(); i++) {
-                if (pars.charAt(i) == '{') {
-                    curDepth++;
+            for (int i = 0; i < ps.length(); i++) {
+                if (ps.charAt(i) == '{') {
+                    depth++;
                 } else {
-                    if (--curDepth == -1) {
-                        curDepth = 1;
+                    if (--depth == -1) {
+                        depth = 1;
                         ans++;
                     }
                 }
             }
 
-            ans += curDepth / 2;
+            ans += depth / 2;
             sb.append(ti).append(". ").append(ans).append("\n");
         }
 
         System.out.print(sb);
-        br.close();
     }
 
 }
