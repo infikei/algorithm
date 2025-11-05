@@ -1,4 +1,5 @@
 // Solve 2025-08-10
+// Update 2025-11-05
 
 #include <bits/stdc++.h>
 
@@ -19,16 +20,17 @@ const int INF = 0x3f3f3f3f;
 const int MOD = 1000000007;
 
 vector<int> adj[1001];
-int matching[1001];
+int matched[1001];
 bool visited[1001];
 
 bool dfs(int u) {
     for (int v : adj[u]) {
         if (visited[v]) continue;
+
         visited[v] = true;
 
-        if (matching[v] == -1 || dfs(matching[v])) {
-            matching[v] = u;
+        if (matched[v] == -1 || dfs(matched[v])) {
+            matched[v] = u;
             return true;
         }
     }
@@ -53,17 +55,17 @@ int main() {
         }
     }
 
-    memset(matching, -1, sizeof matching);
-    int matching_cnt = 0;
+    memset(matched, -1, sizeof matched);
+    int matched_cnt = 0;
 
     for (int u = 1; u <= n; u++) {
         memset(visited, false, sizeof visited);
 
         if (dfs(u)) {
-            matching_cnt++;
+            matched_cnt++;
         }
     }
 
-    cout << matching_cnt << '\n';
+    cout << matched_cnt << '\n';
     return 0;
 }
