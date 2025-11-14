@@ -1,23 +1,24 @@
 # Solve 2023-10-09
+# Update 2025-11-12
 
 n, m = map(int, input().split())
 
-cnt_5, i = 0, 5
+cnt5, i = 0, 5
 
 while i <= n:
-    cnt_5 += n // i
-    cnt_5 -= m // i
-    cnt_5 -= (n - m) // i
+    cnt5 += n // i
+    cnt5 -= m // i
+    cnt5 -= (n - m) // i
 
     i *= 5
 
-cnt_2, i = 0, 2
+cnt2, i = 0, 2
 
 while i <= n:
-    cnt_2 += n // i
-    cnt_2 -= m // i
-    cnt_2 -= (n - m) // i
+    cnt2 += n // i
+    cnt2 -= m // i
+    cnt2 -= (n - m) // i
 
     i *= 2
 
-print(min(cnt_5, cnt_2))
+print(min(cnt5, cnt2))

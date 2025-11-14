@@ -1,21 +1,29 @@
 // Solve 2023-09-18
-// Update 2023-12-25
+// Update 2025-11-12
 
 #include <bits/stdc++.h>
-using namespace std;
 
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
-#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
-#define SIZE(v) (int)v.size()
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
 #define ALL(v) v.begin(),v.end()
+#define UNIQUE(v) v.erase(unique(v.begin(),v.end()),v.end());
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
+
+using namespace std;
 using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+const int INF = 0x3f3f3f3f;
+const int MOD = 1000000007;
 
 int main() {
     FASTIO;
 
     int n, m;
     cin >> n >> m;
-
     m /= 7;
 
     unordered_map<string, int> name_to_idx;
@@ -34,7 +42,7 @@ int main() {
         int idx;
 
         if (name_to_idx.find(name) == name_to_idx.end()) {
-            idx = SIZE(name_to_idx);
+            idx = size(name_to_idx);
             name_to_idx[name] = idx;
             day_cnt.push_back(vector<int>(m, 0));
             hour_cnt.push_back(vector<int>(m, 0));
@@ -50,22 +58,17 @@ int main() {
 
     vector<string> ans;
 
-    for (int i = 0, ie = SIZE(idx_to_name); i < ie; i++) {
-        bool check = true;
+    for (int i = 0; i < size(idx_to_name); i++) {
+        bool flag = true;
 
         for (int j = 0; j < m; j++) {
-            if (day_cnt[i][j] < 5) {
-                check = false;
-                break;
-            }
-
-            if (hour_cnt[i][j] < 3600) {
-                check = false;
+            if (day_cnt[i][j] < 5 || hour_cnt[i][j] < 3600) {
+                flag = false;
                 break;
             }
         }
 
-        if (check) {
+        if (flag) {
             ans.push_back(idx_to_name[i]);
         }
     }
@@ -76,7 +79,7 @@ int main() {
     else {
         sort(ans.begin(), ans.end());
 
-        for (string &a : ans) {
+        for (string& a : ans) {
             cout << a << '\n';
         }
     }

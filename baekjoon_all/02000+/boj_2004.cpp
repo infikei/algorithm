@@ -1,14 +1,34 @@
 // Solve 2022-06-08
-// Update 2023-10-09
+// Update 2025-11-12
 
 #include <bits/stdc++.h>
-using namespace std;
 
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
-#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
-#define SIZE(v) (int)v.size()
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
 #define ALL(v) v.begin(),v.end()
+#define UNIQUE(v) v.erase(unique(v.begin(),v.end()),v.end());
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
+
+using namespace std;
 using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+const int INF = 0x3f3f3f3f;
+const int MOD = 1000000007;
+
+ll count_prime_in_factorial(ll n, ll p) {
+    ll cnt = 0;
+
+    while (n > 0) {
+        n /= p;
+        cnt += n;
+    }
+
+    return cnt;
+}
 
 int main() {
     FASTIO;
@@ -16,26 +36,15 @@ int main() {
     ll n, m;
     cin >> n >> m;
 
-    // nCm = n! / m! / (n - m)! 인 것을 이용한다.
-    // 즉, 1676번의 방법을 조금만 변형해서 해결할 수 있다.
+    ll cnt2 = count_prime_in_factorial(n, 2);
+    cnt2 -= count_prime_in_factorial(m, 2);
+    cnt2 -= count_prime_in_factorial(n - m, 2);
 
-    ll cnt_5 = 0;
+    ll cnt5 = count_prime_in_factorial(n, 5);
+    cnt5 -= count_prime_in_factorial(m, 5);
+    cnt5 -= count_prime_in_factorial(n - m, 5);
 
-    for (ll i = 5; i <= n; i *= 5) {
-        cnt_5 += n / i;
-        cnt_5 -= m / i;
-        cnt_5 -= (n - m) / i;
-    }
-
-    ll cnt_2 = 0;
-
-    for (ll i = 2; i <= n; i *= 2) {
-        cnt_2 += n / i;
-        cnt_2 -= m / i;
-        cnt_2 -= (n - m) / i;
-    }
-
-    cout << min(cnt_5, cnt_2) << '\n';
+    cout << min(cnt2, cnt5) << '\n';
 
     return 0;
 }
