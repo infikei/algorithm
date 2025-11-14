@@ -1,21 +1,13 @@
 // Solve 2025-01-21
-// Update 2025-01-23
+// Update 2025-11-11
 
 #include <bits/stdc++.h>
 
 #define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
-#define size(v) (int)v.size()
-#define all(v) v.begin(),v.end()
-#define setw(n, c) cout << setw(n) << setfill(c);
-#define setp(n) cout << fixed << setprecision(n);
-#define printw(x) cout << (x) << ' ';
-#define println(x) cout << (x) << '\n';
-
-#ifdef BOJ
-#define testPrint(x) ((void)0)
-#else
-#define testPrint(x) cout << "[D] " << #x << ':' << x << '\n'
-#endif
+#define ALL(v) v.begin(),v.end()
+#define UNIQUE(v) v.erase(unique(v.begin(),v.end()),v.end());
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
 
 using namespace std;
 using ll = long long;
@@ -23,8 +15,11 @@ using uint = unsigned int;
 using ull = unsigned long long;
 using ld = long double;
 using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+const int INF = 0x3f3f3f3f;
+const int MOD = 1000000007;
 
-const double PI = M_PI;
+char conv[128];
 
 bool is_prime(ll n) {
     if (n == 1) return false;
@@ -40,46 +35,42 @@ bool is_prime(ll n) {
     return true;
 }
 
-void solution() {
-    string s;
-    cin >> s;
-
-    ll n = stoll(s);
-
-    if (!is_prime(n)) {
-        println("no");
-        return;
-    }
-
-    reverse(all(s));
-
-    for (char &c : s) {
-        if (c == '3' || c == '4' || c == '7') {
-            println("no");
-            return;
-        }
-        else if (c == '6') {
-            c = '9';
-        }
-        else if (c == '9') {
-            c = '6';
-        }
-    }
-
-    n = stoll(s);
-
-    if (!is_prime(n)) {
-        println("no");
-        return;
-    }
-
-    println("yes");
-}
-
 int main() {
     FASTIO;
 
-    solution();
+    conv['0'] = '0';
+    conv['1'] = '1';
+    conv['2'] = '2';
+    conv['3'] = '.';
+    conv['4'] = '.';
+    conv['5'] = '5';
+    conv['6'] = '9';
+    conv['7'] = '.';
+    conv['8'] = '8';
+    conv['9'] = '6';
+
+    string s;
+    cin >> s;
+    ll n = stoll(s);
+
+    for (char& c : s) {
+        c = conv[c];
+
+        if (c == '.') {
+            cout << "no" << '\n';
+            return 0;
+        }
+    }
+
+    reverse(s.begin(), s.end());
+    ll m = stoll(s);
+
+    if (!is_prime(n) || !is_prime(m)) {
+        cout << "no" << '\n';
+    }
+    else {
+        cout << "yes" << '\n';
+    }
 
     return 0;
 }

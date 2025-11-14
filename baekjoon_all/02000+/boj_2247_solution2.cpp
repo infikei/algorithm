@@ -24,12 +24,19 @@ int main() {
 
     int n;
     cin >> n;
-    int csod = 0;
+    ll ans = 0;
+    ll left = 2;
 
-    for (int i = n / 2; i >= 2; i--) {
-        csod = (csod + (n / i - 1) * i) % 1000000;
+    while (left <= n) {
+        ll cnt = n / left;
+        ll right = n / cnt;
+        ll sum = (left + right) * (right - left + 1) / 2;
+        ans += sum * (cnt - 1);
+        ans %= 1000000;
+
+        left = right + 1;
     }
 
-    cout << csod << '\n';
+    cout << ans << '\n';
     return 0;
 }
