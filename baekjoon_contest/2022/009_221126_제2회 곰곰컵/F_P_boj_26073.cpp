@@ -1,36 +1,55 @@
-#include <iostream>
-using namespace std;
-#define fastio ios_base::sync_with_stdio(false);cout.tie(NULL);cin.tie(NULL); // boj_15552.cpp
+// Solve 2022-11-26
+// Update 2025-11-18
 
-int gcd(int a, int b) {
-    if (a % b == 0) {
-        return b;
+#include <bits/stdc++.h>
+
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
+#define ALL(v) v.begin(),v.end()
+#define UNIQUE(v) v.erase(unique(v.begin(),v.end()),v.end());
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
+
+using namespace std;
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+const int INF = 0x3f3f3f3f;
+const int MOD = 1000000007;
+
+int get_gcd(int a, int b) {
+    while (b != 0) {
+        int r = a % b;
+        a = b;
+        b = r;
     }
-    return gcd(b, a % b);
+
+    return a;
 }
 
 int main() {
-    fastio;
+    FASTIO;
 
-    int N;
-    cin >> N;
+    int n;
+    cin >> n;
 
-    for (int n = 0; n < N; n++) {
-        int X, Y;
-        cin >> X >> Y;
+    for (int i = 0; i < n; i++) {
+        int x, y, k, gcd;
+        cin >> x >> y >> k >> gcd;
 
-        int K, A, gcd_of_A;
-        cin >> K >> gcd_of_A;
-        for (int k = 1; k < K; k++) {
-            cin >> A;
-            gcd_of_A = gcd(A, gcd_of_A);
+        for (int j = 1; j < k; j++) {
+            int d;
+            cin >> d;
+            gcd = get_gcd(d, gcd);
         }
 
-        if (X % gcd_of_A == 0 && Y % gcd_of_A == 0) {
-            cout << "Ta-da\n";
+        if (x % gcd == 0 && y % gcd == 0) {
+            cout << "Ta-da" << '\n';
         }
         else {
-            cout << "Gave up\n";
+            cout << "Gave up" << '\n';
         }
     }
 

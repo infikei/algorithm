@@ -1,31 +1,49 @@
-#include <iostream>
+// Solve 2022-11-26
+// Update 2025-11-18
+
+#include <bits/stdc++.h>
+
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
+#define ALL(v) v.begin(),v.end()
+#define UNIQUE(v) v.erase(unique(v.begin(),v.end()),v.end());
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
+
 using namespace std;
-#define fastio ios_base::sync_with_stdio(false);cout.tie(NULL);cin.tie(NULL); // boj_15552.cpp
+using ll = long long;
 using uint = unsigned int;
 using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+const int INF = 0x3f3f3f3f;
+const int MOD = 1000000007;
 
-uint N, L, X[100000];
+int x[100000];
 
 int main() {
-    fastio;
+    FASTIO;
 
-    cin >> N >> L;
+    int n, l;
+    cin >> n >> l;
 
-    for (int n = 0; n < N; n++) {
-        cin >> X[n];
+    for (int i = 0; i < n; i++) {
+        cin >> x[i];
     }
 
-    ull W, sum_of_weight = 0, sum_of_product = 0;
-    for (int n = 0; n < N; n++) {
-        cin >> W;
-        sum_of_weight += W;
-        sum_of_product += W * (ull)X[n];
+    ll w_sum = 0;
+    ll prod_sum = 0;
+
+    for (int i = 0; i < n; i++) {
+        int w;
+        cin >> w;
+
+        w_sum += w;
+        prod_sum += (ll) w * x[i];
     }
 
-    double ans = sum_of_product / (double)sum_of_weight;
-    cout << fixed;
-    cout.precision(9);
+    double ans = prod_sum / (double) w_sum;
+    SETP(9);
     cout << ans << '\n';
-
     return 0;
 }

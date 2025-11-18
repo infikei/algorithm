@@ -1,4 +1,4 @@
-// Solve 2022-11-26
+// Solve 2022-07-03
 // Update 2025-11-18
 
 #include <bits/stdc++.h>
@@ -19,31 +19,25 @@ using pll = pair<ll, ll>;
 const int INF = 0x3f3f3f3f;
 const int MOD = 1000000007;
 
-int x[100000];
-
 int main() {
     FASTIO;
 
-    int n, l;
-    cin >> n >> l;
+    int n, v;
+    cin >> n >> v;
 
-    for (int i = 0; i < n; i++) {
-        cin >> x[i];
+    int memo[3] = {0, v, 0};
+    int tmp[3];
+
+    for (int i = 1; i < n; i++) {
+        cin >> v;
+
+        tmp[0] = max(memo[0], max(memo[1], memo[2]));
+        tmp[1] = memo[0] + v;
+        tmp[2] = memo[1] + v;
+
+        swap(memo, tmp);
     }
 
-    ll w_sum = 0;
-    ll prod_sum = 0;
-
-    for (int i = 0; i < n; i++) {
-        int w;
-        cin >> w;
-
-        w_sum += w;
-        prod_sum += (ll) w * x[i];
-    }
-
-    double ans = prod_sum / (double) w_sum;
-    SETP(9);
-    cout << ans << '\n';
+    cout << max(memo[0], max(memo[1], memo[2])) << '\n';
     return 0;
 }

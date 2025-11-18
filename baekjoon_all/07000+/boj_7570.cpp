@@ -1,4 +1,5 @@
 // Solve 2025-08-16
+// Update 2025-11-18
 
 #include <bits/stdc++.h>
 
@@ -34,10 +35,10 @@ int main() {
 
     int max_asc = 0;
     int cur_asc = 0;
-    int prev = -1;
+    int prv = -1;
 
     for (int i = 1; i <= n; i++) {
-        if (arr[i] > prev) {
+        if (prv < arr[i]) {
             cur_asc++;
         }
         else {
@@ -45,7 +46,7 @@ int main() {
             cur_asc = 1;
         }
 
-        prev = arr[i];
+        prv = arr[i];
     }
 
     max_asc = max(max_asc, cur_asc);

@@ -1,52 +1,60 @@
 // Solve 2022-11-26
-// Update 2023-09-25
+// Update 2025-11-18
 
 #include <bits/stdc++.h>
-using namespace std;
 
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
-#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
-#define SIZE(v) (int)v.size()
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
 #define ALL(v) v.begin(),v.end()
+#define UNIQUE(v) v.erase(unique(v.begin(),v.end()),v.end());
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
+
+using namespace std;
 using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+const int INF = 0x3f3f3f3f;
+const int MOD = 1000000007;
 
 int main() {
     FASTIO;
 
     int n, m;
-    cin >> n >> m;
+    string s, t;
+    cin >> n >> m >> s >> t;
+    int k = n + m;
 
-    int nm = n + m;
+    vector<int> v1, v2;
 
-    string s[2];
-    cin >> s[0] >> s[1];
+    for (int i = 0; i < k; i++) {
+        if (s[i] == '1') {
+            v1.push_back(i);
+        }
+    }
 
-    vector<vector<int> > idx_of_1(2, vector<int>());
-
-    for (int i = 0; i < 2; i++) {
-        for (int j = 0; j < nm; j++) {
-            if (s[i][j] == '1') {
-                idx_of_1[i].push_back(j);
-            }
+    for (int i = 0; i < k; i++) {
+        if (t[i] == '1') {
+            v2.push_back(i);
         }
     }
 
     ll cnt = 0;
 
-    for (int j = 0; j < m; j++) {
-        cnt += abs(idx_of_1[0][j] - idx_of_1[1][j]);
+    for (int i = 0; i < m; i++) {
+        cnt += abs(v1[i] - v2[i]);
     }
 
-    ll ans = 0, k = cnt / 2;
+    ll half = cnt / 2;
 
     if (cnt % 2 == 0) {
-        ans = k * k * 2;
+        cout << half * half * 2 << '\n';
     }
     else {
-        ans = k * (k + 1) * 2 + 1;
+        cout << half * (half + 1) * 2 + 1 << '\n';
     }
-
-    cout << ans << '\n';
 
     return 0;
 }

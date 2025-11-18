@@ -1,31 +1,40 @@
 // Solve 2022-11-26
-// Update 2023-08-11
+// Update 2025-11-18
 
 #include <bits/stdc++.h>
-using namespace std;
 
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
-#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
-#define SIZE(v) (int)v.size()
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
 #define ALL(v) v.begin(),v.end()
+#define UNIQUE(v) v.erase(unique(v.begin(),v.end()),v.end());
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
+
+using namespace std;
 using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+const int INF = 0x3f3f3f3f;
+const int MOD = 1000000007;
 
 int main() {
     FASTIO;
 
-    int n, cnt = 0;
+    int n;
     cin >> n;
+    int cnt = 0;
 
-    for (int i = 0; i < n; i++) {
+    while (n-- > 0) {
         string d_day;
         cin >> d_day;
 
-        int d = stoi(d_day.substr(2, SIZE(d_day) - 2));
-
-        if (d < 91) cnt++;
+        if (stoi(d_day.substr(2)) <= 90) {
+            cnt++;
+        }
     }
 
     cout << cnt << '\n';
-
     return 0;
 }

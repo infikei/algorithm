@@ -1,38 +1,44 @@
 // Solve 2022-11-26
-// Update 2023-09-25
+// Update 2025-11-18
 
 #include <bits/stdc++.h>
-using namespace std;
 
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
-#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
-#define SIZE(v) (int)v.size()
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
 #define ALL(v) v.begin(),v.end()
+#define UNIQUE(v) v.erase(unique(v.begin(),v.end()),v.end());
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
+
+using namespace std;
 using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+const int INF = 0x3f3f3f3f;
+const int MOD = 1000000007;
 
 int main() {
     FASTIO;
 
     int n;
     cin >> n;
+    unordered_set<string> mp;
+    mp.insert("ChongChong");
 
-    unordered_set<string> rainbow_dance_hs;
-
-    rainbow_dance_hs.insert("ChongChong");
-
-    for (int i = 0; i < n; i++) {
+    while (n-- > 0) {
         string a, b;
         cin >> a >> b;
 
-        if (rainbow_dance_hs.find(a) != rainbow_dance_hs.end()) {
-            rainbow_dance_hs.insert(b);
+        if (mp.find(a) != mp.end()) {
+            mp.insert(b);
         }
-        else if (rainbow_dance_hs.find(b) != rainbow_dance_hs.end()) {
-            rainbow_dance_hs.insert(a);
+        else if (mp.find(b) != mp.end()) {
+            mp.insert(a);
         }
     }
 
-    cout << SIZE(rainbow_dance_hs) << '\n';
-
+    cout << size(mp) << '\n';
     return 0;
 }
