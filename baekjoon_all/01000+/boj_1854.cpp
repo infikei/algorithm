@@ -1,15 +1,26 @@
 // Solve 2023-01-25
-// Update 2023-11-24
+// Update 2025-11-21
 
 #include <bits/stdc++.h>
-using namespace std;
 
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
-#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
-#define SIZE(v) (int)v.size()
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
 #define ALL(v) v.begin(),v.end()
+#define UNIQUE(v) v.erase(unique(v.begin(),v.end()),v.end());
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
+
+using namespace std;
 using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+using ld = long double;
 using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+const int INF = 0x3f3f3f3f;
+const int MOD = 1000000007;
+
+vector<pii> adj[1001];
+priority_queue<int> dist_pq[1001];
 
 int main() {
     FASTIO;
@@ -17,44 +28,37 @@ int main() {
     int n, m, k;
     cin >> n >> m >> k;
 
-    vector<vector<pii> > edges(n + 1, vector<pii>());
-
     for (int i = 0; i < m; i++) {
-        int from, to, dist;
-        cin >> from >> to >> dist;
-
-        edges[from].emplace_back(to, dist);
+        int u, v, w;
+        cin >> u >> v >> w;
+        adj[u].emplace_back(v, w);
     }
 
-    vector<priority_queue<int> > dists(n + 1, priority_queue<int>());
-    priority_queue<pii, vector<pii>, greater<pii> > pq_mintop;
-    dists[1].push(0);
+    priority_queue<pii, vector<pii>, greater<pii>> pq_mintop;
+    dist_pq[1].push(0);
     pq_mintop.emplace(0, 1);
 
     while (!pq_mintop.empty()) {
-        int now = pq_mintop.top().second;
-        int dist_to_now = pq_mintop.top().first;
+        auto [cur_dist, cur] = pq_mintop.top();
         pq_mintop.pop();
 
-        for (pii edge : edges[now]) {
-            int next = edge.first;
-            int dist_to_next = dist_to_now + edge.second;
+        for (auto [nxt, w] : adj[cur]) {
+            int nxt_dist = cur_dist + w;
 
-            if (SIZE(dists[next]) < k) {
-                dists[next].push(dist_to_next);
-                pq_mintop.emplace(dist_to_next, next);
+            if (size(dist_pq[nxt]) < k) {
+                dist_pq[nxt].push(nxt_dist);
+                pq_mintop.emplace(nxt_dist, nxt);
             }
-            else if (dists[next].top() > dist_to_next) {
-                dists[next].pop();
-                dists[next].push(dist_to_next);
-                pq_mintop.emplace(dist_to_next, next);
+            else if (nxt_dist < dist_pq[nxt].top()) {
+                dist_pq[nxt].pop();
+                dist_pq[nxt].push(nxt_dist);
+                pq_mintop.emplace(nxt_dist, nxt);
             }
         }
     }
 
     for (int u = 1; u <= n; u++) {
-        if (SIZE(dists[u]) < k) cout << -1 << '\n';
-        else cout << dists[u].top() << '\n';
+        cout << (size(dist_pq[u]) < k ? -1 : dist_pq[u].top()) << '\n';
     }
 
     return 0;
