@@ -1,111 +1,97 @@
 // Solve 2023-01-09
-// Update 2023-11-23
+// Update 2025-11-29
 
 #include <bits/stdc++.h>
-using namespace std;
 
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
-#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
-#define SIZE(v) (int)v.size()
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
 #define ALL(v) v.begin(),v.end()
-using ll = long long;
-using pii = pair<int, int>;
+#define UNIQUE(v) v.erase(unique(v.begin(),v.end()),v.end());
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
 
-const int INF = 1e9;
+using namespace std;
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+const int INF = 0x3f3f3f3f;
+const int MOD = 1000000007;
+
+void dijkstra(int s, vector<int>& min_dist, vector<vector<pii>>& adj) {
+    priority_queue<pii, vector<pii>, greater<pii>> pq;
+    min_dist[s] = 0;
+    pq.emplace(0, s);
+
+    while (!pq.empty()) {
+        auto [cur_dist, cur] = pq.top();
+        pq.pop();
+
+        if (cur_dist > min_dist[cur]) continue;
+
+        for (auto [nxt, w] : adj[cur]) {
+            int nxt_dist = cur_dist + w;
+
+            if (nxt_dist < min_dist[nxt]) {
+                min_dist[nxt] = nxt_dist;
+                pq.emplace(nxt_dist, nxt);
+            }
+        }
+    }
+}
+
+void solution() {
+    int n, m, t, s, g, h;
+    cin >> n >> m >> t >> s >> g >> h;
+
+    vector<vector<pii>> adj(n + 1);
+
+    while (m-- > 0) {
+        int u, v, w;
+        cin >> u >> v >> w;
+        adj[u].emplace_back(v, w);
+        adj[v].emplace_back(u, w);
+    }
+
+    vector<int> min_dist_from_s(n + 1, INF);
+    dijkstra(s, min_dist_from_s, adj);
+
+    if (min_dist_from_s[g] > min_dist_from_s[h]) {
+        swap(g, h);
+    }
+
+    vector<int> min_dist_from_h(n + 1, INF);
+    dijkstra(h, min_dist_from_h, adj);
+
+    vector<int> ans;
+
+    while (t-- > 0) {
+        int x;
+        cin >> x;
+
+        if (min_dist_from_s[h] + min_dist_from_h[x] == min_dist_from_s[x]) {
+            ans.push_back(x);
+        }
+    }
+
+    sort(ans.begin(), ans.end());
+
+    for (int x : ans) {
+        cout << x << ' ';
+    }
+
+    cout << '\n';
+}
 
 int main() {
     FASTIO;
 
-    int tc;
-    cin >> tc;
+    int t;
+    cin >> t;
 
-    for (int tci = 0; tci < tc; tci++) {
-        int n, m, t, s, g, h;
-        cin >> n >> m >> t >> s >> g >> h;
-
-        vector<vector<pii> > edges(n + 1, vector<pii>());
-
-        for (int i = 0; i < m; i++) {
-            int from, to, dist;
-            cin >> from >> to >> dist;
-
-            edges[from].emplace_back(to, dist);
-            edges[to].emplace_back(from, dist);
-        }
-
-        vector<int> dists_from_s(n + 1, INF);
-        priority_queue<pii, vector<pii>, greater<pii> > pq_mintop;
-        dists_from_s[s] = 0;
-        pq_mintop.emplace(0, s);
-
-        while (!pq_mintop.empty()) {
-            int now = pq_mintop.top().second;
-            int dist_to_now = pq_mintop.top().first;
-            pq_mintop.pop();
-
-            if (dists_from_s[now] < dist_to_now) continue;
-
-            for (pii edge : edges[now]) {
-                int next = edge.first;
-                int dist_to_next = dist_to_now + edge.second;
-
-                if (dists_from_s[next] > dist_to_next) {
-                    dists_from_s[next] = dist_to_next;
-                    pq_mintop.emplace(dist_to_next, next);
-                }
-            }
-        }
-
-        int v2;
-
-        if (dists_from_s[g] < dists_from_s[h]) {
-            v2 = h;
-        }
-        else {
-            v2 = g;
-        }
-
-        vector<int> dists_from_v2(n + 1, INF);
-        dists_from_v2[v2] = 0;
-        pq_mintop.emplace(0, v2);
-
-        while (!pq_mintop.empty()) {
-            int now = pq_mintop.top().second;
-            int dist_to_now = pq_mintop.top().first;
-            pq_mintop.pop();
-
-            if (dists_from_v2[now] < dist_to_now) continue;
-
-            for (pii edge : edges[now]) {
-                int next = edge.first;
-                int dist_to_next = dist_to_now + edge.second;
-
-                if (dists_from_v2[next] > dist_to_next) {
-                    dists_from_v2[next] = dist_to_next;
-                    pq_mintop.emplace(dist_to_next, next);
-                }
-            }
-        }
-
-        vector<int> ans_vec;
-        int dist_from_s_to_v2 = dists_from_s[v2];
-
-        for (int i = 0; i < t; i++) {
-            int x;
-            cin >> x;
-
-            if (dist_from_s_to_v2 + dists_from_v2[x] == dists_from_s[x]) {
-                ans_vec.push_back(x);
-            }
-        }
-
-        sort(ans_vec.begin(), ans_vec.end());
-
-        for (int ans : ans_vec) {
-            cout << ans << ' ';
-        }
-
-        cout << '\n';
+    while (t-- > 0) {
+        solution();
     }
 
     return 0;
