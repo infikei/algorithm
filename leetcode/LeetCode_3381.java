@@ -1,6 +1,7 @@
 // Solve 2025-11-27
+// Update 2025-12-05
 
-class Solution {
+class LeetCode_3381 {
 
     public long maxSubarraySum(int[] nums, int k) {
         long curSum = 0;
