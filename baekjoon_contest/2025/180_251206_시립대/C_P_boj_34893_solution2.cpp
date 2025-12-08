@@ -1,4 +1,4 @@
-// Solve 2025-02-21
+// Solve 2025-12-06
 // Update 2025-12-08
 
 #include <bits/stdc++.h>
@@ -19,29 +19,23 @@ using pll = pair<ll, ll>;
 const int INF = 0x3f3f3f3f;
 const int MOD = 1000000007;
 
-// memo[0]은 현재까지 특정 동작을 유지했을 때의 최대 점수
-// memo[1]은 동작을 최대 1번 변경했을 때의 최대 점수
-int memo[2][3];
-
 int main() {
     FASTIO;
 
-    int n;
-    cin >> n;
+    ll u, o, s;
+    cin >> u >> o >> s;
 
-    for (int i = 1; i <= n; i++) {
-        char c;
-        cin >> c;
-        int d = (c == 'H' ? 0 : c == 'P' ? 1 : 2);
+    ll cnt1 = min(u, min(o, s));
+    u -= cnt1;
+    o -= cnt1;
+    s -= cnt1;
 
-        for (int j = 0; j < 3; j++) {
-            memo[1][j] = max(memo[1][j], *max_element(memo[0], memo[0] + 3));
-        }
+    ll cnt2 = 0;
 
-        memo[0][d]++;
-        memo[1][d]++;
+    if (s == 0) {
+        cnt2 = min(u / 3, o);
     }
 
-    cout << *max_element(memo[1], memo[1] + 3) << '\n';
+    cout << cnt1 + cnt2 << '\n';
     return 0;
 }
