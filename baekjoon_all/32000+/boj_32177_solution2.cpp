@@ -26,8 +26,25 @@ struct IPhone{
     }
 };
 
-bool visited[3001];
+int parent[3001];
 vector<IPhone> phones;
+
+int get_parent_of(int u) {
+    if (parent[u] < 0) return u;
+    return parent[u] = get_parent_of(parent[u]);
+}
+
+void union_parents(int u, int v) {
+    u = get_parent_of(u);
+    v = get_parent_of(v);
+
+    if (u == v) return;
+
+    if (parent[u] > parent[v]) swap(u, v);
+
+    parent[u] += parent[v];
+    parent[v] = u;
+}
 
 int get_dist_square(int u, int v) {
     int dx = phones[u].x - phones[v].x;
@@ -48,45 +65,35 @@ int main() {
         phones.emplace_back(x, y, v, 0);
     }
 
-    for (int i = 1; i <= n; i++) {
+    for (int u = 1; u <= n; u++) {
         int x, y, v, p;
         cin >> x >> y >> v >> p;
         phones.emplace_back(x, y, v, p);
     }
 
-    queue<int> que;
-    que.push(0);
-    visited[0] = true;
-    vector<int> ans;
+    memset(parent, -1, sizeof parent);
 
-    while (!que.empty()) {
-        int u = que.front();
-        que.pop();
-
-        for (int v = 1; v <= n; v++) {
-            if (!visited[v] && get_dist_square(u, v) <= k2 && abs(phones[u].v - phones[v].v) <= t) {
-                visited[v] = true;
-                que.push(v);
-
-                if (phones[v].p) {
-                    ans.push_back(v);
-                }
+    for (int u = 0; u <= n; u++) {
+        for (int v = u + 1; v <= n; v++) {
+            if (get_dist_square(u, v) <= k2 && abs(phones[u].v - phones[v].v) <= t) {
+                union_parents(u, v);
             }
         }
     }
 
-    sort(ans.begin(), ans.end());
+    int cnt = 0;
 
-    if (ans.empty()) {
-        cout << 0 << '\n';
-    }
-    else {
-        for (int u : ans) {
+    for (int u = 1; u <= n; u++) {
+        if (phones[u].p == 1 && get_parent_of(u) == get_parent_of(0)) {
             cout << u << ' ';
+            cnt++;
         }
-
-        cout << '\n';
     }
 
+    if (cnt == 0) {
+        cout << 0;
+    }
+
+    cout << '\n';
     return 0;
 }
