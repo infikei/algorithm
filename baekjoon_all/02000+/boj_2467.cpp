@@ -1,56 +1,62 @@
 // Solve 2023-02-22
+// Update 2025-12-20
 
 #include <bits/stdc++.h>
-using namespace std;
 
-#ifdef BOJ
-#define BOJTEST(x) ((void)0)
-#else
-#define BOJTEST(x) cout << "[Debug] " << #x << ':' << x << '\n'
-#endif
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL); // boj_15552.cpp
-#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
-#define SIZE(v) (int)v.size()
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
 #define ALL(v) v.begin(),v.end()
-#define INF (int)1e9
-#define LLINF (ll)4e18
+#define UNIQUE(v) v.erase(unique(v.begin(),v.end()),v.end());
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
+
+using namespace std;
 using ll = long long;
 using uint = unsigned int;
 using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+const int INF = 0x3f3f3f3f;
+const ll LLINF = 0x3f3f3f3f3f3f3f3fLL;
+const int MOD = 1000000007;
 
-const int MAX_N = 1e5;
-int n, arr[MAX_N];
+int a[100000];
 
 int main() {
     FASTIO;
 
+    int n;
     cin >> n;
+
     for (int i = 0; i < n; i++) {
-        cin >> arr[i];
+        cin >> a[i];
     }
 
-    int low = 0, high = n - 1;
-    int ans = 2e9, ans_low = 0, ans_high = 0;
-    while (low < high) {
-        int val = arr[low] + arr[high];
-        if (ans > abs(val)) {
-            ans = abs(val);
-            ans_low = low;
-            ans_high = high;
+    sort(a, a + n);
+
+    int left = 0;
+    int right = n - 1;
+    int mn = abs(a[0] + a[1]);
+    int ans[2] = {a[0], a[1]};
+
+    while (left < right) {
+        int s = a[left] + a[right];
+
+        if (abs(s) < mn) {
+            mn = abs(s);
+            ans[0] = a[left];
+            ans[1] = a[right];
         }
 
-        if (val < 0) {
-            low++;
+        if (s < 0) {
+            left++;
         }
-        else if (val > 0) {
-            high--;
+        else if (s > 0) {
+            right--;
         }
-        else {
-            break;
-        }
+        else break;
     }
 
-    cout << arr[ans_low] << ' ' << arr[ans_high] << '\n';
-
+    cout << ans[0] << ' ' << ans[1] << '\n';
     return 0;
 }
