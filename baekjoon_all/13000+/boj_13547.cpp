@@ -1,84 +1,101 @@
 // Solve 2023-07-04
-// Update 2023-07-06
+// Update 2025-12-18
 
 #include <bits/stdc++.h>
-using namespace std;
 
-#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL); // boj_15552.cpp
-#define SETPRECISION(n) cout << fixed;cout.precision(n); // boj_1008.cpp
-#define SIZE(v) (int)v.size()
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
 #define ALL(v) v.begin(),v.end()
+#define UNIQUE(v) v.erase(unique(v.begin(),v.end()),v.end());
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
+
+using namespace std;
 using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+const int INF = 0x3f3f3f3f;
+const int MOD = 1000000007;
 
 struct Query{
-    int idx, s, e, s2;
-    Query(int nidx = 0, int ns = 0, int ne = 0, int ns2 = 0) : idx(nidx), s(ns), e(ne), s2(ns2) {}
-    bool operator<(const Query &rhs) const {
-        if (s2 != rhs.s2) return s2 > rhs.s2;
-        if (e != rhs.e) return e > rhs.e;
-        return s > rhs.s;
+    int idx, s, e, s_bucket;
+
+    Query(int idx, int s, int e, int s_bucket) : idx(idx), s(s), e(e), s_bucket(s_bucket) {
+    }
+
+    bool operator<(const Query& rhs) const {
+        if (s_bucket != rhs.s_bucket) return s_bucket < rhs.s_bucket;
+        if (e != rhs.e) return e < rhs.e;
+        return s < rhs.s;
     }
 };
 
-int n, sqrt_n, m;
-int arr[100001];
-priority_queue<Query> query_pq;
-int cnt[1000001], now_s, now_e, now_cnt;
-int ans[100000];
+int a[100001];
+int cnt[1000001];
+int ans[100001];
 
 int main() {
     FASTIO;
 
+    int n;
     cin >> n;
-    sqrt_n = sqrt(n);
+    int sqrt_n = sqrt(n);
 
     for (int i = 1; i <= n; i++) {
-        cin >> arr[i];
+        cin >> a[i];
     }
 
-    cin >> m;
+    int q;
+    cin >> q;
+    vector<Query> queries;
 
-    for (int i = 0; i < m; i++) {
+    for (int i = 1; i <= q; i++) {
         int s, e;
         cin >> s >> e;
-        query_pq.push({ i, s, e, s / sqrt_n });
+        queries.emplace_back(i, s, e, s / sqrt_n);
     }
 
-    now_s = now_e = now_cnt = 1;
-    cnt[arr[1]]++;
+    sort(queries.begin(), queries.end());
+    int left = 1;
+    int right = 1;
+    cnt[a[1]]++;
+    int cur = 1;
 
-    for (int i = 0; i < m; i++) {
-        auto query = query_pq.top();
-        query_pq.pop();
-
-        while (query.s < now_s) {
-            now_s--;
-            cnt[arr[now_s]]++;
-            if (cnt[arr[now_s]] == 1) now_cnt++;
+    for (auto [q_idx, s, e, s_bucket] : queries) {
+        while (s < left) {
+            left--;
+            int v = a[left];
+            cnt[v]++;
+            if (cnt[v] == 1) cur++;
         }
 
-        while (now_e < query.e) {
-            now_e++;
-            cnt[arr[now_e]]++;
-            if (cnt[arr[now_e]] == 1) now_cnt++;
+        while (right < e) {
+            right++;
+            int v = a[right];
+            cnt[v]++;
+            if (cnt[v] == 1) cur++;
         }
 
-        while (now_s < query.s) {
-            cnt[arr[now_s]]--;
-            if (cnt[arr[now_s]] == 0) now_cnt--;
-            now_s++;
+        while (left < s) {
+            int v = a[left];
+            left++;
+            cnt[v]--;
+            if (cnt[v] == 0) cur--;
         }
 
-        while (query.e < now_e) {
-            cnt[arr[now_e]]--;
-            if (cnt[arr[now_e]] == 0) now_cnt--;
-            now_e--;
+        while (e < right) {
+            int v = a[right];
+            right--;
+            cnt[v]--;
+            if (cnt[v] == 0) cur--;
         }
 
-        ans[query.idx] = now_cnt;
+        ans[q_idx] = cur;
     }
 
-    for (int i = 0; i < m; i++) {
+    for (int i = 1; i <= q; i++) {
         cout << ans[i] << '\n';
     }
 
