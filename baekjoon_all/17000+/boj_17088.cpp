@@ -1,4 +1,5 @@
 // Solve 2025-06-18
+// Update 2025-12-23
 
 #include <bits/stdc++.h>
 
@@ -25,11 +26,11 @@ int count_to_change(int d0, int d1) {
     int a0 = arr[0] + d0;
     int a1 = arr[1] + d1;
     int cnt = (d0 == 0 ? 0 : 1) + (d1 == 0 ? 0 : 1);
-    int diff = a1 - a0;
+    int d = a1 - a0;
     int cur = a1;
 
     for (int i = 2; i < n; i++) {
-        cur += diff;
+        cur += d;
 
         if (arr[i] == cur) {
             continue;
@@ -45,36 +46,28 @@ int count_to_change(int d0, int d1) {
     return cnt;
 }
 
-void input() {
+int main() {
+    FASTIO;
+
     cin >> n;
 
     for (int i = 0; i < n; i++) {
         cin >> arr[i];
     }
-}
 
-void pro() {
     if (n <= 2) {
         cout << 0 << '\n';
-        return;
+        return 0;
     }
 
-    int ans = INF;
+    int mn = INF;
 
     for (int d0 = -1; d0 <= 1; d0++) {
         for (int d1 = -1; d1 <= 1; d1++) {
-            ans = min(ans, count_to_change(d0, d1));
+            mn = min(mn, count_to_change(d0, d1));
         }
     }
 
-    cout << (ans == INF ? -1 : ans) << '\n';
-}
-
-int main() {
-    FASTIO;
-
-    input();
-    pro();
-
+    cout << (mn == INF ? -1 : mn) << '\n';
     return 0;
 }
