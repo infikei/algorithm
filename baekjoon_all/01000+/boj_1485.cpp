@@ -1,48 +1,54 @@
-#include <iostream>
-#include <vector>
-#include <algorithm>
-using namespace std;
-typedef pair<int, int> pii;
+// Solve 2022-09-07
+// Update 2025-12-26
 
-int d2(pii a, pii b) {
-    int result = (a.first - b.first) * (a.first - b.first);
-    result += (a.second - b.second) * (a.second - b.second);
-    return result;
+#include <bits/stdc++.h>
+
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
+#define ALL(v) v.begin(),v.end()
+#define UNIQUE(v) v.erase(unique(v.begin(),v.end()),v.end());
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
+
+using namespace std;
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+const int INF = 0x3f3f3f3f;
+const int MOD = 1000000007;
+
+ll x[4];
+ll y[4];
+ll len_square[6];
+
+ll get_dist_square(int i, int j) {
+    ll dx = x[i] - x[j];
+    ll dy = y[i] - y[j];
+    return dx * dx + dy * dy;
 }
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    int T;
-    cin >> T;
+    int t;
+    cin >> t;
 
-    for (int t = 0; t < T; t++) {
-        int x, y;
-        vector<pii> pt_vec;
+    while (t-- > 0) {
         for (int i = 0; i < 4; i++) {
-            cin >> x >> y;
-            pt_vec.push_back(make_pair(x, y));
+            cin >> x[i] >> y[i];
         }
 
-        // 점 4개로 만들 수 있는 선분의 길이를 구한다.
-        // 점 4개로 정사각형을 만들 수 있다면, 이 6개의 길이 중 4개가 같은 길이, 그리고 나머지 2개도 같은 길이여야 한다.
-        vector<int> d2_vec;
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0, u = 0; i < 4; i++) {
             for (int j = i + 1; j < 4; j++) {
-                d2_vec.push_back(d2(pt_vec[i], pt_vec[j]));
+                len_square[u] = get_dist_square(i, j);
+                u++;
             }
         }
 
-        sort(d2_vec.begin(), d2_vec.end());
-
-        if (d2_vec[0] == d2_vec[3] && d2_vec[4] == d2_vec[5]) {
-            cout << 1 << '\n';
-        }
-        else {
-            cout << 0 << '\n';
-        }
+        sort(len_square, len_square + 6);
+        cout << (len_square[0] == len_square[3] && len_square[4] == len_square[5]) << '\n';
     }
 
     return 0;
