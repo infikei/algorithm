@@ -1,6 +1,5 @@
 // Solve 2024-02-29
-
-// 백준에 제출할 때는 class 이름을 Main으로 설정해야 한다.
+// Update 2026-01-04
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,44 +9,42 @@ import java.util.StringTokenizer;
 public class boj_10971 {
 
     static int n;
-    static int[][] adj;
-    static int minDist;
+    static int[][] w;
+    static int mn;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st;
         n = Integer.parseInt(br.readLine());
-        adj = new int[n][n];
+        w = new int[n][n];
 
-        for (int from = 0; from < n; from++) {
+        for (int i = 0; i < n; i++) {
             st = new StringTokenizer(br.readLine(), " ");
 
-            for (int to = 0; to < n; to++) {
-                adj[from][to] = Integer.parseInt(st.nextToken());
+            for (int j = 0; j < n; j++) {
+                w[i][j] = Integer.parseInt(st.nextToken());
             }
         }
 
-        minDist = Integer.MAX_VALUE;
-        recur(1, 0, 0, 0);
-        System.out.println(minDist);
-        br.close();
+        mn = Integer.MAX_VALUE;
+        recur(0, 1, 0);
+        System.out.println(mn);
     }
 
-    static void recur(int depth, int selected, int prev, int dist) {
-        if (depth == n) {
-            if (adj[prev][0] != 0) {
-                minDist = Math.min(minDist, dist + adj[prev][0]);
+    static void recur(int cur, int selected, int dist) {
+        if (selected == (1 << n) - 1) {
+            if (w[cur][0] != 0) {
+                mn = Math.min(mn, dist + w[cur][0]);
             }
 
             return;
         }
 
-        if (dist > minDist) return;
+        for (int i = 0; i < n; i++) {
+            if ((selected & (1 << i)) != 0) continue;
+            if (w[cur][i] == 0) continue;
 
-        for (int u = 1; u < n; u++) {
-            if ((selected & 1 << u) == 0 && adj[prev][u] != 0) {
-                recur(depth + 1, selected | 1 << u, u, dist + adj[prev][u]);
-            }
+            recur(i, selected | (1 << i), dist + w[cur][i]);
         }
     }
 
