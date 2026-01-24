@@ -1,4 +1,5 @@
 // Solve 2025-11-09
+// Update 2026-01-19
 
 #include <bits/stdc++.h>
 
@@ -18,7 +19,17 @@ using pll = pair<ll, ll>;
 const int INF = 0x3f3f3f3f;
 const int MOD = 1000000007;
 
-bool visited[10];
+bool checked[10];
+
+bool check() {
+    for (int i = 0; i < 10; i++) {
+        if (!checked[i]) {
+            return false;
+        }
+    }
+
+    return true;
+}
 
 int main() {
     FASTIO;
@@ -27,7 +38,7 @@ int main() {
     cin >> t;
 
     for (int ti = 1; ti <= t; ti++) {
-        memset(visited, false, sizeof visited);
+        memset(checked, false, sizeof checked);
         int n;
         cin >> n;
 
@@ -36,28 +47,24 @@ int main() {
             continue;
         }
 
-        for (int i = n;; i += n) {
-            int tmp = i;
+        int cur = n;
+
+        while (true) {
+            int tmp = cur;
 
             while (tmp > 0) {
-                visited[tmp % 10] = true;
+                checked[tmp % 10] = true;
                 tmp /= 10;
             }
 
-            bool flag = true;
-
-            for (int d = 0; d < 10; d++) {
-                if (!visited[d]) {
-                    flag = false;
-                    break;
-                }
-            }
-
-            if (flag) {
-                cout << "Case #" << ti << ": " << i << '\n';
+            if (check()) {
                 break;
             }
+
+            cur += n;
         }
+
+        cout << "Case #" << ti << ": " << cur << '\n';
     }
 
     return 0;
