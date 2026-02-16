@@ -1,0 +1,59 @@
+// Solve 2026-02-12
+
+#include <bits/stdc++.h>
+
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
+#define ALL(v) v.begin(),v.end()
+#define UNIQUE(v) v.erase(unique(v.begin(),v.end()),v.end());
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
+
+using namespace std;
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+const int INF = 0x3f3f3f3f;
+const int MOD = 1000000007;
+
+ll prefix[100][10000];
+
+int main() {
+    FASTIO;
+
+    int r, s;
+    cin >> r >> s;
+
+    if (r == 1) {
+        cout << 1 << '\n';
+        return 0;
+    }
+
+    ll r_fac = 1;
+
+    for (int i = 1; i <= r; i++) {
+        r_fac = r_fac * i % MOD;
+    }
+
+    for (int j = 0; j < 10000; j++) {
+        prefix[0][j] = 1;
+    }
+
+    for (int i = 1; i < r; i++) {
+        for (int j = 0; j < s; j++) {
+            prefix[i][0] += prefix[i - 1][j];
+        }
+
+        prefix[i][0] %= MOD;
+
+        for (int j = 1, je = (r - 1 - i) * (s - 1) + 1; j < je; j++) {
+            prefix[i][j] = (prefix[i][j - 1] + prefix[i - 1][j + (s - 1)]) % MOD;
+        }
+    }
+
+    cout << r_fac * prefix[r - 1][0] % MOD << '\n';
+
+    return 0;
+}
