@@ -1,37 +1,46 @@
-#include <iostream>
-#include <string>
-using namespace std;
+// Solve 2022-09-15
+// Update 2026-04-08
 
-bool check_all;
-bool check[6];
+#include <bits/stdc++.h>
+
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
+#define ALL(v) v.begin(),v.end()
+#define UNIQUE(v) v.erase(unique(v.begin(),v.end()),v.end());
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
+
+using namespace std;
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+const int INF = 0x3f3f3f3f;
+const int MOD = 1000000007;
 
 int main() {
-    ios_base::sync_with_stdio(false); // C++와 C 두 표준 입출력 동기화를 해제한다.
-    cout.tie(NULL);
-    cin.tie(NULL);                    // 입력과 출력이 묶여있는 것을 풀어준다.
+    FASTIO;
 
-    string name;
-    for (int i = 1; i <= 5; i++) {
-        cin >> name;
-        int name_sz = name.length();
+    bool fbi = false;
 
-        for (int j = 0; j < name_sz - 2; j++) {
-            if (name[j] == 'F' && name[j + 1] == 'B' && name[j + 2] == 'I') {
-                check[i] = true;
-                check_all = true;
+    for (int u = 1; u <= 5; u++) {
+        string s;
+        cin >> s;
+
+        for (int i = 2; i < size(s); i++) {
+            if (s[i - 2] == 'F' && s[i - 1] == 'B' && s[i] == 'I') {
+                cout << u << ' ';
+                fbi = true;
                 break;
             }
         }
-
-        if (check[i]) {
-            cout << i << ' ';
-        }
     }
 
-    if (!check_all) {
+    if (!fbi) {
         cout << "HE GOT AWAY!";
     }
-    cout << '\n';
 
+    cout << '\n';
     return 0;
 }
