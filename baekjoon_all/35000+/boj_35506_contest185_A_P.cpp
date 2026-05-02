@@ -1,0 +1,70 @@
+// Solve 2026-04-26
+
+#include <bits/stdc++.h>
+
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
+#define ALL(v) v.begin(),v.end()
+#define UNIQUE(v) v.erase(unique(v.begin(),v.end()),v.end());
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
+
+using namespace std;
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+const int INF = 0x3f3f3f3f;
+const int MOD = 1000000007;
+
+int main() {
+    FASTIO;
+
+    int n;
+    cin >> n;
+
+    string s;
+
+    for (int i = 0; i < n * 4 + 2; i++) {
+        s.push_back(' ');
+    }
+
+    int a = n * 2 - 1;
+    int b = n * 3;
+    int c = n * 3 + 2;
+
+    for (int i = 0; i < n; i++) {
+        s[a] = '*';
+        s[b] = '*';
+        s[c] = '*';
+        cout << s << '\n';
+        s[a] = ' ';
+        s[b] = ' ';
+        s[c] = ' ';
+
+        a--;
+        b--;
+        c++;
+    }
+
+    a = n - 1;
+    b = n * 2 + 1;
+    c = n * 4 + 1;
+
+    for (int i = 0; i < n; i++) {
+        s[a] = '*';
+        s[b] = '*';
+        s[c] = '*';
+        cout << s << '\n';
+        s[a] = ' ';
+        s[b] = ' ';
+        s[c] = ' ';
+
+        a--;
+        b++;
+        c--;
+    }
+
+    return 0;
+}
