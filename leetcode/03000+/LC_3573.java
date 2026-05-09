@@ -1,6 +1,7 @@
 // Solve 2025-12-17
+// Update 2026-05-09
 
-class LeetCode_3573 {
+class LC_3573 {
 
     final long INF = 0x3f3f3f3f3f3f3f3fL;
 

@@ -1,6 +1,7 @@
 // Solve 2025-06-15
+// Update 2026-05-09
 
-class LeetCode_1143 {
+class LC_1143 {
 
     public int longestCommonSubsequence(String text1, String text2) {
         int n = text1.length();

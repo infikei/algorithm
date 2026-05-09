@@ -1,7 +1,7 @@
 // Solve 2025-06-15
-// Update 2025-06-19
+// Update 2026-05-09
 
-class LeetCode_0746_solution2 {
+class LC_0746_solution2 {
 
     public int minCostClimbingStairs(int[] cost) {
         int n = cost.length;

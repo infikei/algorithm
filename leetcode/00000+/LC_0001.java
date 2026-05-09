@@ -1,6 +1,7 @@
 // Solve 2025-04-16
+// Update 2026-05-09
 
-class LeetCode_0001 {
+class LC_0001 {
 
     public int[] twoSum(int[] nums, int target) {
         for (int i = 0; i < nums.length; i++) {

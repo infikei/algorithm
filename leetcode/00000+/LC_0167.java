@@ -1,6 +1,7 @@
 // Solve 2025-04-17
+// Update 2026-05-09
 
-class LeetCode_0167 {
+class LC_0167 {
 
     public int[] twoSum(int[] numbers, int target) {
         int left = 0;

@@ -1,8 +1,9 @@
 // Solve 2025-05-03
+// Update 2026-05-09
 
 import java.util.*;
 
-class LeetCode_0200 {
+class LC_0200 {
 
     static class Point {
         int x, y;

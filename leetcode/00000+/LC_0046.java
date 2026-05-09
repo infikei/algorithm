@@ -1,8 +1,9 @@
 // Solve 2025-06-11
+// Update 2026-05-09
 
 import java.util.*;
 
-class LeetCode_0046 {
+class LC_0046 {
 
     void recur(int depth, boolean[] selected, int[] curPermutation, List<List<Integer>> permutations, int[] nums) {
         if (depth == nums.length) {

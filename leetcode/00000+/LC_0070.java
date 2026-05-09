@@ -1,6 +1,7 @@
 // Solve 2025-06-15
+// Update 2026-05-09
 
-class LeetCode_0070 {
+class LC_0070 {
 
     int recur(int cur, int[] memo) {
         if (cur < 0) return 0;

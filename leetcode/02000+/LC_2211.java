@@ -1,6 +1,7 @@
 // Solve 2025-12-05
+// Update 2026-05-09
 
-class LeetCode_2211 {
+class LC_2211 {
 
     public int countCollisions(String directions) {
         int i = 0;

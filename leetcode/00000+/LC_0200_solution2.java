@@ -1,6 +1,7 @@
 // Solve 2025-05-03
+// Update 2026-05-09
 
-class LeetCode_0200_solution2 {
+class LC_0200_solution2 {
 
     static int[] dx = { 0, 0, -1, 1 };
     static int[] dy = { -1, 1, 0, 0 };

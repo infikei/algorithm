@@ -1,8 +1,9 @@
 // Solve 2025-06-11
+// Update 2026-05-09
 
 import java.util.*;
 
-class LeetCode_0077 {
+class LC_0077 {
 
     void recur(int depth, int from, int[] curCombination, List<List<Integer>> combinations, int n, int k) {
         if (depth == k) {

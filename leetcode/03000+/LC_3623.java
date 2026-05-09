@@ -1,8 +1,9 @@
 // Solve 2025-12-03
+// Update 2026-05-09
 
 import java.util.*;
 
-class LeetCode_3623 {
+class LC_3623 {
 
     public int countTrapezoids(int[][] points) {
         Map<Integer, Integer> yCounter = new HashMap<>();

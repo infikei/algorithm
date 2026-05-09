@@ -1,8 +1,9 @@
 // Solve 2025-06-13
+// Update 2026-05-09
 
 import java.util.*;
 
-class LeetCode_0051 {
+class LC_0051 {
 
     void dfs(int x, int[] yArr, int n, List<List<String>> boards) {
         if (x == n) {

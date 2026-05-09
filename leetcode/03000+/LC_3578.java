@@ -1,8 +1,9 @@
 // Solve 2025-12-07
+// Update 2026-05-09
 
 import java.util.*;
 
-class LeetCode_3578 {
+class LC_3578 {
 
     final int MOD = 1000000007;
 

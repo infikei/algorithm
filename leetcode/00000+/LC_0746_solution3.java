@@ -1,7 +1,7 @@
 // Solve 2025-06-15
-// Update 2025-06-19
+// Update 2026-05-09
 
-class LeetCode_0746_solution3 {
+class LC_0746_solution3 {
 
     int recur(int cur, int[] memo, int[] cost) {
         if (cur < 0) return 1000000;

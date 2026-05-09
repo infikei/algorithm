@@ -1,8 +1,9 @@
 // Solve 2025-06-11
+// Update 2026-05-09
 
 import java.util.*;
 
-public class LeetCode_0078 {
+class LC_0078 {
 
     void recur(int depth, boolean[] selected, List<List<Integer>> subsets, int[] nums) {
         if (depth == nums.length) {

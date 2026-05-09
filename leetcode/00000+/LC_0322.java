@@ -1,8 +1,9 @@
 // Solve 2025-04-24
+// Update 2026-05-09
 
 import java.util.*;
 
-class LeetCode_0322 {
+class LC_0322 {
 
     public int coinChange(int[] coins, int amount) {
         if (amount == 0) return 0;

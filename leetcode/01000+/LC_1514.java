@@ -1,8 +1,9 @@
 // Solve 2025-06-24
+// Update 2026-05-09
 
 import java.util.*;
 
-class LeetCode_1514 {
+class LC_1514 {
 
     static class AdjNode implements Comparable<AdjNode> {
         int to;

@@ -1,9 +1,9 @@
 // Solve 2024-06-20
-// Update 2025-03-18
+// Update 2026-05-09
 
 import java.util.*;
 
-class LeetCode_1552 {
+class LC_1552 {
 
     public int maxDistance(int[] position, int m) {
         Arrays.sort(position);

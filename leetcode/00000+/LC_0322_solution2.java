@@ -1,8 +1,9 @@
 // Solve 2025-04-24
+// Update 2026-05-09
 
 import java.util.*;
 
-class LeetCode_0322_solution2 {
+class LC_0322_solution2 {
 
     public int coinChange(int[] coins, int amount) {
         final int INF = 1000000000;

@@ -1,8 +1,9 @@
 // Solve 2025-12-11
+// Update 2026-05-09
 
 import java.util.*;
 
-class LeetCode_3531 {
+class LC_3531 {
 
     public int countCoveredBuildings(int n, int[][] buildings) {
         int[] xMin = new int[n + 1];

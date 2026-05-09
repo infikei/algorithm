@@ -1,8 +1,9 @@
 // Solve 2025-12-10
+// Update 2026-05-09
 
 import java.util.*;
 
-class LeetCode_3583 {
+class LC_3583 {
 
     public int specialTriplets(int[] nums) {
         final int MOD = 1000000007;

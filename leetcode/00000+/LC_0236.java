@@ -1,4 +1,5 @@
 // Solve 2025-05-15
+// Update 2026-05-09
 
 class TreeNode {
     int val;
@@ -8,7 +9,7 @@ class TreeNode {
     TreeNode(int x) { val = x; }
 }
 
-class LeetCode_0236 {
+class LC_0236 {
 
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         if (root == null || root == p || root == q) {

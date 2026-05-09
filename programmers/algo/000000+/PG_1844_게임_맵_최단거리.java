@@ -1,8 +1,9 @@
 // Solve 2025-05-23
+// Update 2026-05-09
 
 import java.util.*;
 
-class SolutiPG_01844_게임_맵_최단거리on {
+class PG_1844_게임_맵_최단거리 {
 
     static class Point {
         int x;

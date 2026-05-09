@@ -1,6 +1,7 @@
 // Solve 2025-06-15
+// Update 2026-05-09
 
-class LeetCode_0221 {
+class LC_0221 {
 
     public int maximalSquare(char[][] matrix) {
         int m = matrix.length;

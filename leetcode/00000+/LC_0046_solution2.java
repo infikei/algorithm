@@ -1,8 +1,9 @@
 // Solve 2025-06-11
+// Update 2026-05-09
 
 import java.util.*;
 
-class LeetCode_0046_solution2 {
+class LC_0046_solution2 {
 
     void recur(boolean[] selected, List<Integer> curPermutation, List<List<Integer>> permutations, int[] nums) {
         if (curPermutation.size() == nums.length) {

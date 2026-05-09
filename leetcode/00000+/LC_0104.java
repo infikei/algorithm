@@ -1,4 +1,5 @@
 // Solve 2025-05-14
+// Update 2026-05-09
 
 class TreeNode {
     int val;
@@ -16,7 +17,7 @@ class TreeNode {
     }
 }
 
-class LeetCode_0104 {
+class LC_0104 {
 
     public int maxDepth(TreeNode root) {
         if (root == null) {

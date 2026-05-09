@@ -1,6 +1,7 @@
 // Solve 2025-12-09
+// Update 2026-05-09
 
-public class LeetCode_1925 {
+class LC_1925 {
 
     public int countTriples(int n) {
         int ret = 0;

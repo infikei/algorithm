@@ -1,8 +1,9 @@
 // Solve 2025-04-16
+// Update 2026-05-09
 
 import java.util.*;
 
-class LeetCode_0001_solution3 {
+class LC_0001_solution3 {
 
     public int[] twoSum(int[] nums, int target) {
         HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();

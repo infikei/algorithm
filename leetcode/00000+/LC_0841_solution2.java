@@ -1,10 +1,11 @@
 // Solve 2025-04-23
+// Update 2026-05-09
 
 // DFS 풀이
 
 import java.util.*;
 
-class LeetCode_0841_solution2 {
+class LC_0841_solution2 {
 
     public boolean canVisitAllRooms(List<List<Integer>> rooms) {
         boolean[] visited = new boolean[rooms.size()];

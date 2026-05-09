@@ -1,8 +1,9 @@
 // Solve 2025-04-24
+// Update 2026-05-09
 
 // DFS 풀이
 
-class LeetCode_0785_solution2 {
+class LC_0785_solution2 {
 
     public boolean isBipartite(int[][] graph) {
         int[] team = new int[graph.length];

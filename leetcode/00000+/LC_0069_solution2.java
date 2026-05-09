@@ -1,6 +1,7 @@
 // Solve 2025-06-11
+// Update 2026-05-09
 
-public class LeetCode_0069_solution2 {
+class LC_0069_solution2 {
 
     public int mySqrt(int x) {
         int low = -1;

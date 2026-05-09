@@ -1,4 +1,5 @@
 // Solve 2025-05-15
+// Update 2026-05-09
 
 import java.util.*;
 
@@ -12,7 +13,7 @@ class TreeNode {
     TreeNode(int x) { val = x; }
 }
 
-class LeetCode_0236_solution2 {
+class LC_0236_solution2 {
 
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         ArrayDeque<TreeNode> bfsQue = new ArrayDeque<TreeNode>();

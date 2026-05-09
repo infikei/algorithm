@@ -1,6 +1,7 @@
 // Solve 2025-06-15
+// Update 2026-05-09
 
-class LeetCode_0070_solution2 {
+class LC_0070_solution2 {
 
     public int climbStairs(int n) {
         int[] memo = new int[n + 1];

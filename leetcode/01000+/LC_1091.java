@@ -1,8 +1,9 @@
 // Solve 2025-05-03
+// Update 2026-05-09
 
 import java.util.*;
 
-class LeetCode_1091 {
+class LC_1091 {
 
     static class Point {
         int x, y;

@@ -1,9 +1,9 @@
 // Solve 2025-04-16
-// Update 2025-05-03
+// Update 2026-05-09
 
 import java.util.*;
 
-class LeetCode_0739 {
+class LC_0739 {
 
     public int[] dailyTemperatures(int[] temperatures) {
         int[] answer = new int[temperatures.length];

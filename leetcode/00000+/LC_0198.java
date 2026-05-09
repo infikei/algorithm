@@ -1,7 +1,7 @@
 // Solve 2025-06-15
-// Update 2025-06-19
+// Update 2026-05-09
 
-class LeetCode_0198 {
+class LC_0198 {
 
     int recur(int cur, int[] memo, int[] nums) {
         if (cur < 0) return 0;

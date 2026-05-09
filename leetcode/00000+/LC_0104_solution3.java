@@ -1,4 +1,5 @@
 // Solve 2025-05-14
+// Update 2026-05-09
 
 import java.util.*;
 
@@ -28,7 +29,7 @@ class TreeNodeInfo {
     }
 }
 
-class LeetCode_0104_solution3 {
+class LC_0104_solution3 {
 
     public int maxDepth(TreeNode root) {
         if (root == null) {

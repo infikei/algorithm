@@ -1,7 +1,7 @@
 // Solve 2025-06-15
-// Update 2025-06-19
+// Update 2026-05-09
 
-class LeetCode_0198_solution4 {
+class LC_0198_solution4 {
 
     public int rob(int[] nums) {
         int n = nums.length;

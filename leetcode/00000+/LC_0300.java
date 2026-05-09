@@ -1,6 +1,7 @@
 // Solve 2025-06-15
+// Update 2026-05-09
 
-class LeetCode_0300 {
+class LC_0300 {
 
     public int lengthOfLIS(int[] nums) {
         int n = nums.length;

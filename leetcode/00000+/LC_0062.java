@@ -1,7 +1,7 @@
 // Solve 2025-06-15
-// Update 2025-06-19
+// Update 2026-05-09
 
-class LeetCode_0062 {
+class LC_0062 {
 
     int recur(int x, int y, int m, int n, int[][] memo) {
         if (x >= m || y >= n) return 0;

@@ -1,10 +1,11 @@
 // Solve 2025-04-24
+// Update 2026-05-09
 
 // BFS 풀이
 
 import java.util.*;
 
-class LeetCode_0785 {
+class LC_0785 {
 
     public boolean isBipartite(int[][] graph) {
         int[] team = new int[graph.length];

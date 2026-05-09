@@ -1,8 +1,9 @@
 // Solve 2025-04-16
+// Update 2026-05-09
 
 import java.util.*;
 
-class LeetCode_0001_solution2 {
+class LC_0001_solution2 {
 
     public int[] twoSum(int[] nums, int target) {
         int[][] numsAndIndices = new int[nums.length][2];

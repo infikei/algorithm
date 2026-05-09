@@ -1,6 +1,7 @@
 // Solve 2025-12-11
+// Update 2026-05-09
 
-class LeetCode_3577 {
+class LC_3577 {
 
     public int countPermutations(int[] complexity) {
         final long MOD = 1000000007;

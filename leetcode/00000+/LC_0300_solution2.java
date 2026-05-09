@@ -1,8 +1,9 @@
 // Solve 2025-06-15
+// Update 2026-05-09
 
 import java.util.*;
 
-class LeetCode_0300_solution2 {
+class LC_0300_solution2 {
 
     int getLowerBound(List<Integer> list, int target) {
         int low = -1;
