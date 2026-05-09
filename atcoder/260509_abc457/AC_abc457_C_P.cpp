@@ -1,0 +1,56 @@
+// Solve 2026-05-09
+
+#include <bits/stdc++.h>
+
+#define FASTIO ios_base::sync_with_stdio(false);cin.tie(NULL);
+#define ALL(v) v.begin(),v.end()
+#define UNIQUE(v) v.erase(unique(v.begin(),v.end()),v.end());
+#define SETW(n, c) cout << setw(n) << setfill(c);
+#define SETP(n) cout << fixed << setprecision(n);
+
+using namespace std;
+using ll = long long;
+using uint = unsigned int;
+using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+const int INF = 0x3f3f3f3f;
+const int MOD = 1000000007;
+
+vector<int> a[200000];
+
+int main() {
+    FASTIO;
+
+    int n;
+    ll k;
+    cin >> n >> k;
+    k--;
+
+    for (int i = 0; i < n; i++) {
+        int l;
+        cin >> l;
+
+        for (int j = 0; j < l; j++) {
+            int v;
+            cin >> v;
+            a[i].push_back(v);
+        }
+    }
+
+    for (int i = 0; i < n; i++) {
+        ll c;
+        cin >> c;
+        ll l = size(a[i]);
+
+        if (k < c * l) {
+            cout << a[i][k % l] << '\n';
+            return 0;
+        }
+
+        k -= c * l;
+    }
+
+    return 0;
+}
